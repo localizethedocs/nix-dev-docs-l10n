@@ -1,0 +1,17 @@
+#
+# To compile from requirements.txt.in to requirements.txt, run the following commands:
+#
+# conda activate ./.conda
+# export PYTHONNOUSERSITE=1
+# cd cmake/custom
+# pip install pip-tools
+# pip-compile --output-file=requirements.txt requirements.txt.in
+#
+sphinx
+sphinx-book-theme
+sphinx-copybutton
+sphinx-design
+sphinx-notfound-page
+sphinx-sitemap
+linkify-it-py
+myst-parser
