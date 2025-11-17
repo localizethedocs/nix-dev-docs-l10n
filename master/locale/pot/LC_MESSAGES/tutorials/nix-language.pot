@@ -1,0 +1,2967 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/nix-language.md:3
+msgid "Nix language basics"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:5
+msgid ""
+"The Nix language is designed for conveniently creating and composing "
+"*derivations* – precise descriptions of how contents of existing files are "
+"used to derive new files. It is a domain-specific, purely functional, lazily "
+"evaluated, dynamically typed programming language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:8
+msgid "Notable uses of the Nix language"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:13
+msgid "{term}`Nixpkgs`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:15
+msgid ""
+"The largest, most up-to-date software distribution in the world, and written "
+"in the Nix language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:17
+msgid "{term}`NixOS`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:19
+msgid ""
+"A Linux distribution that can be configured fully declaratively and is based "
+"on Nix and Nixpkgs."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:21
+msgid ""
+"Its underlying modular configuration system is written in the Nix language, "
+"and uses packages from Nixpkgs. The operating system environment and "
+"services it provides are configured with the Nix language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:25
+msgid ""
+"You may quickly encounter Nix language expressions that look very "
+"complicated. As with any programming language, the required amount of Nix "
+"language code closely matches the complexity of the problem it is supposed "
+"to solve, and reflects how well the problem – and its solution – is "
+"understood. Building software is a complex undertaking, and Nix both "
+"*exposes* and *allows managing* this complexity with the Nix language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:29
+msgid ""
+"Yet, the Nix language itself has only a few basic concepts that will be "
+"introduced in this tutorial, and which can be combined arbitrarily. What may "
+"look complicated comes not from the language, but from how it is used."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:32
+msgid "Overview"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:34
+msgid ""
+"This is an introduction to **reading the Nix language**, for the purpose of "
+"following other tutorials and examples."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:36
+msgid "**Using the Nix language** in practice entails multiple things:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:38
+msgid "Language: syntax and semantics"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:39
+msgid "Libraries: `builtins` and `pkgs.lib`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:40
+msgid "Developer tools: testing, debugging, linting, formatting, ..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:41
+msgid "Generic build mechanisms: `stdenv.mkDerivation`, trivial builders, ..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:42
+msgid ""
+"Composition and configuration mechanisms: `override`, `overrideAttrs`, "
+"overlays, `callPackage`, ..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:43
+msgid ""
+"Ecosystem-specific packaging mechanisms: `buildGoModule`, "
+"`buildPythonApplication`, ..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:44
+msgid "NixOS module system: `config`, `option`, ..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:46
+msgid ""
+"This tutorial only covers the most important language features, briefly "
+"discusses libraries, and at the end will direct you to reference material "
+"and resources on the other components."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:48
+msgid "What will you learn?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:50
+msgid ""
+"This tutorial should enable you to read typical Nix language code and "
+"understand its structure. Its goal is to highlight where the Nix language "
+"may differ from languages you are used to."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:53
+msgid ""
+"It therefore shows the most common and distinguishing patterns in the Nix "
+"language:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:55
+msgid "[Assigning names and accessing values](names-values)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:56
+msgid "Declaring and calling [functions](functions)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:57
+msgid "[Built-in and library functions](libraries)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:58
+msgid "[Impurities](impurities) to obtain build inputs"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:59
+msgid "[Derivations](derivations) that describe build tasks"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:62
+msgid ""
+"This tutorial *does not* explain all Nix language features in detail and "
+"*does not* go into specifics of syntactical rules. For instance, we skip "
+"over commonplace constructs such as `if ... then ... else ...`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:65
+msgid "See the [Nix manual][manual-language] for a full language reference."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:70
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:72
+msgid "Familiarity with software development"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:73
+msgid ""
+"Familiarity with Unix shell, to read command line examples <!-- TODO: link "
+"to yet-to-be instructions on \"how to read command line examples\" -->"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:73
+msgid ""
+"<!-- TODO: link to yet-to-be instructions on \"how to read command line "
+"examples\" -->"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:74
+msgid "A {ref}`Nix installation <install-nix>` to run the examples"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:76
+msgid "How long does it take?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:78
+msgid "No experience with functional programming: 2 hours"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:79
+msgid "Familiar with functional programming: 1 hour"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:80
+msgid "Proficient with functional programming: 30 minutes"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:82
+msgid ""
+"We recommend to run all examples. Play with them to validate your "
+"assumptions and test what you have learned. Read detailed explanations if "
+"you want to make sure you fully understand the examples."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:86
+msgid "How to run the examples?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:88
+msgid "A piece of Nix language code is a *Nix expression*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:89
+msgid "Evaluating a Nix expression produces a *Nix value*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:90
+msgid ""
+"The content of a *Nix file* (file extension `.nix`) is a Nix expression."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:93
+msgid ""
+"To *evaluate* means to transform an expression into a value according to the "
+"language rules."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:96
+msgid ""
+"This tutorial contains many examples of Nix expressions. Each one is "
+"followed by the expected evaluation result."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:99
+msgid "The following example is a Nix expression adding two numbers:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:101
+#: ../../../tutorials/nix-language.md:1581
+msgid "1 + 2"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:106
+#: ../../../tutorials/nix-language.md:226
+#: ../../../tutorials/nix-language.md:236
+#: ../../../tutorials/nix-language.md:417
+#: ../../../tutorials/nix-language.md:440
+#: ../../../tutorials/nix-language.md:1323
+#: ../../../tutorials/nix-language.md:1363
+#: ../../../tutorials/nix-language.md:1452
+#: ../../../tutorials/nix-language.md:1565
+#: ../../../tutorials/nix-language.md:1586
+msgid "3"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:111
+msgid "Interactive evaluation"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:113
+msgid ""
+"Use [`nix repl`] to evaluate Nix expressions interactively (by typing them "
+"on the command line):"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:115
+msgid ""
+"$ nix repl\n"
+"Welcome to Nix 2.13.3. Type :? for help.\n"
+"\n"
+"nix-repl> 1 + 2\n"
+"3\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:124
+msgid ""
+"The Nix language uses lazy evaluation, and `nix repl` by default only "
+"computes values when needed."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:126
+msgid ""
+"Some examples show a fully evaluated data structure for clarity. If your "
+"output does not match the example, try prepending `:p` to the input "
+"expression."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:129
+#: ../../../tutorials/nix-language.md:189
+#: ../../../tutorials/nix-language.md:327
+#: ../../../tutorials/nix-language.md:377
+#: ../../../tutorials/nix-language.md:406
+#: ../../../tutorials/nix-language.md:455
+#: ../../../tutorials/nix-language.md:548
+#: ../../../tutorials/nix-language.md:565
+#: ../../../tutorials/nix-language.md:582
+#: ../../../tutorials/nix-language.md:599
+#: ../../../tutorials/nix-language.md:667
+#: ../../../tutorials/nix-language.md:698
+#: ../../../tutorials/nix-language.md:729
+#: ../../../tutorials/nix-language.md:768
+#: ../../../tutorials/nix-language.md:811
+#: ../../../tutorials/nix-language.md:836
+#: ../../../tutorials/nix-language.md:861
+#: ../../../tutorials/nix-language.md:888
+#: ../../../tutorials/nix-language.md:906
+#: ../../../tutorials/nix-language.md:934
+#: ../../../tutorials/nix-language.md:951
+#: ../../../tutorials/nix-language.md:964
+#: ../../../tutorials/nix-language.md:980
+#: ../../../tutorials/nix-language.md:1000
+#: ../../../tutorials/nix-language.md:1020
+#: ../../../tutorials/nix-language.md:1119
+#: ../../../tutorials/nix-language.md:1135
+#: ../../../tutorials/nix-language.md:1156
+#: ../../../tutorials/nix-language.md:1170
+#: ../../../tutorials/nix-language.md:1188
+#: ../../../tutorials/nix-language.md:1206
+#: ../../../tutorials/nix-language.md:1225
+#: ../../../tutorials/nix-language.md:1272
+#: ../../../tutorials/nix-language.md:1298
+#: ../../../tutorials/nix-language.md:1338
+#: ../../../tutorials/nix-language.md:1353
+#: ../../../tutorials/nix-language.md:1402
+#: ../../../tutorials/nix-language.md:1417
+#: ../../../tutorials/nix-language.md:1442
+#: ../../../tutorials/nix-language.md:1465
+#: ../../../tutorials/nix-language.md:1489
+#: ../../../tutorials/nix-language.md:1530
+#: ../../../tutorials/nix-language.md:1554
+#: ../../../tutorials/nix-language.md:1596
+#: ../../../tutorials/nix-language.md:1656
+#: ../../../tutorials/nix-language.md:1729
+#: ../../../tutorials/nix-language.md:1756
+#: ../../../tutorials/nix-language.md:1804
+#: ../../../tutorials/nix-language.md:1854
+#: ../../../tutorials/nix-language.md:1868
+#: ../../../tutorials/nix-language.md:1912
+#: ../../../tutorials/nix-language.md:2090
+msgid "Example:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:131
+msgid ""
+"nix-repl> { a.b.c = 1; }\n"
+"{ a = { ... }; }\n"
+"\n"
+"nix-repl> :p { a.b.c = 1; }\n"
+"{ a = { b = { c = 1; }; }; }\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:139
+msgid "Type `:q` to exit [`nix repl`]."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:145
+msgid "Evaluating Nix files"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:147
+msgid ""
+"Use [`nix-instantiate --eval`][nix-instantiate] to evaluate the expression "
+"in a Nix file."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:149
+msgid ""
+"$ echo 1 + 2 > file.nix\n"
+"$ nix-instantiate --eval file.nix\n"
+"3\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:0
+msgid "Detailed explanation"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:157
+msgid ""
+"The first command writes `1 + 2` to a file `file.nix` in the current "
+"directory. The contents of `file.nix` are now `1 + 2`, which you can check "
+"with"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:160
+msgid ""
+"$ cat file.nix\n"
+"1 + 2\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:165
+msgid ""
+"The second command runs `nix-instantiate` with the `--eval` option on `file."
+"nix`, which reads the file and evaluates the contained Nix expression. The "
+"resulting value is printed as output."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:168
+msgid ""
+"`--eval` is required to evaluate the file and do nothing else. If `--eval` "
+"is omitted, `nix-instantiate` expects the expression in the given file to "
+"evaluate to a special value called a *derivation*, which we will come back "
+"to at the end of this tutorial in [](derivations)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:174
+msgid ""
+"`nix-instantiate --eval` will try to read from `default.nix` if no file name "
+"is specified."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:176
+msgid ""
+"$ echo 1 + 2 > default.nix\n"
+"$ nix-instantiate --eval\n"
+"3\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:184
+msgid ""
+"The Nix language uses lazy evaluation, and `nix-instantiate` by default only "
+"computes values when needed."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:186
+msgid ""
+"Some examples show a fully evaluated data structure for clarity. If your "
+"output does not match the example, try adding the `--strict` option to `nix-"
+"instantiate`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:191
+msgid ""
+"$ echo \"{ a.b.c = 1; }\" > file.nix\n"
+"$ nix-instantiate --eval file.nix\n"
+"{ a = <CODE>; }\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:197
+msgid ""
+"$ echo \"{ a.b.c = 1; }\" > file.nix\n"
+"$ nix-instantiate --eval --strict file.nix\n"
+"{ a = { b = { c = 1; }; }; }\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:207
+msgid "Notes on whitespace"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:209
+msgid ""
+"White space is used to delimit [lexical tokens], where required. It is "
+"otherwise insignificant."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:214
+msgid ""
+"Line breaks, indentation, and additional spaces are for the reader's "
+"convenience."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:216
+msgid "The following are equivalent:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:218
+msgid ""
+"let\n"
+" x = 1;\n"
+" y = 2;\n"
+"in x + y"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:231
+msgid "let x=1;y=2;in x+y"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:242
+msgid "Names and values"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:244
+msgid ""
+"Values in the Nix language can be primitive data types, lists, attribute "
+"sets, and functions."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:246
+msgid ""
+"We show examples of primitive data types and lists in the context of "
+"[attribute sets](attrset). Later in this section we cover special features "
+"of character strings: [string interpolation](string-interpolation), [file "
+"system paths](file-system-paths), and [indented strings](indented-strings). "
+"We deal with [functions](functions) separately."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:250
+msgid ""
+"[Attribute sets](attrset) and [`let` expressions](let) are used to assign "
+"names to values. Assignments are denoted by a single equal sign (`=`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:253
+msgid "Whenever you encounter an equal sign (`=`) in Nix language code:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:254
+msgid "On its left is the assigned name."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:255
+msgid "On its right is the value, delimited by a semicolon (`;`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:258
+msgid "Attribute set `{ ... }`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:260
+msgid ""
+"An attribute set is a collection of name-value-pairs, where names must be "
+"unique."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:262
+msgid ""
+"The following example shows all primitive data types, lists, and attribute "
+"sets."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:265
+msgid ""
+"If you are familiar with JSON, imagine the Nix language as *JSON with "
+"functions*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:267
+msgid ""
+"Nix language data types *without functions* work just like their "
+"counterparts in JSON and look very similar."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:275
+msgid "**Nix**"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:276
+msgid ""
+"{\n"
+"  string = \"hello\";\n"
+"  integer = 1;\n"
+"  float = 3.141;\n"
+"  bool = true;\n"
+"  null = null;\n"
+"  list = [ 1 \"two\" false ];\n"
+"  attribute-set = {\n"
+"    a = \"hello\";\n"
+"    b = 2;\n"
+"    c = 2.718;\n"
+"    d = false;\n"
+"  }; # comments are supported\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:294
+msgid "**JSON**"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:295
+msgid ""
+"{\n"
+"  \"string\": \"hello\",\n"
+"  \"integer\": 1,\n"
+"  \"float\": 3.141,\n"
+"  \"bool\": true,\n"
+"  \"null\": null,\n"
+"  \"list\": [1, \"two\", false],\n"
+"  \"object\": {\n"
+"    \"a\": \"hello\",\n"
+"    \"b\": 1,\n"
+"    \"c\": 2.718,\n"
+"    \"d\": false\n"
+"  }\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:314
+msgid "Attribute names usually do not need quotes.[^attrnames]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:315
+msgid "List elements are separated by white space.[^list-whitespace]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:322
+msgid "Recursive attribute set `rec { ... }`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:324
+msgid ""
+"You will sometimes see attribute sets declared with `rec` prepended. This "
+"allows access to attributes from within the set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:329
+msgid ""
+"rec {\n"
+"  one = 1;\n"
+"  two = one + 1;\n"
+"  three = two + 1;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:338
+msgid "{ one = 1; three = 3; two = 2; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:344
+msgid ""
+"Elements in an attribute set can be declared in any order, and are ordered "
+"on evaluation."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:347
+#: ../../../tutorials/nix-language.md:520
+#: ../../../tutorials/nix-language.md:632
+#: ../../../tutorials/nix-language.md:785
+#: ../../../tutorials/nix-language.md:1368
+msgid "Counter-example:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:349
+msgid ""
+"{\n"
+"  one = 1;\n"
+"  two = one + 1;\n"
+"  three = two + 1;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:358
+msgid ""
+"error: undefined variable 'one'\n"
+"\n"
+"       at «string»:3:9:\n"
+"\n"
+"            2|   one = 1;\n"
+"            3|   two = one + 1;\n"
+"             |         ^\n"
+"            4|   three = two + 1;"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:371
+#: ../../../tutorials/nix-language.md:461
+msgid "`let ... in ...`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:373
+msgid "Also known as “`let` expression” or “`let` binding”"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:375
+msgid "`let` expressions allow assigning names to values for repeated use."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:379
+msgid ""
+"let\n"
+"  a = 1;\n"
+"in\n"
+"a + a"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:387
+#: ../../../tutorials/nix-language.md:1165
+#: ../../../tutorials/nix-language.md:1213
+#: ../../../tutorials/nix-language.md:1607
+#: ../../../tutorials/nix-language.md:1628
+msgid "2"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:394
+msgid ""
+"Assignments are placed between the keywords `let` and `in`. In this example "
+"we assign `a = 1`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:397
+msgid ""
+"After `in` comes the expression in which the assignments are valid, i.e., "
+"where assigned names can be used. In this example the expression is `a + a`, "
+"where `a` refers to `a = 1`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:400
+msgid ""
+"By replacing the names with their assigned values, `a + a` evaluates to `2`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:404
+msgid ""
+"Names can be assigned in any order, and expressions on the right of the "
+"assignment (`=`) can refer to other assigned names."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:408
+msgid ""
+"let\n"
+"  b = a + 1;\n"
+"  a = 1;\n"
+"in\n"
+"a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:424
+msgid ""
+"Assignments are placed between the keywords `let` and `in`. In this example "
+"we assign `a = 1` and `b = a + 1`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:427
+msgid ""
+"The order of assignments does not matter. Therefore the following example, "
+"where the assignments are in reverse order, is equivalent:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:431
+msgid ""
+"let\n"
+"  a = 1;\n"
+"  b = a + 1;\n"
+"in\n"
+"a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:445
+msgid "Note that the `a` in `b = a + 1` refers to `a = 1`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:447
+msgid ""
+"After `in` comes the expression in which the assignments are valid. In this "
+"example the expression is `a + b`, where `a` refers to `a = 1`, and `b` "
+"refers to `b = a + 1`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:450
+msgid ""
+"By replacing the names with their assigned values, `a + b` evaluates to `3`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:452
+msgid ""
+"This is similar to [recursive attribute sets](rec-attrset): in both, the "
+"order of assignments does not matter, and names on the left can be used in "
+"expressions on the right of the assignment (`=`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:463
+msgid ""
+"let\n"
+"  b = a + 1;\n"
+"  c = a + b;\n"
+"  a = 1;\n"
+"in {  c = c; a = a; b = b; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:472
+#: ../../../tutorials/nix-language.md:490
+msgid "{ a = 1; b = 2; c = 3; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:479
+msgid "`rec { ... }`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:481
+msgid ""
+"rec {\n"
+"  b = a + 1;\n"
+"  c = a + b;\n"
+"  a = 1;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:497
+msgid ""
+"The difference is that while a recursive attribute set evaluates to an "
+"[attribute set](attrset), any expression can follow after the `in` keyword."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:499
+msgid "In the following example we use the `let` expression to form a list:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:501
+msgid ""
+"let\n"
+"  b = a + 1;\n"
+"  c = a + b;\n"
+"  a = 1;\n"
+"in [ a b c ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:510
+#: ../../../tutorials/nix-language.md:613
+msgid "[ 1 2 3 ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:517
+msgid ""
+"Only expressions within the `let` expression itself can access the newly "
+"declared names. We say: the bindings have local scope."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:522
+msgid ""
+"{\n"
+"  a = let x = 1; in x;\n"
+"  b = x;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:530
+msgid ""
+"error: undefined variable 'x'\n"
+"\n"
+"       at «string»:3:7:\n"
+"\n"
+"            2|   a = let x = 1; in x;\n"
+"            3|   b = x;\n"
+"             |       ^\n"
+"            4| }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:542
+msgid ""
+"<!-- TODO: exercise - use let to reuse a value in an attribute set -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:544
+msgid "Attribute access"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:546
+msgid ""
+"Attributes in a set are accessed with a dot (`.`) and the attribute name."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:550
+msgid ""
+"let\n"
+"  attrset = { x = 1; };\n"
+"in\n"
+"attrset.x"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:558
+#: ../../../tutorials/nix-language.md:575
+#: ../../../tutorials/nix-language.md:1180
+#: ../../../tutorials/nix-language.md:1199
+#: ../../../tutorials/nix-language.md:1412
+msgid "1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:563
+msgid "Accessing nested attributes works the same way."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:567
+msgid ""
+"let\n"
+"  attrset = { a = { b = { c = 1; }; }; };\n"
+"in\n"
+"attrset.a.b.c"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:580
+msgid "The dot (`.`) notation can also be used for assigning attributes."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:584
+msgid "{ a.b.c = 1; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:589
+msgid "{ a = { b = { c = 1; }; }; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:595
+msgid "`with ...; ...`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:597
+msgid ""
+"The `with` expression allows access to attributes without repeatedly "
+"referencing their attribute set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:601
+msgid ""
+"let\n"
+"  a = {\n"
+"    x = 1;\n"
+"    y = 2;\n"
+"    z = 3;\n"
+"  };\n"
+"in\n"
+"with a; [ x y z ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:618
+msgid "The expression"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:620
+msgid "with a; [ x y z ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:624
+#: ../../../tutorials/nix-language.md:690
+#: ../../../tutorials/nix-language.md:721
+msgid "is equivalent to"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:626
+msgid "[ a.x a.y a.z ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:630
+msgid ""
+"Attributes made available through `with` are only in scope of the expression "
+"following the semicolon (`;`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:634
+msgid ""
+"let\n"
+"  a = {\n"
+"    x = 1;\n"
+"    y = 2;\n"
+"    z = 3;\n"
+"  };\n"
+"in\n"
+"{\n"
+"  b = with a; [ x y z ];\n"
+"  c = x;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:649
+msgid ""
+"error: undefined variable 'x'\n"
+"\n"
+"       at «string»:10:7:\n"
+"\n"
+"            9|   b = with a; [ x y z ];\n"
+"           10|   c = x;\n"
+"             |       ^\n"
+"           11| }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:662
+msgid "`inherit ...`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:664
+msgid ""
+"`inherit` is shorthand for assigning the value of a name from an existing "
+"scope to the same name in a nested scope. It is for convenience to avoid "
+"repeating the same name multiple times."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:669
+msgid ""
+"let\n"
+"  x = 1;\n"
+"  y = 2;\n"
+"in\n"
+"{\n"
+"  inherit x y;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:680
+#: ../../../tutorials/nix-language.md:710
+msgid "{ x = 1; y = 2; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:685
+#: ../../../tutorials/nix-language.md:715
+msgid "The fragment"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:687
+msgid "inherit x y;"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:692
+msgid "x = x; y = y;"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:696
+msgid ""
+"It is also possible to `inherit` names from a specific attribute set with "
+"parentheses (`inherit (...) ...`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:700
+msgid ""
+"let\n"
+"  a = { x = 1; y = 2; };\n"
+"in\n"
+"{\n"
+"  inherit (a) x y;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:717
+msgid "inherit (a) x y;"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:723
+msgid "x = a.x; y = a.y;"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:727
+msgid "`inherit` also works inside `let` expressions."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:731
+msgid ""
+"let\n"
+"  inherit ({ x = 1; y = 2; }) x y;\n"
+"in [ x y ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:738
+msgid "[ 1 2 ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:745
+msgid ""
+"While this example is contrived, in more complex code you will regularly see "
+"nested `let` expressions that re-use names from their outer scope."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:747
+msgid ""
+"Here we use the attribute set `{ x = 1; y = 2; }` to have something non-"
+"trivial to inherit from. The `let` expression inherits `x` and `y` from that "
+"attribute set using `( )`, which is equivalent to writing:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:750
+msgid ""
+"let\n"
+"  x = { x = 1; y = 2; }.x;\n"
+"  y = { x = 1; y = 2; }.y;\n"
+"in"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:757
+msgid ""
+"The new inner scope now contains `x` and `y`, which are used in the list "
+"`[ x y ]`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:762
+msgid "String interpolation `${ ... }`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:764
+msgid "Previously known as “antiquotation”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:766
+msgid ""
+"The value of a Nix expression can be inserted into a character string with "
+"the dollar-sign and braces (`${ }`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:770
+msgid ""
+"let\n"
+"  name = \"Nix\";\n"
+"in\n"
+"\"hello ${name}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:778
+msgid "\"hello Nix\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:783
+msgid ""
+"Only character strings or values that can be represented as a character "
+"string are allowed."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:787
+msgid ""
+"let\n"
+"  x = 1;\n"
+"in\n"
+"\"${x} + ${x} = ${x + x}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:795
+msgid ""
+"error: cannot coerce an integer to a string\n"
+"\n"
+"       at «string»:4:2:\n"
+"\n"
+"            3| in\n"
+"            4| \"${x} + ${x} = ${x + x}\"\n"
+"             |  ^\n"
+"            5|"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:807
+msgid "Interpolated expressions can be arbitrarily nested."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:809
+msgid ""
+"(This can become hard to read, and we recommend to avoid it in practice.)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:813
+msgid ""
+"let\n"
+"  a = \"no\";\n"
+"in\n"
+"\"${a + \" ${a + \" ${a}\"}\"}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:821
+msgid "\"no no no\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:827
+msgid ""
+"Any Nix expression where the value can be represented as a string can be "
+"used within `${ }`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:829
+msgid ""
+"The `+` sign in the above expression is the [string concatenation operator]"
+"(https://nix.dev/manual/nix/latest/language/operators#string-concatenation), "
+"which takes two strings and produces a new string."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:831
+msgid ""
+"The expression in the example is deliberately confusing in order to "
+"demonstrate that arbitrarily nested string interpolations are possible, but "
+"tend to be hard to read."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:833
+msgid ""
+"It denotes a string that contains the interpolation of concatenating the "
+"value of `a` with a string that starts with a space and is followed by "
+"another interpolated string. That second interpolated string is again the "
+"result of concatenating the value of `a` and yet another string that starts "
+"with a space and is followed by an interpolation of `a`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:837
+msgid ""
+"let\n"
+"  a = \"one\";\n"
+"  b = \"two\";\n"
+"in\n"
+"\"${a + b}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:846
+msgid "\"onetwo\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:851
+msgid "Built-in functions are discussed in a [later section](libraries)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:855
+msgid ""
+"You may encounter strings that use the dollar sign (`$`) before an assigned "
+"name, but no braces (`{ }`):"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:857
+msgid ""
+"These are *not* interpolated strings, but usually denote variables in a "
+"shell script."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:859
+msgid ""
+"In such cases, the use of names from the surrounding Nix expression is a "
+"coincidence."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:863
+msgid ""
+"let\n"
+"  out = \"Nix\";\n"
+"in\n"
+"\"echo ${out} > $out\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:871
+msgid "\"echo Nix > $out\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:877
+msgid "<!-- TODO: link to escaping rules -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:880
+msgid "Indented strings"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:882
+msgid "Also known as “multi-line strings”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:884
+msgid ""
+"The Nix language offers convenience syntax for character strings which span "
+"multiple lines that have common indentation."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:886
+msgid "Indented strings are denoted by *double single quotes* (`'' ''`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:890
+msgid ""
+"''\n"
+"multi\n"
+"line\n"
+"string\n"
+"''"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:899
+msgid "\"multi\\nline\\nstring\\n\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:904
+msgid "Equal amounts of prepended white space are trimmed from the result."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:908
+msgid ""
+"''\n"
+"  one\n"
+"   two\n"
+"    three\n"
+"''"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:917
+msgid "\"one\\n two\\n  three\\n\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:923
+msgid ""
+"Indented strings also support [string interpolation](string-interpolation). "
+"For details check the [documentation on string literals in the Nix language]"
+"(https://nix.dev/manual/nix/2.24/language/syntax#string-literal)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:928
+#: ../../../tutorials/nix-language.md:1785
+msgid "File system paths"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:930
+msgid "The Nix language offers convenience syntax for file system paths."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:932
+msgid "Absolute paths always start with a slash (`/`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:936
+#: ../../../tutorials/nix-language.md:941
+msgid "/absolute/path"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:946
+msgid ""
+"Paths are relative when they contain at least one slash (`/`) but do not "
+"start with one. They evaluate to the path relative to the file containing "
+"the expression."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:949
+msgid ""
+"The following examples assume the containing Nix file is in `/current/"
+"directory` (or `nix repl` is run in `/current/directory`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:954
+msgid "./relative"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:959
+msgid "/current/directory/relative"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:966
+msgid "relative/path"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:971
+msgid "/current/directory/relative/path"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:976
+msgid "One dot (`.`) denotes the current directory within the given path."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:978
+msgid ""
+"You will often see the following expression, which specifies a Nix file's "
+"directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:982
+msgid "./."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:987
+msgid "/current/directory"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:994
+msgid ""
+"Since relative paths must contain a slash (`/`) but must not start with one, "
+"and the dot (`.`) denotes no change of directory, the combination `./.` "
+"specifies the current directory as a relative path."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:998
+msgid "Two dots (`..`) denote the parent directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1002
+msgid "../."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1007
+msgid "/current"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1012
+msgid ""
+"Paths can be used in interpolated expressions – an [impure operation]"
+"(impurities) we will cover in detail in a [later section](path-impurities)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1016
+msgid "Lookup paths"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1018
+msgid "Also known as “angle bracket syntax”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1022
+msgid "<nixpkgs>"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1027
+msgid "/nix/var/nix/profiles/per-user/root/channels/nixpkgs"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1032
+msgid ""
+"The value of a [lookup path](https://nix.dev/manual/nix/2.22/language/"
+"constructs/lookup-path) is a file system path that depends on the value of "
+"[`builtins.nixPath`](https://nix.dev/manual/nix/2.22/language/builtin-"
+"constants#builtins-nixPath)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1034
+msgid ""
+"In practice, `<nixpkgs>` points to the file system path of some revision of "
+"{term}`Nixpkgs`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1036
+msgid ""
+"For example, `<nixpkgs/lib>` points to the subdirectory `lib` of that file "
+"system path:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1038
+msgid "<nixpkgs/lib>"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1043
+msgid "/nix/var/nix/profiles/per-user/root/channels/nixpkgs/lib"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1048
+msgid ""
+"While you will encounter many such examples, we recommend to [avoid lookup "
+"paths](search-path) in production code, as they are [impurities](impurities) "
+"which are not reproducible."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1055
+msgid "Functions"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1057
+msgid ""
+"Functions are everywhere in the Nix language and deserve particular "
+"attention."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1059
+msgid ""
+"A function always takes exactly one argument. Argument and function body are "
+"separated by a colon (`:`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1062
+msgid "Wherever you find a colon (`:`) in Nix language code:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1063
+msgid "On its left is the function argument"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1064
+msgid "On its right is the function body."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1066
+msgid ""
+"Function arguments are the third way, apart from [attribute sets](attrset) "
+"and [`let` expressions](let), to assign names to values. Notably, values are "
+"not known in advance: the names are placeholders that are filled when "
+"[calling a function](calling-functions)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1069
+msgid ""
+"Function declarations in the Nix language can appear in different forms. "
+"Each of them is explained in the following, and here is an overview:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1072
+msgid "Single argument"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1074
+#: ../../../tutorials/nix-language.md:1121
+msgid "x: x + 1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1078
+msgid "Multiple arguments via nesting"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1080
+#: ../../../tutorials/nix-language.md:1274
+msgid "x: y: x + y"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1084
+#: ../../../tutorials/nix-language.md:1330
+msgid "Attribute set argument"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1086
+msgid "{ a, b }: a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1090
+msgid "With default attributes"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1092
+msgid "{ a, b ? 0 }: a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1096
+msgid "With additional attributes allowed"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1098
+msgid "{ a, b, ...}: a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1102
+#: ../../../tutorials/nix-language.md:1457
+msgid "Named attribute set argument"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1104
+msgid "args@{ a, b, ... }: a + b + args.c"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1108
+#: ../../../tutorials/nix-language.md:1477
+msgid "or"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1110
+msgid "{ a, b, ... }@args: a + b + args.c"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1114
+msgid ""
+"Functions in the Nix language have no names. We say they are anonymous, and "
+"call such a function a *lambda*.[^lambda]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1126
+#: ../../../tutorials/nix-language.md:1144
+#: ../../../tutorials/nix-language.md:1279
+#: ../../../tutorials/nix-language.md:1291
+#: ../../../tutorials/nix-language.md:1308
+#: ../../../tutorials/nix-language.md:1345
+#: ../../../tutorials/nix-language.md:1472
+#: ../../../tutorials/nix-language.md:1484
+#: ../../../tutorials/nix-language.md:1714
+#: ../../../tutorials/nix-language.md:1740
+msgid "<LAMBDA>"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1131
+msgid "The `<LAMBDA>` indicates the resulting value is an anonymous function."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1133
+msgid "As with any other value, functions can be assigned to a name."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1137
+msgid ""
+"let\n"
+"  f = x: x + 1;\n"
+"in f"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1150
+msgid "Calling functions"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1152
+msgid "Also known as \"function application\"."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1154
+msgid ""
+"Calling a function with an argument means writing the argument after the "
+"function."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1158
+msgid ""
+"let\n"
+"  f = x: x + 1;\n"
+"in f 1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1172
+msgid ""
+"let\n"
+"  f = x: x.a;\n"
+"in\n"
+"f { a = 1; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1185
+msgid ""
+"The above example calls `f` on a literal attribute set. One can also pass "
+"arguments by name."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1190
+msgid ""
+"let\n"
+"  f = x: x.a;\n"
+"  v = { a = 1; };\n"
+"in\n"
+"f v"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1204
+msgid ""
+"Since function and argument are separated by white space, sometimes "
+"parentheses (`( )`) are required to achieve the desired result."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1208
+#: ../../../tutorials/nix-language.md:1623
+msgid "(x: x + 1) 1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1220
+msgid ""
+"This expression applies an anonymous function `x: x + 1` to the argument "
+"`1`. The function has to be written in parentheses to distinguish it from "
+"the argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1227
+msgid ""
+"List elements are also separated by white space, therefore the following are "
+"different:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1229
+msgid ""
+"let\n"
+" f = x: x + 1;\n"
+" a = 1;\n"
+"in [ (f a) ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1237
+msgid "[ 2 ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1242
+msgid ""
+"let\n"
+" f = x: x + 1;\n"
+" a = 1;\n"
+"in [ f a ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1250
+msgid "[ <LAMBDA> 1 ]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1255
+msgid ""
+"The first example reads: apply `f` to `a`, and put the result in a list. The "
+"resulting list has one element."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1258
+msgid ""
+"The second example reads: put `f` and `a` in a list. The resulting list has "
+"two elements."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1261
+msgid "Multiple arguments"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1263
+msgid "Also known as “[curried] functions”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1265
+msgid ""
+"Nix functions take exactly one argument. Multiple arguments can be handled "
+"by nesting functions."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1268
+msgid ""
+"Such a nested function can be used like a function that takes multiple "
+"arguments, but offers additional flexibility."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1284
+msgid "The above function is equivalent to"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1286
+msgid "x: (y: x + y)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1296
+msgid ""
+"This function takes one argument and returns another function `y: x + y` "
+"with `x` set to the value of that argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1300
+msgid ""
+"let\n"
+"  f = x: y: x + y;\n"
+"in\n"
+"f 1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1313
+msgid ""
+"Applying the function which results from `f 1` to another argument yields "
+"the inner body `x + y` (with `x` set to `1` and `y` set to the other "
+"argument), which can now be fully evaluated."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1315
+msgid ""
+"let\n"
+"  f = x: y: x + y;\n"
+"in\n"
+"f 1 2"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1328
+msgid ""
+"<!-- TODO: exercise - assign the lambda a name and do something with it -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1332
+msgid "Also known as “keyword arguments” or “destructuring”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1334
+msgid ""
+"Nix functions can be declared to require an attribute set with specific "
+"structure as argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1336
+msgid ""
+"This is denoted by listing the expected attribute names separated by commas "
+"(`,`) and enclosed in braces (`{ }`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1340
+msgid "{a, b}: a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1350
+msgid ""
+"The argument defines the exact attributes that have to be in that set. "
+"Leaving out or passing additional attributes is an error."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1355
+msgid ""
+"let\n"
+"  f = {a, b}: a + b;\n"
+"in\n"
+"f { a = 1; b = 2; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1370
+msgid ""
+"let\n"
+"  f = {a, b}: a + b;\n"
+"in\n"
+"f { a = 1; b = 2; c = 3; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1378
+msgid ""
+"error: 'f' at (string):2:7 called with unexpected argument 'c'\n"
+"\n"
+"       at «string»:4:1:\n"
+"\n"
+"            3| in\n"
+"            4| f { a = 1; b = 2; c = 3; }\n"
+"             | ^\n"
+"            5|"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1390
+msgid "<!-- TODO: not the same as x: x.a + x.b (!!!!) -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1392
+msgid "Default values"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1394
+msgid "Also known as “default arguments”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1396
+msgid "Destructured arguments can have default values for attributes."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1398
+msgid ""
+"This is denoted by separating the attribute name and its default value with "
+"a question mark (`?`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1400
+msgid ""
+"Attributes in the argument are not required if they have a default value."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1404
+msgid ""
+"let\n"
+"  f = {a, b ? 0}: a + b;\n"
+"in\n"
+"f { a = 1; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1419
+msgid ""
+"let\n"
+"  f = {a ? 0, b ? 0}: a + b;\n"
+"in\n"
+"f { } # empty attribute set"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1427
+msgid "0"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1432
+msgid "Additional attributes"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1434
+msgid "Additional attributes are allowed with an ellipsis (`...`):"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1436
+msgid "{a, b, ...}: a + b"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1440
+msgid ""
+"Unlike in the previous counter-example, passing an argument that contains "
+"additional attributes is not an error."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1444
+msgid ""
+"let\n"
+"  f = {a, b, ...}: a + b;\n"
+"in\n"
+"f { a = 1; b = 2; c = 3; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1459
+msgid "Also known as “@ pattern”, “@ syntax”, or “‘at’ syntax”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1461
+msgid ""
+"An attribute set argument can be given a name to be accessible as a whole."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1463
+msgid ""
+"This is denoted by prepending or appending the name to the attribute set "
+"argument, separated by the at sign (`@`)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1467
+msgid "{a, b, ...}@args: a + b + args.c"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1479
+msgid "args@{a, b, ...}: a + b + args.c"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1491
+msgid ""
+"let\n"
+"  f = {a, b, ...}@args: a + b + args.c;\n"
+"in\n"
+"f { a = 1; b = 2; c = 3; }"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1499
+msgid "6"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1505
+msgid "Function libraries"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1507
+msgid ""
+"In addition to the [built-in operators][operators] (`+`, `==`, `&&`, etc.), "
+"there are two widely used libraries that *together* can be considered "
+"standard for the Nix language. You need to know about both to understand and "
+"navigate Nix language code."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1510
+msgid "<!-- TODO: find a place for operators -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1512
+msgid ""
+"We recommend to at least skim them to familiarise yourself with what is "
+"available."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1517
+msgid "`builtins`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1519
+msgid "Also known as “primitive operations” or “primops”."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1521
+msgid ""
+"Nix comes with many functions that are built into the language. They are "
+"implemented in C++ as part of the Nix language interpreter."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1525
+msgid ""
+"The Nix manual lists all [Built-in Functions][nix-builtins], and shows how "
+"to use them."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1528
+msgid "These functions are available under the `builtins` constant."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1532
+msgid "builtins.toString"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1537
+msgid "<PRIMOP>"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1546
+msgid "`import`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1548
+msgid ""
+"Most built-in functions are only accessible through `builtins`. A notable "
+"exception is `import`, which is also available at the top level."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1551
+msgid ""
+"`import` takes a path to a Nix file, reads it to evaluate the contained Nix "
+"expression, and returns the resulting value. If the path points to a "
+"directory, the file `default.nix` in that directory is used instead."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1556
+msgid "$ echo 1 + 2 > file.nix\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1560
+msgid "import ./file.nix"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1572
+msgid ""
+"The preceding shell command writes the contents `1 + 2` to the file `file."
+"nix` in the current directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1574
+msgid ""
+"The above Nix expression refers to this file as `./file.nix`. `import` reads "
+"the file and evaluates to the contained Nix expression."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1577
+#: ../../../tutorials/nix-language.md:1619
+msgid "It is an error if the file system path does not exist."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1579
+msgid ""
+"After reading `file.nix` the Nix expression is equivalent to the file "
+"contents:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1592
+msgid ""
+"Since a Nix file can contain any Nix expression, `import`ed functions can be "
+"applied to arguments immediately."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1594
+msgid ""
+"That is, whenever you find additional tokens after a call to `import`, the "
+"value it returns should be a function, and anything that follows are "
+"arguments to that function."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1598
+msgid "$ echo \"x: x + 1\" > file.nix\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1602
+msgid "import ./file.nix 1"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1614
+msgid ""
+"The preceding shell command writes the contents `x: x + 1` to the file `file."
+"nix` in the current directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1616
+msgid ""
+"The above Nix expression refers to this file as `./file.nix`. `import ./file."
+"nix` reads the file and evaluates to the contained Nix expression."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1621
+msgid ""
+"After reading the file, the Nix expression `import ./file.nix` is equivalent "
+"to the file contents:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1633
+msgid ""
+"This applies the function `x: x + 1` to the argument `1`, and therefore "
+"evaluates to `2`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1636
+msgid ""
+"Parentheses are required to separate function declaration from function "
+"application."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1642
+msgid "`pkgs.lib`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1644
+msgid ""
+"The [`nixpkgs`][nixpkgs] repository contains an attribute set called [`lib`]"
+"[nixpkgs-lib], which provides a large number of useful functions. They are "
+"implemented in the Nix language, as opposed to [`builtins`](builtins), which "
+"are part of the language itself."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1648
+msgid ""
+"The Nixpkgs manual lists all [Nixpkgs library functions][nixpkgs-functions]."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1654
+msgid ""
+"These functions are usually accessed through `pkgs.lib`, as the Nixpkgs "
+"attribute set is given the name `pkgs` by convention."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1658
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> {};\n"
+"in\n"
+"pkgs.lib.strings.toUpper \"lookup paths considered harmful\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1666
+msgid "LOOKUP PATHS CONSIDERED HARMFUL"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1673
+msgid ""
+"This is a more complex example, but by now you should be familiar with all "
+"its components."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1675
+msgid ""
+"The name `pkgs` is declared to be the expression `import`ed from some file. "
+"That file's path is determined by the value of the lookup path `<nixpkgs>`, "
+"which in turn is determined by the `$NIX_PATH` environment variable at the "
+"time this expression is evaluated. As this expression happens to be a "
+"function, it requires an argument to evaluate, and in this case passing an "
+"empty attribute set `{}` is sufficient."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1679
+msgid ""
+"Now that `pkgs` is in scope of `let ... in ...`, its attributes can be "
+"accessed. From the Nixpkgs manual one can determine that there exists a "
+"function under [`lib.strings.toUpper`]."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1684
+msgid ""
+"For brevity, this example uses a lookup path to obtain *some version* of "
+"Nixpkgs. The function `toUpper` is trivial enough that we can expect it not "
+"to produce different results for different versions of Nixpkgs. Yet, more "
+"sophisticated software is likely to suffer from such problems. A fully "
+"reproducible example would therefore look like this:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1689
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/"
+"archive/06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\";\n"
+"  pkgs = import nixpkgs {};\n"
+"in\n"
+"pkgs.lib.strings.toUpper \"always pin your sources\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1698
+msgid "ALWAYS PIN YOUR SOURCES"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1703
+msgid "See [](pinning-nixpkgs) for details."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1705
+msgid ""
+"What you will also often see is that `pkgs` is passed as an argument to a "
+"function. By convention one can assume that it refers to the Nixpkgs "
+"attribute set, which has a `lib` attribute:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1708
+msgid ""
+"{ pkgs, ... }:\n"
+"pkgs.lib.strings.removePrefix \"no \" \"no true scotsman\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1719
+#: ../../../tutorials/nix-language.md:1745
+msgid ""
+"To make this function produce a result, you can write it to a file (e.g. "
+"`file.nix`) and pass it an argument through `nix-instantiate`:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1721
+msgid ""
+"$ nix-instantiate --eval file.nix --arg pkgs 'import <nixpkgs> {}'\n"
+"\"true scotsman\"\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1726
+msgid ""
+"Oftentimes you will see in NixOS configurations, and also within Nixpkgs, "
+"that `lib` is passed directly. In that case one can assume that this `lib` "
+"is equivalent to `pkgs.lib` where only `pkgs` is available."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1731
+msgid ""
+"{ lib, ... }:\n"
+"let\n"
+"  to-be = true;\n"
+"in\n"
+"lib.trivial.or to-be (! to-be)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1747
+msgid ""
+"$ nix-instantiate --eval file.nix --arg lib '(import <nixpkgs> {}).lib'\n"
+"true\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1752
+msgid ""
+"Sometimes both `pkgs` and `lib` are passed as arguments. In that case, one "
+"can assume `pkgs.lib` and `lib` to be equivalent. This is done to improve "
+"readability by avoiding repeated use of `pkgs.lib`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1758
+msgid ""
+"{ pkgs, lib, ... }:\n"
+"# ... multiple uses of `pkgs`\n"
+"# ... multiple uses of `lib`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1766
+msgid ""
+"For historical reasons, some of the functions in `pkgs.lib` are equivalent "
+"to [`builtins`](builtins) of the same name."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1769
+msgid "Impurities"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1771
+msgid ""
+"So far we have only covered what we call *pure expressions*: declaring data "
+"and transforming it with functions."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1774
+msgid ""
+"In practice, describing derivations – the Nix language's defining feature, "
+"which enables functional programming with the file system – requires "
+"observing the outside world. We will discuss [derivations](derivations) "
+"later in the tutorial."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1777
+msgid ""
+"There is only one impurity in the Nix language that is relevant here: "
+"reading files from the file system as *build inputs*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1780
+msgid ""
+"Build inputs are files that derivations refer to in order to describe how to "
+"derive new files. When run, a derivation will only have access to explicitly "
+"declared build inputs."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1783
+msgid ""
+"The only way to specify build inputs in the Nix language is explicitly with:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1786
+msgid "Dedicated functions"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1788
+msgid ""
+"Nix and the Nix language refer to files by their content hash. If file "
+"contents are not known in advance, it's unavoidable to read files during "
+"expression evaluation."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1791
+msgid ""
+"Nix supports other types of impure expressions, such as [lookup paths]"
+"(search-path) or the constant [`builtins.currentSystem`](https://nix.dev/"
+"manual/nix/stable/language/builtin-constants.html#builtins-currentSystem). "
+"We do not cover those here in more detail, as they do not matter for how the "
+"Nix language works in principle, and because they are discouraged for the "
+"very reason of breaking reproducibility."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1796
+msgid "Paths"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1798
+msgid ""
+"Whenever a file system path is used in [string interpolation](string-"
+"interpolation), the contents of that file are copied to a special location "
+"in the file system, the *Nix store*, as a side effect."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1800
+msgid ""
+"The evaluated string then contains the Nix store path assigned to that file."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1802
+msgid "<!-- TODO: link to explanation of the Nix store -->\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1806
+msgid "$ echo 123 > data\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1810
+msgid "\"${./data}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1815
+msgid "\"/nix/store/h1qj5h5n05b5dl5q4nldrqq8mdg7dhqk-data\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1822
+msgid ""
+"The preceding shell command writes the characters `123` to the file `data` "
+"in the current directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1824
+msgid ""
+"The above Nix expression refers to this file as `./data` and converts the "
+"file system path to an [interpolated string](string-interpolation) `${ ... }"
+"`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1826
+msgid ""
+"Such interpolated expressions must evaluate to something that can be "
+"represented as a character string. A file system path is such a value, and "
+"its character string representation is the corresponding Nix store path:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1829
+msgid "/nix/store/<hash>-<name>"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1833
+msgid ""
+"The Nix store path is obtained by taking the hash of the file's contents "
+"(`<hash>`) and combining it with the file name (`<name>`). The file is "
+"copied into the Nix store directory `/nix/store` as a side effect of "
+"evaluation. It is an error if the file system path does not exist."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1839
+msgid ""
+"For directories the same thing happens: The entire directory (including "
+"nested files and directories) is copied to the Nix store, and the evaluated "
+"string becomes the Nix store path of the directory."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1841
+msgid "Fetchers"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1843
+msgid ""
+"Files to be used as build inputs do not have to come from the file system."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1845
+msgid ""
+"The Nix language provides built-in impure functions to fetch files over the "
+"network during evaluation:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1847
+msgid ""
+"[`builtins.fetchurl`](https://nix.dev/manual/nix/stable/language/builtins."
+"html#builtins-fetchurl)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1848
+msgid ""
+"[`builtins.fetchTarball`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-fetchTarball)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1849
+msgid ""
+"[`builtins.fetchGit`](https://nix.dev/manual/nix/stable/language/builtins."
+"html#builtins-fetchGit)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1850
+msgid ""
+"[`builtins.fetchClosure`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-fetchClosure)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1852
+msgid "These functions evaluate to a file system path in the Nix store."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1856
+msgid ""
+"builtins.fetchurl \"https://github.com/NixOS/nix/"
+"archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1861
+msgid ""
+"\"/nix/"
+"store/7dhgs330clj36384akg86140fqkgh8zf-7c3ab5751568a0bc63430b33a5169c5e4784a0ff."
+"tar.gz\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1866
+msgid ""
+"Some of them add extra convenience, such as automatically unpacking archives."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1870
+msgid ""
+"builtins.fetchTarball \"https://github.com/NixOS/nix/"
+"archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1875
+msgid "\"/nix/store/d59llm96vgis5fy231x6m7nrijs0ww36-source\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1881
+msgid ""
+"The Nixpkgs manual on [Fetchers][nixpkgs-fetchers] lists numerous additional "
+"library functions to fetch files over the network."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1884
+msgid "It is an error if the network request fails."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1889
+msgid "Derivations"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1892
+msgid "Derivations are at the core of both Nix and the Nix language:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1893
+msgid "The Nix language is used to describe derivations."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1894
+msgid "Nix runs derivations to produce *build results*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1895
+msgid "Build results can in turn be used as inputs for other derivations."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1897
+msgid ""
+"The Nix language primitive to declare a derivation is the built-in impure "
+"function `derivation`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1899
+msgid ""
+"It is usually wrapped by the Nixpkgs build mechanism `stdenv.mkDerivation`, "
+"which hides much of the complexity involved in non-trivial build procedures."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1902
+msgid "You will probably never encounter `derivation` in practice."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1905
+msgid ""
+"Whenever you encounter `mkDerivation`, it denotes something that Nix will "
+"eventually *build*."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1907
+msgid "Example: [a package using `mkDerivation`](mkDerivation-example)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1909
+msgid ""
+"The evaluation result of `derivation` (and `mkDerivation`) is an [attribute "
+"set](attrset) with a certain structure and a special property: It can be "
+"used in [string interpolation](string-interpolation), and in that case "
+"evaluates to the Nix store path of its build result."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1914
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> {};\n"
+"in \"${pkgs.nix}\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1921
+msgid "\"/nix/store/sv2srrjddrp2isghmrla8s6lazbzmikd-nix-2.11.0\""
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1927
+msgid ""
+"Your output may differ. It may produce a different hash or even a different "
+"package version."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1930
+msgid ""
+"A derivation's output path is fully determined by its inputs, which in this "
+"case come from *some* version of Nixpkgs."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1932
+msgid ""
+"This is why we recommend to [avoid lookup paths](search-path) to ensure "
+"predictable outcomes, except in examples intended for illustration only."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1937
+msgid ""
+"The example imports the Nix expression from the lookup path `<nixpkgs>`, and "
+"applies the resulting function to an empty attribute set `{}`. Its output is "
+"assigned the name `pkgs`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1940
+msgid ""
+"Converting the attribute `pkgs.nix` to a string with [string interpolation]"
+"(string-interpolation) is allowed, as `pkgs.nix` is a derivation. That is, "
+"ultimately `pkgs.nix` boils down to a call to `derivation`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1943
+msgid ""
+"The resulting string is the file system path where the build result of that "
+"derivation will end up."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1945
+msgid ""
+"There is more depth to the inner workings of derivations, but at this point "
+"it should be enough to know that such expressions evaluate to Nix store "
+"paths."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1949
+msgid ""
+"String interpolation on derivations is used to refer to their build results "
+"as file system paths when declaring new derivations."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1951
+msgid ""
+"This allows constructing arbitrarily complex compositions of derivations "
+"with the Nix language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1953
+msgid "Worked examples"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1955
+msgid ""
+"So far we have seen artificial examples illustrating the various constructs "
+"in the Nix language."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1957
+msgid ""
+"You should now be able to read Nix language code for simple packages and "
+"configurations, and come up with similar explanations of the following "
+"practical examples."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1960
+msgid ""
+"The goal of the following exercises is not to understand what the code means "
+"or how it works, but how it is structured in terms of functions, attribute "
+"sets, and other Nix language data types."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1963
+msgid "Shell environment"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1965
+msgid ""
+"{ pkgs ? import <nixpkgs> {} }:\n"
+"let\n"
+"  message = \"hello world\";\n"
+"in\n"
+"pkgs.mkShellNoCC {\n"
+"  packages = with pkgs; [ cowsay ];\n"
+"  shellHook = ''\n"
+"    cowsay ${message}\n"
+"  '';\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1978
+msgid ""
+"This example declares a shell environment (which runs the `shellHook` on "
+"initialization)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1980
+#: ../../../tutorials/nix-language.md:2008
+#: ../../../tutorials/nix-language.md:2048
+msgid "Explanation:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1982
+msgid ""
+"This expression is a function that takes an attribute set as its argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1983
+msgid ""
+"If the argument has the attribute `pkgs`, it will be used in the function "
+"body. Otherwise, by default, import the Nix expression in the file found on "
+"the lookup path `<nixpkgs>` (which is a function in this case), call the "
+"function with an empty attribute set, and use the resulting value."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1985
+msgid "The name `message` is bound to the string value `\"hello world\"`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1986
+msgid ""
+"The attribute `mkShellNoCC` of the `pkgs` set is a function that is passed "
+"an attribute set as argument. Its return value is also the result of the "
+"outer function."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1988
+msgid ""
+"The attribute set passed to `mkShellNoCC` has the attributes `packages` (set "
+"to a list with one element: the `cowsay` attribute from `pkgs`) and "
+"`shellHook` (set to an indented string)."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1989
+msgid ""
+"The indented string contains an interpolated expression, which will expand "
+"the value of `message` to yield `\"hello world\"`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1992
+msgid "NixOS configuration"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1994
+msgid ""
+"{ config, pkgs, ... }: {\n"
+"\n"
+"  imports = [ ./hardware-configuration.nix ];\n"
+"\n"
+"  environment.systemPackages = with pkgs; [ git ];\n"
+"\n"
+"  # ...\n"
+"\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2006
+msgid "This example is (part of) a NixOS configuration."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2010
+msgid ""
+"This expression is a function that takes an attribute set as an argument. It "
+"returns an attribute set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2012
+msgid ""
+"The argument must at least have the attributes `config` and `pkgs`, and may "
+"have more attributes."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2013
+msgid ""
+"The returned attribute set contains the attributes `imports` and "
+"`environment`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2014
+msgid ""
+"`imports` is a list with one element: a path to a file next to this Nix "
+"file, called `hardware-configuration.nix`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2017
+msgid ""
+"`imports` is not the impure built-in `import`, but a regular attribute name!"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2019
+msgid ""
+"`environment` is itself an attribute set with one attribute "
+"`systemPackages`, which will evaluate to a list with one element: the `git` "
+"attribute from the `pkgs` set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2020
+msgid "The `config` argument is not (shown to be) used."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2023
+msgid "Package"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2025
+msgid ""
+"{ lib, stdenv, fetchurl }:\n"
+"\n"
+"stdenv.mkDerivation rec {\n"
+"\n"
+"  pname = \"hello\";\n"
+"\n"
+"  version = \"2.12\";\n"
+"\n"
+"  src = fetchurl {\n"
+"    url = \"mirror://gnu/${pname}/${pname}-${version}.tar.gz\";\n"
+"    sha256 = \"1ayhp9v4m4rdhjmnl2bq3cibrbqqkgjbl3s7yk2nhlh8vj3ay16g\";\n"
+"  };\n"
+"\n"
+"  meta = with lib; {\n"
+"    license = licenses.gpl3Plus;\n"
+"  };\n"
+"\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2046
+msgid "This example is a (simplified) package declaration from Nixpkgs."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2050
+msgid ""
+"This expression is a function that takes an attribute set which must have "
+"exactly the attributes `lib`, `stdenv`, and `fetchurl`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2051
+msgid ""
+"It returns the result of evaluating the function `mkDerivation`, which is an "
+"attribute of `stdenv`, applied to a recursive set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2052
+msgid ""
+"The recursive set passed to `mkDerivation` uses its own `pname` and "
+"`version` attributes in the argument to the function `fetchurl`. `fetchurl` "
+"itself comes from the outer function's arguments."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2054
+msgid ""
+"The `meta` attribute is itself an attribute set, where the `license` "
+"attribute has the value that was assigned to the nested attribute `lib."
+"licenses.gpl3Plus`."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2056
+msgid "References"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2058
+msgid "[Nix manual: Nix language][manual-language]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2059
+msgid "[Nix manual: String interpolation][manual-string-interpolation]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2060
+msgid "[Nix manual: Built-in Functions][nix-builtins]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2061
+msgid "[Nix manual: `nix repl`][`nix repl`]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2062
+msgid "[Nixpkgs manual: Functions reference][nixpkgs-functions]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2063
+msgid "[Nixpkgs manual: Fetchers][nixpkgs-fetchers]"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2067
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2069
+msgid "Get things done"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2071
+msgid ""
+"[](declarative-reproducible-envs) – create reproducible shell environments "
+"from a Nix file"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2072
+msgid ""
+"[](./packaging-existing-software.md) – make more software available through "
+"Nix"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2075
+msgid ""
+"If you want to take a longer break from learning Nix, you can remove unused "
+"build results from the Nix store with:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2077
+msgid "$ nix-collect-garbage\n"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2081
+msgid "Learn more"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2083
+msgid ""
+"If you worked through the examples, you will have noticed that reading the "
+"Nix language reveals the structure of the code, but does not necessarily "
+"tell what the code actually means."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2085
+msgid "Often it is not possible to determine from the code at hand"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2086
+msgid "the data type of a named value or function argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2087
+msgid "the data type a called function accepts for its argument."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2088
+msgid "which attributes are present in a given attribute set."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2092
+msgid "{ x, y, z }: (x y) z.a"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2096
+msgid "How do we know..."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2097
+msgid ""
+"that `x` will be a function that, given an argument, returns a function?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2098
+msgid ""
+"that, given `x` is a function, `y` will be an appropriate argument to `x`?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2099
+msgid ""
+"that, given `(x y)` is a function, `z.a` will be an appropriate argument to "
+"`(x y)`?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2100
+msgid "that `z` will be an attribute set at all?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2101
+msgid "that, given `z` is an attribute set, it will have an attribute `a`?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2102
+msgid "which data type `y` and `z.a` will be?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2103
+msgid "the data type of the end result?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2105
+msgid ""
+"And how does the caller of this function know that it requires an attribute "
+"set with attributes `x`, `y`, `z`?"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2107
+msgid ""
+"Answering such questions requires knowing the context in which a given "
+"expression is supposed to be used."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2109
+msgid ""
+"The Nix ecosystem and code style is driven by conventions. Most names you "
+"will encounter in Nix language code come from Nixpkgs:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2112
+msgid ""
+"[Nix Pills][nix-pills] - a detailed explanation of derivations and how "
+"Nixpkgs is constructed from first principles"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2114
+msgid "Nixpkgs provides generic build mechanisms that are widely used:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2116
+msgid "[`stdenv`][stdenv] - most importantly `mkDerivation`"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2117
+msgid ""
+"[Trivial Builders][trivial-builders] - to create files and shell scripts"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2119
+msgid "Packages from Nixpkgs can be modified through multiple mechanisms:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2121
+msgid ""
+"[overrides] – specifically `override` and `overrideAttrs` to modify single "
+"packages"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2122
+msgid ""
+"[overlays] – to produce a custom variant of Nixpkgs with individually "
+"modified packages"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2124
+msgid ""
+"Different language ecosystems and frameworks have different requirements to "
+"accommodating them into Nixpkgs:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2126
+msgid ""
+"[Languages and frameworks][language-support] lists tools provided by Nixpkgs "
+"to build language- or framework-specific packages with Nix."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2128
+msgid ""
+"The NixOS Linux distribution has a modular configuration system that imposes "
+"its own conventions:"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:2130
+msgid ""
+"[NixOS modules][nixos-modules] shows how NixOS configurations are organized."
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:318
+msgid ""
+"Details: [Nix manual - attribute set](https://nix.dev/manual/nix/stable/"
+"language/syntax#attrs-literal)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:319
+msgid ""
+"Details: [Nix manual - list](https://nix.dev/manual/nix/stable/language/"
+"syntax#list-literal)"
+msgstr ""
+
+#: ../../../tutorials/nix-language.md:1117
+msgid ""
+"The term *lambda* is a shorthand for [lambda abstraction](https://en."
+"wikipedia.org/wiki/Lambda_calculus#lambdaAbstr) in the [lambda calculus]"
+"(https://en.wikipedia.org/wiki/Lambda_calculus)."
+msgstr ""

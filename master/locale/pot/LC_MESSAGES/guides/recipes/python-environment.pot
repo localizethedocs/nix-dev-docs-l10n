@@ -1,0 +1,190 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/recipes/python-environment.md:2
+msgid "Setting up a Python development environment"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:4
+msgid ""
+"In this example you will build a Python web application using the [Flask]"
+"(https://flask.palletsprojects.com) web framework as an exercise. To make "
+"the best use of it, you should be familiar with [defining declarative shell "
+"environments](declarative-reproducible-envs)."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:7
+msgid "Create a new file called `myapp.py` and add the following code:"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:9
+msgid ""
+"#!/usr/bin/env python\n"
+"\n"
+"from flask import Flask\n"
+"\n"
+"app = Flask(__name__)\n"
+"\n"
+"@app.route(\"/\")\n"
+"def hello():\n"
+"    return {\n"
+"        \"message\": \"Hello, Nix!\"\n"
+"    }\n"
+"\n"
+"def run():\n"
+"    app.run(host=\"0.0.0.0\", port=5000)\n"
+"\n"
+"if __name__ == \"__main__\":\n"
+"    run()"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:29
+msgid ""
+"This is a simple Flask application which serves a JSON document with the "
+"message `\"Hello, Nix!\"`."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:31
+msgid "Create a new file `shell.nix` to declare the development environment:"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:33
+msgid ""
+"{ pkgs ? import (fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"nixos-23.11\") {} }:\n"
+"\n"
+"pkgs.mkShellNoCC {\n"
+"  packages = with pkgs; [\n"
+"    (python3.withPackages (ps: [ ps.flask ]))\n"
+"    curl\n"
+"    jq\n"
+"  ];\n"
+"}"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:45
+msgid ""
+"This describes a shell environment with an instance of `python3` that "
+"includes the `flask` package using [`python3.withPackages`](https://nixos."
+"org/manual/nixpkgs/stable/#python.withpackages-function). It also contains "
+"[`curl`], a utility to perform web requests, and [`jq`], a tool to parse and "
+"format JSON documents."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:51
+msgid ""
+"Both of them are not Python packages. If you went with Python's [virtualenv]"
+"(https://virtualenv.pypa.io/en/latest/), it would not be possible to add "
+"these utilities to the development environment without additional manual "
+"steps."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:54
+msgid "Run `nix-shell` to enter the environment you just declared:"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:56
+msgid ""
+"$ nix-shell\n"
+"these 2 derivations will be built:\n"
+"  /nix/store/5yvz7zf8yzck6r9z4f1br9sh71vqkimk-builder.pl.drv\n"
+"  /nix/store/aihgjkf856dbpjjqalgrdmxyyd8a5j2m-python3-3.9.13-env.drv\n"
+"these 93 paths will be fetched (109.50 MiB download, 468.52 MiB unpacked):\n"
+"  /nix/store/0xxjx37fcy2nl3yz6igmv4mag2a7giq6-glibc-2.33-123\n"
+"  /nix/store/138azk9hs5a2yp3zzx6iy1vdwi9q26wv-hook\n"
+"...\n"
+"\n"
+"[nix-shell:~]$\n"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:69
+msgid "Start the web application within this shell environment:"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:71
+msgid ""
+"[nix-shell:~]$ python ./myapp.py\n"
+" * Serving Flask app 'myapp'\n"
+" * Debug mode: off\n"
+"WARNING: This is a development server. Do not use it in a production "
+"deployment. Use a production WSGI server instead.\n"
+" * Running on all addresses (0.0.0.0)\n"
+" * Running on http://127.0.0.1:5000\n"
+" * Running on http://192.168.1.100:5000\n"
+"Press CTRL+C to quit\n"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:82
+msgid "You now have a running Python web application. Try it out!"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:85
+msgid ""
+"Open a new terminal to start another session of the shell environment and "
+"follow the commands below:"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:87
+msgid ""
+"$ nix-shell\n"
+"\n"
+"[nix-shell:~]$ curl 127.0.0.1:5000\n"
+"{\"message\":\"Hello, Nix!\"}\n"
+"\n"
+"[nix-shell:~]$ curl 127.0.0.1:5000 | jq '.message'\n"
+"  % Total    % Received % Xferd  Average Speed   Time    Time     Time  "
+"Current\n"
+"                                 Dload  Upload   Total   Spent    Left  "
+"Speed\n"
+"100    26  100    26    0     0  13785      0 --:--:-- --:--:-- --:--:-- "
+"26000\n"
+"\"Hello, Nix!\"\n"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:100
+msgid ""
+"As demonstrated, you can use both `curl` and `jq` to test the running web "
+"application without any manual installation."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:102
+msgid ""
+"You can commit the files we created to version control and share them with "
+"other people. Others can now use the same shell environment as long as they "
+"have [Nix installed](install-nix)."
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:105
+msgid "Next steps"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:107
+msgid "[](packaging-tutorial)"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:108
+msgid "[](file-sets-tutorial)"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:109
+msgid "[](automatic-direnv)"
+msgstr ""
+
+#: ../../../guides/recipes/python-environment.md:110
+msgid "[](./dependency-management.md)"
+msgstr ""

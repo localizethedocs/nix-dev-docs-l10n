@@ -1,0 +1,229 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../concepts/faq.md:1
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: ../../../concepts/faq.md:3
+msgid "What is the origin of the name Nix?"
+msgstr ""
+
+#: ../../../concepts/faq.md:5
+msgid ""
+"The name *Nix* is derived from the Dutch word *niks*, meaning *nothing*; "
+"build actions do not see anything that has not been explicitly declared as "
+"an input."
+msgstr ""
+
+#: ../../../concepts/faq.md:8
+msgid ""
+"&mdash; <cite>[Nix: A Safe and Policy-Free System for Software Deployment]"
+"(https://edolstra.github.io/pubs/nspfssd-lisa2004-final.pdf), LISA XVIII, "
+"2004</cite>"
+msgstr ""
+
+#: ../../../concepts/faq.md:8
+msgid "<cite>"
+msgstr ""
+
+#: ../../../concepts/faq.md:8
+msgid "</cite>"
+msgstr ""
+
+#: ../../../concepts/faq.md:10
+msgid ""
+"The Nix logo is inspired by [an idea for the Haskell logo](https://wiki."
+"haskell.org/File:Sgf-logo-blue.png) and the fact that [*nix* is Latin for "
+"*snow*](https://nix-dev.science.uu.narkive.com/VDaaP1BY/nix-logo)."
+msgstr ""
+
+#: ../../../concepts/faq.md:12
+msgid "What are flakes?"
+msgstr ""
+
+#: ../../../concepts/faq.md:14
+msgid "See [](flakes-definition)."
+msgstr ""
+
+#: ../../../concepts/faq.md:17
+msgid "Which channel branch should I use?"
+msgstr ""
+
+#: ../../../concepts/faq.md:19
+msgid "Nixpkgs and NixOS have both stable and rolling releases."
+msgstr ""
+
+#: ../../../concepts/faq.md:21
+msgid ""
+"These releases are distributed in variants called \"channel branches\": Git "
+"branches used for releases, which are also converted to Nix channels."
+msgstr ""
+
+#: ../../../concepts/faq.md:25
+msgid ""
+"Consult the [`nix-channel`](https://nix.dev/manual/nix/2.22/command-ref/nix-"
+"channel) entry in the Nix Reference Manual for more information on channels, "
+"and the [Nixpkgs contributing guide](https://github.com/NixOS/nixpkgs/blob/"
+"master/CONTRIBUTING.md#branch-conventions) on the Nixpkgs branching strategy."
+msgstr ""
+
+#: ../../../concepts/faq.md:28
+msgid "Stable"
+msgstr ""
+
+#: ../../../concepts/faq.md:30
+msgid ""
+"Stable releases receive conservative updates to fix bugs or security "
+"vulnerabilities; otherwise package versions are not changed. A new stable "
+"release is made every six months."
+msgstr ""
+
+#: ../../../concepts/faq.md:33
+msgid ""
+"On Linux (including NixOS and WSL), use [`nixos-*`](https://github.com/NixOS/"
+"nixpkgs/branches/all?query=nixos-)."
+msgstr ""
+
+#: ../../../concepts/faq.md:35
+msgid ""
+"These branches point to commits where most Linux packages got pre-built and "
+"can be fetched from the binary cache. Furthermore, these commits passed the "
+"full NixOS test suite."
+msgstr ""
+
+#: ../../../concepts/faq.md:38
+msgid ""
+"On macOS/Darwin, use [`nixpkgs-*-darwin`](https://github.com/NixOS/nixpkgs/"
+"branches/all?query=nixpkgs-)"
+msgstr ""
+
+#: ../../../concepts/faq.md:40
+msgid ""
+"These branches point to commits where most Darwin packages got pre-built and "
+"can be fetched from the binary cache."
+msgstr ""
+
+#: ../../../concepts/faq.md:42
+msgid "On any other platform it doesn't matter which one of the above is used."
+msgstr ""
+
+#: ../../../concepts/faq.md:44
+msgid "Hydra doesn't pre-build any binaries for other platforms."
+msgstr ""
+
+#: ../../../concepts/faq.md:46
+msgid ""
+"All of these \"channel branches\" follow the corresponding [`release-*`]"
+"(https://github.com/NixOS/nixpkgs/branches/all?query=release-) branch."
+msgstr ""
+
+#: ../../../concepts/faq.md:48
+msgid "Example"
+msgstr ""
+
+#: ../../../concepts/faq.md:49
+msgid ""
+"`nixos-23.05` and `nixpkgs-23.05-darwin` are both based on `release-23.05`."
+msgstr ""
+
+#: ../../../concepts/faq.md:52
+msgid "Rolling"
+msgstr ""
+
+#: ../../../concepts/faq.md:54
+msgid ""
+"Rolling releases follow [`master`](https://github.com/NixOS/nixpkgs/branches/"
+"all?query=master), the main development branch."
+msgstr ""
+
+#: ../../../concepts/faq.md:56
+msgid ""
+"On Linux (including NixOS and WSL), use [`nixos-unstable`](https://github."
+"com/NixOS/nixpkgs/branches/all?query=nixos-unstable)."
+msgstr ""
+
+#: ../../../concepts/faq.md:57
+msgid ""
+"On any other platform, use [`nixpkgs-unstable`](https://github.com/NixOS/"
+"nixpkgs/branches/all?query=nixpkgs-unstable)."
+msgstr ""
+
+#: ../../../concepts/faq.md:59
+msgid ""
+"[`*-small`](https://github.com/NixOS/nixpkgs/branches/all?query=-small) "
+"channel branches have passed a smaller test suite, which means they are more "
+"up-to-date with respect to their base branch, but offer fewer stability "
+"guarantees."
+msgstr ""
+
+#: ../../../concepts/faq.md:61
+msgid "Are there any impurities left in sandboxed builds?"
+msgstr ""
+
+#: ../../../concepts/faq.md:63
+msgid "Yes. There is:"
+msgstr ""
+
+#: ../../../concepts/faq.md:65
+msgid ""
+"CPU architecture—great effort is being made to avoid compilation of native "
+"instructions in favour of hardcoded supported ones."
+msgstr ""
+
+#: ../../../concepts/faq.md:66
+msgid "System's current time/date."
+msgstr ""
+
+#: ../../../concepts/faq.md:67
+msgid ""
+"The filesystem used for building (see also [`TMPDIR`](https://nix.dev/manual/"
+"nix/stable/command-ref/env-common.html#env-TMPDIR))."
+msgstr ""
+
+#: ../../../concepts/faq.md:68
+msgid "Linux kernel parameters, such as:"
+msgstr ""
+
+#: ../../../concepts/faq.md:69
+msgid "[IPv6 capabilities](https://github.com/NixOS/nix/issues/5615)."
+msgstr ""
+
+#: ../../../concepts/faq.md:70
+msgid ""
+"binfmt interpreters, e.g., those configured with [`boot.binfmt."
+"emulatedSystems`](https://search.nixos.org/options?show=boot.binfmt."
+"emulatedSystems)."
+msgstr ""
+
+#: ../../../concepts/faq.md:71
+msgid ""
+"Timing behaviour of the build system—a parallel Make build may not get the "
+"correct inputs in some cases."
+msgstr ""
+
+#: ../../../concepts/faq.md:72
+msgid "Insertion of random values, e.g., from `/dev/random` or `/dev/urandom`."
+msgstr ""
+
+#: ../../../concepts/faq.md:73
+msgid ""
+"Differences between Nix versions. For instance, a new Nix version might "
+"introduce a new environment variable. A statement like `env > $out` is not "
+"promised by Nix to result in the same output, going into the future."
+msgstr ""

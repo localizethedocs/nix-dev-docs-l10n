@@ -1,0 +1,47 @@
+{
+  "po" : 
+  {
+    "en_US" : 
+    {
+      "branch" : "",
+      "commit" : 
+      {
+        "date" : "",
+        "hash" : "",
+        "title" : ""
+      }
+    },
+    "zh_CN" : 
+    {
+      "branch" : "",
+      "commit" : 
+      {
+        "date" : "",
+        "hash" : "",
+        "title" : ""
+      }
+    },
+    "zh_TW" : 
+    {
+      "branch" : "",
+      "commit" : 
+      {
+        "date" : "",
+        "hash" : "",
+        "title" : ""
+      }
+    }
+  },
+  "pot" : 
+  {
+    "branch" : "master",
+    "commit" : 
+    {
+      "date" : "2025-11-05 15:28:55 -0800",
+      "hash" : "d7994a4d5eb8cc96b7828179f107974f0ddc40c1",
+      "title" : "Add previous value to diff"
+    }
+  },
+  "type" : "branch",
+  "version" : "master"
+}

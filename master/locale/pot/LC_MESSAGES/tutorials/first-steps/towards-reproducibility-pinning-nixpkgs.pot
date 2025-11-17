@@ -1,0 +1,115 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:3
+msgid "Towards reproducibility: pinning Nixpkgs"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:5
+msgid "In various Nix examples, you'll often see the following:"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:7
+msgid ""
+"{ pkgs ? import <nixpkgs> {} }:\n"
+"\n"
+"...\n"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:14
+msgid ""
+"`<nixpkgs>` points to the file system path of some revision of {term}"
+"`Nixpkgs`. Find more information on [lookup paths](lookup-path-tutorial) in "
+"[](reading-nix-language)."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:18
+msgid ""
+"This is a **convenient** way to quickly demonstrate a Nix expression and get "
+"it working by importing Nix packages."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:20
+msgid ""
+"However, <ref-search-path>**the resulting Nix expression is not fully "
+"reproducible**."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:20
+msgid "<ref-search-path>"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:22
+msgid "Pinning packages with URLs inside a Nix expression"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:24
+msgid ""
+"To create **fully reproducible** Nix expressions, we can pin an exact "
+"version of Nixpkgs."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:26
+msgid ""
+"The simplest way to do this is to fetch the required Nixpkgs version as a "
+"tarball specified via the relevant Git commit hash:"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:28
+msgid ""
+"{ pkgs ? import (fetchTarball \"https://github.com/NixOS/nixpkgs/"
+"archive/06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\") {}\n"
+"}:\n"
+"\n"
+"...\n"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:35
+msgid ""
+"Picking the commit can be done via [status.nixos.org](https://status.nixos."
+"org/), which lists all the releases and the latest commit that has passed "
+"all tests."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:38
+msgid "When choosing a commit, it is recommended to follow either"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:40
+msgid ""
+"the **latest stable NixOS** release by using a specific version, such as "
+"`nixos-21.05`, **or**"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:41
+msgid "the latest **unstable release** via `nixos-unstable`."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:43
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:45
+msgid ""
+"For more examples and details of the different ways to pin `nixpkgs`, see "
+"{ref}`ref-pinning-nixpkgs`."
+msgstr ""
+
+#: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:46
+msgid "[](dependency-management-npins)"
+msgstr ""

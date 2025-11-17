@@ -1,0 +1,95 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/recipes/add-binary-cache.md:2
+msgid "Configure Nix to use a custom binary cache"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:4
+msgid ""
+"Nix can be configured to use a binary cache with the [`substituters`]"
+"(https://nix.dev/manual/nix/2.21/command-ref/conf-file.html#conf-"
+"substituters) and [`trusted-public-keys`](https://nix.dev/manual/nix/2.21/"
+"command-ref/conf-file.html#conf-trusted-public-keys) settings, either "
+"exclusively or in addition to cache.nixos.org."
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:7
+msgid ""
+"Follow the tutorial to [set up an HTTP binary cache](setup-http-binary-"
+"cache) and create a key pair for signing store objects."
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:10
+msgid ""
+"For example, given a binary cache at `https://example.org` with public key "
+"`My56...Q==%`, and some derivation in `default.nix`, make Nix exclusively "
+"use that cache once by passing [settings as command line flags](https://nix."
+"dev/manual/nix/2.21/command-ref/conf-file#command-line-flags):"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:12
+msgid ""
+"$ nix-build --substituters https://example.org --trusted-public-keys example."
+"org:My56...Q==%\n"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:16
+msgid ""
+"To permanently use the custom cache in addition to the public cache, add to "
+"the [Nix configuration file](https://nix.dev/manual/nix/2.21/command-ref/"
+"conf-file#configuration-file):"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:18
+msgid ""
+"$ echo \"extra-substituters = https://example.org\" >> /etc/nix/nix.conf\n"
+"$ echo \"extra-trusted-public-keys = example.org:My56...Q==%\" >> /etc/nix/"
+"nix.conf\n"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:23
+msgid "To always use only the custom cache:"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:25
+msgid ""
+"$ echo \"substituters = https://example.org\" >> /etc/nix/nix.conf\n"
+"$ echo \"trusted-public-keys = example.org:My56...Q==%\" >> /etc/nix/nix."
+"conf\n"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:30
+msgid "NixOS"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:31
+msgid ""
+"On NixOS, Nix is configured through the [`nix.settings`](https://search."
+"nixos.org/options?show=nix.settings) option:"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:33
+msgid ""
+"{ ... }: {\n"
+"  nix.settings = {\n"
+"    substituters = [ \"https://example.org\" ];\n"
+"    trusted-public-keys = [ \"example.org:My56...Q==%\" ];\n"
+"  };\n"
+"}\n"
+msgstr ""

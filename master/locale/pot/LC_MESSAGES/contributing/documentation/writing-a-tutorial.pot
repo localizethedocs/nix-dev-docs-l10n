@@ -1,0 +1,315 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:1
+msgid "How to write a tutorial"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:3
+msgid "This is a guide to writing tutorials about Nix."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:5
+msgid ""
+"By tutorials we mean *lessons* as described in the [Diátaxis framework for "
+"technical documentation](https://diataxis.fr/), and recommend becoming "
+"familiar with Diátaxis before proceeding. Especially note [the difference "
+"between tutorials and guides](https://diataxis.fr/tutorials-how-to/)."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:8
+msgid "Target audience"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:10
+msgid ""
+"The main target audience of Nix tutorials are software developers with at "
+"least basic experience on the Linux command line."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:12
+msgid ""
+"Experts answering questions immediately, personalised instructions and "
+"training, and other forms of apprenticeship are known to be the most "
+"effective support for learning Nix. **These tutorials are targeted at those "
+"who don't have access to any of that**, and should therefore be written to "
+"be suitable for self-directed learning. This is achieved by following the "
+"structure outlined here, which is primarily characterised by aiming to avoid "
+"and close all information gaps for the learner."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:16
+msgid ""
+"As a byproduct, a well-written tutorial will be useful as lecture notes for "
+"use in interactive training sessions. Therefore, the secondary target "
+"audience are instructors teaching Nix."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:19
+msgid "Process"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:21
+msgid ""
+"Writing a high-quality tutorial takes some time – for you and others. Most "
+"of that time is typically spent collaboratively:"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:23
+msgid "Figuring out the right approach"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:24
+msgid ""
+"Ensuring that the instructions are neither too sparse nor too dense for "
+"learners"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:25
+msgid "Finding ever-more succinct and clear ways to convey ideas"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:27
+msgid "Follow these steps to avoid redoing work"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:29
+msgid "Pick a topic"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:31
+msgid ""
+"There is a [tracking issue](https://github.com/NixOS/nix.dev/issues/572) for "
+"tutorials that the documentation team has decided should exist as part of "
+"the tutorial series. Pick an issue that covers a topic that you're either "
+"knowledgeable about or have a particular interest in."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:34
+msgid ""
+"Check referenced issues and pull requests to make sure you won't duplicate "
+"work that someone else has already started!"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:36
+msgid ""
+"There are more [tutorial requests](https://github.com/NixOS/nix.dev/issues?"
+"q=is%3Aopen+is%3Aissue+label%3Atutorial) than captured in the outline. [Open "
+"a new issue](https://github.com/NixOS/nix.dev/issues/new?&template=tutorial."
+"md) if what you wanted to work on isn't tracked anywhere. This is an "
+"opportunity for you to clarify your goals, and an opportunity for everyone "
+"else to find out that there's interest in that subject."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:40
+msgid "Submit a pull request with an outline"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:42
+msgid ""
+"Submit a pull request with an outline of the tutorial following [our "
+"recommended structure](#structure). The outline should contain bullet points "
+"on each section's content. Reference the tracking issue from the pull "
+"request description to announce that you're working on a tutorial."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:46
+msgid ""
+"A review will ensure you're going in the right direction in terms of "
+"learning objectives and technical implementation."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:48
+msgid "Expand on the outline"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:50
+msgid ""
+"Elaborate the contents of the tutorial following your outline and the []"
+"(style-guide)."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:52
+msgid ""
+"A review will ensure that you get all the required information in the right "
+"order without overwhelming learners."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:54
+msgid "Follow up on review comments"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:56
+msgid ""
+"Revise your tutorial based on the detailed feedback. We recommend testing "
+"your tutorial with friends or coworkers. This will both help with revealing "
+"implicit prerequisites as well as provide a realistic estimate of the "
+"reading time."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:60
+msgid "A final review will check that everything is technically correct."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:62
+msgid "Structure"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:64
+msgid "Each tutorial should answer the following questions."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:66
+msgid ""
+"In addition, we strongly recommend the book [How Learning Works (summary)]"
+"(https://www.lesswrong.com/posts/mAdMkFqWzbJRB544m/book-review-how-learning-"
+"works) as a guide for designing learning materials."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:68
+msgid "What will you learn?"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:70
+msgid "Describe the problem statement and learning goals."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:72
+msgid ""
+"The learning goal of a tutorial is always acquiring a skill, which is "
+"distinguished by being applicable to a set of situations with recurrent "
+"patterns."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:74
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:76
+msgid ""
+"State the prerequisite knowledge and skills. The tutorial should always be "
+"written such that the stated prerequisites are sufficient to achieve the "
+"learning goals."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:79
+msgid "Examples:"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:81
+msgid "links to previous chapters"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:82
+msgid "domain-specific skills or knowledge"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:84
+msgid "How long does it take?"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:86
+msgid ""
+"Estimate the reading time. This is important for learners to make sure they "
+"have the capacity to achieve the planned tasks and thus avoid frustration "
+"that may prevent them from continuing on their journey into the Nix "
+"ecosystem."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:89
+msgid ""
+"The estimate will depend on the learner's pre-existing knowledge and "
+"proficiency. You can note how optional skills or knowledge may influence "
+"reading time."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:92
+msgid "What to do?"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:94
+msgid ""
+"Provide steps to achieve the learning goal. These should take the form of "
+"direct instructions which repeatably lead to the desired outcome."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:97
+msgid ""
+"It is also worthwhile to add contextual explanations within `:::{dropdown}` "
+"blocks. This can help with understanding while keeping distractions minimal."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:100
+msgid "What did you learn?"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:102
+msgid ""
+"Provide exercises or worked examples, and other means of self-assessment."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:104
+msgid ""
+"This is also a good place to offer the readers ways to give feedback or ask "
+"the authors questions in order to continue improving the tutorial."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:106
+msgid "Next steps"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:108
+msgid "Depending on how well a use case is explored, point the reader to"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:110
+msgid "reference manuals"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:111
+msgid "guides or other tutorials"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:112
+msgid "links to known-good external resources, with summaries"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:113
+msgid ""
+"overview of available support tools, and their state of maturity and "
+"maintenance"
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:114
+msgid "overview of ideas, and the state of community discussion."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:116
+msgid ""
+"We recommend making an explicit separation of practical from theoretical "
+"learning resources, as then readers will be able to quickly decide to either "
+"get things done or learn more."
+msgstr ""
+
+#: ../../../contributing/documentation/writing-a-tutorial.md:118
+msgid ""
+"External resources should have a summary to set expectations, ideally "
+"including reading time. Blog posts should have their original title in the "
+"link, and `(<author>, <year>)`: Give authors credit, give readers an idea of "
+"how up to date the information is."
+msgstr ""

@@ -1,0 +1,378 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../contributing/documentation/style-guide.md:1
+msgid "Style guide"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:3
+msgid ""
+"This document outlines the guidelines we use when writing documentation."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:5
+msgid "Writing style"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:7
+msgid "Aim for clarity and brevity"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:9
+msgid "I would have written a shorter letter, but I did not have the time."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:11
+msgid ""
+"— [Blaise Pascal](https://en.m.wikiquote.org/w/index.php?"
+"title=Blaise_Pascal&oldid=2978584#Quotes)"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:13
+msgid ""
+"Readers' time and attention are limited. Take the time to be extraordinarily "
+"respectful of their cognitive resources."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:16
+msgid ""
+"The same holds for communication directed to contributors and maintainers: "
+"This is a public project, and many people will read what you write. Use this "
+"leverage with care."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:20
+msgid ""
+"Follow the evidence-based [plain language guidelines](https://www."
+"plainlanguage.gov/guidelines/)."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:22
+msgid ""
+"Don't use jargon. Readers may not be familiar with particular technical "
+"terms."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:23
+msgid ""
+"Don't use long, complicated words if there are shorter, simpler words that "
+"convey the same meaning."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:25
+msgid "Use the imperative voice when giving instructions. For example, write:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:28
+msgid "Add the `python310` package to `buildInputs`."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:30
+msgid ""
+"Don't use a conversational tone, as it distracts from the content. For "
+"example, don't write:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:33
+msgid ""
+"Going forward, let's now add the `python310` package to `buildInputs` as we "
+"have seen in the previous tutorial."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:35
+msgid "Use inclusive language"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:37
+msgid ""
+"Adapted from [Contributor Covenant] and [The Carpentries Code of Conduct]:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:39
+msgid "Use welcoming and inclusive language"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:40
+msgid "Show empathy and respect towards other people"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:41
+msgid "Be respectful of different viewpoints and experiences"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:42
+msgid "Give and gracefully accept constructive criticism"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:43
+msgid "Focus on what is best for the community"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:45
+msgid ""
+"Avoid idioms as they can be hard to understand for non-native English "
+"speakers."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:47
+msgid ""
+"Don't try to be funny. Humor is highly culturally sensitive. At best, jokes "
+"may obfuscate the relevant instructions. At worst, jokes may offend readers "
+"and invalidate our effort to help them learn."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:52
+msgid ""
+"Don't use references to popular culture. What you may consider well-known "
+"may be entirely obscure and distracting to people from different backgrounds."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:58
+msgid "Voice"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:60
+msgid ""
+"Describe the subject factually and use the imperative voice in direct "
+"instructions."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:62
+msgid ""
+"Do not assume a personal relationship with readers, prefer clarity and "
+"brevity to emotional appeal."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:64
+msgid ""
+"Use \"you\" to refer to the reader and only use \"we\" to refer to the "
+"authors. Both should be rarely needed."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:67
+msgid "For example:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:69
+msgid ""
+"You will have to deploy secrets to the remote machine. We chose to show the "
+"explicit, manual process using `scp` here, but there are various tools to "
+"automate that."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:72
+msgid "Be correct, cite sources"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:74
+msgid ""
+"The only thing worse than no documentation is _incorrect documentation_. One "
+"way to ensure correctness is by citing your sources. If you make a claim "
+"about how something works (e.g. that a command line argument exists), link "
+"to official documentation for that subject. We would like to maintain a "
+"network of documentation, so linking to other documentation helps to "
+"reinforce the documentation ecosystem."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:79
+msgid ""
+"It is explicitly encouraged to update or restructure the manuals where "
+"appropriate, to improve the overall experience."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:81
+msgid "Markup and source"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:83
+msgid "Code samples"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:85
+msgid ""
+"Always motivate code before showing it, describing in words what it is for "
+"or what it will do."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:87
+msgid "Counter-example"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:90
+msgid ""
+"Run this command:\n"
+"\n"
+"```bash\n"
+":(){ :|:& };:\n"
+"```\n"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:99
+msgid ""
+"Non-trivial examples may need additional explanation, especially if they use "
+"concepts from outside the given context. Use a collapsed content box for "
+"explanation that would distract from the reading flow."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:102
+#: ../../../contributing/documentation/style-guide.md:159
+msgid "Example"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:105
+msgid ""
+"Set off a [fork bomb](https://en.wikipedia.org/wiki/Fork_bomb):\n"
+"\n"
+"```bash\n"
+":(){ :|:& };:\n"
+"```\n"
+"\n"
+":::{dropdown} Detailed explanation\n"
+"This Bash command defines and executes a function `:` that recursively "
+"spawns copies of itself, quickly consuming system resources.\n"
+":::\n"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:118
+msgid ""
+"Always explain code in the text itself. Use comments in code samples very "
+"sparingly, for instance to highlight a particular aspect."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:121
+msgid ""
+"Readers tend to glance over large amounts of code when scanning for "
+"information, even if most of it is comments. Especially beginners will "
+"likely find reading more complex-looking code strenuous and may therefore "
+"avoid it altogether."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:124
+msgid ""
+"If a code sample appears to require a lot of inline explanation, consider "
+"replacing it with a simpler one. If that's not possible, break the example "
+"down into multiple parts, explain them separately, and then show the "
+"combined result at the end."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:127
+msgid "Code samples that are _intended_ to work should work."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:129
+msgid ""
+"If you are going to present an example that does not work (e.g. you're "
+"illustrating a common mistake) explain this beforehand. Many readers will "
+"get stuck trying to make example code work without reading ahead to find out "
+"that the code isn't intended to work."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:132
+msgid ""
+"Code samples should all include a programming language when applicable for "
+"syntax highlighting when rendered, e.g.:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:134
+msgid ""
+"```python\n"
+"print(\"Hello, World!\")\n"
+"```\n"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:140
+msgid "Headers"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:142
+msgid "Reserve the largest header (`#`) for the title."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:144
+msgid ""
+"Use Markdown headers `##` through `###` to divide up content in the body of "
+"the document. Finer-grained headings are not necessarily better."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:147
+msgid "One line per sentence"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:149
+msgid "Write one sentence per line."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:151
+msgid ""
+"This makes long sentences immediately visible. It also makes it easier to "
+"review changes and provide direct suggestions, since the GitHub review "
+"interface is line-oriented."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:154
+msgid "Links"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:156
+msgid ""
+"Use [reference links](https://github.github.com/gfm/#reference-link) – "
+"sparingly – to ease source readability. Put definitions close to their first "
+"use."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:162
+msgid ""
+"We follow the [Diátaxis](https://diataxis.fr/) approach to structure "
+"documentation.\n"
+"This framework distinguishes between [tutorials], [guides], [reference], and "
+"[explanation].\n"
+"\n"
+"[tutorials]: https://diataxis.fr/tutorials/\n"
+"[guides]: https://diataxis.fr/how-to-guides/\n"
+"[reference]: https://diataxis.fr/reference/\n"
+"[explanation]: https://diataxis.fr/explanation/\n"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:173
+msgid ""
+"Unless explicitly required to point to the latest version of an external "
+"resource, all references should be [permanent links](https://en.wikipedia."
+"org/wiki/Permalink)."
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:175
+msgid "Many web services offer permalinks, such as:"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:177
+msgid ""
+"[GitHub URLs to specific commits](https://docs.github.com/en/repositories/"
+"working-with-files/using-files/getting-permanent-links-to-files)"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:178
+msgid ""
+"[Wikipedia URLs to specific page versions](https://en.wikipedia.org/wiki/"
+"Wikipedia:Linking_to_Wikipedia#Permanent_links_to_old_versions_of_pages)"
+msgstr ""
+
+#: ../../../contributing/documentation/style-guide.md:179
+msgid ""
+"[Internet Archive \"Save Page Now\" for persisting web pages](https://web."
+"archive.org/save)"
+msgstr ""

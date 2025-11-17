@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../index.md:0
+msgid "Official documentation for getting things done with Nix."
+msgstr ""
+
+#: ../../../index.md:0
+msgid ""
+"Nix, Nixpkgs, NixOS, Linux, build systems, deployment, packaging, "
+"declarative, reproducible, immutable, software, developer"
+msgstr ""
+
+#: ../../../index.md:0
+msgid "en_GB"
+msgstr ""
+
+#: ../../../index.md:10
+msgid "Welcome to nix.dev"
+msgstr ""
+
+#: ../../../index.md:12
+msgid ""
+"nix.dev is the home of official documentation for the Nix ecosystem. It is "
+"maintained by the [Nix documentation team](https://nixos.org/community/teams/"
+"documentation)."
+msgstr ""
+
+#: ../../../index.md:15
+msgid ""
+"If you're new here, {ref}`install Nix <install-nix>` and begin your journey "
+"with our tutorial series!"
+msgstr ""
+
+#: ../../../index.md:19
+msgid "Tutorials"
+msgstr ""
+
+#: ../../../index.md:24
+msgid "Series of lessons to get started"
+msgstr ""
+
+#: ../../../index.md:27
+msgid "Guides"
+msgstr ""
+
+#: ../../../index.md:32
+msgid "Guides to getting things done"
+msgstr ""
+
+#: ../../../index.md:37
+msgid "Reference"
+msgstr ""
+
+#: ../../../index.md:42
+msgid "Collections of detailed technical descriptions"
+msgstr ""
+
+#: ../../../index.md:45
+msgid "Concepts"
+msgstr ""
+
+#: ../../../index.md:50
+msgid "Explanations of history and ideas in the Nix ecosystem"
+msgstr ""
+
+#: ../../../index.md:53
+msgid "What can you do with Nix?"
+msgstr ""
+
+#: ../../../index.md:55
+msgid ""
+"The following list illustrates some of what can be achieved with the Nix "
+"ecosystem:"
+msgstr ""
+
+#: ../../../index.md:57
+msgid "{ref}`Reproducible development environments <ad-hoc-envs>`."
+msgstr ""
+
+#: ../../../index.md:58
+msgid "Easy installation of software over URLs."
+msgstr ""
+
+#: ../../../index.md:59
+msgid "Easy transfer of software environments between computers."
+msgstr ""
+
+#: ../../../index.md:60
+msgid ""
+"{ref}`Declarative specification of Linux machines <deploy-nixos-using-"
+"terraform>`."
+msgstr ""
+
+#: ../../../index.md:61
+msgid ""
+"{ref}`Reproducible integration testing using virtual machines <integration-"
+"testing-vms>`."
+msgstr ""
+
+#: ../../../index.md:62
+msgid "Avoidance of version conflicts with already installed software."
+msgstr ""
+
+#: ../../../index.md:63
+msgid "Installing software from source code."
+msgstr ""
+
+#: ../../../index.md:64
+msgid "{ref}`Transparent build caching using binary caches <github-actions>`."
+msgstr ""
+
+#: ../../../index.md:65
+msgid "Strong support for software auditability."
+msgstr ""
+
+#: ../../../index.md:66
+msgid "{ref}`First-class cross compilation support <cross-compilation>`."
+msgstr ""
+
+#: ../../../index.md:67
+msgid "Remote builds."
+msgstr ""
+
+#: ../../../index.md:68
+msgid "Remote deployments."
+msgstr ""
+
+#: ../../../index.md:69
+msgid "Atomic upgrades and rollbacks."
+msgstr ""
+
+#: ../../../index.md:72
+msgid "Who is Nix for?"
+msgstr ""
+
+#: ../../../index.md:74
+msgid ""
+"Nix is a tool for people who both need computers to do exactly as intended, "
+"repeatably, far into the future, and who are familiar with command line "
+"interfaces and plain text editors."
+msgstr ""
+
+#: ../../../index.md:76
+msgid ""
+"You don't have to be a professional software developer and you don't need "
+"formal education in informatics to greatly benefit from Nix. However, "
+"experience with complex software projects and knowing some informatics helps "
+"with appreciating why it's useful and how it works. And it helps with "
+"learning how to use it effectively and [how to make improvements](how-to-"
+"contribute)."
+msgstr ""
+
+#: ../../../index.md:80
+msgid "You probably won't want to go back to a world without Nix if you're a:"
+msgstr ""
+
+#: ../../../index.md:82
+msgid "Full-stack or back-end developer"
+msgstr ""
+
+#: ../../../index.md:83
+msgid "Test engineer"
+msgstr ""
+
+#: ../../../index.md:84
+msgid "Embedded systems developer"
+msgstr ""
+
+#: ../../../index.md:85
+msgid "DevOps engineer"
+msgstr ""
+
+#: ../../../index.md:86
+msgid "System administrator"
+msgstr ""
+
+#: ../../../index.md:87
+msgid "Data scientist"
+msgstr ""
+
+#: ../../../index.md:88
+msgid "Natural scientist"
+msgstr ""
+
+#: ../../../index.md:89
+msgid "Student of a technical field"
+msgstr ""
+
+#: ../../../index.md:90
+msgid "Open source software enthusiast"
+msgstr ""

@@ -1,0 +1,517 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:0
+msgid "Provisioning remote machines"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:0
+msgid ""
+"Nix, deployment, remote, provisioning, nixos-anywhere, disko, partitioning, "
+"installation"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:9
+msgid "Provisioning remote machines via SSH"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:11
+msgid ""
+"It is possible to replace any Linux installation with a NixOS configuration "
+"on running systems using [`nixos-anywhere`] and [`disko`]."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:16
+msgid "Introduction"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:18
+msgid ""
+"In this tutorial, you will deploy a NixOS configuration to a running "
+"computer."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:20
+msgid "What will you learn?"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:22
+msgid "You'll learn how to"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:23
+msgid ""
+"Specify a minimal NixOS configuration with a declarative disk layout and SSH "
+"access"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:24
+msgid "Check that a configuration is valid"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:25
+msgid "Deploy and update a NixOS configuration on a remote machine"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:27
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:29
+msgid "Familiarity with the [Nix language](reading-nix-language)"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:30
+msgid "Familiarity with the [](module-system-tutorial)"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:32
+msgid ""
+"For a successful unattended installation, ensure for the *target machine* "
+"that:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:34
+msgid "It is a QEMU virtual machine running Linux"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:35
+msgid "With [`kexec`](https://en.wikipedia.org/wiki/Kexec) support"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:36
+msgid "On the `x86-64` or `aarch64` instruction set architecture (ISA)"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:37
+msgid "With at least 1 GB of RAM"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:39
+msgid ""
+"This may also be a live system booted from USB, such as the [NixOS installer]"
+"(https://nixos.org/download/#download-nixos-accordion)."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:41
+msgid "The IP address is configured automatically with DHCP"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:42
+msgid "You can login via SSH"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:43
+msgid "With public key authentication (preferred), or password"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:44
+msgid "As user `root` or another user with `sudo` permissions"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:46
+msgid ""
+"The *local machine* only needs a working [Nix installation](install-nix)."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:48
+msgid ""
+"We call the *target machine* `target-machine` in this tutorial. Replace it "
+"with the actual hostname or IP address."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:51
+msgid "Prepare the environment"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:53
+msgid "Create a new project directory and enter it with your shell:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:55
+msgid ""
+"mkdir remote\n"
+"cd remote\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:60
+msgid ""
+"[Specify dependencies](dependency-management-npins) on `nixpkgs`, `disko`, "
+"and `nixos-anywhere`:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:62
+msgid ""
+"$ nix-shell -p npins\n"
+"[nix-shell:remote]$ npins init\n"
+"[nix-shell:remote]$ npins add github nix-community disko\n"
+"[nix-shell:remote]$ npins add github nix-community nixos-anywhere\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:69
+msgid ""
+"Create a new file `shell.nix` which provides all needed tooling using the "
+"pinned dependencies:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:71
+msgid ""
+"let\n"
+"  sources = import ./npins;\n"
+"  pkgs = import sources.nixpkgs {};\n"
+"in\n"
+"\n"
+"pkgs.mkShell {\n"
+"  nativeBuildInputs = with pkgs; [\n"
+"    npins\n"
+"    nixos-anywhere\n"
+"    nixos-rebuild\n"
+"  ];\n"
+"  shellHook = ''\n"
+"    export NIX_PATH=\"nixpkgs=${sources.nixpkgs}:nixos-config=$PWD/"
+"configuration.nix\"\n"
+"  '';\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:89
+msgid "Now exit the temporary environment and enter the newly specified one:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:91
+msgid ""
+"[nix-shell:remote]$ exit\n"
+"$ nix-shell\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:96
+msgid ""
+"This shell environment is ready to use well-defined versions of Nixpkgs with "
+"`nixos-anywhere` and `nixos-rebuild`."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:99
+msgid "Run all following commands in this environment."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:102
+msgid "Create a NixOS configuration"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:104
+msgid ""
+"The new NixOS configuration will consist of the general system configuration "
+"and a disk layout specification."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:106
+msgid ""
+"The disk layout in this example describes a single disk with a [master boot "
+"record](https://en.wikipedia.org/wiki/Master_boot_record) (MBR) and [EFI "
+"system partition](https://en.wikipedia.org/wiki/EFI_system_partition) (ESP) "
+"partition, and a root file system that takes all remaining available space. "
+"It will work on both EFI and BIOS systems."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:109
+msgid ""
+"Create a new file `single-disk-layout.nix` with the disk layout "
+"specification:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:112
+msgid ""
+"{ ... }:\n"
+"\n"
+"{\n"
+"  disko.devices.disk.main = {\n"
+"    type = \"disk\";\n"
+"    content = {\n"
+"      type = \"gpt\";\n"
+"      partitions = {\n"
+"        MBR = {\n"
+"          priority = 0;\n"
+"          size = \"1M\";\n"
+"          type = \"EF02\";\n"
+"        };\n"
+"        ESP = {\n"
+"          priority = 1;\n"
+"          size = \"500M\";\n"
+"          type = \"EF00\";\n"
+"          content = {\n"
+"            type = \"filesystem\";\n"
+"            format = \"vfat\";\n"
+"            mountpoint = \"/boot\";\n"
+"          };\n"
+"        };\n"
+"        root = {\n"
+"          priority = 2;\n"
+"          size = \"100%\";\n"
+"          content = {\n"
+"            type = \"filesystem\";\n"
+"            format = \"ext4\";\n"
+"            mountpoint = \"/\";\n"
+"          };\n"
+"        };\n"
+"      };\n"
+"    };\n"
+"  };\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:151
+msgid ""
+"Create the file `configuration.nix`, which imports the disk layout "
+"definition and specifies which disk to format:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:154
+msgid ""
+"If you don't know the target disk's device identifier, list all devices on "
+"the *target machine* with `lsblk`:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:156
+msgid ""
+"$ ssh target-machine lsblk\n"
+"NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS\n"
+"sda      8:0    0   256G  0 disk\n"
+"├─sda1   8:1    0 248.5G  0 part /nix/store\n"
+"│                                /\n"
+"└─sda2   8:2    0   7.5G  0 part [SWAP]\n"
+"sr0     11:0    1  1024M  0 rom\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:166
+msgid ""
+"In this example, the disk name is `sda`. The block device path is then `/dev/"
+"sda`. Note that value for later."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:172
+msgid ""
+"{ modulesPath, ... }:\n"
+"\n"
+"let\n"
+"  diskDevice = \"/dev/sda\";\n"
+"  sources = import ./npins;\n"
+"in\n"
+"{\n"
+"  imports = [\n"
+"    (modulesPath + \"/profiles/qemu-guest.nix\")\n"
+"    (sources.disko + \"/module.nix\")\n"
+"    ./single-disk-layout.nix\n"
+"  ];\n"
+"\n"
+"  disko.devices.disk.main.device = diskDevice;\n"
+"\n"
+"  boot.loader.grub = {\n"
+"    devices = [ diskDevice ];\n"
+"    efiSupport = true;\n"
+"    efiInstallAsRemovable = true;\n"
+"  };\n"
+"\n"
+"  services.openssh.enable = true;\n"
+"\n"
+"  users.users.root.openssh.authorizedKeys.keys = [\n"
+"    \"<your SSH key here>\"\n"
+"  ];\n"
+"\n"
+"  system.stateVersion = \"24.11\";\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:205
+msgid "Replace `/dev/sda` with your disk block device path."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:207
+msgid ""
+"Replace the `<your SSH key here>` string with the SSH public key that you "
+"want to use for future logins as user `root`."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:0
+msgid "Detailed explanation"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:212
+msgid ""
+"The `diskDevice` variable in the `let` block defines the path of the disk "
+"block device:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:215
+msgid ""
+"let\n"
+"  diskDevice = \"/dev/sda\";\n"
+"  sources = import ./npins;\n"
+"in\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:222
+msgid ""
+"It is used to set the target for the partitioning and formatting as "
+"described in the disk layout specification. It is also used in the boot "
+"loader configuration to make it bootable on both legacy BIOS as well as UEFI "
+"systems:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:226
+msgid ""
+"  disko.devices.disk.main.device = diskDevice;\n"
+"\n"
+"  boot.loader.grub = {\n"
+"    devices = [ diskDevice ];\n"
+"    efiSupport = true;\n"
+"    efiInstallAsRemovable = true;\n"
+"  };\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:236
+msgid ""
+"The `qemu-guest.nix` module makes this system compatible for running inside "
+"a QEMU virtual machine:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:239
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:251
+msgid ""
+"  imports = [\n"
+"    (modulesPath + \"/profiles/qemu-guest.nix\")\n"
+"    (sources.disko + \"/module.nix\")\n"
+"    ./single-disk-layout.nix\n"
+"  ];\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:247
+msgid ""
+"From a disk layout specification, the `disko` library generates a "
+"partitioning script and the portion of the NixOS configuration that mounts "
+"the partitions accordingly at boot time. The first line imports the library, "
+"the second line applies the disk layout:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:260
+msgid "Test the disk layout"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:262
+msgid "Check that the disk layout is valid:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:264
+msgid ""
+"nix-build -E \"((import <nixpkgs> {}).nixos [ ./configuration.nix ])."
+"installTest\"\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:268
+msgid ""
+"This command runs the complete installation in a virtual machine by building "
+"a derivation in the `installTest` attribute provided by the `disko` module."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:270
+msgid "Deploy the system"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:272
+msgid ""
+"To deploy the system, build the configuration and the corresponding disk "
+"formatting script, and run `nixos-anywhere` using the results:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:275
+msgid ""
+"Replace `target-host` with the hostname or IP address of your *target "
+"machine*."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:278
+msgid ""
+"toplevel=$(nixos-rebuild build --no-flake)\n"
+"diskoScript=$(nix-build -E \"((import <nixpkgs> {}).nixos [ ./configuration."
+"nix ]).diskoScript\")\n"
+"nixos-anywhere --store-paths \"$diskoScript\" \"$toplevel\" root@target-"
+"host\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:285
+msgid ""
+"If you don't have public key authentication: Set the environment variable "
+"`SSH_PASS` to your password then append the `--env-password` flag to the "
+"`nixos-anywhere` command."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:289
+msgid ""
+"`nixos-anywhere` will now log into the target system, partition, format, and "
+"mount the disk, and install the NixOS configuration. Then, it reboots the "
+"system."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:292
+msgid "Update the system"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:294
+msgid "To update the system, run `npins` and re-deploy the configuration:"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:296
+msgid ""
+"npins update nixpkgs\n"
+"nixos-rebuild switch --no-flake --target-host root@target-host\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:301
+msgid ""
+"`nixos-anywhere` is not needed any more, unless you want to change the disk "
+"layout."
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:304
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:306
+msgid "[](binary-cache-setup)"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:307
+msgid "[](post-build-hooks)"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:309
+msgid "References"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:311
+msgid "[`nixos-anywhere` project page][`nixos-anywhere`]"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:312
+msgid "[`disko` project repository][`disko`]"
+msgstr ""
+
+#: ../../../tutorials/nixos/provisioning-remote-machines.md:313
+msgid ""
+"[Collection of disk layout examples](https://github.com/nix-community/disko/"
+"tree/master/example)"
+msgstr ""

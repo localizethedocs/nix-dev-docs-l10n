@@ -1,0 +1,207 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../contributing/documentation/diataxis.md:1
+msgid "Documentation framework"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:3
+msgid ""
+"We aim to build our documentation according to the [Diátaxis framework for "
+"technical documentation](https://diataxis.fr), which divides documentation "
+"into four categories:"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:5
+msgid "[Tutorials](#tutorials)"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:6
+msgid "[Guides](#guides)"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:7
+msgid "[Reference](#reference)"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:8
+msgid "[Concepts](#concepts)"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:10
+msgid ""
+"We've found that contributors struggle to understand the differences between "
+"these categories, and while we _strongly_ recommend reading up on the "
+"Diátaxis framework, we can summarize them as follows:"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:12
+msgid "Reference"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:14
+msgid "Reference material should"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:16
+msgid ""
+"Focus on \"what's there\", simply listing which functions, classes, etc. "
+"exist"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:17
+msgid ""
+"Use terse language, with the text and layout optimized for scanning and "
+"random access"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:18
+msgid "Show relevant and complete usage examples"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:19
+msgid "Link to related items for better discoverability"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:21
+msgid "Tutorials"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:23
+msgid ""
+"Tutorials walk the user through a particular activity to teach them about "
+"common tools and patterns in the ecosystem. While the activity itself is "
+"important, the goal is also to connect the dots between other things the "
+"reader has learned."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:26
+msgid ""
+"The structure of tutorials should minimise the cognitive load on learners, "
+"and actively avoid choices and opportunities for user errors."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:28
+msgid "Guides"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:30
+msgid ""
+"Guides are a list of steps showing how to achieve a specific goal or solve a "
+"specific problem. The goal is to help the reader reach a specific end, not "
+"understand the underlying theory or broader context."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:33
+msgid ""
+"A guide assumes that the reader already has the background to understand the "
+"topic at hand and therefore doesn't need to explain the introduction of each "
+"new concept."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:35
+msgid "Concepts"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:37
+msgid ""
+"Concepts describe the internals of a piece of code or how to think about a "
+"particular idea or entity in the ecosystem. A concept can also describe the "
+"historical context behind why something works the way that it does today."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:40
+msgid ""
+"If you find yourself wanting to write about the nitty gritty details of how "
+"something works, you most likely want to write an explanation."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:42
+msgid "Guides vs. Tutorials"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:44
+msgid ""
+"We find that contributors primarily struggle with the difference between a "
+"Guide and a Tutorial."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:46
+msgid "Here are several explanations to help you understand the difference."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:48
+msgid ""
+"A guide is used in a \"working\" context where the reader just wants a "
+"sequence of instructions to achieve an outcome."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:49
+msgid ""
+"In this context the reader may already know or may not care how or why these "
+"instructions work, they just want to know what to do in order to achieve the "
+"desired result."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:50
+msgid ""
+"A tutorial is used in a \"learning\" context where the reader is following a "
+"sequence of instructions to gain practice performing a certain task."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:51
+msgid ""
+"Some small bits of motivation or explanation are helpful in this context to "
+"help a reader connect the dots with other things they may have already "
+"learned, but the focus is on the activity, not on _how_ or _why_."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:53
+msgid "A helpful analogy is landing an airplane in two different contexts."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:55
+msgid ""
+"Let's say the pilot is unconscious and you now have to land the plane to "
+"avoid a crash landing. In this context you just want to know how not to die. "
+"You don't care about how or why, you just want to be on the ground in one "
+"piece. This is the context for a guide."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:60
+msgid ""
+"A pilot training in a flight simulator wants to practice landing the plane. "
+"The pilot-in-training needs practice knowing when to deploy the landing "
+"gear, when to adjust flaps, etc. Actually landing the plane during the "
+"flight simulation is less important than learning the individual skills that "
+"make up a successful landing. This is the context for a tutorial."
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:65
+msgid ""
+"Finally, one last way of thinking about the difference between a how-to "
+"guide and a tutorial is like this:"
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:66
+msgid "Guide: \"step 1: do this, step 2: do that, etc\""
+msgstr ""
+
+#: ../../../contributing/documentation/diataxis.md:67
+msgid "Tutorial: \"take my hand as I show you how to do this\""
+msgstr ""

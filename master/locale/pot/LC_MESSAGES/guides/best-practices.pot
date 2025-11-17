@@ -1,0 +1,424 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/best-practices.md:1
+msgid "Best practices"
+msgstr ""
+
+#: ../../../guides/best-practices.md:3
+msgid "URLs"
+msgstr ""
+
+#: ../../../guides/best-practices.md:5
+msgid ""
+"The Nix language syntax supports bare URLs, so one could write `https://"
+"example.com` instead of `\"https://example.com\"`"
+msgstr ""
+
+#: ../../../guides/best-practices.md:7
+msgid ""
+"[RFC 45](https://github.com/NixOS/rfcs/pull/45) was accepted to deprecate "
+"unquoted URLs and provides a number of arguments for how this feature does "
+"more harm than good."
+msgstr ""
+
+#: ../../../guides/best-practices.md:11
+msgid "Always quote URLs."
+msgstr ""
+
+#: ../../../guides/best-practices.md:15
+msgid "Recursive attribute set `rec { ... }`"
+msgstr ""
+
+#: ../../../guides/best-practices.md:17
+msgid "`rec` allows you to reference names within the same attribute set."
+msgstr ""
+
+#: ../../../guides/best-practices.md:19 ../../../guides/best-practices.md:44
+#: ../../../guides/best-practices.md:95 ../../../guides/best-practices.md:203
+#: ../../../guides/best-practices.md:217
+msgid "Example:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:21
+msgid ""
+"rec {\n"
+"  a = 1;\n"
+"  b = a + 2;\n"
+"}"
+msgstr ""
+
+#: ../../../guides/best-practices.md:29
+msgid "{ a = 1; b = 3; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:34
+msgid ""
+"A common pitfall is to introduce a hard-to-debug error `infinite recursion` "
+"when shadowing a name. The simplest example for this is:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:37
+msgid "let a = 1; in rec { a = a; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:42
+msgid "Avoid `rec`. Use `let ... in`."
+msgstr ""
+
+#: ../../../guides/best-practices.md:46
+msgid ""
+"let\n"
+"  a = 1;\n"
+"in {\n"
+"  a = a;\n"
+"  b = a + 2;\n"
+"}"
+msgstr ""
+
+#: ../../../guides/best-practices.md:58
+msgid "Self-reference can be achieved by explicitly naming the attribute set:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:60
+msgid ""
+"let\n"
+"  argset = {\n"
+"    a = 1;\n"
+"    b = argset.a + 2;\n"
+"  };\n"
+"in\n"
+"  argset"
+msgstr ""
+
+#: ../../../guides/best-practices.md:72
+msgid "`with` scopes"
+msgstr ""
+
+#: ../../../guides/best-practices.md:74
+msgid "It's still common to see the following expression in the wild:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:76
+msgid ""
+"with (import <nixpkgs> {});\n"
+"\n"
+"# ... lots of code"
+msgstr ""
+
+#: ../../../guides/best-practices.md:83
+msgid ""
+"This brings all attributes of the imported expression into scope of the "
+"current expression."
+msgstr ""
+
+#: ../../../guides/best-practices.md:85
+msgid "There are a number of problems with that approach:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:87
+msgid ""
+"Static analysis can't reason about the code, because it would have to "
+"actually evaluate this file to see which names are in scope."
+msgstr ""
+
+#: ../../../guides/best-practices.md:88
+msgid ""
+"When more than one `with` is used, it's not clear anymore where the names "
+"are coming from."
+msgstr ""
+
+#: ../../../guides/best-practices.md:89
+msgid ""
+"Scoping rules for `with` are not intuitive, see this [Nix issue for details]"
+"(https://github.com/NixOS/nix/issues/490)."
+msgstr ""
+
+#: ../../../guides/best-practices.md:92
+msgid ""
+"Do not use `with` at the top of a Nix file. Explicitly assign names in a "
+"`let` expression."
+msgstr ""
+
+#: ../../../guides/best-practices.md:97
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> {};\n"
+"  inherit (pkgs) curl jq;\n"
+"in\n"
+"\n"
+"# ..."
+msgstr ""
+
+#: ../../../guides/best-practices.md:108
+msgid ""
+"Smaller scopes are usually less problematic, but can still lead to surprises "
+"due to scoping rules."
+msgstr ""
+
+#: ../../../guides/best-practices.md:111
+msgid ""
+"If you want to avoid `with` altogether, try replacing expressions of this "
+"form"
+msgstr ""
+
+#: ../../../guides/best-practices.md:113
+msgid "buildInputs = with pkgs; [ curl jq ];"
+msgstr ""
+
+#: ../../../guides/best-practices.md:118
+msgid "with the following:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:120
+msgid ""
+"buildInputs = builtins.attrValues {\n"
+"  inherit (pkgs) curl jq;\n"
+"};"
+msgstr ""
+
+#: ../../../guides/best-practices.md:129
+msgid "`<...>` lookup paths"
+msgstr ""
+
+#: ../../../guides/best-practices.md:131
+msgid ""
+"You will often encounter Nix language code samples that refer to `<nixpkgs>`."
+msgstr ""
+
+#: ../../../guides/best-practices.md:133
+msgid ""
+"`<...>` is special syntax that was [introduced in 2011] to conveniently "
+"access values from the environment variable [`$NIX_PATH`]."
+msgstr ""
+
+#: ../../../guides/best-practices.md:138
+msgid ""
+"This means the value of a lookup path depends on external system state. When "
+"using lookup paths, the same Nix expression can produce different results."
+msgstr ""
+
+#: ../../../guides/best-practices.md:141
+msgid ""
+"In most cases, `$NIX_PATH` is set to the latest channel when Nix is "
+"installed, and is therefore likely to differ from machine to machine."
+msgstr ""
+
+#: ../../../guides/best-practices.md:144
+msgid ""
+"[Channels](https://nix.dev/manual/nix/stable/command-ref/nix-channel.html) "
+"are a mechanism for referencing remote Nix expressions and retrieving their "
+"latest version."
+msgstr ""
+
+#: ../../../guides/best-practices.md:147
+msgid ""
+"The state of a subscribed channel is external to the Nix expressions relying "
+"on it. It is not easily portable across machines. This may limit "
+"reproducibility."
+msgstr ""
+
+#: ../../../guides/best-practices.md:151
+msgid ""
+"For example, two developers on different machines are likely to have "
+"`<nixpkgs>` point to different revisions of the {term}`Nixpkgs` repository. "
+"Builds may work for one and fail for the other, causing confusion."
+msgstr ""
+
+#: ../../../guides/best-practices.md:155
+msgid ""
+"Declare dependencies explicitly using the techniques shown in [](pinning-"
+"nixpkgs)."
+msgstr ""
+
+#: ../../../guides/best-practices.md:157
+msgid "Do not use lookup paths, except in minimal examples."
+msgstr ""
+
+#: ../../../guides/best-practices.md:160
+msgid "Some tools expect the lookup path to be set. In that case:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:163
+msgid ""
+"Set `$NIX_PATH` to a known value in a central location under version control."
+msgstr ""
+
+#: ../../../guides/best-practices.md:165
+msgid "NixOS"
+msgstr ""
+
+#: ../../../guides/best-practices.md:166
+msgid ""
+"On NixOS, `$NIX_PATH` can be set permanently with the [`nix.nixPath`]"
+"(https://search.nixos.org/options?show=nix.nixPath) option."
+msgstr ""
+
+#: ../../../guides/best-practices.md:171
+msgid "Reproducible Nixpkgs configuration"
+msgstr ""
+
+#: ../../../guides/best-practices.md:173
+msgid ""
+"To quickly obtain packages for demonstration, we use the following concise "
+"pattern:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:175
+msgid "import <nixpkgs> {}\n"
+msgstr ""
+
+#: ../../../guides/best-practices.md:179
+msgid ""
+"However, even when `<nixpkgs>` is replaced as shown in [](pinning-nixpkgs), "
+"the result may still not be fully reproducible. This is because for "
+"historical reasons the [Nixpkgs top-level expression] by default impurely "
+"reads from the file system to obtain configuration parameters. Systems that "
+"have the appropriate files populated may end up with different results."
+msgstr ""
+
+#: ../../../guides/best-practices.md:185
+msgid ""
+"It is a well-known problem that cannot be resolved without breaking existing "
+"setups."
+msgstr ""
+
+#: ../../../guides/best-practices.md:188
+msgid ""
+"Explicitly set [`config`](https://nixos.org/manual/nixpkgs/stable/#chap-"
+"packageconfig) and [`overlays`](https://nixos.org/manual/nixpkgs/stable/"
+"#chap-overlays) when importing Nixpkgs:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:191
+msgid "import <nixpkgs> { config = {}; overlays = []; }\n"
+msgstr ""
+
+#: ../../../guides/best-practices.md:196
+msgid ""
+"This is what we do in our tutorials to ensure that the examples will behave "
+"exactly as expected. We skip it in minimal examples to reduce distractions."
+msgstr ""
+
+#: ../../../guides/best-practices.md:199
+msgid "Updating nested attribute sets"
+msgstr ""
+
+#: ../../../guides/best-practices.md:201
+msgid ""
+"The [attribute set update operator](https://nix.dev/manual/nix/stable/"
+"language/operators.html#update) merges two attribute sets."
+msgstr ""
+
+#: ../../../guides/best-practices.md:205
+msgid "{ a = 1; b = 2; } // { b = 3; c = 4; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:210
+msgid "{ a = 1; b = 3; c = 4; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:215
+msgid "However, names on the right take precedence, and updates are shallow."
+msgstr ""
+
+#: ../../../guides/best-practices.md:219
+msgid "{ a = { b = 1; }; } // { a = { c = 3; }; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:224
+msgid "{ a = { c = 3; }; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:229
+msgid ""
+"Here, key `b` was completely removed, because the whole `a` value was "
+"replaced."
+msgstr ""
+
+#: ../../../guides/best-practices.md:232
+msgid ""
+"Use the [`pkgs.lib.recursiveUpdate`](https://nixos.org/manual/nixpkgs/stable/"
+"#function-library-lib.attrsets.recursiveUpdate) Nixpkgs function:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:234
+msgid ""
+"let pkgs = import <nixpkgs> {}; in\n"
+"pkgs.lib.recursiveUpdate { a = { b = 1; }; } { a = { c = 3;}; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:240
+msgid "{ a = { b = 1; c = 3; }; }"
+msgstr ""
+
+#: ../../../guides/best-practices.md:246
+msgid "Reproducible source paths"
+msgstr ""
+
+#: ../../../guides/best-practices.md:248
+msgid ""
+"let pkgs = import <nixpkgs> {}; in\n"
+"\n"
+"pkgs.stdenv.mkDerivation {\n"
+"  name = \"foo\";\n"
+"  src = ./.;\n"
+"}"
+msgstr ""
+
+#: ../../../guides/best-practices.md:258
+msgid ""
+"If the Nix file containing this expression is in `/home/myuser/myproject`, "
+"then the store path of `src` will be `/nix/store/<hash>-myproject`."
+msgstr ""
+
+#: ../../../guides/best-practices.md:260
+msgid ""
+"The problem is that now your build is no longer reproducible, as it depends "
+"on the parent directory name. That cannot be declared in the source code, "
+"and results in an impurity."
+msgstr ""
+
+#: ../../../guides/best-practices.md:263
+msgid ""
+"If someone builds the project in a directory with a different name, they "
+"will get a different store path for `src` and everything that depends on it. "
+"This can be the cause of needless rebuilds."
+msgstr ""
+
+#: ../../../guides/best-practices.md:267
+msgid ""
+"Use [`builtins.path`](https://nix.dev/manual/nix/stable/language/builtins."
+"html#builtins-path) with the `name` attribute set to something fixed."
+msgstr ""
+
+#: ../../../guides/best-practices.md:269
+msgid ""
+"This will derive the symbolic name of the store path from `name` instead of "
+"the working directory:"
+msgstr ""
+
+#: ../../../guides/best-practices.md:271
+msgid ""
+"let pkgs = import <nixpkgs> {}; in\n"
+"\n"
+"pkgs.stdenv.mkDerivation {\n"
+"  name = \"foo\";\n"
+"  src = builtins.path { path = ./.; name = \"myproject\"; };\n"
+"}"
+msgstr ""

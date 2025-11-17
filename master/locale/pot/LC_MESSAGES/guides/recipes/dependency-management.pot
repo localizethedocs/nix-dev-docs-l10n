@@ -1,0 +1,217 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/recipes/dependency-management.md:2
+msgid "Automatically managing remote sources with `npins`"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:4
+msgid ""
+"The Nix language can be used to describe dependencies between files managed "
+"by Nix. Nix expressions themselves can depend on remote sources, and there "
+"are multiple ways to specify their origin, as shown in [](pinning-nixpkgs)."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:7
+msgid ""
+"For more automation around handling remote sources, set up [`npins`](https://"
+"github.com/andir/npins/) in your project:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:9
+msgid ""
+"$ nix-shell -p npins --run \"npins init --bare; npins add github nixos "
+"nixpkgs --branch nixos-23.11\"\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:13
+msgid ""
+"This command will fetch the latest revision of the Nixpkgs 23.11 release "
+"branch. In the current directory it will generate `npins/sources.json`, "
+"which will contain a pinned reference to the obtained revision. It will also "
+"create `npins/default.nix`, which exposes those dependencies as an attribute "
+"set."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:17
+msgid ""
+"Import the generated `npins/default.nix` as the default value for the "
+"argument to the function in `default.nix` and use it to refer to the Nixpkgs "
+"source directory:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:19
+msgid ""
+"{\n"
+"  sources ? import ./npins,\n"
+"  system ? builtins.currentSystem,\n"
+"  pkgs ? import sources.nixpkgs { inherit system; config = {}; overlays = "
+"[]; },\n"
+"}:\n"
+"{\n"
+"  package = pkgs.hello;\n"
+"}\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:30
+msgid ""
+"`nix-build` will call the top-level function with the empty attribute set `{}"
+"`, or with the attributes passed via [`--arg`](https://nix.dev/manual/nix/"
+"stable/command-ref/nix-build#opt-arg) or [`--argstr`](https://nix.dev/manual/"
+"nix/stable/command-ref/nix-build#opt-argstr). This pattern allows "
+"[overriding remote sources](overriding-sources-npins) programmatically."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:33
+msgid ""
+"Add `npins` to the development environment for your project to have it "
+"readily available:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:35
+msgid ""
+" {\n"
+"   sources ? import ./npins,\n"
+"   system ? builtins.currentSystem,\n"
+"   pkgs ? import sources.nixpkgs { inherit system; config = {}; overlays = "
+"[]; },\n"
+" }:\n"
+"-{\n"
+"+rec {\n"
+"   package = pkgs.hello;\n"
+"+  shell = pkgs.mkShellNoCC {\n"
+"+    inputsFrom = [ package ];\n"
+"+    packages = with pkgs; [\n"
+"+      npins\n"
+"+    ];\n"
+"+  };\n"
+" }\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:53
+msgid "Also add a `shell.nix` to enter that environment more conveniently:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:55
+msgid "(import ./. {}).shell\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:59
+msgid ""
+"See [](./sharing-dependencies) for details, and note that here you have to "
+"pass an empty attribute set to the imported expression, since `default.nix` "
+"now contains a function."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:62
+msgid "Overriding sources"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:64
+msgid ""
+"As an example, we will use the previously created expression with an older "
+"version of Nixpkgs."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:66
+msgid ""
+"Enter the development environment, create a new directory, and set up npins "
+"with a different version of Nixpkgs:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:68
+msgid ""
+"$ nix-shell\n"
+"[nix-shell]$ mkdir old\n"
+"[nix-shell]$ cd old\n"
+"[nix-shell]$ npins init --bare\n"
+"[nix-shell]$ npins add github nixos nixpkgs --branch nixos-21.11\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:76
+msgid ""
+"Create a file `default.nix` in the new directory to import the original one "
+"with the `sources` you just created."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:78
+msgid "import ../default.nix { sources = import ./npins; }\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:82
+msgid "This will result in a different version being built:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:84
+msgid ""
+"$ nix-build -A build\n"
+"$ ./result/bin/hello --version | head -1\n"
+"hello (GNU Hello) 2.10\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:90
+msgid "Sources can also be overridden on the command line:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:92
+msgid "nix-build .. -A build --arg sources 'import ./npins'\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:96
+msgid "Migrating from `niv`"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:98
+msgid ""
+"A previous version of this guide recommended using [`niv`](https://github."
+"com/nmattia/niv/), a similar pin manager written in Haskell."
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:100
+msgid ""
+"If you have a project using `niv`, you can import remote source definitions "
+"into `npins`:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:102
+msgid "npins import-niv\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:107
+msgid ""
+"All the imported entries will be updated, so they won't necessarily point to "
+"the same commits as before!"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:110
+msgid "Next steps"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:112
+msgid "Check the built-in help for more information:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:114
+msgid "npins --help\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:118
+msgid ""
+"For more details and examples of the different ways to specify remote "
+"sources, see [](pinning-nixpkgs)."
+msgstr ""

@@ -1,0 +1,176 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:0
+msgid "Continuous Integration with GitHub Actions and a binary cache"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:0
+msgid "CI, Continuous Integration, GitHub Actions, Binary Cache, Nix"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:10
+msgid "Continuous integration with GitHub Actions"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:12
+msgid ""
+"In this guide, we'll show you **a few short steps** to get started using "
+"[GitHub Actions](https://github.com/features/actions) as your continuous "
+"integration (CI) workflow for commits and pull requests."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:14
+msgid ""
+"One benefit of Nix is that **CI can build and cache developer environments "
+"for every project** on every branch using binary caches."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:16
+msgid ""
+"An important aspect of CI is the feedback loop of, **how many minutes does "
+"the build take to finish?**"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:18
+msgid ""
+"There are several good options, but Cachix (below) is the most "
+"straightforward."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:20
+msgid "Caching builds using Cachix"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:22
+msgid ""
+"Using [Cachix](https://cachix.org/) you'll never have to waste time building "
+"a derivation twice, and you'll share built derivations with all your "
+"developers."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:24
+msgid "After each job, just-built derivations are pushed to your binary cache."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:26
+msgid ""
+"Before each job, derivations to be built are first substituted (if they "
+"exist) from your binary cache."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:28
+msgid "1. Creating your first binary cache"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:30
+msgid ""
+"It's recommended to have different binary caches per team, depending on who "
+"will have write/read access to it."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:32
+msgid ""
+"Fill out the form on the [create binary cache](https://app.cachix.org/cache) "
+"page."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:34
+msgid ""
+"On your freshly created binary cache, follow the **Push binaries** tab "
+"instructions."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:36
+msgid "2. Setting up secrets"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:38
+msgid ""
+"On your GitHub repository or organization (for use across all repositories):"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:40
+msgid "Click on `Settings`."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:41
+msgid "Click on `Secrets`."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:42
+msgid ""
+"Add your previously generated secrets (`CACHIX_SIGNING_KEY` and/or "
+"`CACHIX_AUTH_TOKEN`)."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:44
+msgid "3. Setting up GitHub Actions"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:46
+msgid "Create `.github/workflows/test.yml` with:"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:48
+msgid ""
+"name: \"Test\"\n"
+"on:\n"
+"  pull_request:\n"
+"  push:\n"
+"jobs:\n"
+"  tests:\n"
+"    runs-on: ubuntu-latest\n"
+"    steps:\n"
+"    - uses: actions/checkout@v4\n"
+"    - uses: cachix/install-nix-action@v25\n"
+"      with:\n"
+"        nix_path: nixpkgs=channel:nixos-unstable\n"
+"    - uses: cachix/cachix-action@v14\n"
+"      with:\n"
+"        name: mycache\n"
+"        # If you chose signing key for write access\n"
+"        signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'\n"
+"        # If you chose API tokens for write access OR if you have a private "
+"cache\n"
+"        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'\n"
+"    - run: nix-build\n"
+"    - run: nix-shell --run \"echo OK\"\n"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:72
+msgid ""
+"Once you commit and push to your GitHub repository, you should see status "
+"checks appearing on commits and PRs."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:75
+msgid "Next steps"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:77
+msgid ""
+"See [GitHub Actions workflow syntax](https://docs.github.com/en/actions/"
+"reference/workflow-syntax-for-github-actions)"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:78
+msgid ""
+"To quickly set up a Nix project read through [Getting started Nix template]"
+"(https://github.com/nix-dot-dev/getting-started-nix-template)."
+msgstr ""

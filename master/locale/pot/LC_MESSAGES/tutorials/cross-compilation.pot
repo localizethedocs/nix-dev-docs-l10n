@@ -1,0 +1,578 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/cross-compilation.md:0
+msgid "Cross compilation tutorial using Nix"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:0
+msgid "Nix, cross compilation, cross-compile, Nix"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:11
+msgid "Cross compilation"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:13
+msgid ""
+"Nixpkgs offers powerful tools to cross-compile software for various system "
+"types."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:15
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:18
+msgid "Experience using C compilers"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:19
+msgid "Basic knowledge of the [Nix language](<reading-nix-language>)"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:21
+msgid "Platforms"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:23
+msgid ""
+"When compiling code, we can distinguish between the **build platform**, "
+"where the executable is *built*, and the **host platform**, where the "
+"compiled executable *runs*. [^id3]"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:25
+msgid ""
+"**Native compilation** is the special case where those two platforms are the "
+"same. **Cross compilation** is the general case where those two platforms "
+"are not."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:28
+msgid ""
+"Cross compilation is needed when the host platform has limited resources "
+"(such as CPU) or when it's not easily accessible for development."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:30
+msgid ""
+"The `nixpkgs` package collection has world-class support for cross "
+"compilation, after many years of hard work by the Nix community."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:36
+msgid "What's a target platform?"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:38
+msgid "There is a third concept for a platform we call a **target platform**."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:40
+msgid ""
+"The target platform is relevant to cases where you want to build a compiler "
+"binary. In such cases, you would build a compiler on the *build platform*, "
+"run it to compile code on the *host platform*, and run the final executable "
+"on the *target platform*."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:43
+msgid ""
+"Since this is rarely needed, we will assume that the target is identical to "
+"the host."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:45
+msgid "Determining the host platform config"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:47
+msgid ""
+"The build platform is determined automatically by Nix during the configure "
+"phase."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:49
+msgid ""
+"The host platform is best determined by running this command on the host "
+"platform:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:51
+msgid ""
+"$ $(nix-build '<nixpkgs>' -I nixpkgs=channel:nixos-23.11 -A gnu-config)/"
+"config.guess\n"
+"aarch64-unknown-linux-gnu\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:56
+msgid ""
+"In case this is not possible (for example, when the host platform is not "
+"easily accessible for development), the platform config has to be "
+"constructed manually via the following template:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:58
+msgid "<cpu>-<vendor>-<os>-<abi>\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:62
+msgid "This string representation is used in `nixpkgs` for historic reasons."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:64
+msgid ""
+"Note that `<vendor>` is often `unknown` and `<abi>` is optional. There's "
+"also no unique identifier for a platform, for example `unknown` and `pc` are "
+"interchangeable (which is why the script is called `config.guess`)."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:67
+msgid ""
+"If you can't install Nix, find a way to run `config.guess` (usually comes "
+"with the autoconf package) from the OS you're able to run on the host "
+"platform."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:69
+msgid "Some other common examples of platform configs:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:71
+msgid "aarch64-apple-darwin14"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:72
+msgid "aarch64-pc-linux-gnu"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:73
+msgid "x86_64-w64-mingw32"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:74
+msgid "aarch64-apple-ios"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:77
+msgid ""
+"macOS/Darwin is a special case, as not the whole OS is open-source. It's "
+"only possible to cross compile between `aarch64-darwin` and `x86_64-darwin`. "
+"`aarch64-darwin` support was recently added, so cross compilation is barely "
+"tested."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:82
+msgid "Choosing the host platform with Nix"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:84
+msgid ""
+"`nixpkgs` comes with a set of predefined host platforms for cross "
+"compilation called `pkgsCross`."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:86
+msgid "It is possible to explore them in `nix repl`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:89
+msgid ""
+"[Starting with Nix 2.19](https://nix.dev/manual/nix/latest/release-notes/"
+"rl-2.19), `nix repl` requires the `-f` / `--file` flag:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:90
+msgid "$ nix repl -f '<nixpkgs>' -I nixpkgs=channel:nixos-23.11\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:95
+msgid ""
+"$ nix repl '<nixpkgs>' -I nixpkgs=channel:nixos-23.11\n"
+"Welcome to Nix 2.18.1. Type :? for help.\n"
+"\n"
+"Loading '<nixpkgs>'...\n"
+"Added 14200 variables.\n"
+"\n"
+"nix-repl> pkgsCross.<TAB>\n"
+"pkgsCross.aarch64-android             pkgsCross.musl-power\n"
+"pkgsCross.aarch64-android-prebuilt    pkgsCross.musl32\n"
+"pkgsCross.aarch64-darwin              pkgsCross.musl64\n"
+"pkgsCross.aarch64-embedded            pkgsCross.muslpi\n"
+"pkgsCross.aarch64-multiplatform       pkgsCross.or1k\n"
+"pkgsCross.aarch64-multiplatform-musl  pkgsCross.pogoplug4\n"
+"pkgsCross.aarch64be-embedded          pkgsCross.powernv\n"
+"pkgsCross.amd64-netbsd                pkgsCross.ppc-embedded\n"
+"pkgsCross.arm-embedded                pkgsCross.ppc64\n"
+"pkgsCross.armhf-embedded              pkgsCross.ppc64-musl\n"
+"pkgsCross.armv7a-android-prebuilt     pkgsCross.ppcle-embedded\n"
+"pkgsCross.armv7l-hf-multiplatform     pkgsCross.raspberryPi\n"
+"pkgsCross.avr                         pkgsCross.remarkable1\n"
+"pkgsCross.ben-nanonote                pkgsCross.remarkable2\n"
+"pkgsCross.fuloongminipc               pkgsCross.riscv32\n"
+"pkgsCross.ghcjs                       pkgsCross.riscv32-embedded\n"
+"pkgsCross.gnu32                       pkgsCross.riscv64\n"
+"pkgsCross.gnu64                       pkgsCross.riscv64-embedded\n"
+"pkgsCross.i686-embedded               pkgsCross.scaleway-c1\n"
+"pkgsCross.iphone32                    pkgsCross.sheevaplug\n"
+"pkgsCross.iphone32-simulator          pkgsCross.vc4\n"
+"pkgsCross.iphone64                    pkgsCross.wasi32\n"
+"pkgsCross.iphone64-simulator          pkgsCross.x86_64-embedded\n"
+"pkgsCross.mingw32                     pkgsCross.x86_64-netbsd\n"
+"pkgsCross.mingwW64                    pkgsCross.x86_64-netbsd-llvm\n"
+"pkgsCross.mmix                        pkgsCross.x86_64-unknown-redox\n"
+"pkgsCross.msp430\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:132
+msgid ""
+"These attribute names for cross compilation packages have been chosen "
+"somewhat freely over the course of time. They usually do not match the "
+"corresponding platform config string."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:135
+msgid ""
+"You can retrieve the platform string from `pkgsCross.<platform>.stdenv."
+"hostPlatform.config`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:137
+msgid ""
+"nix-repl> pkgsCross.aarch64-multiplatform.stdenv.hostPlatform.config\n"
+"\"aarch64-unknown-linux-gnu\"\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:142
+msgid ""
+"If the host platform you seek hasn't been defined yet, please [contribute it "
+"upstream](https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples."
+"nix)."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:144
+msgid "Specifying the host platform"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:146
+msgid "The mechanism for setting up cross compilation works as follows:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:148
+msgid ""
+"Take the build platform configuration and apply it to the current package "
+"set, called `pkgs` by convention."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:150
+msgid ""
+"The build platform is implied in `pkgs = import <nixpkgs> {}` to be the "
+"current system. This produces a build environment `pkgs.stdenv` with all the "
+"dependencies present to compile on the build platform."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:153
+msgid ""
+"Apply the appropriate host platform configuration to all the packages in "
+"`pkgsCross`."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:155
+msgid ""
+"Taking `pkgs.pkgsCross.<host>.hello` will produce the package `hello` "
+"compiled on the build platform to run on the `<host>` platform."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:157
+msgid ""
+"There are multiple equivalent ways to access packages targeted to the host "
+"platform."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:159
+msgid ""
+"Explicitly pick the host platform package from within the build platform "
+"environment:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:161
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"release-23.11\";\n"
+"  pkgs = import nixpkgs {};\n"
+"in\n"
+"pkgs.pkgsCross.aarch64-multiplatform.hello\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:169
+msgid ""
+"Pass the host platform to `crossSystem` when importing `nixpkgs`. This "
+"configures `nixpkgs` such that all its packages are built for the host "
+"platform:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:172
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"release-23.11\";\n"
+"  pkgs = import nixpkgs { crossSystem = { config = \"aarch64-unknown-linux-"
+"gnu\"; }; };\n"
+"in\n"
+"pkgs.hello\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:180
+msgid ""
+"Equivalently, you can pass the host platform as an argument to `nix-build`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:182
+msgid ""
+"$ nix-build '<nixpkgs>' -I nixpkgs=channel:nixos-23.11 \\\n"
+"  --arg crossSystem '{ config = \"aarch64-unknown-linux-gnu\"; }' \\\n"
+"  -A hello\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:188
+msgid "Cross compiling for the first time"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:190
+msgid ""
+"To cross compile a package like [hello](https://www.gnu.org/software/"
+"hello/), pick the platform attribute — `aarch64-multiplatform` in our case — "
+"and run:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:192
+msgid ""
+"$ nix-build '<nixpkgs>' -I nixpkgs=channel:nixos-23.11 \\\n"
+"  -A pkgsCross.aarch64-multiplatform.hello\n"
+"...\n"
+"/nix/store/1dx87l5rav8679lqigf9xxkb7wvh2m4k-hello-aarch64-unknown-linux-"
+"gnu-2.12.1\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:200
+msgid ""
+"The hash of the package in the store path changes with the updates to the "
+"channel."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:203
+msgid ""
+"[Search for a package](https://search.nixos.org/packages) attribute name to "
+"find the one you're interested in building."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:205
+msgid "Real-world cross compiling of a Hello World example"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:207
+msgid ""
+"To show off the power of cross compilation in Nix, let's build our own Hello "
+"World program by cross compiling it as static executables to `armv6l-unknown-"
+"linux-gnueabihf` and `x86_64-w64-mingw32` (Windows) platforms and run the "
+"resulting executable with [an emulator](https://en.wikipedia.org/wiki/"
+"Emulator)."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:209
+msgid "Given we have a `cross-compile.nix`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:211
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"release-23.11\";\n"
+"  pkgs = import nixpkgs {};\n"
+"\n"
+"  # Create a C program that prints Hello World\n"
+"  helloWorld = pkgs.writeText \"hello.c\" ''\n"
+"    #include <stdio.h>\n"
+"\n"
+"    int main (void)\n"
+"    {\n"
+"      printf (\"Hello, world!\\n\");\n"
+"      return 0;\n"
+"    }\n"
+"  '';\n"
+"\n"
+"  # A function that takes host platform packages\n"
+"  crossCompileFor = hostPkgs:\n"
+"    # Run a simple command with the compiler available\n"
+"    hostPkgs.runCommandCC \"hello-world-cross-test\" {} ''\n"
+"      # Wine requires home directory\n"
+"      HOME=$PWD\n"
+"\n"
+"      # Compile our example using the compiler specific to our host "
+"platform\n"
+"      $CC ${helloWorld} -o hello\n"
+"\n"
+"      # Run the compiled program using user mode emulation (Qemu/Wine)\n"
+"      # buildPackages is passed so that emulation is built for the build "
+"platform\n"
+"      ${hostPkgs.stdenv.hostPlatform.emulator hostPkgs.buildPackages} hello "
+"> $out\n"
+"\n"
+"      # print to stdout\n"
+"      cat $out\n"
+"    '';\n"
+"in {\n"
+"  # Statically compile our example using the two platform hosts\n"
+"  rpi = crossCompileFor pkgs.pkgsCross.raspberryPi;\n"
+"  windows = crossCompileFor pkgs.pkgsCross.mingwW64;\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:251
+msgid ""
+"If we build this example and print both resulting derivations, we should see "
+"\"Hello, world!\" for each:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:253
+msgid ""
+"$ cat $(nix-build cross-compile.nix)\n"
+"Hello, world!\n"
+"Hello, world!\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:259
+msgid "Developer environment with a cross compiler"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:261
+msgid ""
+"In the {ref}`tutorial for declarative reproducible environments <declarative-"
+"reproducible-envs>`, we looked at how Nix helps us provide tooling and "
+"system libraries for our project."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:263
+msgid ""
+"It's also possible to provide an environment with a compiler configured for "
+"**cross-compilation to static binaries using musl**."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:265
+msgid "Given we have a `shell.nix`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:267
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"release-23.11\";\n"
+"  pkgs = (import nixpkgs {}).pkgsCross.aarch64-multiplatform;\n"
+"in\n"
+"\n"
+"# callPackage is needed due to https://github.com/NixOS/nixpkgs/pull/126844\n"
+"pkgs.pkgsStatic.callPackage ({ mkShell, zlib, pkg-config, file }: mkShell {\n"
+"  # these tools run on the build platform, but are configured to target the "
+"host platform\n"
+"  nativeBuildInputs = [ pkg-config file ];\n"
+"  # libraries needed for the host platform\n"
+"  buildInputs = [ zlib ];\n"
+"}) {}\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:282
+msgid "And `hello.c`:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:284
+msgid ""
+"#include <stdio.h>\n"
+"\n"
+"int main (void)\n"
+"{\n"
+"  printf (\"Hello, world!\\n\");\n"
+"  return 0;\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:294
+msgid "We can cross compile it:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:296
+msgid "$ nix-shell --run '$CC hello.c -o hello' shell.nix\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:300
+msgid "And confirm it's aarch64:"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:302
+msgid ""
+"$ nix-shell --run 'file hello' shell.nix\n"
+"hello: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically "
+"linked, with debug_info, not stripped\n"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:307
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:309
+msgid ""
+"The [official binary cache](https://cache.nixos.org) has a limited number of "
+"binaries for packages that are cross compiled, so to save time recompiling, "
+"configure {ref}`your own binary cache and CI with GitHub Actions <github-"
+"actions>`."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:311
+msgid ""
+"While many compilers in Nixpkgs support cross compilation, not all of them "
+"do."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:313
+msgid ""
+"Additionally, supporting cross compilation is not trivial work and due to "
+"many possible combinations of what would need to be tested, some packages "
+"might not build."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:315
+msgid ""
+"[A detailed explanation of how cross compilation is implemented in Nix]"
+"(https://nixos.org/manual/nixpkgs/stable/#chap-cross) can help with fixing "
+"those issues."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:317
+msgid ""
+"The Nix community has a [dedicated Matrix room](https://matrix.to/#/#cross-"
+"compiling:nixos.org) for help with cross compiling."
+msgstr ""
+
+#: ../../../tutorials/cross-compilation.md:32
+msgid ""
+"Terminology for cross compilation platforms differs between build systems. "
+"We have chosen to follow [autoconf terminology](https://www.gnu.org/software/"
+"autoconf/manual/autoconf-2.69/html_node/Hosts-and-Cross_002dCompilation."
+"html)."
+msgstr ""

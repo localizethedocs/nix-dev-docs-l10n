@@ -1,0 +1,191 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-17 17:37+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../recommended-reading.md:1
+msgid "Further reading"
+msgstr ""
+
+#: ../../../recommended-reading.md:3
+msgid "Nix language tutorials"
+msgstr ""
+
+#: ../../../recommended-reading.md:5
+msgid ""
+"[Nix language one-pager reference](https://github.com/tazjin/nix-1p) "
+"(Vincent Ambo, 2019-2021)"
+msgstr ""
+
+#: ../../../recommended-reading.md:7
+msgid "Overview of common language features and widely used idioms."
+msgstr ""
+
+#: ../../../recommended-reading.md:9
+msgid "[A tour of Nix](https://nixcloud.io/tour) (Joachim Schiele, 2015-2022)"
+msgstr ""
+
+#: ../../../recommended-reading.md:11
+msgid "Interactive exercises with the Nix language."
+msgstr ""
+
+#: ../../../recommended-reading.md:13
+msgid ""
+"[Video: Nix language overview](https://www.youtube.com/watch?"
+"v=eCapIx9heBw&list=PL-saUBvIJzOkjAw_vOac75v-x6EzNzZq-&index=5) (Wil Taylor, "
+"2021)"
+msgstr ""
+
+#: ../../../recommended-reading.md:15
+msgid "Overview of language features."
+msgstr ""
+
+#: ../../../recommended-reading.md:17
+msgid ""
+"[Video: Reading the Nix language](https://youtu.be/hbJkMl631FE?t=1533) "
+"(Jonas Chevalier, 2019)"
+msgstr ""
+
+#: ../../../recommended-reading.md:19
+msgid "Introduction to reading Nix language code."
+msgstr ""
+
+#: ../../../recommended-reading.md:21
+msgid ""
+"[Video: How and Why it Works](https://youtu.be/hbJkMl631FE?t=4806) (Graham "
+"Christensen, 2019)"
+msgstr ""
+
+#: ../../../recommended-reading.md:23
+msgid "Introduction to writing derivations."
+msgstr ""
+
+#: ../../../recommended-reading.md:25
+msgid "Other articles"
+msgstr ""
+
+#: ../../../recommended-reading.md:27
+msgid "[Nix Pills](https://nixos.org/nixos/nix-pills/index.html)"
+msgstr ""
+
+#: ../../../recommended-reading.md:29
+msgid ""
+"A low-level tutorial on building software packages with Nix, showing in "
+"detail how Nixpkgs is constructed."
+msgstr ""
+
+#: ../../../recommended-reading.md:31
+msgid ""
+"[Customizing packages in Nix](https://bobvanderlinden.me/customizing-"
+"packages-in-nix/) (2022)"
+msgstr ""
+
+#: ../../../recommended-reading.md:33
+msgid "An overview of different methods to customize Nix packages."
+msgstr ""
+
+#: ../../../recommended-reading.md:35
+msgid ""
+"[Manage your dot files with Home Manager](https://ghedam.at/24353/tutorial-"
+"getting-started-with-home-manager-for-nix) (Mattia Gheda, 2021)"
+msgstr ""
+
+#: ../../../recommended-reading.md:37
+msgid "A tutorial for getting started with Home Manager."
+msgstr ""
+
+#: ../../../recommended-reading.md:39
+msgid "[Nix Shorts](https://github.com/justinwoo/nix-shorts)"
+msgstr ""
+
+#: ../../../recommended-reading.md:41
+msgid "A series of posts on the basics of how packaging with Nix works."
+msgstr ""
+
+#: ../../../recommended-reading.md:43
+msgid ""
+"[NixOS and Flakes - An unofficial book for beginners](https://nixos-and-"
+"flakes.thiscute.world) (2023)"
+msgstr ""
+
+#: ../../../recommended-reading.md:45
+msgid ""
+"This tutorial is an introduction to {term}`NixOS` using the experimental Nix "
+"[Flakes](flakes-definition) functionality."
+msgstr ""
+
+#: ../../../recommended-reading.md:47
+msgid "Other videos"
+msgstr ""
+
+#: ../../../recommended-reading.md:49
+msgid ""
+"[Nixology](https://www.youtube.com/playlist?list=PLRGI9KQ3_HP_OFRG6R-"
+"p4iFgMSK1t5BHs) (Burke Libbey, 2020)"
+msgstr ""
+
+#: ../../../recommended-reading.md:51
+msgid "Video series introducing fundamental Nix concepts."
+msgstr ""
+
+#: ../../../recommended-reading.md:53
+msgid ""
+"[The Nix Hour](https://www.youtube.com/playlist?"
+"list=PLyzwHTVJlRc8yjlx4VR4LU5A5O44og9in) (Silvan Mosberger, since 2022)"
+msgstr ""
+
+#: ../../../recommended-reading.md:55
+msgid ""
+"Weekly series exploring topics and answering questions from all around the "
+"Nix ecosystem."
+msgstr ""
+
+#: ../../../recommended-reading.md:57
+msgid ""
+"[Nixpkgs](https://www.youtube.com/@jonringer117/videos) (Jon Ringer, 2020-22)"
+msgstr ""
+
+#: ../../../recommended-reading.md:59
+msgid "Video series with tutorials on various activities around Nixpkgs."
+msgstr ""
+
+#: ../../../recommended-reading.md:61
+msgid ""
+"[NixOS](https://www.youtube.com/playlist?list=PL-saUBvIJzOkjAw_vOac75v-"
+"x6EzNzZq-) (Wil Taylor, 2021)"
+msgstr ""
+
+#: ../../../recommended-reading.md:63
+msgid "Series of tutorials on getting started with NixOS."
+msgstr ""
+
+#: ../../../recommended-reading.md:65
+msgid ""
+"[NixOS Foundation on YouTube](https://www.youtube.com/@NixOS-Foundation/"
+"playlists)"
+msgstr ""
+
+#: ../../../recommended-reading.md:67
+msgid "The official NixOS Foundation channel."
+msgstr ""
+
+#: ../../../recommended-reading.md:69
+msgid "[NixCon on YouTube](https://www.youtube.com/@NixCon)"
+msgstr ""
+
+#: ../../../recommended-reading.md:71
+msgid "Recordings of NixCon talks and discussions."
+msgstr ""
