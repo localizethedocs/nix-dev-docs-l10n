@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-02-16 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -200,18 +200,82 @@ msgid ""
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:110
-msgid "Next steps"
+msgid "Managing NixOS configurations"
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:112
+msgid ""
+"NixOS relies on the `NIX_PATH` environment variable to locate `nixpkgs`, "
+"which defaults to using channels. To instead use a `nixpkgs` version managed "
+"by `npins`, one can manually override this environment variable on system "
+"rebuilds:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:115
+msgid ""
+"sudo NIX_PATH=\"nixos-config=configuration.nix:nixpkgs=$(nix-instantiate --"
+"raw --eval npins -A nixpkgs.outPath)\" nixos-rebuild switch\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:119
+msgid ""
+"To make such pinned dependencies available as [look-up paths](https://nix."
+"dev/tutorials/nix-language.html#lookup-paths) (like `<nixpkgs>`) while using "
+"the NixOS configuration, one may use:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:121
+msgid ""
+"# configuration.nix\n"
+"{ lib, ... }:\n"
+"let\n"
+"  sources = import ./npins;\n"
+"in\n"
+"{\n"
+"  # ...\n"
+"  nix.channel.enable = false;\n"
+"  nix.nixPath = lib.mapAttrsToList (k: v: \"${k}=${v}\") sources;\n"
+"}\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:134
+msgid ""
+"To use the [v3 command line] and run programs from dependencies exposing "
+"packages through a [flake], like `nix run nixpkgs#hello`, you can enable "
+"flakes and add the pins to the flake registry like:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:138
+msgid ""
+"# configuration.nix\n"
+"{ lib, ... }:\n"
+"let\n"
+"  sources = import ./npins;\n"
+"in\n"
+"{\n"
+"  # ...\n"
+"  experimental-features = \"nix-command flakes\";\n"
+"  nix.registry = lib.mapAttrs (_: path: {\n"
+"    to = {\n"
+"      type = \"path\";\n"
+"      inherit path;\n"
+"    };\n"
+"  }) sources;\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:158
+msgid "Next steps"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:160
 msgid "Check the built-in help for more information:"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:114
+#: ../../../guides/recipes/dependency-management.md:162
 msgid "npins --help\n"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:118
+#: ../../../guides/recipes/dependency-management.md:166
 msgid ""
 "For more details and examples of the different ways to specify remote "
 "sources, see [](pinning-nixpkgs)."

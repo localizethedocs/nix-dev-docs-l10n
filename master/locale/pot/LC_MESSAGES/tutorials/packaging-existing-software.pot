@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-02-16 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -413,8 +413,9 @@ msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:223
 msgid ""
-"Now you will package a somewhat more complicated program, [`icat`](https://"
-"github.com/atextor/icat), which allows you to render images in your terminal."
+"Now you will add a second, somewhat more complicated, program: [`icat`]"
+"(https://github.com/atextor/icat) (which allows you to render images in your "
+"terminal)."
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:225
@@ -588,8 +589,8 @@ msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:334
 msgid ""
-"Running `nix-build` with the new `icat` attribute, an entirely new issue is "
-"reported:"
+"Running `nix-build` on only the new `icat` attribute, an entirely new issue "
+"is reported:"
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:336
@@ -1079,9 +1080,9 @@ msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:638
 msgid ""
-"Running the `nix-build` command once more will finally do what you want, "
-"repeatably. Call `ls` in the local directory to find a `result` symlink to a "
-"location in the Nix store:"
+"Running the `nix-build -A icat` command once more will finally do what you "
+"want, repeatably. Call `ls` in the local directory to find a `result` "
+"symlink to a location in the Nix store:"
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:641
@@ -1095,45 +1096,53 @@ msgid "`result/bin/icat` is the executable built previously. Success!"
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:648
+msgid ""
+"Running `nix-build` (without specifying an attribute) would build all of our "
+"attributes at once. The first (`hello`) will be under `result/bin/`, while "
+"the second (`icat`) will be under `result-2/bin/`. If we were to add more "
+"attributes we would get even more `result-n` symlinks."
+msgstr ""
+
+#: ../../../tutorials/packaging-existing-software.md:652
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:650
+#: ../../../tutorials/packaging-existing-software.md:654
 msgid ""
 "[Nixpkgs Manual - Standard Environment](https://nixos.org/manual/nixpkgs/"
 "unstable/#part-stdenv)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:652
+#: ../../../tutorials/packaging-existing-software.md:656
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:654
+#: ../../../tutorials/packaging-existing-software.md:658
 msgid "[](callpackage-tutorial)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:655
+#: ../../../tutorials/packaging-existing-software.md:659
 msgid "[](sharing-dependencies)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:656
+#: ../../../tutorials/packaging-existing-software.md:660
 msgid "[](automatic-direnv)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:657
+#: ../../../tutorials/packaging-existing-software.md:661
 msgid "[](python-dev-environment)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:658
+#: ../../../tutorials/packaging-existing-software.md:662
 msgid ""
 "[Add your own new packages to Nixpkgs](https://github.com/NixOS/nixpkgs/blob/"
 "master/CONTRIBUTING.md)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:659
+#: ../../../tutorials/packaging-existing-software.md:663
 msgid "[](../contributing/how-to-contribute.md)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:660
+#: ../../../tutorials/packaging-existing-software.md:664
 msgid "[](../contributing/how-to-get-help.md)"
 msgstr ""
