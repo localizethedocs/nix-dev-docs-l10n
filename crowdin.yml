@@ -16,6 +16,7 @@ preserve_hierarchy : true
 #
 languages_mapping: &languages_mapping
   locale:
+    ko:     ko_KR
     zh-CN:  zh_CN
     zh-TW:  zh_TW
 

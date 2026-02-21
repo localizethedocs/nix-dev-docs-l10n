@@ -4,6 +4,11 @@
     "crowdin" : "en",
     "readthedocs" : "en"
   },
+  "ko_KR" : {
+    "langtag" : "ko-kr",
+    "crowdin" : "ko",
+    "readthedocs" : "ko"
+  },
   "zh_CN" : {
     "langtag" : "zh-cn",
     "crowdin" : "zh-CN",

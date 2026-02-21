@@ -30,6 +30,15 @@
       }
     },
     {
+      "name" : "ko_KR",
+      "displayName" : "Korean",
+      "description" : "한국어",
+      "inherits" : "default",
+      "cacheVariables" : {
+        "LANGUAGE" : "ko_KR"
+      }
+    },
+    {
       "name" : "zh_CN",
       "displayName" : "Simplified Chinese",
       "description" : "简体中文",

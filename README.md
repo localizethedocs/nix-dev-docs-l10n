@@ -12,6 +12,7 @@
 <p></p>
 <ul>
   <li><a href="./README.md"><code>en_US</code> : English</a></li>
+  <li><a href="./README.ko_KR.md"><code>ko_KR</code> : 한국어</a></li>
   <li><a href="./README.zh_CN.md"><code>zh_CN</code> : 简体中文</a></li>
   <li><a href="./README.zh_TW.md"><code>zh_TW</code> : 繁體中文</a></li>
 </ul>
@@ -299,6 +300,22 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
   </thead>
   <tbody>
+    <!-- ko_KR -->
+    <tr>
+      <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>ko_KR</code></div></td>
+      <td rowspan="1" colspan="1" align="center" style="text-align: center;">
+        <div>
+          <div>Korean</div>
+          <div>한국어</div>
+        </div>
+      </td>
+      <td rowspan="1" colspan="1" align="center" style="text-align: center;">
+        <div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/ko" title="ko translation" target="_blank"><img alt="ko translation" src="https://img.shields.io/badge/dynamic/json?color=blue&label=ko&style=flat&logo=crowdin&query=%24.progress.0.data.translationProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/ko" title="ko proofreading" target="_blank"><img alt="ko proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=ko&style=flat&logo=crowdin&query=%24.progress.0.data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+        </div>
+      </td>
+    </tr>
     <!-- zh_CN -->
     <tr>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>zh_CN</code></div></td>
@@ -310,8 +327,8 @@ The goal of this project is to translate the nix.dev Documentation into multiple
       </td>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;">
         <div>
-          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-CN" title="zh-CN translation" target="_blank"><img alt="zh-CN translation" src="https://img.shields.io/badge/dynamic/json?color=blue&label=zh-CN&style=flat&logo=crowdin&query=%24.progress.0.data.translationProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
-          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-CN" title="zh-CN proofreading" target="_blank"><img alt="zh-CN proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=zh-CN&style=flat&logo=crowdin&query=%24.progress.0.data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-CN" title="zh-CN translation" target="_blank"><img alt="zh-CN translation" src="https://img.shields.io/badge/dynamic/json?color=blue&label=zh-CN&style=flat&logo=crowdin&query=%24.progress.1.data.translationProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-CN" title="zh-CN proofreading" target="_blank"><img alt="zh-CN proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=zh-CN&style=flat&logo=crowdin&query=%24.progress.1.data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
         </div>
       </td>
     </tr>
@@ -326,8 +343,8 @@ The goal of this project is to translate the nix.dev Documentation into multiple
       </td>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;">
         <div>
-          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-TW" title="zh-TW translation" target="_blank"><img alt="zh-TW translation" src="https://img.shields.io/badge/dynamic/json?color=blue&label=zh-TW&style=flat&logo=crowdin&query=%24.progress.1.data.translationProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
-          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-TW" title="zh-TW proofreading" target="_blank"><img alt="zh-TW proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=zh-TW&style=flat&logo=crowdin&query=%24.progress.1.data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-TW" title="zh-TW translation" target="_blank"><img alt="zh-TW translation" src="https://img.shields.io/badge/dynamic/json?color=blue&label=zh-TW&style=flat&logo=crowdin&query=%24.progress.2.data.translationProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
+          <div><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n/zh-TW" title="zh-TW proofreading" target="_blank"><img alt="zh-TW proofreading" src="https://img.shields.io/badge/dynamic/json?color=green&label=zh-TW&style=flat&logo=crowdin&query=%24.progress.2.data.approvalProgress&url=https%3A%2F%2Fbadges.awesome-crowdin.com%2Fstats-200032568-31.json" /></a></div>
         </div>
       </td>
     </tr>
@@ -357,6 +374,13 @@ You can preview translations in <a href="https://projects.localizethedocs.org/ni
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>en_US</code></div></td>
       <td rowspan="1" colspan="1" align="left"   style="text-align: left;  ">
         <div><a href="https://projects.localizethedocs.org/nix-dev-docs-l10n/en-us">https://projects.localizethedocs.org/nix-dev-docs-l10n/en-us</a></div>
+      </td>
+    </tr>
+    <!-- ko_KR -->
+    <tr>
+      <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>ko_KR</code></div></td>
+      <td rowspan="1" colspan="1" align="left"   style="text-align: left;  ">
+        <div><a href="https://projects.localizethedocs.org/nix-dev-docs-l10n/ko-kr">https://projects.localizethedocs.org/nix-dev-docs-l10n/ko-kr</a></div>
       </td>
     </tr>
     <!-- zh_CN -->
