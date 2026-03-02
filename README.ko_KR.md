@@ -5,10 +5,10 @@
 </div>
 
 <div align="center">
-<h1 id="localization-of-nix-dev-documentation">Localization of nix.dev Documentation</h1>
+<h1 id="localization-of-nix-dev-documentation">nix.dev 문서의 현지화</h1>
 </div>
 
-<details><summary><strong>Switch Languages</strong></summary>
+<details><summary><strong>언어 전환</strong></summary>
 <p></p>
 <ul>
   <li><a href="./README.md"><code>en_US</code> : English</a></li>
@@ -18,22 +18,22 @@
 </ul>
 </details>
 
-<h2 id="table-of-contents">Table of Contents</h2>
+<h2 id="table-of-contents">목차</h2>
 
 <ul>
-  <li><a href="#introduction">Introduction</a></li>
-  <li><a href="#progress-of-translations">Progress of Translations</a></li>
-  <li><a href="#preview-translations">Preview Translations</a></li>
-  <li><a href="#maintainers">Maintainers</a></li>
-  <li><a href="#support-this-project">Support this Project</a></li>
-  <li><a href="#sponsorship">Sponsorship</a></li>
-  <li><a href="#code-contributors">Code Contributors</a></li>
-  <li><a href="#translation-contributors">Translation Contributors</a></li>
-  <li><a href="#financial-contributors">Financial Contributors</a></li>
-  <li><a href="#licenses">Licenses</a></li>
+  <li><a href="#introduction">소개</a></li>
+  <li><a href="#progress-of-translations">번역 진행 현황</a></li>
+  <li><a href="#preview-translations">번역 미리보기</a></li>
+  <li><a href="#maintainers">관리자</a></li>
+  <li><a href="#support-this-project">프로젝트 후원하기</a></li>
+  <li><a href="#sponsorship">후원</a></li>
+  <li><a href="#code-contributors">코드 기여자</a></li>
+  <li><a href="#translation-contributors">번역 기여자</a></li>
+  <li><a href="#financial-contributors">재정 기여자</a></li>
+  <li><a href="#licenses">라이선스</a></li>
 </ul>
 
-<h2 id="introduction"><a href="#table-of-contents">Introduction</a></h2>
+<h2 id="introduction"><a href="#table-of-contents">소개</a></h2>
 
 <div align="center"><a href="https://localizethedocs.zulipchat.com" title="Zulip Chat" target="_blank">
   <img alt="Zulip Chat" src="https://img.shields.io/badge/Zulip-Chat-blue.svg?logo=zulip&style=flat&logoColor=white" />
@@ -66,22 +66,22 @@
 
 <p></p>
 
-The goal of this project is to translate the nix.dev Documentation into multiple languages. Translations are contributed via the Crowdin platform, automatically synchronized with the GitHub repository, and can be previewed on GitHub Pages.
+이 프로젝트의 목표는 nix.dev 문서를 여러 언어로 번역하는 것입니다. 번역은 Crowdin 플랫폼을 통해 기여되며, GitHub 저장소와 자동으로 동기화되고, GitHub Pages에서 미리볼 수 있습니다.
 
 > [!NOTE]
-> The translation is community-driven. If you find any inaccuracies, always refer to the <a href="https://nix.dev">official documentation</a> or the <a href="https://github.com/nixos/nix.dev">source repository</a> of the upstream project for the most reliable information.
+> 이 번역은 커뮤니티 주도로 진행됩니다. 부정확한 내용을 발견하시면, 가장 신뢰할 수 있는 정보를 위해 항상 업스트림 프로젝트의 <a href="https://nix.dev">공식 문서</a> 또는 <a href="https://github.com/nixos/nix.dev">소스 저장소</a>를 참고해 주세요.
 
 <div align="center">
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>Project Links</div></th>
+      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>프로젝트 링크</div></th>
     </tr>
   </thead>
   <tbody>
     <!-- Preview -->
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Preview</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>미리보기</div></th>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;">
         <div><a href="https://projects.localizethedocs.org/nix-dev-docs-l10n" target="_blank">nix-dev-docs-l10n</a></div>
       </td>
@@ -121,36 +121,36 @@ The goal of this project is to translate the nix.dev Documentation into multiple
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>Branch Structure</div></th>
+      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>브랜치 구조</div></th>
     </tr>
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Branch</div></th>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Description</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>브랜치</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>설명</div></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>main</code></div></td>
       <td rowspan="1" colspan="1" align="left"   style="text-align: left;">
-        <div>Store CMake scripts and GitHub workflows for the infrastructure.</div>
+        <div>인프라를 위한 CMake 스크립트와 GitHub 워크플로를 저장합니다.</div>
       </td>
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>l10n</code></div></td>
       <td rowspan="1" colspan="1" align="left"   style="text-align: left;">
-        <div>Store <code>.pot</code> and <code>.po</code> files generated from the upstream project.</div>
+        <div>업스트림 프로젝트에서 생성된 <code>.pot</code> 및 <code>.po</code> 파일을 저장합니다.</div>
       </td>
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>pages</code></div></td>
       <td rowspan="1" colspan="1" align="left"   style="text-align: left;">
-        <div>Store the built documentation deployed to GitHub Pages.</div>
+        <div>GitHub Pages에 배포된 빌드된 문서를 저장합니다.</div>
       </td>
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="center" style="text-align: center;"><div><code>po/${VERSION}</code></div></td>
       <td rowspan="1" colspan="1" align="left"   style="text-align: left;">
-        <div>Store version-specific <code>.po</code> files for reuse by the upstream project.</div>
+        <div>업스트림 프로젝트에서 재사용할 수 있는 버전별 <code>.po</code> 파일을 저장합니다.</div>
       </td>
     </tr>
   </tbody>
@@ -161,11 +161,11 @@ The goal of this project is to translate the nix.dev Documentation into multiple
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>GitHub Workflows</div></th>
+      <th rowspan="1" colspan="2" align="center" style="text-align: center;"><div>GitHub 워크플로</div></th>
     </tr>
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Status</div></th>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Description</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>상태</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>설명</div></th>
     </tr>
   </thead>
   <tbody>
@@ -174,7 +174,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml" ><img alt="ci-sphinx-build-docs" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Build documents by Sphinx and upload build artifacts.</div>
+        <div>Sphinx로 문서를 빌드하고 빌드 아티팩트를 업로드합니다.</div>
       </td>
     </tr>
     <tr>
@@ -182,7 +182,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml" ><img alt="ci-sphinx-update-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update <code>.pot</code> files by Sphinx with <code>gettext</code> builder.</div>
+        <div>Sphinx의 <code>gettext</code> 빌더를 사용하여 <code>.pot</code> 파일을 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -190,7 +190,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml" ><img alt="ci-gettext-update-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update <code>.po</code> files from <code>.pot</code> files by Gettext toolkit.</div>
+        <div>Gettext 도구를 사용하여 <code>.pot</code> 파일에서 <code>.po</code> 파일을 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -198,7 +198,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml"><img alt="ci-gettext-compendium" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update <code>.po</code> files from the compendium by Gettext toolkit.</div>
+        <div>Gettext 도구를 사용하여 편집 모음에서 <code>.po</code> 파일을 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -206,7 +206,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml"><img alt="ci-gettext-statistics" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update statistics information of <code>.po</code> files by Gettext toolkit.</div>
+        <div>Gettext 도구를 사용하여 <code>.po</code> 파일의 통계 정보를 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -214,7 +214,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml"><img alt="ci-crowdin-upload-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Upload <code>.pot</code> files to Crowdin by its CLI tool.</div>
+        <div>Crowdin CLI 도구를 사용하여 <code>.pot</code> 파일을 Crowdin에 업로드합니다.</div>
       </td>
     </tr>
     <tr>
@@ -222,7 +222,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml"><img alt="ci-crowdin-download-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Download <code>.po</code> files from Crowdin by its CLI tool.</div>
+        <div>Crowdin CLI 도구를 사용하여 Crowdin에서 <code>.po</code> 파일을 다운로드합니다.</div>
       </td>
     </tr>
     <tr>
@@ -230,7 +230,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml"><img alt="ci-crowdin-update-readme" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update README translations by Crowdin CLI tool.</div>
+        <div>Crowdin CLI 도구를 사용하여 README 번역을 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -238,7 +238,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml"><img alt="ci-deploy-pages" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Download and deploy build artifacts to <code>pages</code> branch.</div>
+        <div>빌드 아티팩트를 다운로드하고 <code>pages</code> 브랜치에 배포합니다.</div>
       </td>
     </tr>
     <tr>
@@ -246,7 +246,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml"><img alt="ci-deploy-po-version" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Deploy <code>.po</code> files to <code>po/${VERSION}</code> branch.</div>
+        <div><code>.po</code> 파일을 <code>po/${VERSION}</code> 브랜치에 배포합니다.</div>
       </td>
     </tr>
     <tr>
@@ -254,7 +254,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml"><img alt="ci-update-contributors" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update contributors <code>.svg</code> files to <code>static</code> branch.</div>
+        <div>기여자 <code>.svg</code> 파일을 <code>static</code> 브랜치에 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -262,7 +262,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml"><img alt="ci-update-license-year" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update the copyright year in LICENSE to the current year.</div>
+        <div>LICENSE의 저작권 연도를 현재 연도로 업데이트합니다.</div>
       </td>
     </tr>
     <tr>
@@ -270,30 +270,30 @@ The goal of this project is to translate the nix.dev Documentation into multiple
         <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml"><img alt="ci-update-submodule" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml/badge.svg" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
-        <div>Update each of the submodules to their latest commit.</div>
+        <div>각 서브모듈을 최신 커밋으로 업데이트합니다.</div>
       </td>
     </tr>
   </tbody>
 </table>
 </div>
 
-<h2 id="progress-of-translations"><a href="#table-of-contents">Progress of Translations</a></h2>
+<h2 id="progress-of-translations"><a href="#table-of-contents">번역 진행 현황</a></h2>
 
 <div align="center">
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Locale</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>로캘</div></th>
       <th rowspan="1" colspan="1" align="center" style="text-align: center;">
         <div>
-          <div>English Name</div>
-          <div>Native Name</div>
+          <div>영어 이름</div>
+          <div>현지 이름</div>
         </div>
       </th>
       <th rowspan="1" colspan="1" align="center" style="text-align: center;">
         <div>
-          <div>Translated</div>
-          <div>Proofread</div>
+          <div>번역 진행률</div>
+          <div>검수 진행률</div>
         </div>
       </th>
     </tr>
@@ -354,15 +354,15 @@ The goal of this project is to translate the nix.dev Documentation into multiple
 <div align="center"><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n"><img src="https://badges.awesome-crowdin.com/translation-200032568-31.png"></a>
 </div>
 
-<h2 id="preview-translations"><a href="#table-of-contents">Preview Translations</a></h2>
+<h2 id="preview-translations"><a href="#table-of-contents">번역 미리보기</a></h2>
 
-You can preview translations in <a href="https://projects.localizethedocs.org/nix-dev-docs-l10n">GitHub Pages</a>:
+<a href="https://projects.localizethedocs.org/nix-dev-docs-l10n">GitHub Pages</a>에서 번역을 미리볼 수 있습니다:
 
 <div align="center">
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Language</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>언어</div></th>
       <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>GitHub Pages</div></th>
     </tr>
   </thead>
@@ -399,10 +399,10 @@ You can preview translations in <a href="https://projects.localizethedocs.org/ni
 </table>
 </div>
 
-Alternatively, you can preview translations locally by running the following commands:
+또는 다음 명령어를 실행하여 로컬에서 번역을 미리볼 수 있습니다:
 
 ```bash
-# Please make sure the following prerequisites are installed:
+# 다음 필수 프로그램이 설치되어 있는지 확인해 주세요:
 # CMake (3.25~), Git, Conda, Gettext
 LANGUAGE=en_US
 VERSION=master
@@ -412,18 +412,18 @@ cmake --preset ${LANGUAGE} -DVERSION=${VERSION}
 cmake --build out/build/${LANGUAGE}
 ```
 
-You can switch to other available languages and versions by the flyout navigation menu.
+플라이아웃 탐색 메뉴를 통해 다른 사용 가능한 언어와 버전으로 전환할 수 있습니다.
 
-<h2 id="maintainers"><a href="#table-of-contents">Maintainers</a></h2>
+<h2 id="maintainers"><a href="#table-of-contents">관리자</a></h2>
 
-This project is currently maintained by:
+이 프로젝트는 현재 다음 인원이 관리하고 있습니다:
 
 <div align="center">
 <table>
   <thead>
     <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>Name</div></th>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>GitHub Username</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>이름</div></th>
+      <th rowspan="1" colspan="1" align="center" style="text-align: center;"><div>GitHub 사용자명</div></th>
     </tr>
   </thead>
   <tbody>
@@ -435,23 +435,23 @@ This project is currently maintained by:
 </table>
 </div>
 
-<h2 id="support-this-project"><a href="#table-of-contents">Support this Project</a></h2>
+<h2 id="support-this-project"><a href="#table-of-contents">프로젝트 지원하기</a></h2>
 
-You can contribute and support this project by doing any of the following:
+다음과 같은 방법으로 이 프로젝트에 기여하고 지원할 수 있습니다:
 
 <ul>
-  <li>Star the project on GitHub or other mirrors.</li>
-  <li>Submit issues on <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/issues">GitHub</a> if you found any bug.</li>
-  <li>Submit pull requests on <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/pulls">GitHub</a> if you know how to fix the bug.</li>
-  <li>Contribute your translations on <a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n">Crowdin</a>.</li>
-  <li>If you love this kind of l10n projects, please consider <a href="#sponsorship">sponsorship</a>.</li>
+  <li>GitHub 또는 다른 미러 저장소에서 프로젝트에 스타를 눌러주세요.</li>
+  <li>버그를 발견하셨다면 <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/issues">GitHub</a>에 이슈를 제출해 주세요.</li>
+  <li>버그 수정 방법을 알고 계시다면 <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/pulls">GitHub</a>에 풀 리퀘스트를 제출해 주세요.</li>
+  <li><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n">Crowdin</a>에서 번역에 기여해 주세요.</li>
+  <li>이러한 현지화 프로젝트가 마음에 드신다면, <a href="#sponsorship">후원</a>을 고려해 주세요.</li>
 </ul>
 
-It will facilitate the creation and ongoing maintenance of l10n projects for open-source documentation.
+이는 오픈소스 문서의 현지화 프로젝트 생성 및 지속적인 유지 관리를 촉진할 것입니다.
 
-<h2 id="sponsorship"><a href="#table-of-contents">Sponsorship</a></h2>
+<h2 id="sponsorship"><a href="#table-of-contents">후원</a></h2>
 
-You can sponsor the projects through the following platforms:
+다음 플랫폼을 통해 프로젝트를 후원할 수 있습니다:
 
 <div align="center">
 <table>
@@ -478,7 +478,7 @@ You can sponsor the projects through the following platforms:
 </table>
 </div>
 
-Alternatively, you can sponsor the maintainers directly through the following platforms:
+또는 다음 플랫폼을 통해 관리자에게 직접 후원할 수 있습니다:
 
 <div align="center">
 <table>
@@ -508,19 +508,19 @@ Alternatively, you can sponsor the maintainers directly through the following pl
 </table>
 </div>
 
-<h2 id="code-contributors"><a href="#table-of-contents">Code Contributors</a></h2>
+<h2 id="code-contributors"><a href="#table-of-contents">코드 기여자</a></h2>
 
 <div align="center">
 <img width="100%" alt="GitHub Contributors SVG" src="https://contrib.nn.ci/api?repo=localizethedocs/nix-dev-docs-l10n&no_bot=true" />
 </div>
 
-<h2 id="translation-contributors"><a href="#table-of-contents">Translation Contributors</a></h2>
+<h2 id="translation-contributors"><a href="#table-of-contents">번역 기여자</a></h2>
 
 <div align="center">
 <img width="100%" alt="Crowdin Contributors SVG" src="https://cdn.jsdelivr.net/gh/localizethedocs/nix-dev-docs-l10n@static/crowdin-contributors.svg">
 </div>
 
-<h2 id="financial-contributors"><a href="#table-of-contents">Financial Contributors</a></h2>
+<h2 id="financial-contributors"><a href="#table-of-contents">재정 기여자</a></h2>
 
 <div align="center">
 <h3 id="localize-the-docs">Localize The Docs</h3>
@@ -538,13 +538,13 @@ Alternatively, you can sponsor the maintainers directly through the following pl
 <img width="100%" alt="Haowei Hsu" src="https://cdn.jsdelivr.net/gh/hwhsu1231/sponsors/static/sponsors.svg" />
 </div>
 
-<h2 id="licenses"><a href="#table-of-contents">Licenses</a></h2>
+<h2 id="licenses"><a href="#table-of-contents">라이선스</a></h2>
 
-All original and translated text in the <code>.pot</code> and<code>.po</code> files stored in the <code>l10n</code> branch is made available under the same license as <a href="https://github.com/nixos/nix.dev">the upstream project</a>.
+<code>l10n</code> 브랜치에 저장된 <code>.pot</code> 및 <code>.po</code> 파일의 모든 원문 및 번역문은 <a href="https://github.com/nixos/nix.dev">업스트림 프로젝트</a>와 동일한 라이선스 하에 제공됩니다.
 
-All CMake script files (e.g., <code>CMakeLists.txt</code>, <code>CMakePresets.json</code>, and <code>cmake/\*\*/\*</code> files), GitHub workflow files (e.g., <code>.github/workflows/\*.yml</code> files), and configuration files (e.g., <code>versions.json</code>, <code>languages.json</code>, <code>crowdin.yml</code>, and so on) of this project are licensed under <a href="https://opensource.org/license/bsd-3-clause/">3-Clause BSD</a> license. See <a href="./LICENSE-BSD">LICENSE-BSD</a> for details.
+이 프로젝트의 모든 CMake 스크립트 파일(예: <code>CMakeLists.txt</code>, <code>CMakePresets.json</code>, <code>cmake/\*\*/\*</code> 파일), GitHub 워크플로 파일(예: <code>.github/workflows/\*.yml</code> 파일) 및 설정 파일(예: <code>versions.json</code>, <code>languages.json</code>, <code>crowdin.yml</code> 등)은 <a href="https://opensource.org/license/bsd-3-clause/">3-Clause BSD</a> 라이선스에 따라 사용이 허가됩니다. 자세한 내용은 <a href="./LICENSE-BSD">LICENSE-BSD</a>를 참고하세요.
 
-All document files (e.g., <code>README.md</code>) of this project are licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> license. See <a href="./LICENSE-CC">LICENSE-CC</a> for details.
+이 프로젝트의 모든 문서 파일(예: <code>README.md</code>)은 <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a> 라이선스에 따라 사용이 허가됩니다. 자세한 내용은 <a href="./LICENSE-CC">LICENSE-CC</a>를 참고하세요.
 
 <a href="http://creativecommons.org/licenses/by-sa/4.0/" title="CC BY SA 4.0" target="_blank">
   <img alt="CC BY SA 4.0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"/>
