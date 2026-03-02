@@ -40,7 +40,9 @@ msgstr "Linux"
 
 #: ../../../install-nix.md:12 ../../../install-nix.md:24
 msgid "Install Nix via the recommended [multi-user installation]:"
-msgstr "권장 방식인 [다중 사용자(multi-user) 설치]를 통해 Nix를 설치합니다:"
+msgstr ""
+"권장 방식인 [다중 사용자(multi-user) 설치](https://nix.dev/manual/nix/stable/"
+"installation/multi-user.html)를 통해 Nix를 설치합니다:"
 
 #: ../../../install-nix.md:14 ../../../install-nix.md:52
 msgid "$ curl -L https://nixos.org/nix/install | sh -s -- --daemon\n"
@@ -103,7 +105,8 @@ msgid ""
 "recommended [multi-user installation]:"
 msgstr ""
 "하지만 [systemd 지원]이 활성화되어 있다면, 권장 방식인 [다중 사용자(multi-"
-"user) 설치]를 통해 Nix를 설치합니다:"
+"user) 설치](https://nix.dev/manual/nix/stable/installation/multi-user.html)"
+"를 통해 Nix를 설치합니다:"
 
 #: ../../../install-nix.md:0
 msgid "Docker"
