@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-03-16 08:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -36,11 +36,11 @@ msgstr ""
 msgid "Linux"
 msgstr ""
 
-#: ../../../install-nix.md:12 ../../../install-nix.md:24
+#: ../../../install-nix.md:12 ../../../install-nix.md:26
 msgid "Install Nix via the recommended [multi-user installation]:"
 msgstr ""
 
-#: ../../../install-nix.md:14 ../../../install-nix.md:52
+#: ../../../install-nix.md:14 ../../../install-nix.md:54
 msgid "$ curl -L https://nixos.org/nix/install | sh -s -- --daemon\n"
 msgstr ""
 
@@ -50,27 +50,33 @@ msgid ""
 "wiki.archlinux.org/title/Nix#Installation)."
 msgstr ""
 
+#: ../../../install-nix.md:20
+msgid ""
+"On Fedora, you can [install Nix via `dnf`](https://src.fedoraproject.org/"
+"rpms/nix)."
+msgstr ""
+
 #: ../../../install-nix.md:0
 msgid "macOS"
 msgstr ""
 
-#: ../../../install-nix.md:26
+#: ../../../install-nix.md:28
 msgid "$ curl -L https://nixos.org/nix/install | sh\n"
 msgstr ""
 
-#: ../../../install-nix.md:31
+#: ../../../install-nix.md:33
 msgid "**Updating to macOS 15 Sequoia**"
 msgstr ""
 
-#: ../../../install-nix.md:33
+#: ../../../install-nix.md:35
 msgid "If you recently updated to macOS 15 Sequoia and are getting the error"
 msgstr ""
 
-#: ../../../install-nix.md:34
+#: ../../../install-nix.md:36
 msgid "error: the user '_nixbld1' in the group 'nixbld' does not exist\n"
 msgstr ""
 
-#: ../../../install-nix.md:37
+#: ../../../install-nix.md:39
 msgid ""
 "when running Nix commands, refer to GitHub issue [NixOS/nix#10892](https://"
 "github.com/NixOS/nix/issues/10892) for instructions to fix your installation "
@@ -81,15 +87,15 @@ msgstr ""
 msgid "Windows (WSL2)"
 msgstr ""
 
-#: ../../../install-nix.md:44
+#: ../../../install-nix.md:46
 msgid "Install Nix via the recommended [single-user installation]:"
 msgstr ""
 
-#: ../../../install-nix.md:46
+#: ../../../install-nix.md:48
 msgid "$ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon\n"
 msgstr ""
 
-#: ../../../install-nix.md:50
+#: ../../../install-nix.md:52
 msgid ""
 "However, if you have [systemd support] enabled, install Nix via the "
 "recommended [multi-user installation]:"
@@ -99,31 +105,31 @@ msgstr ""
 msgid "Docker"
 msgstr ""
 
-#: ../../../install-nix.md:62
+#: ../../../install-nix.md:64
 msgid "Start a Docker shell with Nix:"
 msgstr ""
 
-#: ../../../install-nix.md:64
+#: ../../../install-nix.md:66
 msgid "$ docker run -it nixos/nix\n"
 msgstr ""
 
-#: ../../../install-nix.md:68
+#: ../../../install-nix.md:70
 msgid "Or start a Docker shell with Nix exposing a `workdir` directory:"
 msgstr ""
 
-#: ../../../install-nix.md:70
+#: ../../../install-nix.md:72
 msgid ""
 "$ mkdir workdir\n"
 "$ docker run -it -v $(pwd)/workdir:/workdir nixos/nix\n"
 msgstr ""
 
-#: ../../../install-nix.md:75
+#: ../../../install-nix.md:77
 msgid ""
 "The `workdir` example from above can also be used to start hacking on "
 "Nixpkgs:"
 msgstr ""
 
-#: ../../../install-nix.md:77
+#: ../../../install-nix.md:79
 msgid ""
 "$ git clone git@github.com:NixOS/nixpkgs\n"
 "$ docker run -it -v $(pwd)/nixpkgs:/nixpkgs nixos/nix\n"
@@ -131,15 +137,15 @@ msgid ""
 "bash-5.1# find ./result # this symlink points to the build package\n"
 msgstr ""
 
-#: ../../../install-nix.md:87
+#: ../../../install-nix.md:89
 msgid "Verify installation"
 msgstr ""
 
-#: ../../../install-nix.md:89
+#: ../../../install-nix.md:91
 msgid "Check the installation by opening **a new terminal** and typing:"
 msgstr ""
 
-#: ../../../install-nix.md:91
+#: ../../../install-nix.md:93
 msgid ""
 "$ nix --version\n"
 "nix (Nix) 2.11.0\n"

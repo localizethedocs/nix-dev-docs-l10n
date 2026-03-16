@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-03-16 08:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -304,9 +304,9 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:154
 msgid ""
-"You may want to run some commands before entering the shell environment. "
-"These commands can be placed in the `shellHook` attribute provided to "
-"`mkShellNoCC`."
+"You may want to run some shell commands before entering the interactive "
+"shell environment. These commands can be placed in the `shellHook` attribute "
+"provided to `mkShellNoCC`."
 msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:157
