@@ -26,10 +26,9 @@
   <li><a href="#preview-translations">번역 미리보기</a></li>
   <li><a href="#maintainers">관리자</a></li>
   <li><a href="#support-this-project">프로젝트 후원하기</a></li>
-  <li><a href="#sponsorship">후원</a></li>
+  <li><a href="#financial-sponsors">Financial Sponsors</a></li>
   <li><a href="#code-contributors">코드 기여자</a></li>
   <li><a href="#translation-contributors">번역 기여자</a></li>
-  <li><a href="#financial-contributors">재정 기여자</a></li>
   <li><a href="#licenses">라이선스</a></li>
 </ul>
 
@@ -444,12 +443,12 @@ cmake --build out/build/${LANGUAGE}
   <li>버그를 발견하셨다면 <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/issues">GitHub</a>에 이슈를 제출해 주세요.</li>
   <li>버그 수정 방법을 알고 계시다면 <a href="https://github.com/localizethedocs/nix-dev-docs-l10n/pulls">GitHub</a>에 풀 리퀘스트를 제출해 주세요.</li>
   <li><a href="https://localizethedocs.crowdin.com/nix-dev-docs-l10n">Crowdin</a>에서 번역에 기여해 주세요.</li>
-  <li>이러한 현지화 프로젝트가 마음에 드신다면, <a href="#sponsorship">후원</a>을 고려해 주세요.</li>
+  <li>Consider becoming a <a href="#financial-sponsors">sponsor</a> if you love this kind of l10n projects.</li>
 </ul>
 
 이는 오픈소스 문서의 현지화 프로젝트 생성 및 지속적인 유지 관리를 촉진할 것입니다.
 
-<h2 id="sponsorship"><a href="#table-of-contents">후원</a></h2>
+<h2 id="financial-sponsors"><a href="#table-of-contents">Financial Sponsors</a></h2>
 
 다음 플랫폼을 통해 프로젝트를 후원할 수 있습니다:
 
@@ -478,34 +477,10 @@ cmake --build out/build/${LANGUAGE}
 </table>
 </div>
 
-또는 다음 플랫폼을 통해 관리자에게 직접 후원할 수 있습니다:
+Maintenance of the projects is made possible by the generous support of our sponsors:
 
 <div align="center">
-<table>
-  <tbody>
-    <tr>
-      <th rowspan="1" colspan="2" align="center" style="text-align: center; width: 100%;"><div>Haowei Hsu</div></th>
-    </tr>
-    <!-- Row 1 -->
-    <tr>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center; width: 50%;"><div>Patreon</div></th>
-      <th rowspan="1" colspan="1" align="center" style="text-align: center; width: 50%;"><div>Afdian</div></th>
-    </tr>
-    <!-- Row 2 -->
-    <tr>
-      <td rowspan="1" colspan="1" align="center" style="text-align: center; width: 50%;" >
-        <div><a href="https://www.patreon.com/hwhsu1231" target="_blank">
-          <img width="200" src="https://cdn.jsdelivr.net/gh/localizethedocs/static/button/sponsor-patreon.png" alt="Patreon" />
-        </a></div>
-      </td>
-      <td rowspan="1" colspan="1" align="center" style="text-align: center; width: 50%;">
-        <div><a href="https://www.afdian.com/a/hwhsu1231" target="_blank">
-          <img width="200" src="https://cdn.jsdelivr.net/gh/localizethedocs/static/button/sponsor-afdian.png" alt="Afdian" />
-        </a></div>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<img width="100%" alt="Localize The Docs" src="https://cdn.jsdelivr.net/gh/localizethedocs/sponsors/static/sponsors.svg" />
 </div>
 
 <h2 id="code-contributors"><a href="#table-of-contents">코드 기여자</a></h2>
@@ -518,24 +493,6 @@ cmake --build out/build/${LANGUAGE}
 
 <div align="center">
 <img width="100%" alt="Crowdin Contributors SVG" src="https://cdn.jsdelivr.net/gh/localizethedocs/nix-dev-docs-l10n@static/crowdin-contributors.svg">
-</div>
-
-<h2 id="financial-contributors"><a href="#table-of-contents">재정 기여자</a></h2>
-
-<div align="center">
-<h3 id="localize-the-docs">Localize The Docs</h3>
-</div>
-
-<div align="center">
-<img width="100%" alt="Localize The Docs" src="https://cdn.jsdelivr.net/gh/localizethedocs/sponsors/static/sponsors.svg" />
-</div>
-
-<div align="center">
-<h3 id="haowei-hsu">Haowei Hsu</h3>
-</div>
-
-<div align="center">
-<img width="100%" alt="Haowei Hsu" src="https://cdn.jsdelivr.net/gh/hwhsu1231/sponsors/static/sponsors.svg" />
 </div>
 
 <h2 id="licenses"><a href="#table-of-contents">라이선스</a></h2>
