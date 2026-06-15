@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -69,8 +69,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:25
 msgid ""
-"Integration tests are reproducible due to the design properties of Nix, "
-"making them a valuable part of a continuous integration (CI) pipeline."
+"Nix's design properties make integration tests reproducible, which makes "
+"them valuable in a continuous integration (CI) pipeline."
 msgstr ""
 
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:27
@@ -141,9 +141,9 @@ msgid ""
 "function that takes a `nodes` attribute. This Python test script can access "
 "the virtual machines via the names used for the `nodes`. It has super user "
 "rights in the virtual machines. In the Python script each virtual machine is "
-"accessible via the `machine` object. NixOS provides [various methods]"
-"(https://nixos.org/manual/nixos/stable/index.html#ssec-machine-objects) to "
-"run tests on these configurations."
+"accessible via the `machine` object. NixOS provides [methods](https://nixos."
+"org/manual/nixos/stable/index.html#ssec-machine-objects) to run tests on "
+"these configurations."
 msgstr ""
 
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:70

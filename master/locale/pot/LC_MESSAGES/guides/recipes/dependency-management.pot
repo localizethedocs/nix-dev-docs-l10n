@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-16 08:34+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,9 +23,9 @@ msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:4
 msgid ""
-"The Nix language can be used to describe dependencies between files managed "
-"by Nix. Nix expressions themselves can depend on remote sources, and there "
-"are multiple ways to specify their origin, as shown in [](pinning-nixpkgs)."
+"The Nix language describes dependencies between files that Nix manages. Nix "
+"expressions themselves can depend on remote sources, and there are multiple "
+"ways to specify their origin, as shown in [](pinning-nixpkgs)."
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:7
@@ -196,7 +196,7 @@ msgstr ""
 #: ../../../guides/recipes/dependency-management.md:107
 msgid ""
 "All the imported entries will be updated, so they won't necessarily point to "
-"the same commits as before!"
+"the same commits as before."
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:110
