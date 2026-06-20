@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-16 08:34+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,9 +38,9 @@ msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:13
 msgid ""
-"In the long term, Nix helps tremendously with alleviating such problems. But "
-"when *first* packaging existing software with Nix, it's common to encounter "
-"errors that seem inscrutable."
+"In the long term, Nix alleviates such problems. But when *first* packaging "
+"existing software with Nix, it's common to encounter errors that seem "
+"inscrutable."
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:16
@@ -50,58 +50,58 @@ msgstr ""
 #: ../../../tutorials/packaging-existing-software.md:18
 msgid ""
 "In this tutorial, you'll create your first [Nix derivations](https://nix.dev/"
-"manual/nix/stable/language/derivations) to package C/C++ software, taking "
-"advantage of the [Nixpkgs Standard Environment](https://nixos.org/manual/"
-"nixpkgs/stable/#part-stdenv) (`stdenv`), which automates much of the work "
-"involved."
+"manual/nix/stable/language/derivations) to package C/C++ software. You'll "
+"take advantage of the [Nixpkgs Standard Environment](https://nixos.org/"
+"manual/nixpkgs/stable/#part-stdenv) (`stdenv`), which automates much of the "
+"work involved."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:20
+#: ../../../tutorials/packaging-existing-software.md:21
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:22
+#: ../../../tutorials/packaging-existing-software.md:23
 msgid ""
 "The tutorial begins with `hello`, an implementation of \"hello world\" which "
-"only requires dependencies already provided by `stdenv`. Next, you will "
-"build more complex packages with their own dependencies, leading you to use "
+"only requires dependencies already provided by `stdenv`. Next, you build "
+"more complex packages with their own dependencies, which leads to using "
 "additional derivation features."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:25
+#: ../../../tutorials/packaging-existing-software.md:26
 msgid ""
 "You'll encounter and address Nix error messages, build failures, and a host "
 "of other issues, developing your iterative debugging techniques along the "
 "way."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:27
+#: ../../../tutorials/packaging-existing-software.md:28
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:29
+#: ../../../tutorials/packaging-existing-software.md:30
 msgid "Familiarity with the Unix shell and plain text editors"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:30
+#: ../../../tutorials/packaging-existing-software.md:31
 msgid ""
 "You should be confident with [reading the Nix language](reading-nix-"
 "language). Feel free to go back and work through the tutorial first."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:32
+#: ../../../tutorials/packaging-existing-software.md:33
 msgid "How long does it take?"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:34
+#: ../../../tutorials/packaging-existing-software.md:35
 msgid "Going through all the steps carefully will take around 60 minutes."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:36
+#: ../../../tutorials/packaging-existing-software.md:37
 msgid "Your first package"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:39
+#: ../../../tutorials/packaging-existing-software.md:40
 msgid ""
 "<!--\n"
 "TODO: link to the Nix manual glossary entry once it's in a released build:\n"
@@ -110,7 +110,7 @@ msgid ""
 "-->\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:43
+#: ../../../tutorials/packaging-existing-software.md:44
 msgid ""
 "A _package_ is a loosely defined concept that refers to either a collection "
 "of files and other data, or a {term}`Nix expression` representing such a "
@@ -119,7 +119,7 @@ msgid ""
 "composed in environments alongside other packages."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:46
+#: ../../../tutorials/packaging-existing-software.md:47
 msgid ""
 "For the purposes of this tutorial, a \"package\" is a Nix language function "
 "that will evaluate to a derivation. It will enable you or others to produce "
@@ -127,42 +127,42 @@ msgid ""
 "existing software with Nix\"."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:50
+#: ../../../tutorials/packaging-existing-software.md:51
 msgid "To start, consider this skeleton derivation:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:52
+#: ../../../tutorials/packaging-existing-software.md:53
 msgid ""
 "{ stdenv }:\n"
 "\n"
 "stdenv.mkDerivation {\t}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:58
+#: ../../../tutorials/packaging-existing-software.md:59
 msgid ""
 "This is a function which takes an attribute set containing `stdenv`, and "
 "produces a derivation (which currently does nothing)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:60
+#: ../../../tutorials/packaging-existing-software.md:61
 msgid "A package function"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:62
+#: ../../../tutorials/packaging-existing-software.md:63
 msgid ""
 "GNU Hello is an implementation of the \"hello world\" program, with source "
 "code accessible [from the GNU Project's FTP server](https://ftp.gnu.org/gnu/"
 "hello/)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:64
+#: ../../../tutorials/packaging-existing-software.md:65
 msgid ""
 "To begin, add a `pname` attribute to the set passed to `mkDerivation`. Every "
 "package needs a name and a version, and Nix will throw `error: derivation "
 "name missing` without one."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:67
+#: ../../../tutorials/packaging-existing-software.md:68
 msgid ""
 "\n"
 "stdenv.mkDerivation {\n"
@@ -171,20 +171,20 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:75
+#: ../../../tutorials/packaging-existing-software.md:76
 msgid ""
-"Next, you will declare a dependency on the latest version of `hello`, and "
-"instruct Nix to use `fetchzip` to download the [source code archive](https://"
-"ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz)."
+"Next, declare a dependency on the latest version of `hello`, and instruct "
+"Nix to use `fetchzip` to download the [source code archive](https://ftp.gnu."
+"org/gnu/hello/hello-2.12.1.tar.gz)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:78
+#: ../../../tutorials/packaging-existing-software.md:79
 msgid ""
 "`fetchzip` can fetch [more archives](https://nixos.org/manual/nixpkgs/stable/"
 "#fetchurl) than just zip files!"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:81
+#: ../../../tutorials/packaging-existing-software.md:82
 msgid ""
 "The hash cannot be known until after the archive has been downloaded and "
 "unpacked. Nix will complain if the hash supplied to `fetchzip` is incorrect. "
@@ -192,7 +192,7 @@ msgid ""
 "message to determine the correct hash:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:85
+#: ../../../tutorials/packaging-existing-software.md:86
 msgid ""
 "# hello.nix\n"
 "{\n"
@@ -211,13 +211,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:103
+#: ../../../tutorials/packaging-existing-software.md:104
 msgid ""
 "Save this file to `hello.nix` and run `nix-build` to observe your first "
 "build failure:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:105
+#: ../../../tutorials/packaging-existing-software.md:106
 msgid ""
 "$ nix-build hello.nix\n"
 "error: cannot evaluate a function that has an argument without a value "
@@ -236,30 +236,30 @@ msgid ""
 "            4|   fetchzip,\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:121
+#: ../../../tutorials/packaging-existing-software.md:122
 msgid ""
 "Problem: the expression in `hello.nix` is a *function*, which only produces "
 "its intended output if it is passed the correct *arguments*."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:123
+#: ../../../tutorials/packaging-existing-software.md:124
 msgid "Building with `nix-build`"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:125
+#: ../../../tutorials/packaging-existing-software.md:126
 msgid ""
 "`stdenv` is available from [`nixpkgs`](https://github.com/NixOS/nixpkgs/), "
-"which must be imported with another Nix expression in order to pass it as an "
-"argument to this derivation."
+"which must be imported with another Nix expression to pass it as an argument "
+"to this derivation."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:127
+#: ../../../tutorials/packaging-existing-software.md:128
 msgid ""
 "The recommended way to do this is to create a `default.nix` file in the same "
 "directory as `hello.nix`, with the following contents:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:129
+#: ../../../tutorials/packaging-existing-software.md:130
 msgid ""
 "# default.nix\n"
 "let\n"
@@ -272,13 +272,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:140
+#: ../../../tutorials/packaging-existing-software.md:141
 msgid ""
 "This allows you to run `nix-build -A hello` to realize the derivation in "
 "`hello.nix`, similar to the current convention used in Nixpkgs."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:143
+#: ../../../tutorials/packaging-existing-software.md:144
 msgid ""
 "`callPackage` automatically passes attributes from `pkgs` to the given "
 "function, if they match attributes required by that function's argument "
@@ -286,15 +286,15 @@ msgid ""
 "`fetchzip` to the function defined in `hello.nix`."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:146
+#: ../../../tutorials/packaging-existing-software.md:147
 msgid "The tutorial [](./callpackage.md) goes into detail on how this works."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:149
+#: ../../../tutorials/packaging-existing-software.md:150
 msgid "Now run the `nix-build` command with the new argument:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:151
+#: ../../../tutorials/packaging-existing-software.md:152
 msgid ""
 "$ nix-build -A hello\n"
 "error: hash mismatch in fixed-output derivation '/nix/store/"
@@ -305,18 +305,18 @@ msgid ""
 "b4mjwlv73nmiqgkdabsdjc4zq9gnma1l-hello-2.12.1.drv' failed to build\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:159
+#: ../../../tutorials/packaging-existing-software.md:160
 msgid "Finding the file hash"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:160
+#: ../../../tutorials/packaging-existing-software.md:161
 msgid ""
 "As expected, the incorrect file hash caused an error, and Nix helpfully "
 "provided the correct one. In `hello.nix`, replace the empty string with the "
 "correct hash:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:163
+#: ../../../tutorials/packaging-existing-software.md:164
 msgid ""
 "# hello.nix\n"
 "{\n"
@@ -335,11 +335,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:181
+#: ../../../tutorials/packaging-existing-software.md:182
 msgid "Now run the previous command again:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:183
+#: ../../../tutorials/packaging-existing-software.md:184
 msgid ""
 "$ nix-build -A hello\n"
 "this derivation will be built:\n"
@@ -355,11 +355,11 @@ msgid ""
 "... <many more lines omitted>\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:197
-msgid "Great news: the derivation built successfully!"
+#: ../../../tutorials/packaging-existing-software.md:198
+msgid "The derivation built successfully."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:199
+#: ../../../tutorials/packaging-existing-software.md:200
 msgid ""
 "The console output shows that `configure` was called, which produced a "
 "`Makefile` that was then used to build the project. It wasn't necessary to "
@@ -368,63 +368,62 @@ msgid ""
 "automatically detected the structure of the project directory."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:202
+#: ../../../tutorials/packaging-existing-software.md:203
 msgid "Build result"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:203
+#: ../../../tutorials/packaging-existing-software.md:204
 msgid "Check your working directory for the result:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:205
+#: ../../../tutorials/packaging-existing-software.md:206
 msgid ""
 "$ ls\n"
 "default.nix hello.nix  result\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:210
+#: ../../../tutorials/packaging-existing-software.md:211
 msgid ""
 "This `result` is a [symbolic link](https://en.wikipedia.org/wiki/"
 "Symbolic_link) to a Nix store location containing the built binary; you can "
 "call `./result/bin/hello` to execute this program:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:212
+#: ../../../tutorials/packaging-existing-software.md:213
 msgid ""
 "$ ./result/bin/hello\n"
 "Hello, world!\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:217
+#: ../../../tutorials/packaging-existing-software.md:218
 msgid ""
 "Congratulations, you have successfully packaged your first program with Nix!"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:219
+#: ../../../tutorials/packaging-existing-software.md:220
 msgid ""
 "Next, you'll package another piece of software with external-to-`stdenv` "
 "dependencies that present new challenges, requiring you to make use of more "
 "`mkDerivation` features."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:221
+#: ../../../tutorials/packaging-existing-software.md:222
 msgid "A package with dependencies"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:223
+#: ../../../tutorials/packaging-existing-software.md:224
 msgid ""
-"Now you will add a second, somewhat more complicated, program: [`icat`]"
-"(https://github.com/atextor/icat) (which allows you to render images in your "
-"terminal)."
+"Now add a second, somewhat more complicated, program: [`icat`](https://"
+"github.com/atextor/icat) (which renders images in your terminal)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:225
+#: ../../../tutorials/packaging-existing-software.md:226
 msgid ""
 "Change the `default.nix` from the previous section by adding a new attribute "
 "for `icat`:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:227
+#: ../../../tutorials/packaging-existing-software.md:228
 msgid ""
 "# default.nix\n"
 "let\n"
@@ -438,13 +437,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:239
+#: ../../../tutorials/packaging-existing-software.md:240
 msgid ""
 "Copy `hello.nix` to a new file `icat.nix`, and update the `pname` and "
 "`version` attributes in that file:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:241
+#: ../../../tutorials/packaging-existing-software.md:242
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -462,17 +461,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:258
+#: ../../../tutorials/packaging-existing-software.md:259
 msgid ""
 "Now to download the source code. `icat`'s upstream repository is hosted on "
 "[GitHub](https://github.com/atextor/icat), so you should replace the "
 "previous [source fetcher](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-"
-"fetchers). This time you will use [`fetchFromGitHub`](https://nixos.org/"
-"manual/nixpkgs/stable/#fetchfromgithub) instead of `fetchzip`, by updating "
-"the argument attribute set to the function accordingly:"
+"fetchers). This time, use [`fetchFromGitHub`](https://nixos.org/manual/"
+"nixpkgs/stable/#fetchfromgithub) instead of `fetchzip`, by updating the "
+"argument attribute set to the function accordingly:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:262
+#: ../../../tutorials/packaging-existing-software.md:263
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -490,40 +489,40 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:279
+#: ../../../tutorials/packaging-existing-software.md:280
 msgid "Fetching source from GitHub"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:280
+#: ../../../tutorials/packaging-existing-software.md:281
 msgid ""
 "While `fetchzip` required `url` and `sha256` arguments, more are needed for "
 "[`fetchFromGitHub`](https://nixos.org/manual/nixpkgs/stable/"
 "#fetchfromgithub)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:282
+#: ../../../tutorials/packaging-existing-software.md:283
 msgid ""
 "The source URL is `https://github.com/atextor/icat`, which already gives the "
 "first two arguments:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:283
+#: ../../../tutorials/packaging-existing-software.md:284
 msgid "`owner`: the name of the account controlling the repository"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:285
+#: ../../../tutorials/packaging-existing-software.md:286
 msgid "owner = \"atextor\";\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:288
+#: ../../../tutorials/packaging-existing-software.md:289
 msgid "`repo`: the name of the repository to fetch"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:290
+#: ../../../tutorials/packaging-existing-software.md:291
 msgid "repo = \"icat\";\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:294
+#: ../../../tutorials/packaging-existing-software.md:295
 msgid ""
 "Navigate to the project's [Tags page](https://github.com/atextor/icat/tags) "
 "to find a suitable [Git revision](https://git-scm.com/docs/revisions) "
@@ -531,11 +530,11 @@ msgid ""
 "the release you want to fetch."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:296
+#: ../../../tutorials/packaging-existing-software.md:297
 msgid "In this case, the latest release tag is `v0.5`."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:298
+#: ../../../tutorials/packaging-existing-software.md:299
 msgid ""
 "As in the `hello` example, a hash must also be supplied. This time, instead "
 "of using the empty string and letting `nix-build` report the correct one in "
@@ -543,14 +542,14 @@ msgid ""
 "prefetch-url` command."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:301
+#: ../../../tutorials/packaging-existing-software.md:302
 msgid ""
 "You need the SHA256 hash of the *contents* of the tarball (as opposed to the "
 "hash of the tarball file itself). Therefore pass the `--unpack` and `--type "
 "sha256` arguments:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:304
+#: ../../../tutorials/packaging-existing-software.md:305
 msgid ""
 "$ nix-prefetch-url --unpack https://github.com/atextor/icat/archive/refs/"
 "tags/v0.5.tar.gz --type sha256\n"
@@ -558,11 +557,11 @@ msgid ""
 "0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:310
+#: ../../../tutorials/packaging-existing-software.md:311
 msgid "Set the correct hash for `fetchFromGitHub`:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:312
+#: ../../../tutorials/packaging-existing-software.md:313
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -583,17 +582,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:332
+#: ../../../tutorials/packaging-existing-software.md:333
 msgid "Missing dependencies"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:334
+#: ../../../tutorials/packaging-existing-software.md:335
 msgid ""
 "Running `nix-build` on only the new `icat` attribute, an entirely new issue "
 "is reported:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:336
+#: ../../../tutorials/packaging-existing-software.md:337
 msgid ""
 "$ nix-build -A icat\n"
 "these 2 derivations will be built:\n"
@@ -622,27 +621,27 @@ msgid ""
 "l5wz9inkvkf0qhl8kpl39vpg2xfm2qpy-icat.drv'.\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:357
+#: ../../../tutorials/packaging-existing-software.md:358
 msgid ""
-"A compiler error! The `icat` source was pulled from GitHub, and Nix tried to "
+"A compiler error. The `icat` source was pulled from GitHub, and Nix tried to "
 "build what it found, but compilation failed due to a missing dependency: the "
 "`imlib2` header."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:360
+#: ../../../tutorials/packaging-existing-software.md:361
 msgid ""
 "If you [search for `imlib2` on search.nixos.org](https://search.nixos.org/"
 "packages?query=imlib2), you'll find that `imlib2` is already in Nixpkgs."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:362
+#: ../../../tutorials/packaging-existing-software.md:363
 msgid ""
 "Add this package to your build environment by adding `imlib2` to the "
 "arguments of the function in `icat.nix`. Then add the argument's value "
 "`imlib2` to the list of `buildInputs` in `stdenv.mkDerivation`:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:365
+#: ../../../tutorials/packaging-existing-software.md:366
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -666,13 +665,13 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:388
+#: ../../../tutorials/packaging-existing-software.md:389
 msgid ""
 "Run `nix-build -A icat` again and you'll encounter another error, but "
 "compilation proceeds further this time:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:390
+#: ../../../tutorials/packaging-existing-software.md:391
 msgid ""
 "$ nix-build -A icat\n"
 "this derivation will be built:\n"
@@ -700,40 +699,40 @@ msgid ""
 "bw2d4rp2k1l5rg49hds199ma2mz36x47-icat.drv'.\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:410
+#: ../../../tutorials/packaging-existing-software.md:411
 msgid ""
 "You can see a few warnings which should be corrected in the upstream code. "
 "But the important bit for this tutorial is `fatal error: X11/Xlib.h: No such "
 "file or directory`: another dependency is missing."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:413
+#: ../../../tutorials/packaging-existing-software.md:414
 msgid "Finding packages"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:415
+#: ../../../tutorials/packaging-existing-software.md:416
 msgid ""
 "Determining from where to source a dependency is currently somewhat "
 "involved, because package names don't always correspond to library or "
 "program names."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:417
+#: ../../../tutorials/packaging-existing-software.md:418
 msgid ""
-"You will need the `Xlib.h` headers from the `X11` C package, the Nixpkgs "
-"derivation for which is `libX11`, available in the `xorg` package set. There "
+"You need the `Xlib.h` headers from the `X11` C package. The Nixpkgs "
+"derivation for this is `libX11`, available in the `xorg` package set. There "
 "are multiple ways to figure this out:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:420
+#: ../../../tutorials/packaging-existing-software.md:422
 msgid "`search.nixos.org`"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:423
+#: ../../../tutorials/packaging-existing-software.md:425
 msgid "The easiest way to find what you need is on search.nixos.org/packages."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:426
+#: ../../../tutorials/packaging-existing-software.md:428
 msgid ""
 "Unfortunately in this case, [searching for `x11`](https://search.nixos.org/"
 "packages?query=x11) produces too many irrelevant results because X11 is "
@@ -743,17 +742,17 @@ msgid ""
 "&query=x11) shows something promising."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:429
+#: ../../../tutorials/packaging-existing-software.md:431
 msgid ""
 "In case all else fails, it helps to become familiar with searching the "
 "[Nixpkgs source code](https://github.com/nixos/nixpkgs) for keywords."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:431
+#: ../../../tutorials/packaging-existing-software.md:433
 msgid "Local code search"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:433
+#: ../../../tutorials/packaging-existing-software.md:435
 msgid ""
 "To find name assignments in the source, search for `\"<keyword> =\"`. For "
 "example, these are the search results for [`\"x11 = \"`](https://github.com/"
@@ -762,45 +761,45 @@ msgid ""
 "%3D%22&type=code) on Github."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:436
+#: ../../../tutorials/packaging-existing-software.md:438
 msgid ""
 "Or fetch a clone of the [Nixpkgs repository](https://github.com/nixos/"
 "nixpkgs) and search the code locally."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:438
+#: ../../../tutorials/packaging-existing-software.md:440
 msgid ""
 "Start a shell that makes the required tools available – `git` for version "
 "control, and `rg` for code search (provided by the [`ripgrep` package]"
 "(https://search.nixos.org/packages?show=ripgrep)):"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:439
+#: ../../../tutorials/packaging-existing-software.md:441
 msgid ""
 "$ nix-shell -p git ripgrep\n"
 "[nix-shell:~]$\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:444
+#: ../../../tutorials/packaging-existing-software.md:446
 msgid ""
 "The Nixpkgs repository is huge. Only clone the latest revision to avoid "
 "waiting a long time for a full clone:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:447
+#: ../../../tutorials/packaging-existing-software.md:449
 msgid ""
 "[nix-shell:~]$ git clone https://github.com/NixOS/nixpkgs --depth 1\n"
 "...\n"
 "[nix-shell:~]$ cd nixpkgs/\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:453
+#: ../../../tutorials/packaging-existing-software.md:455
 msgid ""
 "To narrow down results, only search the `pkgs` subdirectory, which holds all "
 "the package recipes:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:455
+#: ../../../tutorials/packaging-existing-software.md:457
 msgid ""
 "[nix-shell:~]$ rg \"x11 =\" pkgs\n"
 "pkgs/tools/X11/primus/default.nix\n"
@@ -821,13 +820,13 @@ msgid ""
 "... <a lot more results>\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:472
+#: ../../../tutorials/packaging-existing-software.md:474
 msgid ""
 "Since `rg` is case sensitive by default, Add `-i` to make sure you don't "
 "miss anything:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:475
+#: ../../../tutorials/packaging-existing-software.md:477
 msgid ""
 "[nix-shell:~]$ rg -i \"libx11 =\" pkgs\n"
 "pkgs/applications/version-management/monotone-viz/graphviz-2.0.nix\n"
@@ -845,27 +844,27 @@ msgid ""
 "147:  libX11 = super.libX11.overrideAttrs (attrs: {\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:490
+#: ../../../tutorials/packaging-existing-software.md:492
 msgid "Local derivation search"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:492
+#: ../../../tutorials/packaging-existing-software.md:494
 msgid ""
 "To search derivations on the command line, use `nix-locate` from the [`nix-"
 "index`](https://github.com/nix-community/nix-index)."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:494
+#: ../../../tutorials/packaging-existing-software.md:496
 msgid "Adding package sets as dependencies"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:496
+#: ../../../tutorials/packaging-existing-software.md:498
 msgid ""
 "Add `xorg` to your derivation's input attribute set and use `xorg.libX11` in "
 "`buildInputs`:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:498
+#: ../../../tutorials/packaging-existing-software.md:500
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -890,22 +889,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:523
+#: ../../../tutorials/packaging-existing-software.md:525
 msgid ""
 "Because the Nix language is lazily evaluated, accessing only `xorg.libX11` "
 "means that the remaining contents of the `xorg` attribute set are never "
 "processed."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:526
+#: ../../../tutorials/packaging-existing-software.md:528
 msgid "Fixing build failures"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:528
+#: ../../../tutorials/packaging-existing-software.md:530
 msgid "Run the last command again:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:530
+#: ../../../tutorials/packaging-existing-software.md:532
 msgid ""
 "$ nix-build -A icat\n"
 "this derivation will be built:\n"
@@ -932,24 +931,24 @@ msgid ""
 "x1d79ld8jxqdla5zw2b47d2sl87mf56k-icat.drv'.\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:550
+#: ../../../tutorials/packaging-existing-software.md:552
 msgid ""
 "The missing dependency error is solved, but there is now another problem: "
 "`make: *** No rule to make target 'install'.  Stop.`"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:552
+#: ../../../tutorials/packaging-existing-software.md:554
 msgid "`installPhase`"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:553
+#: ../../../tutorials/packaging-existing-software.md:555
 msgid ""
 "`stdenv` is automatically working with the `Makefile` that comes with "
 "`icat`. The console output shows that `configure` and `make` are executed "
 "without issue, so the `icat` binary is compiling successfully."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:556
+#: ../../../tutorials/packaging-existing-software.md:558
 msgid ""
 "The failure occurs when the `stdenv` attempts to run `make install`. The "
 "`Makefile` included in the project happens to lack an `install` target. The "
@@ -957,21 +956,21 @@ msgid ""
 "tool, leaving the installation step up to users."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:560
+#: ../../../tutorials/packaging-existing-software.md:562
 msgid ""
 "To add this step to your derivation, use the [`installPhase` attribute]"
 "(https://nixos.org/manual/nixpkgs/stable/#ssec-install-phase). It contains a "
 "list of command strings that are executed to perform the installation."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:563
+#: ../../../tutorials/packaging-existing-software.md:565
 msgid ""
 "Because `make` finishes successfully, the `icat` executable is available in "
 "the build directory. You only need to copy it from there to the output "
 "directory."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:566
+#: ../../../tutorials/packaging-existing-software.md:568
 msgid ""
 "In Nix, the output directory is stored in the `$out` variable. That variable "
 "is accessible in the derivation's [`builder` execution environment](https://"
@@ -979,7 +978,7 @@ msgid ""
 "`bin` directory within the `$out` directory and copy the `icat` binary there:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:570
+#: ../../../tutorials/packaging-existing-software.md:572
 msgid ""
 "# icat.nix\n"
 "{\n"
@@ -1009,18 +1008,18 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:599
+#: ../../../tutorials/packaging-existing-software.md:601
 msgid "Phases and hooks"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:601
+#: ../../../tutorials/packaging-existing-software.md:603
 msgid ""
 "Nixpkgs `stdenv.mkDerivation` derivations are separated into [phases]"
 "(https://nixos.org/manual/nixpkgs/stable/#sec-stdenv-phases). Each is "
 "intended to control some aspect of the build process."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:604
+#: ../../../tutorials/packaging-existing-software.md:606
 msgid ""
 "Earlier you observed how `stdenv.mkDerivation` expected the project's "
 "`Makefile` to have an `install` target, and failed when it didn't. To fix "
@@ -1030,34 +1029,34 @@ msgid ""
 "determined the `buildPhase` information for the `icat` package."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:608
+#: ../../../tutorials/packaging-existing-software.md:610
 msgid ""
 "During derivation realisation, there are a number of shell functions "
 "(\"hooks\", in Nixpkgs) which may execute in each derivation phase. Hooks do "
 "things like set variables, source files, create directories, and so on."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:611
+#: ../../../tutorials/packaging-existing-software.md:613
 msgid ""
 "These are specific to each phase, and run both before and after that phase's "
 "execution. They modify the build environment for common operations during "
 "the build."
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:614
+#: ../../../tutorials/packaging-existing-software.md:616
 msgid ""
-"It's good practice when packaging software with Nix to include calls to "
-"these hooks in the derivation phases you define, even when you don't make "
-"direct use of them. This facilitates easy [overriding](https://nixos.org/"
-"manual/nixpkgs/stable/#chap-overrides) of specific parts of the derivation "
-"later. And it keeps the code tidy and makes it easier to read."
-msgstr ""
-
-#: ../../../tutorials/packaging-existing-software.md:618
-msgid "Adjust your `installPhase` to call the appropriate hooks:"
+"Include calls to these hooks in the derivation phases you define, even when "
+"you don't make direct use of them. This facilitates easy [overriding]"
+"(https://nixos.org/manual/nixpkgs/stable/#chap-overrides) of specific parts "
+"of the derivation later. And it keeps the code tidy and makes it easier to "
+"read."
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:620
+msgid "Adjust your `installPhase` to call the appropriate hooks:"
+msgstr ""
+
+#: ../../../tutorials/packaging-existing-software.md:622
 msgid ""
 "# icat.nix\n"
 "\n"
@@ -1074,75 +1073,75 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:636
+#: ../../../tutorials/packaging-existing-software.md:638
 msgid "A successful build"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:638
+#: ../../../tutorials/packaging-existing-software.md:640
 msgid ""
 "Running the `nix-build -A icat` command once more will finally do what you "
 "want, repeatably. Call `ls` in the local directory to find a `result` "
 "symlink to a location in the Nix store:"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:641
+#: ../../../tutorials/packaging-existing-software.md:643
 msgid ""
 "$ ls\n"
 "default.nix hello.nix icat.nix result\n"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:646
+#: ../../../tutorials/packaging-existing-software.md:648
 msgid "`result/bin/icat` is the executable built previously. Success!"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:648
+#: ../../../tutorials/packaging-existing-software.md:650
 msgid ""
-"Running `nix-build` (without specifying an attribute) would build all of our "
-"attributes at once. The first (`hello`) will be under `result/bin/`, while "
-"the second (`icat`) will be under `result-2/bin/`. If we were to add more "
-"attributes we would get even more `result-n` symlinks."
-msgstr ""
-
-#: ../../../tutorials/packaging-existing-software.md:652
-msgid "References"
+"Running `nix-build` (without specifying an attribute) builds all attributes "
+"at once. The first (`hello`) appears under `result/bin/`, while the second "
+"(`icat`) appears under `result-2/bin/`. Adding more attributes produces "
+"additional `result-n` symlinks."
 msgstr ""
 
 #: ../../../tutorials/packaging-existing-software.md:654
+msgid "References"
+msgstr ""
+
+#: ../../../tutorials/packaging-existing-software.md:656
 msgid ""
 "[Nixpkgs Manual - Standard Environment](https://nixos.org/manual/nixpkgs/"
 "unstable/#part-stdenv)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:656
+#: ../../../tutorials/packaging-existing-software.md:658
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:658
+#: ../../../tutorials/packaging-existing-software.md:660
 msgid "[](callpackage-tutorial)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:659
+#: ../../../tutorials/packaging-existing-software.md:661
 msgid "[](sharing-dependencies)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:660
+#: ../../../tutorials/packaging-existing-software.md:662
 msgid "[](automatic-direnv)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:661
+#: ../../../tutorials/packaging-existing-software.md:663
 msgid "[](python-dev-environment)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:662
+#: ../../../tutorials/packaging-existing-software.md:664
 msgid ""
 "[Add your own new packages to Nixpkgs](https://github.com/NixOS/nixpkgs/blob/"
 "master/CONTRIBUTING.md)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:663
+#: ../../../tutorials/packaging-existing-software.md:665
 msgid "[](../contributing/how-to-contribute.md)"
 msgstr ""
 
-#: ../../../tutorials/packaging-existing-software.md:664
+#: ../../../tutorials/packaging-existing-software.md:666
 msgid "[](../contributing/how-to-get-help.md)"
 msgstr ""

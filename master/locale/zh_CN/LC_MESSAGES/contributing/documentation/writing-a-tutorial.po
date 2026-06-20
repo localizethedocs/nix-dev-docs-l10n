@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgstr ""
 #: ../../../contributing/documentation/writing-a-tutorial.md:34
 msgid ""
 "Check referenced issues and pull requests to make sure you won't duplicate "
-"work that someone else has already started!"
+"work that someone else has already started."
 msgstr ""
 
 #: ../../../contributing/documentation/writing-a-tutorial.md:36
@@ -267,7 +267,7 @@ msgstr ""
 #: ../../../contributing/documentation/writing-a-tutorial.md:104
 msgid ""
 "This is also a good place to offer the readers ways to give feedback or ask "
-"the authors questions in order to continue improving the tutorial."
+"the authors questions to continue improving the tutorial."
 msgstr ""
 
 #: ../../../contributing/documentation/writing-a-tutorial.md:106

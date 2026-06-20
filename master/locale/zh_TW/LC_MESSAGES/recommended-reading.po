@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-16 08:34+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,8 +56,8 @@ msgstr ""
 
 #: ../../../recommended-reading.md:17
 msgid ""
-"[Video: Reading the Nix language](https://youtu.be/hbJkMl631FE?t=1533) "
-"(Jonas Chevalier, 2019)"
+"[Video: Reading the Nix language](https://youtu.be/61MuMY9XFNo) (Jonas "
+"Chevalier, 2019)"
 msgstr ""
 
 #: ../../../recommended-reading.md:19
@@ -66,7 +66,7 @@ msgstr ""
 
 #: ../../../recommended-reading.md:21
 msgid ""
-"[Video: How and Why it Works](https://youtu.be/hbJkMl631FE?t=4806) (Graham "
+"[Video: How and Why it Works](https://youtu.be/lxtHH838yko) (Graham "
 "Christensen, 2019)"
 msgstr ""
 

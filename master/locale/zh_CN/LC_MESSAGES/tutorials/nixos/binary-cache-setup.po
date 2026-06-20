@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,8 +43,8 @@ msgstr "简介"
 
 #: ../../../tutorials/nixos/binary-cache-setup.md:16
 msgid ""
-"In this tutorial you will set up a Nix binary cache that will serve store "
-"objects from a NixOS machine over HTTP or HTTPS."
+"In this tutorial you set up a Nix binary cache that serves store objects "
+"from a NixOS machine over HTTP or HTTPS."
 msgstr ""
 
 #: ../../../tutorials/nixos/binary-cache-setup.md:18
@@ -220,8 +220,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/binary-cache-setup.md:115
 msgid ""
-"A pair of private and public keys is required to ensure that the store "
-"objects in the cache are authentic."
+"You need a pair of private and public keys to ensure that the store objects "
+"in the cache are authentic."
 msgstr ""
 
 #: ../../../tutorials/nixos/binary-cache-setup.md:117

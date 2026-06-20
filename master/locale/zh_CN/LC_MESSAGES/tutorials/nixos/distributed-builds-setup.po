@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -288,9 +288,8 @@ msgstr ""
 #: ../../../tutorials/nixos/distributed-builds-setup.md:142
 #: ../../../tutorials/nixos/distributed-builds-setup.md:205
 msgid ""
-"This particular list must be specified in order to delegate building "
-"compilers and running [NixOS VM tests](integration-testing-vms) to remote "
-"machines."
+"This particular list must be specified to delegate building compilers and "
+"running [NixOS VM tests](integration-testing-vms) to remote machines."
 msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:144
@@ -506,9 +505,9 @@ msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:294
 msgid ""
-"Refer to the [Nix reference manual](https://nix.dev/manual/nix/2.23/command-"
-"ref/conf-file) for details on the options available in [`nix.settings`]"
-"(https://search.nixos.org/options?show=nix.settings)."
+"Refer to the [Nix reference manual](https://nix.dev/manual/nix/latest/"
+"command-ref/conf-file) for details on the options available in [`nix."
+"settings`](https://search.nixos.org/options?show=nix.settings)."
 msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:297
@@ -552,31 +551,38 @@ msgid ""
 "section."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:315
+#: ../../../tutorials/nixos/distributed-builds-setup.md:316
+msgid ""
+"Configure remote build machines to [host a binary cache](setup-http-binary-"
+"cache) and use them as [preferred binary caches](custom-binary-cache) to "
+"reduce your external traffic."
+msgstr ""
+
+#: ../../../tutorials/nixos/distributed-builds-setup.md:319
 msgid "Alternatives"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:317
+#: ../../../tutorials/nixos/distributed-builds-setup.md:321
 msgid "[nixbuild.net](https://nixbuild.net) - Nix remote builders as a service"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:318
+#: ../../../tutorials/nixos/distributed-builds-setup.md:322
 msgid ""
 "[Hercules CI](https://hercules-ci.com/) - Continuous integration with "
 "automatic build distribution"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:319
+#: ../../../tutorials/nixos/distributed-builds-setup.md:323
 msgid ""
 "[garnix](https://garnix.io/) - Hosted continuous integration with build "
 "distribution"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:321
+#: ../../../tutorials/nixos/distributed-builds-setup.md:325
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:323
+#: ../../../tutorials/nixos/distributed-builds-setup.md:327
 msgid ""
 "[Nix reference manual: Settings for distributed builds](https://nix.dev/"
 "manual/nix/latest/command-ref/conf-file#conf-builders)"

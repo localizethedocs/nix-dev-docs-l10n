@@ -16,9 +16,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-03-16 08:28:43 +0000",
-        "hash" : "d0b57098256b0da5897d256f50adc869b5244304",
-        "title" : "[create-pull-request] automated change (#1218)"
+        "date" : "2026-06-07 11:40:54 +0200",
+        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
+        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
       }
     },
     "zh_CN" : 
@@ -26,9 +26,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-03-16 08:28:43 +0000",
-        "hash" : "d0b57098256b0da5897d256f50adc869b5244304",
-        "title" : "[create-pull-request] automated change (#1218)"
+        "date" : "2026-06-07 11:40:54 +0200",
+        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
+        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
       }
     },
     "zh_TW" : 
@@ -36,9 +36,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-03-16 08:28:43 +0000",
-        "hash" : "d0b57098256b0da5897d256f50adc869b5244304",
-        "title" : "[create-pull-request] automated change (#1218)"
+        "date" : "2026-06-07 11:40:54 +0200",
+        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
+        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
       }
     }
   },

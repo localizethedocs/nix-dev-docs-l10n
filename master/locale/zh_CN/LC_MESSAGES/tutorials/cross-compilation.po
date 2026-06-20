@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,8 +31,7 @@ msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:13
 msgid ""
-"Nixpkgs offers powerful tools to cross-compile software for various system "
-"types."
+"Nixpkgs provides tools to cross-compile software for different system types."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:15
@@ -53,7 +52,7 @@ msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:23
 msgid ""
-"When compiling code, we can distinguish between the **build platform**, "
+"When compiling code, there is a distinction between the **build platform**, "
 "where the executable is *built*, and the **host platform**, where the "
 "compiled executable *runs*. [^id3]"
 msgstr ""
@@ -72,9 +71,7 @@ msgid ""
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:30
-msgid ""
-"The `nixpkgs` package collection has world-class support for cross "
-"compilation, after many years of hard work by the Nix community."
+msgid "Nixpkgs has well-tested cross compilation support."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:36
@@ -82,7 +79,7 @@ msgid "What's a target platform?"
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:38
-msgid "There is a third concept for a platform we call a **target platform**."
+msgid "There is a third concept for a platform called the **target platform**."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:40
@@ -95,8 +92,8 @@ msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:43
 msgid ""
-"Since this is rarely needed, we will assume that the target is identical to "
-"the host."
+"Since this is rarely needed, this tutorial assumes that the target is "
+"identical to the host."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:45
@@ -390,11 +387,10 @@ msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:207
 msgid ""
-"To show off the power of cross compilation in Nix, let's build our own Hello "
-"World program by cross compiling it as static executables to `armv6l-unknown-"
-"linux-gnueabihf` and `x86_64-w64-mingw32` (Windows) platforms and run the "
-"resulting executable with [an emulator](https://en.wikipedia.org/wiki/"
-"Emulator)."
+"The following example cross compiles a Hello World program as static "
+"executables to `armv6l-unknown-linux-gnueabihf` and `x86_64-w64-mingw32` "
+"(Windows) platforms, and runs the resulting executable with [an emulator]"
+"(https://en.wikipedia.org/wiki/Emulator)."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:209

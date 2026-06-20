@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -149,7 +149,7 @@ msgid ""
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:65
-msgid "You should be greeted with a fresh shell!"
+msgid "You should be greeted with a fresh shell."
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:67
@@ -175,61 +175,97 @@ msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:75
 msgid ""
-"If you're connecting to wifi, run `iwconfig` to find the name of your "
-"wireless network interface. If it's `wlan0`, replace `SSID` and `passphrase` "
-"with your data and run:"
+"If you're connecting to wifi, run `ip link` to find the name of your "
+"wireless network interface. Look for an interface starting with `wl` "
+"(commonly `wlan0`)."
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:77
+msgid "Replace `SSID` and `passphrase` with your wifi credentials and run:"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:78
 msgid ""
 "# wpa_supplicant -B -i wlan0 -c <(wpa_passphrase 'SSID' 'passphrase') &\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:81
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:82
 msgid ""
-"Once you see in your terminal that connection is established, run `host "
-"nixos.org` to check that the DNS resolves correctly."
+"Wait for `wpa_supplicant` to establish the connection. Then assign a static "
+"IP address to enable internet access. Replace `192.168.1.X` with an "
+"available IP address on your network and `192.168.1.1` with your router's "
+"gateway address:"
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:83
+msgid ""
+"# ip addr add 192.168.1.X/24 dev wlan0\n"
+"# ip route add default via 192.168.1.1\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:88
+msgid "Now you can download and run `dhcpcd` to obtain a proper IP address:"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:89
+msgid ""
+"# nix-shell -p dhcpcd\n"
+"# dhcpcd wlan0\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:94
+msgid "After a few seconds, verify the connection by running:"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:95
+msgid "# host nixos.org\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:99
+msgid ""
+"If DNS resolution succeeds, you have internet connectivity and can proceed "
+"to the next section."
+msgstr ""
+
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:101
 msgid "In case you've made a typo, run `pkill wpa_supplicant` and start over."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:85
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:103
 msgid "Updating firmware"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:87
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:105
 msgid ""
 "To benefit from updates and bug fixes from the vendor, we'll start by "
 "updating Raspberry Pi firmware:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:89
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:107
 msgid ""
 "# nix-shell -p raspberrypi-eeprom\n"
 "# mount /dev/disk/by-label/FIRMWARE /mnt\n"
 "# BOOTFS=/mnt FIRMWARE_RELEASE_STATUS=stable rpi-eeprom-update -d -a\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:95
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:113
 msgid "Installing and configuring NixOS"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:97
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:115
 msgid ""
 "Now we'll install NixOS with our own configuration, here creating a `guest` "
 "user and enabling the SSH daemon."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:99
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:117
 msgid ""
 "In the `let` binding below, change the value of the `SSID` and "
 "`SSIDpassword` variables to the `SSID` and `passphrase` values you used "
 "previously:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:101
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:119
 msgid ""
 "{ config, pkgs, lib, ... }:\n"
 "\n"
@@ -287,87 +323,87 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:157
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:175
 msgid "To save time on typing the whole configuration, download it:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:159
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:177
 msgid ""
 "# curl -L https://tinyurl.com/tutorial-nixos-install-rpi4 > /etc/nixos/"
 "configuration.nix\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:164
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:182
 msgid ""
 "Credentials you write into a NixOS configuration will be stored in plain "
 "text in your `/nix/store` when that configuration is built."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:166
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:184
 msgid ""
 "If you **don't** want this to happen, you can enter your credentials at a "
 "console or use one of the community's solutions for encrypted secrets."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:169
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:187
 msgid ""
 "Due to the way the `nixos-sd-image` is designed, NixOS is actually *already "
 "installed* at this point, so we only need to `nixos-rebuild` with our new "
 "configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:171
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:189
 msgid ""
 "# nixos-rebuild boot\n"
 "# reboot\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:176
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:194
 msgid ""
 "If your system doesn't boot, select the oldest configuration in the "
 "bootloader menu to get back to the live image and start over."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:178
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:196
 msgid "Making changes"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:180
-msgid "It booted, congratulations!"
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:198
+msgid "It booted, congratulations."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:182
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:200
 msgid ""
 "To make further changes to the configuration, [search through NixOS options]"
 "(https://search.nixos.org/options), edit `/etc/nixos/configuration.nix`, and "
 "update your system:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:185
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:203
 msgid ""
 "$ sudo -i\n"
 "# nixos-rebuild switch\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:190
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:208
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:192
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:210
 msgid ""
 "Once you have a working OS, try upgrading it with `nixos-rebuild switch --"
 "upgrade` to install more recent package versions, and reboot to the old "
 "configuration if something broke."
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:193
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:211
 msgid ""
 "To enable hardware acceleration for a nice graphical desktop experience, add "
 "the [`nixos-hardware`](https://github.com/nixos/nixos-hardware) module to "
 "your configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:195
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:213
 msgid ""
 "imports = [\n"
 "  \"${fetchTarball \"https://github.com/NixOS/nixos-hardware/tarball/"
@@ -375,13 +411,13 @@ msgid ""
 "];\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:201
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:219
 msgid ""
 "We recommend pinning the reference to `nixos-hardware`: [](ref-pinning-"
 "nixpkgs)"
 msgstr ""
 
-#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:203
+#: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:221
 msgid ""
 "To tweak bootloader options affecting hardware, [see `config.txt` options]"
 "(https://www.raspberrypi.org/documentation/configuration/config-txt/). You "

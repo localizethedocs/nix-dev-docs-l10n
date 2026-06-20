@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-16 08:44+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,7 +273,7 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:137
 msgid ""
-"Try it out! Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
+"Try it out. Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
 "start it again with `nix-shell`."
 msgstr ""
 
@@ -337,7 +337,7 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:179
 msgid ""
-"Try it again! Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
+"Try it again. Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
 "start it again with `nix-shell` to observe the effect."
 msgstr ""
 

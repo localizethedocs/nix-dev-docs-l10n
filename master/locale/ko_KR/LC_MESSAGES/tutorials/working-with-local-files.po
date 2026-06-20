@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,18 +25,18 @@ msgstr ""
 msgid ""
 "To build a local project in a Nix derivation, source files must be "
 "accessible to its [`builder` executable](https://nix.dev/manual/nix/stable/"
-"language/derivations#attr-builder). Since by default, the `builder` runs in "
-"an [isolated environment](https://nix.dev/manual/nix/stable/command-ref/conf-"
-"file.html#conf-sandbox) that only allows reading from the Nix store, the Nix "
+"language/derivations#attr-builder). By default, the `builder` runs in an "
+"[isolated environment](https://nix.dev/manual/nix/stable/command-ref/conf-"
+"file.html#conf-sandbox) that only allows reading from the Nix store. The Nix "
 "language has built-in features to copy local files to the store and expose "
 "the resulting store paths."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:7
+#: ../../../tutorials/working-with-local-files.md:8
 msgid "Using these features directly can be tricky however:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:9
+#: ../../../tutorials/working-with-local-files.md:10
 msgid ""
 "Coercion of paths to strings, such as the wide-spread pattern of `src = ./."
 "`, makes the derivation dependent on the name of the current directory. "
@@ -44,7 +44,7 @@ msgid ""
 "unneeded files, which causes unnecessary new builds when they change."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:14
+#: ../../../tutorials/working-with-local-files.md:15
 msgid ""
 "The [`builtins.path`](https://nix.dev/manual/nix/stable/language/builtins."
 "html#builtins-path) function (and equivalently [`lib.sources."
@@ -54,7 +54,7 @@ msgid ""
 "interface."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:19
+#: ../../../tutorials/working-with-local-files.md:20
 msgid ""
 "In this tutorial you'll learn how to use the Nixpkgs [`lib.fileset` library]"
 "(https://nixos.org/manual/nixpkgs/stable/#sec-functions-library-fileset) to "
@@ -62,44 +62,44 @@ msgid ""
 "functionality and offers a safer and more convenient interface."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:22
+#: ../../../tutorials/working-with-local-files.md:23
 msgid "File sets"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:24
+#: ../../../tutorials/working-with-local-files.md:25
 msgid ""
 "A _file set_ is a data type representing a collection of local files. File "
 "sets can be created, composed, and manipulated with the various functions of "
 "the library."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:27
+#: ../../../tutorials/working-with-local-files.md:28
 msgid ""
 "You can explore and learn about the library with [`nix repl`](https://nix."
 "dev/manual/nix/stable/command-ref/new-cli/nix3-repl):"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:29
+#: ../../../tutorials/working-with-local-files.md:30
 msgid ""
 "$ nix repl -f channel:nixos-23.11\n"
 "...\n"
 "nix-repl> fs = lib.fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:35
+#: ../../../tutorials/working-with-local-files.md:36
 msgid ""
 "The [`trace`](https://nixos.org/manual/nixpkgs/stable/#function-library-lib."
 "fileset.trace) function pretty-prints the files included in a given file set:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:37
+#: ../../../tutorials/working-with-local-files.md:38
 msgid ""
 "nix-repl> fs.trace ./. null\n"
 "trace: /home/user (all files in directory)\n"
 "null\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:43
+#: ../../../tutorials/working-with-local-files.md:44
 msgid ""
 "All functions that expect a file set for an argument can also accept a [path]"
 "(https://nix.dev/manual/nix/stable/language/values#type-path). Such path "
@@ -109,14 +109,14 @@ msgid ""
 "directory)`."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:48
+#: ../../../tutorials/working-with-local-files.md:49
 msgid ""
 "The `trace` function pretty-prints its first argument and returns its second "
 "argument. But since you often just need the pretty-printing in `nix repl`, "
 "you can omit the second argument:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:51
+#: ../../../tutorials/working-with-local-files.md:52
 msgid ""
 "nix-repl> fs.trace ./.\n"
 "trace: /home/user (all files in directory)\n"
@@ -124,7 +124,7 @@ msgid ""
 "fileset/default.nix:555:8»\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:58
+#: ../../../tutorials/working-with-local-files.md:59
 msgid ""
 "Even though file sets conceptually contain local files, these files are "
 "*never* added to the Nix store unless explicitly requested. Therefore you "
@@ -132,54 +132,54 @@ msgid ""
 "world-readable store."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:61
+#: ../../../tutorials/working-with-local-files.md:62
 msgid ""
-"In this example, although we pretty-printed the home directory, no files "
+"In this example, although you pretty-printed the home directory, no files "
 "were copied. This is in contrast to coercion of paths to strings such as in "
 "`\"${./.}\"`, which copies the whole directory to the Nix store on "
-"evaluation!"
+"evaluation."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:66
+#: ../../../tutorials/working-with-local-files.md:67
 msgid ""
 "When using the [`flakes` and `nix-command` experimental features](https://"
 "nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake), a local directory "
 "within a Flake is always copied into the Nix store *completely* unless it is "
-"a Git repository!"
+"a Git repository."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:70
+#: ../../../tutorials/working-with-local-files.md:71
 msgid "This implicit coercion also works for files:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:72
+#: ../../../tutorials/working-with-local-files.md:73
 msgid "$ touch some-file\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:76
+#: ../../../tutorials/working-with-local-files.md:77
 msgid ""
 "nix-repl> fs.trace ./some-file\n"
 "trace: /home/user\n"
 "trace: - some-file (regular)\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:82
+#: ../../../tutorials/working-with-local-files.md:83
 msgid ""
 "In addition to the included file, this also prints its [file type](https://"
 "nix.dev/manual/nix/stable/language/builtins.html#builtins-readFileType)."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:85
+#: ../../../tutorials/working-with-local-files.md:86
 msgid "Example project"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:87
+#: ../../../tutorials/working-with-local-files.md:88
 msgid ""
 "To further experiment with the library, make a sample project. Create a new "
 "directory, enter it, and set up `npins` to pin the Nixpkgs dependency:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:90
+#: ../../../tutorials/working-with-local-files.md:91
 msgid ""
 "$ mkdir fileset\n"
 "$ cd fileset\n"
@@ -187,15 +187,15 @@ msgid ""
 "nixpkgs --branch nixos-23.11\"\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:96
+#: ../../../tutorials/working-with-local-files.md:97
 msgid "Then create a `default.nix` file with the following contents:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:98
+#: ../../../tutorials/working-with-local-files.md:99
 msgid "default.nix"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:98
+#: ../../../tutorials/working-with-local-files.md:99
 msgid ""
 "{\n"
 "  system ? builtins.currentSystem,\n"
@@ -211,21 +211,21 @@ msgid ""
 "pkgs.callPackage ./build.nix { }"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:114
+#: ../../../tutorials/working-with-local-files.md:115
 msgid "Add two source files to work with:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:116
+#: ../../../tutorials/working-with-local-files.md:117
 msgid ""
 "$ echo hello > hello.txt\n"
 "$ echo world > world.txt\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:121
+#: ../../../tutorials/working-with-local-files.md:122
 msgid "Adding files to the Nix store"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:123
+#: ../../../tutorials/working-with-local-files.md:124
 msgid ""
 "Files in a given file set can be added to the Nix store with [`toSource`]"
 "(https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset."
@@ -234,23 +234,23 @@ msgid ""
 "`fileset` attribute are included in the result."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:127
+#: ../../../tutorials/working-with-local-files.md:128
 msgid "Define `build.nix` as follows:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:129
-#: ../../../tutorials/working-with-local-files.md:178
-#: ../../../tutorials/working-with-local-files.md:249
-#: ../../../tutorials/working-with-local-files.md:305
-#: ../../../tutorials/working-with-local-files.md:369
-#: ../../../tutorials/working-with-local-files.md:415
-#: ../../../tutorials/working-with-local-files.md:456
-#: ../../../tutorials/working-with-local-files.md:539
-#: ../../../tutorials/working-with-local-files.md:581
+#: ../../../tutorials/working-with-local-files.md:130
+#: ../../../tutorials/working-with-local-files.md:179
+#: ../../../tutorials/working-with-local-files.md:250
+#: ../../../tutorials/working-with-local-files.md:306
+#: ../../../tutorials/working-with-local-files.md:370
+#: ../../../tutorials/working-with-local-files.md:416
+#: ../../../tutorials/working-with-local-files.md:457
+#: ../../../tutorials/working-with-local-files.md:540
+#: ../../../tutorials/working-with-local-files.md:582
 msgid "build.nix"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:129
+#: ../../../tutorials/working-with-local-files.md:130
 msgid ""
 "{ stdenv, lib }:\n"
 "let\n"
@@ -273,21 +273,21 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:152
+#: ../../../tutorials/working-with-local-files.md:153
 msgid ""
 "The call to `fs.trace` prints the file set that will be used as a derivation "
 "input."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:154
+#: ../../../tutorials/working-with-local-files.md:155
 msgid "Try building it:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:157
+#: ../../../tutorials/working-with-local-files.md:158
 msgid "It will take a while to fetch Nixpkgs the first time around."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:160
+#: ../../../tutorials/working-with-local-files.md:161
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -301,23 +301,23 @@ msgid ""
 "/nix/store/sa4g6h13v0zbpfw6pzva860kp5aks44n-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:172
+#: ../../../tutorials/working-with-local-files.md:173
 msgid ""
 "But the real benefit of the file set library comes from its facilities for "
 "composing file sets in different ways."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:174
+#: ../../../tutorials/working-with-local-files.md:175
 msgid "Difference"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:176
+#: ../../../tutorials/working-with-local-files.md:177
 msgid ""
 "To be able to copy both files `hello.txt` and `world.txt` to the output, add "
 "the whole project directory as a source again:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:178
+#: ../../../tutorials/working-with-local-files.md:179
 msgid ""
 " { stdenv, lib }:\n"
 " let\n"
@@ -342,12 +342,12 @@ msgid ""
 " }"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:203
-#: ../../../tutorials/working-with-local-files.md:382
+#: ../../../tutorials/working-with-local-files.md:204
+#: ../../../tutorials/working-with-local-files.md:383
 msgid "This will work as expected:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:205
+#: ../../../tutorials/working-with-local-files.md:206
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset (all files in directory)\n"
@@ -362,12 +362,12 @@ msgid ""
 "/nix/store/wmsxfgbylagmf033nkazr3qfc96y7mwk-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:217
+#: ../../../tutorials/working-with-local-files.md:218
 msgid ""
 "However, if you run `nix-build` again, the output path will be different!"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:219
+#: ../../../tutorials/working-with-local-files.md:220
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset (all files in directory)\n"
@@ -382,31 +382,31 @@ msgid ""
 "/nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:231
+#: ../../../tutorials/working-with-local-files.md:232
 msgid ""
 "The problem here is that `nix-build` by default creates a `result` symlink "
 "in the working directory, which points to the store path just produced:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:233
+#: ../../../tutorials/working-with-local-files.md:234
 msgid ""
 "$ ls -l result\n"
 "result -> /nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:238
+#: ../../../tutorials/working-with-local-files.md:239
 msgid ""
 "Since `src` refers to the whole directory, and its contents change when `nix-"
 "build` succeeds, Nix will have to start over every time."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:241
+#: ../../../tutorials/working-with-local-files.md:242
 msgid ""
 "This will also happen without the file set library, e.g. when setting `src "
 "= ./.;` directly."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:244
+#: ../../../tutorials/working-with-local-files.md:245
 msgid ""
 "The [`difference`](https://nixos.org/manual/nixpkgs/stable/#function-library-"
 "lib.fileset.difference) function subtracts one file set from another. The "
@@ -414,12 +414,12 @@ msgid ""
 "that aren't in the second argument."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:247
+#: ../../../tutorials/working-with-local-files.md:248
 msgid ""
 "Use it to filter out `./result` by changing the `sourceFiles` definition:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:249
+#: ../../../tutorials/working-with-local-files.md:250
 msgid ""
 " { stdenv, lib }:\n"
 " let\n"
@@ -429,13 +429,13 @@ msgid ""
 " in"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:259
+#: ../../../tutorials/working-with-local-files.md:260
 msgid ""
 "Building this, the file set library will specify which files are taken from "
 "the directory:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:261
+#: ../../../tutorials/working-with-local-files.md:262
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -455,12 +455,12 @@ msgid ""
 "/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:278
+#: ../../../tutorials/working-with-local-files.md:279
 msgid "An attempt to repeat the build will re-use the existing store path:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:280
-#: ../../../tutorials/working-with-local-files.md:328
+#: ../../../tutorials/working-with-local-files.md:281
+#: ../../../tutorials/working-with-local-files.md:329
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -472,15 +472,15 @@ msgid ""
 "/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:291
+#: ../../../tutorials/working-with-local-files.md:292
 msgid "Missing files"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:293
+#: ../../../tutorials/working-with-local-files.md:294
 msgid "Removing the `./result` symlink creates a new problem, though:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:295
+#: ../../../tutorials/working-with-local-files.md:296
 msgid ""
 "$ rm result\n"
 "$ nix-build\n"
@@ -490,7 +490,7 @@ msgid ""
 "maybeMissing`.\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:303
+#: ../../../tutorials/working-with-local-files.md:304
 msgid ""
 "Follow the instructions in the error message, and use [`maybeMissing`]"
 "(https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset."
@@ -498,7 +498,7 @@ msgid ""
 "case the file set will be empty):"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:305
+#: ../../../tutorials/working-with-local-files.md:306
 msgid ""
 " { stdenv, lib }:\n"
 " let\n"
@@ -508,12 +508,12 @@ msgid ""
 " in"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:315
+#: ../../../tutorials/working-with-local-files.md:316
 msgid ""
 "This now works, using the whole directory since `./result` is not present:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:317
+#: ../../../tutorials/working-with-local-files.md:318
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset (all files in directory)\n"
@@ -523,36 +523,36 @@ msgid ""
 "/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:326
+#: ../../../tutorials/working-with-local-files.md:327
 msgid ""
 "Another build attempt will produce a different trace, but the same output "
 "path:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:339
+#: ../../../tutorials/working-with-local-files.md:340
 msgid "Union (explicitly exclude files)"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:341
+#: ../../../tutorials/working-with-local-files.md:342
 msgid ""
 "There is still a problem: Changing _any_ of the included files causes the "
 "derivation to be built again, even though it doesn't depend on those files."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:344
+#: ../../../tutorials/working-with-local-files.md:345
 msgid "Append an empty line to `build.nix`:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:346
-#: ../../../tutorials/working-with-local-files.md:397
+#: ../../../tutorials/working-with-local-files.md:347
+#: ../../../tutorials/working-with-local-files.md:398
 msgid "$ echo >> build.nix\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:350
+#: ../../../tutorials/working-with-local-files.md:351
 msgid "Again, Nix will start from scratch:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:352
+#: ../../../tutorials/working-with-local-files.md:353
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -566,20 +566,20 @@ msgid ""
 "/nix/store/6pffjljjy3c7kla60nljk3fad4q4kkzn-filesets\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:365
+#: ../../../tutorials/working-with-local-files.md:366
 msgid ""
 "One way to fix this is to use [`unions`](https://nixos.org/manual/nixpkgs/"
 "stable/#function-library-lib.fileset.unions)."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:367
+#: ../../../tutorials/working-with-local-files.md:368
 msgid ""
 "Create a file set containing a union of the files to exclude (`fs.unions "
 "[ ... ]`), and subtract it (`difference`) from the complete directory (`./."
 "`):"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:369
+#: ../../../tutorials/working-with-local-files.md:370
 msgid ""
 "  sourceFiles =\n"
 "    fs.difference\n"
@@ -592,7 +592,7 @@ msgid ""
 "      ]);"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:384
+#: ../../../tutorials/working-with-local-files.md:385
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -604,14 +604,14 @@ msgid ""
 "/nix/store/ckn40y7hgqphhbhyrq64h9r6rvdh973r-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:395
+#: ../../../tutorials/working-with-local-files.md:396
 msgid ""
 "Changing any of the excluded files now doesn't necessarily cause a new build "
 "anymore:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:401
-#: ../../../tutorials/working-with-local-files.md:431
+#: ../../../tutorials/working-with-local-files.md:402
+#: ../../../tutorials/working-with-local-files.md:432
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -620,22 +620,22 @@ msgid ""
 "/nix/store/ckn40y7hgqphhbhyrq64h9r6rvdh973r-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:409
+#: ../../../tutorials/working-with-local-files.md:410
 msgid "Filter"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:411
+#: ../../../tutorials/working-with-local-files.md:412
 msgid ""
 "The [`fileFilter`](https://nixos.org/manual/nixpkgs/stable/#function-library-"
 "lib.fileset.fileFilter) function allows filtering file sets such that each "
 "included file satisfies the given criteria."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:413
+#: ../../../tutorials/working-with-local-files.md:414
 msgid "Use it to select all files with a name ending in `.nix`:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:415
+#: ../../../tutorials/working-with-local-files.md:416
 msgid ""
 "   sourceFiles =\n"
 "     fs.difference\n"
@@ -649,11 +649,11 @@ msgid ""
 "       ]);"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:429
+#: ../../../tutorials/working-with-local-files.md:430
 msgid "This does not change the result, even if we add a new `.nix` file."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:439
+#: ../../../tutorials/working-with-local-files.md:440
 msgid ""
 "Notably, the approach of using `difference ./.` explicitly selects the files "
 "to _exclude_, which means that new files added to the source directory are "
@@ -661,32 +661,32 @@ msgid ""
 "than the alternative in the next section."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:442
+#: ../../../tutorials/working-with-local-files.md:443
 msgid "Union (explicitly include files)"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:444
+#: ../../../tutorials/working-with-local-files.md:445
 msgid ""
 "To contrast the previous approach, `unions` can also be used to select only "
 "the files to _include_. This means that new files added to the current "
 "directory would be ignored by default."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:447
+#: ../../../tutorials/working-with-local-files.md:448
 msgid "Create some additional files:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:449
+#: ../../../tutorials/working-with-local-files.md:450
 msgid ""
 "$ mkdir src\n"
 "$ touch build.sh src/select.{c,h}\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:454
+#: ../../../tutorials/working-with-local-files.md:455
 msgid "Then create a file set from only the files to be included explicitly:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:456
+#: ../../../tutorials/working-with-local-files.md:457
 msgid ""
 "{ stdenv, lib }:\n"
 "let\n"
@@ -716,13 +716,13 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:486
+#: ../../../tutorials/working-with-local-files.md:487
 msgid ""
 "The `postInstall` script is simplified to rely on the sources to be pre-"
 "filtered appropriately:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:488
+#: ../../../tutorials/working-with-local-files.md:489
 msgid ""
 "$ nix-build\n"
 "trace: /home/user/fileset\n"
@@ -749,11 +749,11 @@ msgid ""
 "/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:509
+#: ../../../tutorials/working-with-local-files.md:510
 msgid "Only the specified files are used, even when a new one is added:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:511
+#: ../../../tutorials/working-with-local-files.md:512
 msgid ""
 "$ touch src/select.o README.md\n"
 "\n"
@@ -767,24 +767,24 @@ msgid ""
 "/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:524
+#: ../../../tutorials/working-with-local-files.md:525
 msgid "Matching files tracked by Git"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:526
+#: ../../../tutorials/working-with-local-files.md:527
 msgid ""
 "If a directory is part of a Git repository, passing it to [`gitTracked`]"
 "(https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset."
 "gitTracked) gives you a file set that only includes files tracked by Git."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:528
+#: ../../../tutorials/working-with-local-files.md:529
 msgid ""
 "Create a local Git repository and add all files except `src/select.o` and `./"
 "result` to it:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:530
+#: ../../../tutorials/working-with-local-files.md:531
 msgid ""
 "$ git init\n"
 "Initialized empty Git repository in /home/user/fileset/.git/\n"
@@ -792,19 +792,19 @@ msgid ""
 "$ git reset src/select.o result\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:537
+#: ../../../tutorials/working-with-local-files.md:538
 msgid "Re-use this selection of files with `gitTracked`:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:539
+#: ../../../tutorials/working-with-local-files.md:540
 msgid "  sourceFiles = fs.gitTracked ./.;"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:544
+#: ../../../tutorials/working-with-local-files.md:545
 msgid "Build it again:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:546
+#: ../../../tutorials/working-with-local-files.md:547
 msgid ""
 "$ nix-build\n"
 "warning: Git tree '/home/user/fileset' is dirty\n"
@@ -825,37 +825,37 @@ msgid ""
 "/nix/store/cw4bza1r27iimzrdbfl4yn5xr36d6k5l-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:566
+#: ../../../tutorials/working-with-local-files.md:567
 msgid ""
 "This includes too much though, as not all of these files are needed to build "
 "the derivation as originally intended."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:569
+#: ../../../tutorials/working-with-local-files.md:570
 msgid ""
 "When using the [`flakes` and `nix-command` experimental features](https://"
 "nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake), this function "
 "isn't needed, because `nix build` by default only allows access to files "
-"tracked by Git. However, in order to provide the same developer experience "
-"for stable Nix, use of this function is nevertheless recommended."
+"tracked by Git. However, to provide the same developer experience for stable "
+"Nix, use of this function is nevertheless recommended."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:574
+#: ../../../tutorials/working-with-local-files.md:575
 msgid "Intersection"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:576
+#: ../../../tutorials/working-with-local-files.md:577
 msgid ""
 "This is where `intersection` comes in. It allows creating a file set that "
 "consists only of files that are in _both_ of two given file sets."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:579
+#: ../../../tutorials/working-with-local-files.md:580
 msgid ""
 "Select all files that are both tracked by Git *and* relevant for the build:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:581
+#: ../../../tutorials/working-with-local-files.md:582
 msgid ""
 "  sourceFiles =\n"
 "    fs.intersection\n"
@@ -868,13 +868,13 @@ msgid ""
 "      ]);"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:594
+#: ../../../tutorials/working-with-local-files.md:595
 msgid ""
 "This will produce the same output as in the other approach and therefore re-"
 "use a previous build result:"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:596
+#: ../../../tutorials/working-with-local-files.md:597
 msgid ""
 "$ nix-build\n"
 "warning: Git tree '/home/user/fileset' is dirty\n"
@@ -887,17 +887,17 @@ msgid ""
 "/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset\n"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:608
+#: ../../../tutorials/working-with-local-files.md:609
 msgid "Conclusion"
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:610
+#: ../../../tutorials/working-with-local-files.md:611
 msgid ""
 "We have shown some examples on how to use all of the fundamental file set "
 "functions. For more complex use cases, they can be composed as needed."
 msgstr ""
 
-#: ../../../tutorials/working-with-local-files.md:613
+#: ../../../tutorials/working-with-local-files.md:614
 msgid ""
 "For the complete list and more details, see the [`lib.fileset` reference "
 "documentation](https://nixos.org/manual/nixpkgs/stable/#sec-functions-"

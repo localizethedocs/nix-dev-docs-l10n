@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,9 +89,7 @@ msgid "What can you do with Nix?"
 msgstr "您可以用 Nix 做什麼？"
 
 #: ../../../index.md:55
-msgid ""
-"The following list illustrates some of what can be achieved with the Nix "
-"ecosystem:"
+msgid "With the Nix ecosystem, you can:"
 msgstr ""
 
 #: ../../../index.md:57

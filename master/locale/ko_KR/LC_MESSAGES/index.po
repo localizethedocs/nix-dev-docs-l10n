@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -91,10 +91,8 @@ msgid "What can you do with Nix?"
 msgstr "Nix로 무엇을 할 수 있나요?"
 
 #: ../../../index.md:55
-msgid ""
-"The following list illustrates some of what can be achieved with the Nix "
-"ecosystem:"
-msgstr "다음 목록은 Nix 생태계로 달성할 수 있는 것들을 보여줍니다:"
+msgid "With the Nix ecosystem, you can:"
+msgstr ""
 
 #: ../../../index.md:57
 msgid "{ref}`Reproducible development environments <ad-hoc-envs>`."
@@ -221,3 +219,8 @@ msgstr "이공계 학생"
 #: ../../../index.md:90
 msgid "Open source software enthusiast"
 msgstr "오픈소스 소프트웨어 애호가"
+
+#~ msgid ""
+#~ "The following list illustrates some of what can be achieved with the Nix "
+#~ "ecosystem:"
+#~ msgstr "다음 목록은 Nix 생태계로 달성할 수 있는 것들을 보여줍니다:"
