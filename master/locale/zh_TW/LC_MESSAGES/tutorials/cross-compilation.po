@@ -627,8 +627,3 @@ msgid ""
 "autoconf/manual/autoconf-2.69/html_node/Hosts-and-Cross_002dCompilation."
 "html)."
 msgstr ""
-
-#~ msgid ""
-#~ "Nixpkgs offers powerful tools to cross-compile software for various "
-#~ "system types."
-#~ msgstr "Nixpkgs 提供強大的工具，可為各種系統類型交叉編譯軟體。"

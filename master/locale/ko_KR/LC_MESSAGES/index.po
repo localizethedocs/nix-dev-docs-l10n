@@ -219,8 +219,3 @@ msgstr "이공계 학생"
 #: ../../../index.md:90
 msgid "Open source software enthusiast"
 msgstr "오픈소스 소프트웨어 애호가"
-
-#~ msgid ""
-#~ "The following list illustrates some of what can be achieved with the Nix "
-#~ "ecosystem:"
-#~ msgstr "다음 목록은 Nix 생태계로 달성할 수 있는 것들을 보여줍니다:"
