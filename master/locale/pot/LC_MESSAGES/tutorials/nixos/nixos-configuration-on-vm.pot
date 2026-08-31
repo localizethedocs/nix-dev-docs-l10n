@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-08-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,8 @@ msgstr ""
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:7
 msgid ""
 "NixOS configurations can be used to test and use NixOS using a virtual "
-"machine, independent of an installation on a \"bare metal\" computer."
+"machine, which is a lighter weight option compared to a full \"bare metal\" "
+"installation."
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:9
