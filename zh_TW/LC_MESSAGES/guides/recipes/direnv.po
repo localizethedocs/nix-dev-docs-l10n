@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/recipes/direnv.md:2
+msgid "Automatic environment activation with `direnv`"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:4
+msgid ""
+"Instead of manually activating the environment for each project, you can "
+"reload a [declarative shell](declarative-reproducible-envs) every time you "
+"enter the project's directory or change the `shell.nix` inside it."
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:6
+msgid ""
+"[Make nix-direnv available](https://github.com/nix-community/nix-direnv)"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:7
+msgid "[Hook it into your shell](https://direnv.net/docs/hook.html)"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:9
+msgid "For example, write a `shell.nix` with the following contents:"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:11
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"nixos-23.11\";\n"
+"  pkgs = import nixpkgs { config = {}; overlays = []; };\n"
+"in\n"
+"\n"
+"pkgs.mkShellNoCC {\n"
+"  packages = with pkgs; [\n"
+"    hello\n"
+"  ];\n"
+"}\n"
+msgstr ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"nixos-23.11\";\n"
+"  pkgs = import nixpkgs { config = {}; overlays = []; };\n"
+"in\n"
+"\n"
+"pkgs.mkShellNoCC {\n"
+"  packages = with pkgs; [\n"
+"    hello\n"
+"  ];\n"
+"}\n"
+
+#: ../../../guides/recipes/direnv.md:24
+msgid "From the top-level directory of your project, run:"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:26
+msgid "$ echo \"use nix\" > .envrc && direnv allow\n"
+msgstr "$ echo \"use nix\" > .envrc && direnv allow\n"
+
+#: ../../../guides/recipes/direnv.md:30
+msgid ""
+"The next time you launch your terminal and enter the top-level directory of "
+"your project, `direnv` will automatically launch the shell defined in `shell."
+"nix`."
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:32
+msgid ""
+"$ cd myproject\n"
+"$ which hello\n"
+"/nix/store/1gxz5nfzfnhyxjdyzi04r86sh61y4i00-hello-2.12.1/bin/hello\n"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:38
+msgid "`direnv` will also check for changes to the `shell.nix` file."
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:40
+msgid "Make the following addition:"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:42
+msgid ""
+" let\n"
+"   nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"nixos-23.11\";\n"
+"   pkgs = import nixpkgs { config = {}; overlays = []; };\n"
+" in\n"
+"\n"
+" pkgs.mkShellNoCC {\n"
+"   packages = with pkgs; [\n"
+"     hello\n"
+"   ];\n"
+"+\n"
+"+  shellHook = ''\n"
+"+    hello\n"
+"+  '';\n"
+" }\n"
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:59
+msgid ""
+"The running environment should reload itself after the first interaction "
+"(run any command or press `Enter`)."
+msgstr ""
+
+#: ../../../guides/recipes/direnv.md:61
+msgid "Hello, world!\n"
+msgstr ""

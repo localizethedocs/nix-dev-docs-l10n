@@ -1,0 +1,174 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-16 08:44+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../install-nix.md:3
+msgid "Install Nix"
+msgstr "Nix 설치"
+
+#: ../../../install-nix.md:4
+msgid "Requirements:"
+msgstr "요구사항:"
+
+#: ../../../install-nix.md:5
+msgid ""
+"Prior to installation, you might first need to install `xz-utils` or similar "
+"for decompressing the Nix binary tarball (`.tar.xz`) that will be downloaded "
+"via the scripts below."
+msgstr ""
+"설치에 앞서, 아래 스크립트를 통해 다운로드할 Nix 바이너리 tarball(`.tar.xz`)"
+"의 압축을 해제하려면 `xz-utils` 또는 이와 유사한 도구를 먼저 설치해야 합니다."
+
+#: ../../../install-nix.md:0
+msgid "Linux"
+msgstr "Linux"
+
+#: ../../../install-nix.md:12 ../../../install-nix.md:26
+msgid "Install Nix via the recommended [multi-user installation]:"
+msgstr ""
+"권장 방식인 [다중 사용자(multi-user) 설치](https://nix.dev/manual/nix/stable/"
+"installation/multi-user.html)를 통해 Nix를 설치합니다:"
+
+#: ../../../install-nix.md:14 ../../../install-nix.md:54
+msgid "$ curl -L https://nixos.org/nix/install | sh -s -- --daemon\n"
+msgstr "$ curl -L https://nixos.org/nix/install | sh -s -- --daemon\n"
+
+#: ../../../install-nix.md:18
+msgid ""
+"On Arch Linux, you can alternatively [install Nix through `pacman`](https://"
+"wiki.archlinux.org/title/Nix#Installation)."
+msgstr ""
+"Arch Linux의 경우, [`pacman`을 통해 Nix를 설치](https://wiki.archlinux.org/"
+"title/Nix#Installation)할 수도 있습니다."
+
+#: ../../../install-nix.md:20
+msgid ""
+"On Fedora, you can [install Nix via `dnf`](https://src.fedoraproject.org/"
+"rpms/nix)."
+msgstr ""
+
+#: ../../../install-nix.md:0
+msgid "macOS"
+msgstr "macOS"
+
+#: ../../../install-nix.md:28
+msgid "$ curl -L https://nixos.org/nix/install | sh\n"
+msgstr "$ curl -L https://nixos.org/nix/install | sh\n"
+
+#: ../../../install-nix.md:33
+msgid "**Updating to macOS 15 Sequoia**"
+msgstr "**macOS 15 Sequoia 업데이트**"
+
+#: ../../../install-nix.md:35
+msgid "If you recently updated to macOS 15 Sequoia and are getting the error"
+msgstr ""
+"최근 macOS 15 Sequoia로 업데이트한 후 Nix 명령어를 실행할 때 다음 오류가 발생"
+"한다면"
+
+#: ../../../install-nix.md:36
+msgid "error: the user '_nixbld1' in the group 'nixbld' does not exist\n"
+msgstr "error: the user '_nixbld1' in the group 'nixbld' does not exist\n"
+
+#: ../../../install-nix.md:39
+msgid ""
+"when running Nix commands, refer to GitHub issue [NixOS/nix#10892](https://"
+"github.com/NixOS/nix/issues/10892) for instructions to fix your installation "
+"without reinstalling."
+msgstr ""
+"Nix를 재설치하지 않고 문제를 해결하는 방법은 GitHub 이슈 [NixOS/nix#10892]"
+"(https://github.com/NixOS/nix/issues/10892)를 참고하세요."
+
+#: ../../../install-nix.md:0
+msgid "Windows (WSL2)"
+msgstr "Windows (WSL2)"
+
+#: ../../../install-nix.md:46
+msgid "Install Nix via the recommended [single-user installation]:"
+msgstr "권장 방식인 [단일 사용자(single-user) 설치]를 통해 Nix를 설치합니다:"
+
+#: ../../../install-nix.md:48
+msgid "$ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon\n"
+msgstr "$ curl -L https://nixos.org/nix/install | sh -s -- --no-daemon\n"
+
+#: ../../../install-nix.md:52
+msgid ""
+"However, if you have [systemd support] enabled, install Nix via the "
+"recommended [multi-user installation]:"
+msgstr ""
+"하지만 [systemd 지원]이 활성화되어 있다면, 권장 방식인 [다중 사용자(multi-"
+"user) 설치](https://nix.dev/manual/nix/stable/installation/multi-user.html)"
+"를 통해 Nix를 설치합니다:"
+
+#: ../../../install-nix.md:0
+msgid "Docker"
+msgstr "Docker"
+
+#: ../../../install-nix.md:64
+msgid "Start a Docker shell with Nix:"
+msgstr "Nix가 포함된 Docker 쉘 시작:"
+
+#: ../../../install-nix.md:66
+msgid "$ docker run -it nixos/nix\n"
+msgstr "$ docker run -it nixos/nix\n"
+
+#: ../../../install-nix.md:70
+msgid "Or start a Docker shell with Nix exposing a `workdir` directory:"
+msgstr "또는 `workdir` 디렉토리를 노출해 Nix가 포함된 Docker 쉘 시작:"
+
+#: ../../../install-nix.md:72
+msgid ""
+"$ mkdir workdir\n"
+"$ docker run -it -v $(pwd)/workdir:/workdir nixos/nix\n"
+msgstr ""
+"$ mkdir workdir\n"
+"$ docker run -it -v $(pwd)/workdir:/workdir nixos/nix\n"
+
+#: ../../../install-nix.md:77
+msgid ""
+"The `workdir` example from above can also be used to start hacking on "
+"Nixpkgs:"
+msgstr ""
+"위의 `workdir` 예제는 Nixpkgs 작업을 시작하는 데에도 사용할 수 있습니다:"
+
+#: ../../../install-nix.md:79
+msgid ""
+"$ git clone git@github.com:NixOS/nixpkgs\n"
+"$ docker run -it -v $(pwd)/nixpkgs:/nixpkgs nixos/nix\n"
+"bash-5.1# nix-build -I nixpkgs=/nixpkgs -A hello\n"
+"bash-5.1# find ./result # this symlink points to the build package\n"
+msgstr ""
+"$ git clone git@github.com:NixOS/nixpkgs\n"
+"$ docker run -it -v $(pwd)/nixpkgs:/nixpkgs nixos/nix\n"
+"bash-5.1# nix-build -I nixpkgs=/nixpkgs -A hello\n"
+"bash-5.1# find ./result # this symlink points to the build package\n"
+
+#: ../../../install-nix.md:89
+msgid "Verify installation"
+msgstr "설치 확인"
+
+#: ../../../install-nix.md:91
+msgid "Check the installation by opening **a new terminal** and typing:"
+msgstr "**새 터미널**을 열고 다음을 입력해 설치를 확인하세요:"
+
+#: ../../../install-nix.md:93
+msgid ""
+"$ nix --version\n"
+"nix (Nix) 2.11.0\n"
+msgstr ""
+"$ nix --version\n"
+"nix (Nix) 2.11.0\n"
