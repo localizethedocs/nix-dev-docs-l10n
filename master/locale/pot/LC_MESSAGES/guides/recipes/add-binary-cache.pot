@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-08-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,11 +32,17 @@ msgstr ""
 
 #: ../../../guides/recipes/add-binary-cache.md:7
 msgid ""
-"Follow the tutorial to [set up an HTTP binary cache](setup-http-binary-"
-"cache) and create a key pair for signing store objects."
+"Nix will accept any requested store object signed with private keys "
+"corresponding to the configured public keys. Access to those private keys "
+"thus allows substituting arbitrary files into your Nix store. This includes "
+"executables that may run with elevated privileges or automatically!"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:10
+#: ../../../guides/recipes/add-binary-cache.md:11
+msgid "Only add public keys you trust unconditionally."
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:14
 msgid ""
 "For example, given a binary cache at `https://example.org` with public key "
 "`My56...Q==%`, and some derivation in `default.nix`, make Nix exclusively "
@@ -44,13 +50,13 @@ msgid ""
 "dev/manual/nix/latest/command-ref/conf-file#command-line-flags):"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:12
+#: ../../../guides/recipes/add-binary-cache.md:16
 msgid ""
 "$ nix-build --substituters https://example.org --trusted-public-keys example."
 "org:My56...Q==%\n"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:16
+#: ../../../guides/recipes/add-binary-cache.md:20
 msgid ""
 "To permanently configure trying the custom cache before the public cache, "
 "add it as `extra-substiters` with lower `priority` value to the [Nix "
@@ -58,7 +64,7 @@ msgid ""
 "file#configuration-file):"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:18
+#: ../../../guides/recipes/add-binary-cache.md:22
 msgid ""
 "$ echo \"extra-substituters = https://example.org?priority=30\" >> /etc/nix/"
 "nix.conf\n"
@@ -66,28 +72,28 @@ msgid ""
 "nix.conf\n"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:23
+#: ../../../guides/recipes/add-binary-cache.md:27
 msgid "To always use only the custom cache:"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:25
+#: ../../../guides/recipes/add-binary-cache.md:29
 msgid ""
 "$ echo \"substituters = https://example.org\" >> /etc/nix/nix.conf\n"
 "$ echo \"trusted-public-keys = example.org:My56...Q==%\" >> /etc/nix/nix."
 "conf\n"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:30
+#: ../../../guides/recipes/add-binary-cache.md:34
 msgid "NixOS"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:31
+#: ../../../guides/recipes/add-binary-cache.md:35
 msgid ""
 "On NixOS, Nix is configured through the [`nix.settings`](https://search."
 "nixos.org/options?show=nix.settings) option:"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:33
+#: ../../../guides/recipes/add-binary-cache.md:37
 msgid ""
 "{ ... }: {\n"
 "  nix.settings = {\n"
@@ -97,7 +103,17 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../guides/recipes/add-binary-cache.md:44
+#: ../../../guides/recipes/add-binary-cache.md:47
+msgid "Next steps"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:49
+msgid ""
+"Follow the tutorial to [set up your own HTTP binary cache](setup-http-binary-"
+"cache)"
+msgstr ""
+
+#: ../../../guides/recipes/add-binary-cache.md:52
 msgid ""
 "Use [remote build machines](distributed-build-setup-tutorial) as preferred "
 "binary caches to reduce your external traffic."

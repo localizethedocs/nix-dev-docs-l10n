@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-08-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -205,26 +205,53 @@ msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:112
 msgid ""
-"NixOS relies on the `NIX_PATH` environment variable to locate `nixpkgs`, "
-"which defaults to using channels. To instead use a `nixpkgs` version managed "
-"by `npins`, one can manually override this environment variable on system "
-"rebuilds:"
+"NixOS defaults to using channels to locate `nixpkgs`. You can instead pin a "
+"version using `npins` from the `system.nix` entrypoint (available since "
+"26.05):"
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:115
+msgid ""
+"let\n"
+"  sources = import ./npins;\n"
+"in\n"
+"import \"${sources.nixpkgs}/nixos\" {\n"
+"  configuration = ./configuration.nix;\n"
+"}\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:124
+msgid "Before NixOS 26.05's `system.nix` use:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:126
 msgid ""
 "sudo NIX_PATH=\"nixos-config=configuration.nix:nixpkgs=$(nix-instantiate --"
 "raw --eval npins -A nixpkgs.outPath)\" nixos-rebuild switch\n"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:119
+#: ../../../guides/recipes/dependency-management.md:130
+msgid ""
+"If you use npins with `system.nix`, disable channels in your configuration:"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:132
+msgid ""
+"# configuration.nix\n"
+"{\n"
+"  # ...\n"
+"  nix.channel.enable = false;\n"
+"}\n"
+msgstr ""
+
+#: ../../../guides/recipes/dependency-management.md:140
 msgid ""
 "To make such pinned dependencies available as [look-up paths](https://nix."
 "dev/tutorials/nix-language.html#lookup-paths) (like `<nixpkgs>`) while using "
 "the NixOS configuration, one may use:"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:121
+#: ../../../guides/recipes/dependency-management.md:142
 msgid ""
 "# configuration.nix\n"
 "{ lib, ... }:\n"
@@ -233,19 +260,18 @@ msgid ""
 "in\n"
 "{\n"
 "  # ...\n"
-"  nix.channel.enable = false;\n"
 "  nix.nixPath = lib.mapAttrsToList (k: v: \"${k}=${v}\") sources;\n"
 "}\n"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:134
+#: ../../../guides/recipes/dependency-management.md:154
 msgid ""
 "To use the [v3 command line] and run programs from dependencies exposing "
 "packages through a [flake], like `nix run nixpkgs#hello`, you can enable "
 "flakes and add the pins to the flake registry like:"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:138
+#: ../../../guides/recipes/dependency-management.md:158
 msgid ""
 "# configuration.nix\n"
 "{ lib, ... }:\n"
@@ -263,19 +289,19 @@ msgid ""
 "  }) sources;\n"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:158
+#: ../../../guides/recipes/dependency-management.md:178
 msgid "Next steps"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:160
+#: ../../../guides/recipes/dependency-management.md:180
 msgid "Check the built-in help for more information:"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:162
+#: ../../../guides/recipes/dependency-management.md:182
 msgid "npins --help\n"
 msgstr ""
 
-#: ../../../guides/recipes/dependency-management.md:166
+#: ../../../guides/recipes/dependency-management.md:186
 msgid ""
 "For more details and examples of the different ways to specify remote "
 "sources, see [](pinning-nixpkgs)."

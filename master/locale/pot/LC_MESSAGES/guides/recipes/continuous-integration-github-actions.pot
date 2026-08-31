@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-08-31 15:36+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,24 +104,29 @@ msgid "Click on `Settings`."
 msgstr ""
 
 #: ../../../guides/recipes/continuous-integration-github-actions.md:39
-msgid "Click on `Secrets`."
+msgid ""
+"Click on `Secrets and variables` and click on `Actions` in dropdown list"
 msgstr ""
 
 #: ../../../guides/recipes/continuous-integration-github-actions.md:40
+msgid "Click on `New repository secret`."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:41
 msgid ""
 "Add your previously generated secrets (`CACHIX_SIGNING_KEY` and/or "
 "`CACHIX_AUTH_TOKEN`)."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:42
+#: ../../../guides/recipes/continuous-integration-github-actions.md:43
 msgid "3. Setting up GitHub Actions"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:44
+#: ../../../guides/recipes/continuous-integration-github-actions.md:45
 msgid "Create `.github/workflows/test.yml` with:"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:46
+#: ../../../guides/recipes/continuous-integration-github-actions.md:47
 msgid ""
 "name: \"Test\"\n"
 "on:\n"
@@ -147,23 +152,23 @@ msgid ""
 "    - run: nix-shell --run \"echo OK\"\n"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:70
+#: ../../../guides/recipes/continuous-integration-github-actions.md:71
 msgid ""
 "Once you commit and push to your GitHub repository, you should see status "
 "checks appearing on commits and PRs."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:73
+#: ../../../guides/recipes/continuous-integration-github-actions.md:74
 msgid "Next steps"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:75
+#: ../../../guides/recipes/continuous-integration-github-actions.md:76
 msgid ""
 "See [GitHub Actions workflow syntax](https://docs.github.com/en/actions/"
 "reference/workflow-syntax-for-github-actions)"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:76
+#: ../../../guides/recipes/continuous-integration-github-actions.md:77
 msgid ""
 "To quickly set up a Nix project read through [Getting started Nix template]"
 "(https://github.com/nix-dot-dev/getting-started-nix-template)."
