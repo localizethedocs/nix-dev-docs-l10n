@@ -1,0 +1,786 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Setting up a binary cache for store objects" lang="en" name="description" xml:lang="en" />
+<meta content="Nix, caching" name="keywords" />
+
+    <title>Setting up an HTTP binary cache &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=cbf116e0"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/nixos/binary-cache-setup';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/nixos/binary-cache-setup.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜尋" href="../../search.html" />
+    <link rel="next" title="Setting up distributed builds" href="distributed-builds-setup.html" />
+    <link rel="prev" title="使用 Terraform 部署 NixOS" href="deploying-nixos-using-terraform.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">NixOS</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/nixos/binary-cache-setup.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Setting up an HTTP binary cache</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-will-it-take">How long will it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-services">Set up services</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-signing-key-pair">Generate a signing key pair</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-availability">Test availability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-general-availability">Check general availability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-store-object-signing">Check store object signing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-the-binary-cache-via-https">Serving the binary cache via HTTPS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives">Alternatives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="setting-up-an-http-binary-cache">
+<span id="setup-http-binary-cache"></span><h1>Setting up an HTTP binary cache<a class="headerlink" href="#setting-up-an-http-binary-cache" title="連結到這個標頭">#</a></h1>
+<p>A binary cache stores pre-built <a class="reference external" href="https://nix.dev/manual/nix/latest/store/store-object">Nix store objects</a> and provides them to other machines over the network.
+Any machine with a Nix store can be a binary cache for other machines.</p>
+<section id="introduction">
+<h2>簡介<a class="headerlink" href="#introduction" title="連結到這個標頭">#</a></h2>
+<p>In this tutorial you set up a Nix binary cache that serves store objects from a NixOS machine over HTTP or HTTPS.</p>
+<section id="what-will-you-learn">
+<h3>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h3>
+<p>您將會學到如何：</p>
+<ul class="simple">
+<li><p>Set up signing keys for your cache</p></li>
+<li><p>Enable the right services on the NixOS machine serving the cache</p></li>
+<li><p>Check that the setup works as intended</p></li>
+</ul>
+</section>
+<section id="what-do-you-need">
+<h3>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h3>
+<ul>
+<li><p>A working <a class="reference internal" href="../../install-nix.html#install-nix"><span class="std std-ref">Nix installation</span></a> on your local machine</p></li>
+<li><p>SSH access to a NixOS machine to use as a cache</p>
+<p>If you're new to NixOS, learn about the <a class="reference internal" href="../module-system/index.html#module-system-tutorial"><span class="std std-ref">module system</span></a> and configure your first system with <a class="reference internal" href="nixos-configuration-on-vm.html#nixos-vms"><span class="std std-ref">NixOS 虛擬機</span></a>.</p>
+</li>
+<li><p>(optional) A public IP and DNS domain</p>
+<p>If you don't host yourself, check <a class="reference external" href="https://wiki.nixos.org/wiki/NixOS_friendly_hosters">NixOS-friendly hosters</a> on the NixOS Wiki.
+Follow the tutorial on <a class="reference internal" href="provisioning-remote-machines.html#provisioning-remote-machines-tutorial"><span class="std std-ref">Provisioning remote machines via SSH</span></a> to deploy your NixOS configuration.</p>
+</li>
+</ul>
+<p>For a cache on a local network, we assume:</p>
+<ul class="simple">
+<li><p>The hostname is <code class="docutils literal notranslate"><span class="pre">cache</span></code> (replace it with yours, or an IP address)</p></li>
+<li><p>The host serves store objects via HTTP on port 80 (this is the default)</p></li>
+</ul>
+<p>For a publicly accessible cache, we assume:</p>
+<ul class="simple">
+<li><p>The domain name is <code class="docutils literal notranslate"><span class="pre">cache.example.com</span></code> (replace it with yours)</p></li>
+<li><p>The host serves store objects via HTTPS on port 443 (this is the default)</p></li>
+</ul>
+</section>
+<section id="how-long-will-it-take">
+<h3>How long will it take?<a class="headerlink" href="#how-long-will-it-take" title="連結到這個標頭">#</a></h3>
+<ul class="simple">
+<li><p>25 分鐘</p></li>
+</ul>
+</section>
+</section>
+<section id="set-up-services">
+<h2>Set up services<a class="headerlink" href="#set-up-services" title="連結到這個標頭">#</a></h2>
+<p>For the NixOS machine hosting the cache, create a new configuration module in <code class="docutils literal notranslate"><span class="pre">binary-cache.nix</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  services<span class="o">.</span><span class="ss">nix-serve</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">secretKeyFile</span> <span class="o">=</span> <span class="s2">&quot;/var/secrets/cache-private-key.pem&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  services<span class="o">.</span><span class="ss">nginx</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    <span class="ss">recommendedProxySettings</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+    virtualHosts<span class="o">.</span><span class="ss">cache</span> <span class="o">=</span> <span class="p">{</span>
+      locations<span class="o">.</span><span class="s2">&quot;/&quot;</span><span class="o">.</span><span class="ss">proxyPass</span> <span class="o">=</span> <span class="s2">&quot;http://</span><span class="si">${</span>config<span class="o">.</span>services<span class="o">.</span>nix-serve<span class="o">.</span>bindAddress<span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nb">toString</span> config<span class="o">.</span>services<span class="o">.</span>nix-serve<span class="o">.</span>port<span class="si">}</span><span class="s2">&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  networking<span class="o">.</span>firewall<span class="o">.</span><span class="ss">allowedTCPPorts</span> <span class="o">=</span> <span class="p">[</span>
+    config<span class="o">.</span>services<span class="o">.</span>nginx<span class="o">.</span>defaultHTTPListenPort
+  <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The options under <a class="reference external" href="https://search.nixos.org/options?query=services.nix-serve"><code class="docutils literal notranslate"><span class="pre">services.nix-serve</span></code></a> configure the binary cache service.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nix-serve</span></code> doesn't support IPv6 or SSL/HTTPS.
+The <a class="reference external" href="https://search.nixos.org/options?query=services.nginx"><code class="docutils literal notranslate"><span class="pre">services.nginx</span></code></a> options are used to set up a proxy, which does support IPv6, to handle requests to the hostname <code class="docutils literal notranslate"><span class="pre">cache</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>There is an <a class="reference internal" href="#https-binary-cache"><span class="std std-ref">optional HTTPS section</span></a> at the end of this tutorial.</p>
+</div>
+<p>Add the new NixOS module to the existing machine configuration:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+
+<span class="p">{</span>
+  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="l">./binary-cache.nix</span>
+  <span class="p">];</span>
+
+  <span class="c1"># ...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>From your local machine, deploy the new configuration:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nixos-rebuild switch --no-flake --target-host root@cache</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>The binary cache daemon will report errors because there is no secret key file yet.</p>
+</div>
+</section>
+<section id="generate-a-signing-key-pair">
+<h2>Generate a signing key pair<a class="headerlink" href="#generate-a-signing-key-pair" title="連結到這個標頭">#</a></h2>
+<p>You need a pair of private and public keys to ensure that the store objects in the cache are authentic.</p>
+<!-- TODO: link to the remote builds tutorial for the case where store objects are signed after building them -->
+<p>To generate a key pair for the binary cache, replace the example hostname <code class="docutils literal notranslate"><span class="pre">cache.example.com</span></code> with your hostname:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-store --generate-binary-cache-key cache.example.com cache-private-key.pem cache-public-key.pem</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cache-private-key.pem</span></code> will be used by the binary cache daemon to sign the binaries as they are served.
+Copy it to the location configured in <code class="docutils literal notranslate"><span class="pre">services.nix-serve.secretKeyFile</span></code> on the machine hosting the cache:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">scp cache-private-key.pem root@cache:/var/secrets/cache-private-key.pem</span>
+</pre></div>
+</div>
+<p>Up until now, the binary cache daemon was in a restart loop due to the missing secret key file.
+Check that it now works correctly:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">ssh root@cache systemctl status nix-serve.service</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p><a class="reference internal" href="../../guides/recipes/add-binary-cache.html#custom-binary-cache"><span class="std std-ref">Configure Nix to use a custom binary cache</span></a> using <code class="docutils literal notranslate"><span class="pre">cache-public-key.pem</span></code> on your local machine.</p>
+</div>
+</section>
+<section id="test-availability">
+<h2>Test availability<a class="headerlink" href="#test-availability" title="連結到這個標頭">#</a></h2>
+<p>The following steps check if everything is set up correctly and may help with identifying problems.</p>
+<section id="check-general-availability">
+<h3>Check general availability<a class="headerlink" href="#check-general-availability" title="連結到這個標頭">#</a></h3>
+<p>Test if the binary cache, reverse proxy, and firewall rules work as intended by querying the cache:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>curl<span class="w"> </span>http://cache/nix-cache-info
+<span class="go">StoreDir: /nix/store</span>
+<span class="go">WantMassQuery: 1</span>
+<span class="go">Priority: 30</span>
+</pre></div>
+</div>
+</section>
+<section id="check-store-object-signing">
+<h3>Check store object signing<a class="headerlink" href="#check-store-object-signing" title="連結到這個標頭">#</a></h3>
+<p>To test if store objects are signed correctly, inspect the metadata of a sample derivation.
+On the binary cache host, build the <code class="docutils literal notranslate"><span class="pre">hello</span></code> package and get the <code class="docutils literal notranslate"><span class="pre">.narinfo</span></code> file from the cache:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nv">hash</span><span class="o">=</span><span class="k">$(</span>nix-build<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-A<span class="w"> </span>pkgs.hello<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span><span class="s1">&#39;{print $4}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span>-F<span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"> </span><span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span>
+<span class="gp">$ </span>curl<span class="w"> </span><span class="s2">&quot;http://cache/</span><span class="nv">$hash</span><span class="s2">.narinfo&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">&quot;Sig: &quot;</span>
+<span class="go">...</span>
+<span class="go">Sig: cache.example.org:GyBFzocLAeLEFd0hr2noK84VzPUw0ArCNYEnrm1YXakdsC5FkO2Bkj2JH8Xjou+wxeXMjFKa0YP2AML7nBWsAg==</span>
+</pre></div>
+</div>
+<p>Make sure that the output contains this line prefixed with <code class="docutils literal notranslate"><span class="pre">Sig:</span></code> and shows the public key you generated.</p>
+</section>
+<section id="serving-the-binary-cache-via-https">
+<span id="https-binary-cache"></span><h3>Serving the binary cache via HTTPS<a class="headerlink" href="#serving-the-binary-cache-via-https" title="連結到這個標頭">#</a></h3>
+<p>If the binary cache is publicly accessible, it is possible to enforce HTTPS with <a class="reference external" href="https://letsencrypt.org/">Let's Encrypt</a> SSL certificates.
+Edit your <code class="docutils literal notranslate"><span class="pre">binary-cache.nix</span></code> like this and make sure to replace the example URL and mail address with yours:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  services.nginx = {
+<span class="w"> </span>    enable = true;
+<span class="w"> </span>    recommendedProxySettings = true;
+<span class="gd">-    virtualHosts.cache = {</span>
+<span class="gi">+    virtualHosts.&quot;cache.example.com&quot; = {</span>
+<span class="gi">+      enableACME = true;</span>
+<span class="gi">+      forceSSL = true;</span>
+<span class="w"> </span>      locations.&quot;/&quot;.proxyPass = &quot;http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}&quot;;
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+
+<span class="gi">+   security.acme = {</span>
+<span class="gi">+     acceptTerms = true;</span>
+<span class="gi">+     certs = {</span>
+<span class="gi">+       &quot;cache.example.com&quot;.email = &quot;you@example.com&quot;;</span>
+<span class="gi">+     };</span>
+<span class="gi">+   };</span>
+
+<span class="w"> </span>  networking.firewall.allowedTCPPorts = [
+<span class="w"> </span>    config.services.nginx.defaultHTTPListenPort
+<span class="gi">+    config.services.nginx.defaultSSLListenPort</span>
+<span class="w"> </span>  ];
+</pre></div>
+</div>
+<p>重新建置系統以部署這些變更：</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nixos-rebuild switch --no-flake --target-host root@cache.example.com</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="next-steps">
+<h2>下一步<a class="headerlink" href="#next-steps" title="連結到這個標頭">#</a></h2>
+<p>If your binary cache is already a <a class="reference external" href="https://nix.dev/manual/nix/latest/advanced-topics/distributed-builds">remote build machine</a>, it will serve all store objects in its Nix store.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../../guides/recipes/add-binary-cache.html#custom-binary-cache"><span class="std std-ref">Configure Nix to use a custom binary cache</span></a> using the binary cache's hostname and the generated public key</p></li>
+<li><p><a class="reference internal" href="../../guides/recipes/post-build-hook.html#post-build-hooks"><span class="std std-ref">Setting up post-build hooks</span></a> to upload store objects to the binary cache</p></li>
+<li><p><a class="reference internal" href="distributed-builds-setup.html#distributed-build-setup-tutorial"><span class="std std-ref">Setting up distributed builds</span></a></p></li>
+</ul>
+<p>To save storage space, please refer to the following NixOS configuration attributes:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://search.nixos.org/options?query=nix.gc"><code class="docutils literal notranslate"><span class="pre">nix.gc</span></code></a>: Options for automatic garbage collection</p></li>
+<li><p><a class="reference external" href="https://search.nixos.org/options?query=nix.optimise"><code class="docutils literal notranslate"><span class="pre">nix.optimise</span></code></a>: Options for periodic Nix store optimisation</p></li>
+</ul>
+</section>
+<section id="alternatives">
+<h2>Alternatives<a class="headerlink" href="#alternatives" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/aristanetworks/nix-serve-ng"><code class="docutils literal notranslate"><span class="pre">nix-serve-ng</span></code></a>: A drop-in replacement for <code class="docutils literal notranslate"><span class="pre">nix-serve</span></code>, written in Haskell</p></li>
+<li><p>The <a class="reference external" href="https://nix.dev/manual/nix/latest/store/types/ssh-store">SSH Store</a>, <a class="reference external" href="https://nix.dev/manual/nix/latest/store/types/experimental-ssh-store">Experimental SSH Store</a>, and the <a class="reference external" href="https://nix.dev/manual/nix/latest/store/types/s3-binary-cache-store">S3 Binary Cache Store</a> can also be used to serve a cache.
+There are many commercial providers for S3-compatible storage, for example:</p>
+<ul>
+<li><p>Amazon S3</p></li>
+<li><p>Tigris</p></li>
+<li><p>Cloudflare R2</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/zhaofengli/attic">attic</a>: Nix binary cache server backed by an S3-compatible storage provider</p></li>
+<li><p><a class="reference external" href="https://www.cachix.org">Cachix</a>: Nix binary cache as a service</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>參考<a class="headerlink" href="#references" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/latest/store/types/http-binary-cache-store">Nix Manual on HTTP Binary Cache Store</a></p></li>
+<li><p><a class="reference external" href="https://search.nixos.org/options?query=services.nix-serve"><code class="docutils literal notranslate"><span class="pre">services.nix-serve</span></code> module options</a></p></li>
+<li><p><a class="reference external" href="https://search.nixos.org/options?query=services.nginx"><code class="docutils literal notranslate"><span class="pre">services.nginx</span></code> module options</a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="deploying-nixos-using-terraform.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">使用 Terraform 部署 NixOS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="distributed-builds-setup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">Setting up distributed builds</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-will-it-take">How long will it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#set-up-services">Set up services</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#generate-a-signing-key-pair">Generate a signing key pair</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-availability">Test availability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-general-availability">Check general availability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#check-store-object-signing">Check store object signing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#serving-the-binary-cache-via-https">Serving the binary cache via HTTPS</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alternatives">Alternatives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

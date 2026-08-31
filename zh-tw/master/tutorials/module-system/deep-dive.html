@@ -1,0 +1,1758 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. Module system deep dive &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=cbf116e0"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/module-system/deep-dive';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/module-system/deep-dive.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜尋" href="../../search.html" />
+    <link rel="next" title="NixOS" href="../nixos/index.html" />
+    <link rel="prev" title="1. A basic module" href="a-basic-module/index.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">模組系統</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/module-system/deep-dive.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module system deep dive</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">2.1. 概覽</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">2.1.1. 您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">2.1.2. 您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-empty-module">2.2. The empty module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaring-options">2.3. Declaring options</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-modules">2.4. Evaluating modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-checking">2.5. Type checking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interlude-reproducible-scripts">2.6. Interlude: reproducible scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaring-more-options">2.7. Declaring more options</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies-between-options">2.8. Dependencies between options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-option-values">2.8.1. Accessing option values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-definitions">2.9. Conditional definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">2.10. Default values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-shell-commands">2.11. Wrapping shell commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-modules">2.12. Splitting modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-submodule-type">2.13. The <code class="docutils literal notranslate"><span class="pre">submodule</span></code> type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-options-in-other-modules">2.14. Defining options in other modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-submodules">2.15. Nested submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-strmatching-type">2.16. The <code class="docutils literal notranslate"><span class="pre">strMatching</span></code> type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-as-submodule-arguments">2.17. Functions as submodule arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-either-and-enum-types">2.18. The <code class="docutils literal notranslate"><span class="pre">either</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span></code> types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pathtype-submodule">2.19. The <code class="docutils literal notranslate"><span class="pre">pathType</span></code> submodule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-between-constraint-on-integer-values">2.20. The <code class="docutils literal notranslate"><span class="pre">between</span></code> constraint on integer values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pathstyle-submodule">2.21. The <code class="docutils literal notranslate"><span class="pre">pathStyle</span></code> submodule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-styling-color">2.22. Path styling: color</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-styling">2.23. Further styling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up">2.24. Wrapping up</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-system-deep-dive">
+<span id="id1"></span><h1><span class="section-number">2. </span>Module system deep dive<a class="headerlink" href="#module-system-deep-dive" title="連結到這個標頭">#</a></h1>
+<p>Or: <em>Wrapping the world in modules</em></p>
+<p>In this tutorial you will follow an extensive demonstration of how to wrap an existing API with Nix modules.</p>
+<section id="overview">
+<h2><span class="section-number">2.1. </span>概覽<a class="headerlink" href="#overview" title="連結到這個標頭">#</a></h2>
+<p>This tutorial follows <a class="reference external" href="https://github.com/infinisil">&#64;infinisil</a>'s <a class="reference external" href="https://infinisil.com/modules.mp4">presentation on modules</a>  (<a class="reference external" href="https://github.com/tweag/summer-of-nix-modules">source</a>) for  participants of <a class="reference external" href="https://github.com/ngi-nix/summer-of-nix">Summer of Nix</a> 2021.</p>
+<p>It may help to play it alongside this tutorial to better keep track of changes to the code you will work on.</p>
+<section id="what-will-you-learn">
+<h3><span class="section-number">2.1.1. </span>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h3>
+<p>You'll write modules to interact with the <a class="reference external" href="https://developers.google.com/maps/documentation/maps-static">Google Maps API</a>, declaring module options which represent map geometry, location pins, and more.</p>
+<p>During the tutorial, you will first write some <em>incorrect</em> configurations, creating opportunities to discuss the resulting error messages and how to resolve them, particularly when discussing type checking.</p>
+</section>
+<section id="what-do-you-need">
+<h3><span class="section-number">2.1.2. </span>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h3>
+<p>You will use two helper scripts for this exercise.
+Download <a class="reference download internal" download="" href="../../_downloads/4094b12f51ac6e6660209d82d7bb356e/map.sh"><code class="xref download docutils literal notranslate"><span class="pre">map.sh</span></code></a> and <a class="reference download internal" download="" href="../../_downloads/770939e594fe4b5dfabc3064d73281af/geocode.sh"><code class="xref download docutils literal notranslate"><span class="pre">geocode.sh</span></code></a> to your working directory.</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>To run the examples in this tutorial, you will need a <a class="reference external" href="https://developers.google.com/maps/documentation/maps-static/start#before-you-begin">Google API key</a> in <code class="docutils literal notranslate"><span class="pre">$XDG_DATA_HOME/google-api/key</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="the-empty-module">
+<h2><span class="section-number">2.2. </span>The empty module<a class="headerlink" href="#the-empty-module" title="連結到這個標頭">#</a></h2>
+<p>Write the following into a file called <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id2" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="declaring-options">
+<h2><span class="section-number">2.3. </span>Declaring options<a class="headerlink" href="#declaring-options" title="連結到這個標頭">#</a></h2>
+<p>We will need some helper functions, which will come from the <a class="reference external" href="https://github.com/NixOS/nixpkgs/tree/master/lib">Nixpkgs library</a>, which is passed by the module system as <code class="docutils literal notranslate"><span class="pre">lib</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id3" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">- { ... }:</span>
+<span class="gi">+ { lib, ... }:</span>
+{
+
+}
+</pre></div>
+</div>
+</div>
+<p>Using <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.options.mkOption"><code class="docutils literal notranslate"><span class="pre">lib.mkOption</span></code></a>, declare the <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code> option to have the type <code class="docutils literal notranslate"><span class="pre">lines</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id4" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ lib, ... }: {
+
+<span class="gi">+ options = {</span>
+<span class="gi">+   scripts.output = lib.mkOption {</span>
+<span class="gi">+     type = lib.types.lines;</span>
+<span class="gi">+   };</span>
+<span class="gi">+ };</span>
+
+<span class="w"> </span>}
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">lines</span></code> type means that the only valid values are strings, and that multiple definitions should be joined with newlines.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>The name and attribute path of the option is arbitrary.
+Here we use <code class="docutils literal notranslate"><span class="pre">scripts</span></code>, because we will add another script later, and call this one <code class="docutils literal notranslate"><span class="pre">output</span></code>, because it will output the resulting map.</p>
+</div>
+</section>
+<section id="evaluating-modules">
+<h2><span class="section-number">2.4. </span>Evaluating modules<a class="headerlink" href="#evaluating-modules" title="連結到這個標頭">#</a></h2>
+<p>Write a new file <code class="docutils literal notranslate"><span class="pre">eval.nix</span></code> to call <a class="reference external" href="https://nixos.org/manual/nixpkgs/unstable/#module-system-lib-evalModules"><code class="docutils literal notranslate"><span class="pre">lib.evalModules</span></code></a> and evaluate the module in <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">eval.nix</span><a class="headerlink" href="#id5" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-23.11&quot;</span><span class="p">;</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="k">in</span>
+pkgs<span class="o">.</span>lib<span class="o">.</span>evalModules <span class="p">{</span>
+  <span class="ss">modules</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="l">./default.nix</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Run the following command:</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>This will result in an error.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nix-instantiate --eval eval.nix -A config.scripts.output</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-instantiate"><code class="docutils literal notranslate"><span class="pre">nix-instantiate</span> <span class="pre">--eval</span></code></a> parses and evaluates the Nix file at the specified path, and prints the result.
+<code class="docutils literal notranslate"><span class="pre">evalModules</span></code> produces an attribute set where the final configuration values appear in the <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute.
+Therefore we evaluate the Nix expression in <code class="docutils literal notranslate"><span class="pre">eval.nix</span></code> at the <a class="reference external" href="https://nix.dev/manual/nix/stable/language/operators#attribute-selection">attribute path</a> <code class="docutils literal notranslate"><span class="pre">config.scripts.output</span></code>.</p>
+</div>
+</details><p>The error message indicates that the <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code> option is used but not defined: a value must be set for the option before accessing it.
+You will do this in the next steps.</p>
+</section>
+<section id="type-checking">
+<h2><span class="section-number">2.5. </span>Type checking<a class="headerlink" href="#type-checking" title="連結到這個標頭">#</a></h2>
+<p>As previously mentioned, the <code class="docutils literal notranslate"><span class="pre">lines</span></code> type only permits string values.</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>In this section, you will set an invalid value and encounter a type error.</p>
+</div>
+<p>What happens if you instead try to assign an integer to the option?</p>
+<p>Add the following lines to <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id6" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ lib, ... }: {
+
+<span class="w"> </span> options = {
+<span class="w"> </span>   scripts.output = lib.mkOption {
+<span class="w"> </span>     type = lib.types.lines;
+<span class="w"> </span>   };
+<span class="w"> </span> };
+
+<span class="gi">+ config = {</span>
+<span class="gi">+   scripts.output = 42;</span>
+<span class="gi">+ };</span>
+<span class="w"> </span>}
+</pre></div>
+</div>
+</div>
+<p>Now try to execute the previous command, and witness your first module error:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>eval.nix<span class="w"> </span>-A<span class="w"> </span>config.scripts.output
+<span class="go">error:</span>
+<span class="go">...</span>
+<span class="go">       error: A definition for option `scripts.output&#39; is not of type `strings concatenated with &quot;\n&quot;&#39;. Definition values:</span>
+<span class="go">       - In `/home/nix-user/default.nix&#39;: 42</span>
+</pre></div>
+</div>
+<p>The definition <code class="docutils literal notranslate"><span class="pre">scripts.output</span> <span class="pre">=</span> <span class="pre">42;</span></code> caused a type error: integers are not strings concatenated with the newline character.</p>
+<p>To make this module pass the type checks and successfully evaluate the <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code> option, you will now assign a string to <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code>.</p>
+<p>In this case, you will assign a shell command that runs the <a class="reference download internal" download="" href="../../_downloads/4094b12f51ac6e6660209d82d7bb356e/map.sh"><code class="xref download docutils literal notranslate"><span class="pre">map</span></code></a> script in the current directory.
+That in turn calls the Google Maps Static API to generate a world map.
+The output is passed on to display it with <a class="reference external" href="https://feh.finalrewind.org/"><code class="docutils literal notranslate"><span class="pre">feh</span></code></a>, a minimalistic image viewer.</p>
+<p>Update <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> by changing the value of <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code> to the following string:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id7" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  config = {
+<span class="gd">-    scripts.output = 42;</span>
+<span class="gi">+    scripts.output = &#39;&#39;</span>
+<span class="gi">+      ./map.sh size=640x640 scale=2 | feh -</span>
+<span class="gi">+    &#39;&#39;;</span>
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+</section>
+<section id="interlude-reproducible-scripts">
+<h2><span class="section-number">2.6. </span>Interlude: reproducible scripts<a class="headerlink" href="#interlude-reproducible-scripts" title="連結到這個標頭">#</a></h2>
+<p>That simple command will likely not work as intended on your system, as it may lack the required dependencies (curl and feh).
+We can solve this by packaging the raw <a class="reference download internal" download="" href="../../_downloads/4094b12f51ac6e6660209d82d7bb356e/map.sh"><code class="xref download docutils literal notranslate"><span class="pre">map</span></code></a> script with <code class="docutils literal notranslate"><span class="pre">pkgs.writeShellApplication</span></code>.</p>
+<p>First, make available a <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> argument in your module evaluation by adding a module that sets <code class="docutils literal notranslate"><span class="pre">config._module.args</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">eval.nix</span><a class="headerlink" href="#id8" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>pkgs.lib.evalModules {
+<span class="w"> </span>  modules = [
+<span class="gi">+    ({ config, ... }: { config._module.args = { inherit pkgs; }; })</span>
+<span class="w"> </span>    ./default.nix
+<span class="w"> </span>  ];
+<span class="w"> </span>}
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>This mechanism is currently only <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/lib/modules.nix#L140-L182">documented in the module system code</a>, and that documentation is incomplete and out of date.</p>
+</div>
+<p>Then change <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> to have the following contents:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id9" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> pkgs<span class="p">,</span> lib<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+
+  <span class="ss">options</span> <span class="o">=</span> <span class="p">{</span>
+    scripts<span class="o">.</span><span class="ss">output</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+      <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>package<span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span>
+    scripts<span class="o">.</span><span class="ss">output</span> <span class="o">=</span> pkgs<span class="o">.</span>writeShellApplication <span class="p">{</span>
+      <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;map&quot;</span><span class="p">;</span>
+      <span class="ss">runtimeInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span> curl feh <span class="p">];</span>
+      <span class="ss">text</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">        </span><span class="si">${</span><span class="l">./map.sh</span><span class="si">}</span><span class="s s-Multiline"> size=640x640 scale=2 | feh -</span>
+<span class="s s-Multiline">      &#39;&#39;</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>This will access the previously added <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> argument so we can use dependencies, and copy the <code class="docutils literal notranslate"><span class="pre">map</span></code> file in the current directory into the Nix store so it's available to the wrapped script, which will also live in the Nix store.</p>
+<p>Run the script with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nix-build eval.nix -A config.scripts.output</span>
+<span class="go">./result/bin/map</span>
+</pre></div>
+</div>
+<p>To iterate more quickly, open a new terminal and set up <a class="reference external" href="https://github.com/eradman/entr"><code class="docutils literal notranslate"><span class="pre">entr</span></code></a> to re-run the script whenever any source file in the current directory changes:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">nix-shell -p entr findutils bash --run \</span>
+<span class="go">  &quot;ls *.nix | \</span>
+<span class="go">   entr -rs &#39; \</span>
+<span class="go">     nix-build eval.nix -A config.scripts.output --no-out-link \</span>
+<span class="go">     | xargs printf -- \&quot;%s/bin/map\&quot; \</span>
+<span class="go">     | xargs bash \</span>
+<span class="go">   &#39; \</span>
+<span class="go">  &quot;</span>
+</pre></div>
+</div>
+<p>This command does the following:</p>
+<ul class="simple">
+<li><p>List all <code class="docutils literal notranslate"><span class="pre">.nix</span></code> files</p></li>
+<li><p>Make <code class="docutils literal notranslate"><span class="pre">entr</span></code> watch them for changes. Terminate the invoked command on each change with <code class="docutils literal notranslate"><span class="pre">-r</span></code>.</p></li>
+<li><p>On each change:</p>
+<ul>
+<li><p>Run the <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> invocation as above, but without adding a <code class="docutils literal notranslate"><span class="pre">./result</span></code> symlink</p></li>
+<li><p>Take the resulting store path and append <code class="docutils literal notranslate"><span class="pre">/bin/map</span></code> to it</p></li>
+<li><p>Run the executable at the path constructed this way</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="declaring-more-options">
+<h2><span class="section-number">2.7. </span>Declaring more options<a class="headerlink" href="#declaring-more-options" title="連結到這個標頭">#</a></h2>
+<p>Rather than setting all script parameters directly, we will do that through the module system.
+This will not just add some safety through type checking, but also allow building abstractions to manage growing complexity and changing requirements.</p>
+<p>Let's begin by introducing another option, <code class="docutils literal notranslate"><span class="pre">requestParams</span></code>, which will represent the parameters of the request made to the Google Maps API.</p>
+<p>Its type will be <code class="docutils literal notranslate"><span class="pre">listOf</span> <span class="pre">&lt;elementType&gt;</span></code>, which is a list of elements of one type.</p>
+<p>Instead of <code class="docutils literal notranslate"><span class="pre">lines</span></code>, in this case you will want the type of the list elements to be <code class="docutils literal notranslate"><span class="pre">str</span></code>, a generic string type.</p>
+<p>The difference between <code class="docutils literal notranslate"><span class="pre">str</span></code> and <code class="docutils literal notranslate"><span class="pre">lines</span></code> is in their merging behavior:
+Module option types not only check for valid values, but also specify how multiple definitions of an option are to be combined into one.</p>
+<ul class="simple">
+<li><p>For <code class="docutils literal notranslate"><span class="pre">lines</span></code>, multiple definitions get merged by concatenation with newlines.</p></li>
+<li><p>For <code class="docutils literal notranslate"><span class="pre">str</span></code>, multiple definitions are not allowed. This is not a problem here, since one can't define a list element multiple times.</p></li>
+</ul>
+<p>Make the following additions to your <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> file:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id10" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    scripts.output = lib.mkOption {
+<span class="w"> </span>      type = lib.types.package;
+<span class="w"> </span>    };
+<span class="gi">+</span>
+<span class="gi">+    requestParams = lib.mkOption {</span>
+<span class="gi">+      type = lib.types.listOf lib.types.str;</span>
+<span class="gi">+    };</span>
+<span class="w"> </span>  };
+
+<span class="w"> </span> config = {
+<span class="w"> </span>   scripts.output = pkgs.writeShellApplication {
+<span class="w"> </span>     name = &quot;map&quot;;
+<span class="w"> </span>     runtimeInputs = with pkgs; [ curl feh ];
+<span class="w"> </span>     text = &#39;&#39;
+<span class="w"> </span>       ${./map.sh} size=640x640 scale=2 | feh -
+<span class="w"> </span>     &#39;&#39;;
+<span class="w"> </span>   };
+<span class="gi">+</span>
+<span class="gi">+    requestParams = [</span>
+<span class="gi">+      &quot;size=640x640&quot;</span>
+<span class="gi">+      &quot;scale=2&quot;</span>
+<span class="gi">+    ];</span>
+<span class="w"> </span>  };
+<span class="w"> </span>}
+</pre></div>
+</div>
+</div>
+</section>
+<section id="dependencies-between-options">
+<h2><span class="section-number">2.8. </span>Dependencies between options<a class="headerlink" href="#dependencies-between-options" title="連結到這個標頭">#</a></h2>
+<p>A given module generally declares one option that produces a result to be used elsewhere, in this case <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code>.</p>
+<p>Options can depend on other options, making it possible to build more useful abstractions.</p>
+<p>Here, we want the <code class="docutils literal notranslate"><span class="pre">scripts.output</span></code> option to use the values of <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> as arguments to the <code class="docutils literal notranslate"><span class="pre">./map</span></code> script.</p>
+<section id="accessing-option-values">
+<h3><span class="section-number">2.8.1. </span>Accessing option values<a class="headerlink" href="#accessing-option-values" title="連結到這個標頭">#</a></h3>
+<p>To make option values available to a module, the arguments of the function declaring the module must include the <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute.</p>
+<p>Update <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> to add the <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute:</p>
+<div class="literal-block-wrapper docutils container" id="id11">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id11" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-{ pkgs, lib, ... }: {</span>
+<span class="gi">+{ pkgs, lib, config, ... }: {</span>
+</pre></div>
+</div>
+</div>
+<p>When a module that sets options is evaluated, the resulting values can be accessed by their corresponding attribute names under <code class="docutils literal notranslate"><span class="pre">config</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>Option values can't be accessed directly from the same module.</p>
+<p>The module system evaluates all modules it receives, and any of them can define a particular option's value.
+What happens when an option is set by multiple modules is determined by that option's type.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">config</span></code> <em>argument</em> is <strong>not</strong> the same as the <code class="docutils literal notranslate"><span class="pre">config</span></code> <em>attribute</em>:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">config</span></code> <em>argument</em> holds the result of the module system's lazy evaluation, which takes into account all modules passed to <code class="docutils literal notranslate"><span class="pre">evalModules</span></code> and their <code class="docutils literal notranslate"><span class="pre">imports</span></code>.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">config</span></code> <em>attribute</em> of a module exposes that particular module's option values to the module system for evaluation.</p></li>
+</ul>
+</div>
+<p>Now make the following changes to <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id12">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id12" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  config = {
+<span class="w"> </span>    scripts.output = pkgs.writeShellApplication {
+<span class="w"> </span>      name = &quot;map&quot;;
+<span class="w"> </span>      runtimeInputs = with pkgs; [ curl feh ];
+<span class="w"> </span>      text = &#39;&#39;
+<span class="gd">-        ${./map.sh} size=640x640 scale=2 | feh -</span>
+<span class="gi">+        ${./map.sh} ${lib.concatStringsSep &quot; &quot;</span>
+<span class="gi">+          config.requestParams} | feh -</span>
+<span class="w"> </span>      &#39;&#39;;
+</pre></div>
+</div>
+</div>
+<p>Here, the value of the <code class="docutils literal notranslate"><span class="pre">config.requestParams</span></code> attribute is populated by the module system based on the definitions in the same file.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>Lazy evaluation in the Nix language allows the module system to make a value available in the <code class="docutils literal notranslate"><span class="pre">config</span></code> argument passed to the module which defines that value.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">lib.concatStringsSep</span> <span class="pre">&quot;</span> <span class="pre">&quot;</span></code> is then used to join each list element from the value of <code class="docutils literal notranslate"><span class="pre">config.requestParams</span></code> into a single string, with the list elements of <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> separated by a space character.</p>
+<p>The result of this represents the list of command line arguments to pass to the <code class="docutils literal notranslate"><span class="pre">./map</span></code> script.</p>
+</section>
+</section>
+<section id="conditional-definitions">
+<h2><span class="section-number">2.9. </span>Conditional definitions<a class="headerlink" href="#conditional-definitions" title="連結到這個標頭">#</a></h2>
+<p>Sometimes, you will want option values to be optional. This can be useful when defining a value for an option is not required, as in the following case.</p>
+<p>You will define a new option, <code class="docutils literal notranslate"><span class="pre">map.zoom</span></code>, to control the zoom level of the map. The Google Maps API will infer a zoom level if no corresponding argument is passed, a situation you can represent with the <code class="docutils literal notranslate"><span class="pre">nullOr</span> <span class="pre">&lt;type&gt;</span></code>, which represents values of type <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> or <code class="docutils literal notranslate"><span class="pre">null</span></code>. This <em>does not</em> automatically mean that when the option isn't defined, the value of such an option is <code class="docutils literal notranslate"><span class="pre">null</span></code> -- we still need to define a default value.</p>
+<p>Add the <code class="docutils literal notranslate"><span class="pre">map</span></code> attribute set with the <code class="docutils literal notranslate"><span class="pre">zoom</span></code> option into the top-level <code class="docutils literal notranslate"><span class="pre">options</span></code> declaration, like so:</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id13" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    requestParams = lib.mkOption {
+<span class="w"> </span>      type = lib.types.listOf lib.types.str;
+<span class="w"> </span>    };
+<span class="gi">+</span>
+<span class="gi">+    map = {</span>
+<span class="gi">+      zoom = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.nullOr lib.types.int;</span>
+<span class="gi">+        default = null;</span>
+<span class="gi">+      };</span>
+<span class="gi">+    };</span>
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>To make use of this, use the <code class="docutils literal notranslate"><span class="pre">mkIf</span> <span class="pre">&lt;condition&gt;</span> <span class="pre">&lt;definition&gt;</span></code> function, which only adds the definition if the condition evaluates to <code class="docutils literal notranslate"><span class="pre">true</span></code>.
+Make the following additions to the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> list in the <code class="docutils literal notranslate"><span class="pre">config</span></code> block:</p>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id14" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    requestParams = [
+<span class="w"> </span>      &quot;size=640x640&quot;
+<span class="w"> </span>      &quot;scale=2&quot;
+<span class="gi">+      (lib.mkIf (config.map.zoom != null)</span>
+<span class="gi">+        &quot;zoom=${toString config.map.zoom}&quot;)</span>
+<span class="w"> </span>    ];
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>This will only add a <code class="docutils literal notranslate"><span class="pre">zoom</span></code> parameter to the script invocation if the value of <code class="docutils literal notranslate"><span class="pre">config.map.zoom</span></code> is not <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+</section>
+<section id="default-values">
+<h2><span class="section-number">2.10. </span>Default values<a class="headerlink" href="#default-values" title="連結到這個標頭">#</a></h2>
+<p>Let's say that in our application we want to have a different default behavior that sets the zoom level to <code class="docutils literal notranslate"><span class="pre">10</span></code>, such that automatic zooming has to be enabled explicitly.</p>
+<p>This can be done with the <code class="docutils literal notranslate"><span class="pre">default</span></code> argument to <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/lib/options.nix"><code class="docutils literal notranslate"><span class="pre">mkOption</span></code></a>.
+Its value will be used if the value of the option declaring it is not specified otherwise.</p>
+<p>Modify the corresponding line:</p>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id15" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    map = {
+<span class="w"> </span>      zoom = lib.mkOption {
+<span class="w"> </span>        type = lib.types.nullOr lib.types.int;
+<span class="gd">-        default = null;</span>
+<span class="gi">+        default = 10;</span>
+<span class="w"> </span>      };
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+</section>
+<section id="wrapping-shell-commands">
+<h2><span class="section-number">2.11. </span>Wrapping shell commands<a class="headerlink" href="#wrapping-shell-commands" title="連結到這個標頭">#</a></h2>
+<p>You have now declared options controlling the map dimensions and zoom level, but have not provided a way to specify where the map should be centered.</p>
+<p>Add the <code class="docutils literal notranslate"><span class="pre">center</span></code> option now, possibly with your own location as default value:</p>
+<div class="literal-block-wrapper docutils container" id="id16">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id16" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = lib.types.nullOr lib.types.int;
+<span class="w"> </span>        default = 10;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      center = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.nullOr lib.types.str;</span>
+<span class="gi">+        default = &quot;switzerland&quot;;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>To implement this behavior, you will use the <a class="reference download internal" download="" href="../../_downloads/770939e594fe4b5dfabc3064d73281af/geocode.sh"><code class="xref download docutils literal notranslate"><span class="pre">geocode</span></code></a> utility, which turns location names into coordinates.
+There are multiple ways of making a new package accessible, but as an exercise, you will add it as an option in the module system.</p>
+<p>First, add a new option to accommodate the package:</p>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id17" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  options = {
+<span class="w"> </span>    scripts.output = lib.mkOption {
+<span class="w"> </span>      type = lib.types.package;
+<span class="w"> </span>    };
+<span class="gi">+</span>
+<span class="gi">+    scripts.geocode = lib.mkOption {</span>
+<span class="gi">+      type = lib.types.package;</span>
+<span class="gi">+    };</span>
+</pre></div>
+</div>
+</div>
+<p>Then define the value for that option where you make the raw script reproducible by wrapping a call to it in <code class="docutils literal notranslate"><span class="pre">writeShellApplication</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id18">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id18" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  config = {
+<span class="gi">+    scripts.geocode = pkgs.writeShellApplication {</span>
+<span class="gi">+      name = &quot;geocode&quot;;</span>
+<span class="gi">+      runtimeInputs = with pkgs; [ curl jq ];</span>
+<span class="gi">+      text = &#39;&#39;exec ${./geocode.sh} &quot;$@&quot;&#39;&#39;;</span>
+<span class="gi">+    };</span>
+<span class="gi">+</span>
+<span class="w"> </span>    scripts.output = pkgs.writeShellApplication {
+<span class="w"> </span>      name = &quot;map&quot;;
+<span class="w"> </span>      runtimeInputs = with pkgs; [ curl feh ];
+</pre></div>
+</div>
+</div>
+<p>Add another <code class="docutils literal notranslate"><span class="pre">mkIf</span></code> call to the list of <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> now where you access the wrapped package through <code class="docutils literal notranslate"><span class="pre">config.scripts.geocode</span></code>, and run the executable <code class="docutils literal notranslate"><span class="pre">/bin/geocode</span></code> inside:</p>
+<div class="literal-block-wrapper docutils container" id="id19">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id19" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>      &quot;scale=2&quot;
+<span class="w"> </span>      (lib.mkIf (config.map.zoom != null)
+<span class="w"> </span>        &quot;zoom=${toString config.map.zoom}&quot;)
+<span class="gi">+      (lib.mkIf (config.map.center != null)</span>
+<span class="gi">+        &quot;center=\&quot;$(${config.scripts.geocode}/bin/geocode ${</span>
+<span class="gi">+          lib.escapeShellArg config.map.center</span>
+<span class="gi">+        })\&quot;&quot;)</span>
+<span class="w"> </span>    ];
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>This time, you've used <code class="docutils literal notranslate"><span class="pre">escapeShellArg</span></code> to pass the <code class="docutils literal notranslate"><span class="pre">config.map.center</span></code> value as a command-line argument to <code class="docutils literal notranslate"><span class="pre">geocode</span></code>, string interpolating the result back into the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> string which sets the <code class="docutils literal notranslate"><span class="pre">center</span></code> value.</p>
+<p>Wrapping shell command execution in Nix modules is a helpful technique for controlling system changes, as it uses the more ergonomic attributes and values interface rather than dealing with the peculiarities of escaping manually.</p>
+</section>
+<section id="splitting-modules">
+<h2><span class="section-number">2.12. </span>Splitting modules<a class="headerlink" href="#splitting-modules" title="連結到這個標頭">#</a></h2>
+<p>The <a class="reference external" href="https://nixos.org/manual/nixos/stable/#sec-writing-modules">module schema</a> includes the <code class="docutils literal notranslate"><span class="pre">imports</span></code> attribute, which allows incorporating further modules, for example to split a large configuration into multiple files.</p>
+<p>In particular, this allows you to separate option declarations from where they are used in your configuration.</p>
+<p>Create a new module, <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>, where you can declare options for defining location pins and other markers on the map:</p>
+<div class="literal-block-wrapper docutils container" id="id20">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id20" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>{ lib, config, ... }: {
+
+}
+</pre></div>
+</div>
+</div>
+<p>Reference this new file in <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> using the <code class="docutils literal notranslate"><span class="pre">imports</span></code> attribute:</p>
+<div class="literal-block-wrapper docutils container" id="id21">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id21" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ pkgs, lib, config, ... }: {
+
+<span class="gi">+  imports = [</span>
+<span class="gi">+    ./marker.nix</span>
+<span class="gi">+  ];</span>
+<span class="gi">+</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="the-submodule-type">
+<h2><span class="section-number">2.13. </span>The <code class="docutils literal notranslate"><span class="pre">submodule</span></code> type<a class="headerlink" href="#the-submodule-type" title="連結到這個標頭">#</a></h2>
+<p>We want to set multiple markers on the map.
+A marker is a complex type with multiple fields.</p>
+<p>This is where one of the most useful types included in the module system's type system comes into play: <code class="docutils literal notranslate"><span class="pre">submodule</span></code>.
+This type allows you to define nested modules with their own options.</p>
+<p>Here, you will define a new <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> option whose type is a list of submodules, each with a nested <code class="docutils literal notranslate"><span class="pre">location</span></code> type, allowing you to define a list of markers on the map.</p>
+<p>Each assignment of markers will be type-checked during evaluation of the top-level <code class="docutils literal notranslate"><span class="pre">config</span></code>.</p>
+<p>Make the following changes to <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id22">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id22" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-{ lib, config, ... }: {</span>
+<span class="gi">+{ lib, config, ... }:</span>
+<span class="gi">+let</span>
+<span class="gi">+  markerType = lib.types.submodule {</span>
+<span class="gi">+    options = {</span>
+<span class="gi">+      location = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.nullOr lib.types.str;</span>
+<span class="gi">+        default = null;</span>
+<span class="gi">+      };</span>
+<span class="gi">+    };</span>
+<span class="gi">+  };</span>
+<span class="gi">+in {</span>
+<span class="gi">+</span>
+<span class="gi">+  options = {</span>
+<span class="gi">+    map.markers = lib.mkOption {</span>
+<span class="gi">+      type = lib.types.listOf markerType;</span>
+<span class="gi">+    };</span>
+<span class="gi">+  };</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="defining-options-in-other-modules">
+<h2><span class="section-number">2.14. </span>Defining options in other modules<a class="headerlink" href="#defining-options-in-other-modules" title="連結到這個標頭">#</a></h2>
+<p>Because of the way the module system composes option definitions, you can freely assign values to options defined in other modules.</p>
+<p>In this case, you will use the <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> option to produce and add new elements to the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> list, making your declared markers appear on the returned map – but from the module declared in <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>.</p>
+<p>To implement this behavior, add the following <code class="docutils literal notranslate"><span class="pre">config</span></code> block to <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id23">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id23" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+  config = {</span>
+<span class="gi">+</span>
+<span class="gi">+    map.markers = [</span>
+<span class="gi">+      { location = &quot;new york&quot;; }</span>
+<span class="gi">+    ];</span>
+<span class="gi">+</span>
+<span class="gi">+    requestParams = let</span>
+<span class="gi">+      paramForMarker =</span>
+<span class="gi">+        builtins.map (marker: &quot;$(${config.scripts.geocode}/bin/geocode ${</span>
+<span class="gi">+          lib.escapeShellArg marker.location})&quot;) config.map.markers;</span>
+<span class="gi">+    in [ &quot;markers=\&quot;${lib.concatStringsSep &quot;|&quot; paramForMarker}\&quot;&quot; ];</span>
+<span class="gi">+  };</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>To avoid confusion with the <code class="docutils literal notranslate"><span class="pre">map</span></code> option setting and the final <code class="docutils literal notranslate"><span class="pre">config.map</span></code> configuration value, here we use the <code class="docutils literal notranslate"><span class="pre">map</span></code> function explicitly as <code class="docutils literal notranslate"><span class="pre">builtins.map</span></code>.</p>
+</div>
+<p>Here, you again used <code class="docutils literal notranslate"><span class="pre">escapeShellArg</span></code> and string interpolation to generate a Nix string, this time producing a pipe-separated list of geocoded location attributes.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> value was also set to the resulting list of strings, which gets appended to the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> list defined in <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>, thanks to the default merging behavior of the <code class="docutils literal notranslate"><span class="pre">list</span></code> type.</p>
+<p>When defining multiple markers, determining an appropriate center or zoom level for the map may be challenging; it's easier to let the API do this for you.</p>
+<p>To achieve this, make the following additions to <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>, above the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> declaration:</p>
+<div class="literal-block-wrapper docutils container" id="id24">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id24" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+    map.center = lib.mkIf</span>
+<span class="gi">+      (lib.length config.map.markers &gt;= 1)</span>
+<span class="gi">+      null;</span>
+<span class="gi">+</span>
+<span class="gi">+    map.zoom = lib.mkIf</span>
+<span class="gi">+      (lib.length config.map.markers &gt;= 2)</span>
+<span class="gi">+      null;</span>
+<span class="gi">+</span>
+<span class="w"> </span>    requestParams = let
+<span class="w"> </span>      paramForMarker = marker:
+<span class="w"> </span>        let
+</pre></div>
+</div>
+</div>
+<p>In this case, the default behavior of the Google Maps API when not passed a center or zoom level is to pick the geometric center of all the given markers, and to set a zoom level appropriate for viewing all markers at once.</p>
+</section>
+<section id="nested-submodules">
+<h2><span class="section-number">2.15. </span>Nested submodules<a class="headerlink" href="#nested-submodules" title="連結到這個標頭">#</a></h2>
+<p>Next, we want to allow multiple named users to define a list of markers each.</p>
+<p>For that you'll add a <code class="docutils literal notranslate"><span class="pre">users</span></code> option with type <code class="docutils literal notranslate"><span class="pre">lib.types.attrsOf</span> <span class="pre">&lt;subtype&gt;</span></code>, which will allow you to define <code class="docutils literal notranslate"><span class="pre">users</span></code> as an attribute set, whose values have type <code class="docutils literal notranslate"><span class="pre">&lt;subtype&gt;</span></code>.</p>
+<p>Here, that subtype will be another submodule which allows declaring a departure marker, suitable for querying the API for the recommended route for a trip.</p>
+<p>This will again make use of the <code class="docutils literal notranslate"><span class="pre">markerType</span></code> submodule, giving a nested structure of submodules.</p>
+<p>To propagate marker definitions from <code class="docutils literal notranslate"><span class="pre">users</span></code> to the <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> option, make the following changes.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">let</span></code> block:</p>
+<div class="literal-block-wrapper docutils container" id="id25">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id25" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+  userType = lib.types.submodule {</span>
+<span class="gi">+    options = {</span>
+<span class="gi">+      departure = lib.mkOption {</span>
+<span class="gi">+        type = markerType;</span>
+<span class="gi">+        default = {};</span>
+<span class="gi">+      };</span>
+<span class="gi">+    };</span>
+<span class="gi">+  };</span>
+<span class="gi">+</span>
+<span class="w"> </span>in {
+</pre></div>
+</div>
+</div>
+<p>This defines a submodule type for a user, with a <code class="docutils literal notranslate"><span class="pre">departure</span></code> option of type <code class="docutils literal notranslate"><span class="pre">markerType</span></code>.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">options</span></code> block, above <code class="docutils literal notranslate"><span class="pre">map.markers</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id26">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id26" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+    users = lib.mkOption {</span>
+<span class="gi">+      type = lib.types.attrsOf userType;</span>
+<span class="gi">+    };</span>
+</pre></div>
+</div>
+</div>
+<p>That allows adding a <code class="docutils literal notranslate"><span class="pre">users</span></code> attribute set to <code class="docutils literal notranslate"><span class="pre">config</span></code> in any submodule that imports <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>, where each attribute will be of type <code class="docutils literal notranslate"><span class="pre">userType</span></code> as declared in the previous step.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">config</span></code> block, above <code class="docutils literal notranslate"><span class="pre">map.center</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id27">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id27" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  config = {
+
+<span class="gd">-    map.markers = [</span>
+<span class="gd">-      { location = &quot;new york&quot;; }</span>
+<span class="gd">-    ];</span>
+<span class="gi">+    map.markers = lib.filter</span>
+<span class="gi">+      (marker: marker.location != null)</span>
+<span class="gi">+      (lib.concatMap (user: [</span>
+<span class="gi">+        user.departure</span>
+<span class="gi">+      ]) (lib.attrValues config.users));</span>
+
+<span class="w"> </span>    map.center = lib.mkIf
+<span class="w"> </span>      (lib.length config.map.markers &gt;= 1)
+</pre></div>
+</div>
+</div>
+<p>This takes all the <code class="docutils literal notranslate"><span class="pre">departure</span></code> markers from all users in the <code class="docutils literal notranslate"><span class="pre">config</span></code> argument, and adds them to <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> if their <code class="docutils literal notranslate"><span class="pre">location</span></code> attribute is not <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">config.users</span></code> attribute set is passed to <code class="docutils literal notranslate"><span class="pre">attrValues</span></code>, which returns a list of values of each of the attributes in the set (here, the set of <code class="docutils literal notranslate"><span class="pre">config.users</span></code> you've defined), sorted alphabetically (which is how attribute names are stored in the Nix language).</p>
+<p>Back in <code class="docutils literal notranslate"><span class="pre">default.nix</span></code>, the resulting <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> option value is still accessed by <code class="docutils literal notranslate"><span class="pre">requestParams</span></code>, which in turn is used to generate arguments to the script that ultimately calls the Google Maps API.</p>
+<p>Defining the options in this way allows you to set multiple <code class="docutils literal notranslate"><span class="pre">users.&lt;name&gt;.departure.location</span></code> values and generate a map with the appropriate zoom and center, with pins corresponding to the set of <code class="docutils literal notranslate"><span class="pre">departure.location</span></code> values for <em>all</em> <code class="docutils literal notranslate"><span class="pre">users</span></code>.</p>
+<p>In the 2021 Summer of Nix, this formed the basis of an interactive multi-person map demo.</p>
+</section>
+<section id="the-strmatching-type">
+<h2><span class="section-number">2.16. </span>The <code class="docutils literal notranslate"><span class="pre">strMatching</span></code> type<a class="headerlink" href="#the-strmatching-type" title="連結到這個標頭">#</a></h2>
+<p>Now that the map can be rendered with multiple markers, it's time to add some style customizations.</p>
+<p>To tell the markers apart, add another option to the <code class="docutils literal notranslate"><span class="pre">markerType</span></code> submodule, to allow labeling each marker pin.</p>
+<p>The API documentation states that <a class="reference external" href="https://developers.google.com/maps/documentation/maps-static/start#MarkerStyles">these labels must be either an uppercase letter or a number</a>.</p>
+<p>You can implement this with the <code class="docutils literal notranslate"><span class="pre">strMatching</span> <span class="pre">&quot;&lt;regex&gt;&quot;</span></code> type, where <code class="docutils literal notranslate"><span class="pre">&lt;regex&gt;</span></code> is a regular expression that will accept any matching values, in this case an uppercase letter or number.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">let</span></code> block:</p>
+<div class="literal-block-wrapper docutils container" id="id28">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id28" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = lib.types.nullOr lib.types.str;
+<span class="w"> </span>        default = null;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      style.label = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.nullOr</span>
+<span class="gi">+          (lib.types.strMatching &quot;[A-Z0-9]&quot;);</span>
+<span class="gi">+        default = null;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Again, <code class="docutils literal notranslate"><span class="pre">types.nullOr</span></code> allows for <code class="docutils literal notranslate"><span class="pre">null</span></code> values, and the default has been set to <code class="docutils literal notranslate"><span class="pre">null</span></code>.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">paramForMarker</span></code> function:</p>
+<div class="literal-block-wrapper docutils container" id="id29">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id29" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    requestParams = let
+<span class="gd">-      paramForMarker =</span>
+<span class="gd">-        builtins.map (marker: &quot;$(${config.scripts.geocode}/bin/geocode ${</span>
+<span class="gd">-         lib.escapeShellArg marker.location})&quot;) config.map.markers;</span>
+<span class="gd">-    in [ &quot;markers=\&quot;${lib.concatStringsSep &quot;|&quot; paramForMarker}\&quot;&quot; ];</span>
+<span class="gi">+      paramForMarker = marker:</span>
+<span class="gi">+        let</span>
+<span class="gi">+          attributes =</span>
+<span class="gi">+            lib.optional (marker.style.label != null)</span>
+<span class="gi">+            &quot;label:${marker.style.label}&quot;</span>
+<span class="gi">+            ++ [</span>
+<span class="gi">+              &quot;$(${config.scripts.geocode}/bin/geocode ${</span>
+<span class="gi">+                lib.escapeShellArg marker.location</span>
+<span class="gi">+              })&quot;</span>
+<span class="gi">+            ];</span>
+<span class="gi">+        in &quot;markers=\&quot;${lib.concatStringsSep &quot;|&quot; attributes}\&quot;&quot;;</span>
+<span class="gi">+      in</span>
+<span class="gi">+        builtins.map paramForMarker config.map.markers;</span>
+</pre></div>
+</div>
+</div>
+<p>Note how we now create a unique <code class="docutils literal notranslate"><span class="pre">marker</span></code> for each user by concatenating the <code class="docutils literal notranslate"><span class="pre">label</span></code> and <code class="docutils literal notranslate"><span class="pre">location</span></code> attributes together, and assigning them to the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code>.
+The label for each <code class="docutils literal notranslate"><span class="pre">marker</span></code> is only propagated to the CLI parameters if <code class="docutils literal notranslate"><span class="pre">marker.style.label</span></code> is set.</p>
+</section>
+<section id="functions-as-submodule-arguments">
+<h2><span class="section-number">2.17. </span>Functions as submodule arguments<a class="headerlink" href="#functions-as-submodule-arguments" title="連結到這個標頭">#</a></h2>
+<p>Right now, if a label is not explicitly set, none will show up.
+But since every <code class="docutils literal notranslate"><span class="pre">users</span></code> attribute has a name, we could use that as an automatic value instead.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">firstUpperAlnum</span></code> function allows you to retrieve the first character of the username, with the correct type for passing to <code class="docutils literal notranslate"><span class="pre">departure.style.label</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id30">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id30" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>{ lib, config, ... }:
+<span class="w"> </span>let
+<span class="gi">+  # Returns the uppercased first letter</span>
+<span class="gi">+  # or number of a string</span>
+<span class="gi">+  firstUpperAlnum = str:</span>
+<span class="gi">+    lib.mapNullable lib.head</span>
+<span class="gi">+    (builtins.match &quot;[^A-Z0-9]*([A-Z0-9]).*&quot;</span>
+<span class="gi">+    (lib.toUpper str));</span>
+
+<span class="w"> </span>  markerType = lib.types.submodule {
+<span class="w"> </span>    options = {
+</pre></div>
+</div>
+</div>
+<p>By transforming the argument to <code class="docutils literal notranslate"><span class="pre">lib.types.submodule</span></code> into a function, you can access arguments within it.</p>
+<p>One special argument automatically available to submodules is <code class="docutils literal notranslate"><span class="pre">name</span></code>, which when used in <code class="docutils literal notranslate"><span class="pre">attrsOf</span></code>, gives you the name of the attribute the submodule is defined under:</p>
+<div class="literal-block-wrapper docutils container" id="id31">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id31" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gd">-  userType = lib.types.submodule {</span>
+<span class="gi">+  userType = lib.types.submodule ({ name, ... }: {</span>
+<span class="w"> </span>    options = {
+<span class="w"> </span>      departure = lib.mkOption {
+<span class="w"> </span>        type = markerType;
+<span class="w"> </span>        default = {};
+<span class="w"> </span>      };
+<span class="w"> </span>    };
+<span class="gd">-  };</span>
+</pre></div>
+</div>
+</div>
+<p>In this case, you don't easily have access to the name from the marker submodules <code class="docutils literal notranslate"><span class="pre">label</span></code> option, where you otherwise could set a <code class="docutils literal notranslate"><span class="pre">default</span></code> value.</p>
+<p>Instead you can use the <code class="docutils literal notranslate"><span class="pre">config</span></code> section of the <code class="docutils literal notranslate"><span class="pre">user</span></code> submodule to set a default, like so:</p>
+<div class="literal-block-wrapper docutils container" id="id32">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id32" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="gi">+</span>
+<span class="gi">+    config = {</span>
+<span class="gi">+      departure.style.label = lib.mkDefault</span>
+<span class="gi">+        (firstUpperAlnum name);</span>
+<span class="gi">+    };</span>
+<span class="gi">+  });</span>
+
+<span class="w"> </span>in {
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>Module options have a <em>priority</em>, represented as an integer, which determines the precedence for setting the option to a particular value.
+When merging values, the priority with lowest numeric value wins.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">lib.mkDefault</span></code> modifier sets the priority of its argument value to 1000, the lowest precedence.</p>
+<p>This ensures that other values set for the same option will prevail.</p>
+</div>
+</section>
+<section id="the-either-and-enum-types">
+<h2><span class="section-number">2.18. </span>The <code class="docutils literal notranslate"><span class="pre">either</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span></code> types<a class="headerlink" href="#the-either-and-enum-types" title="連結到這個標頭">#</a></h2>
+<p>For better visual contrast, it would be helpful to have a way to change the <em>color</em> of a marker.</p>
+<p>Here you will use two new type-functions for this:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">either</span> <span class="pre">&lt;this&gt;</span> <span class="pre">&lt;that&gt;</span></code>, which takes two types as arguments, and allows either of them</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enum</span> <span class="pre">[</span> <span class="pre">&lt;allowed</span> <span class="pre">values&gt;</span> <span class="pre">]</span></code>, which takes a list of allowed values, and allows any of them</p></li>
+</ul>
+<p>In the <code class="docutils literal notranslate"><span class="pre">let</span></code> block, add the following <code class="docutils literal notranslate"><span class="pre">colorType</span></code> option, which can hold strings containing either some given color names or an RGB value, add the new compound type:</p>
+<div class="literal-block-wrapper docutils container" id="id33">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id33" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    ...
+<span class="w"> </span>    (builtins.match &quot;[^A-Z0-9]*([A-Z0-9]).*&quot;
+<span class="w"> </span>    (lib.toUpper str));
+
+<span class="gi">+  # Either a color name or `0xRRGGBB`</span>
+<span class="gi">+  colorType = lib.types.either</span>
+<span class="gi">+    (lib.types.strMatching &quot;0x[0-9A-F]{6}&quot;)</span>
+<span class="gi">+    (lib.types.enum [</span>
+<span class="gi">+      &quot;black&quot; &quot;brown&quot; &quot;green&quot; &quot;purple&quot; &quot;yellow&quot;</span>
+<span class="gi">+      &quot;blue&quot; &quot;gray&quot; &quot;orange&quot; &quot;red&quot; &quot;white&quot; ]);</span>
+<span class="gi">+</span>
+<span class="w"> </span>  markerType = lib.types.submodule {
+<span class="w"> </span>    options = {
+<span class="w"> </span>      location = lib.mkOption {
+</pre></div>
+</div>
+</div>
+<p>This allows either strings that match a 24-bit hexadecimal number or are equal to one of the specified color names.</p>
+<p>At the bottom of the <code class="docutils literal notranslate"><span class="pre">let</span></code> block, add the <code class="docutils literal notranslate"><span class="pre">style.color</span></code> option and specify a default value:</p>
+<div class="literal-block-wrapper docutils container" id="id34">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id34" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>          (lib.types.strMatching &quot;[A-Z0-9]&quot;);
+<span class="w"> </span>        default = null;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      style.color = lib.mkOption {</span>
+<span class="gi">+        type = colorType;</span>
+<span class="gi">+        default = &quot;red&quot;;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Now add an entry to the <code class="docutils literal notranslate"><span class="pre">paramForMarker</span></code> list which makes use of the new option:</p>
+<div class="literal-block-wrapper docutils container" id="id35">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id35" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>              (marker.style.label != null)
+<span class="w"> </span>              &quot;label:${marker.style.label}&quot;
+<span class="w"> </span>            ++ [
+<span class="gi">+              &quot;color:${marker.style.color}&quot;</span>
+<span class="w"> </span>              &quot;$(${config.scripts.geocode}/bin/geocode ${
+<span class="w"> </span>                lib.escapeShellArg marker.location
+<span class="w"> </span>              })&quot;
+</pre></div>
+</div>
+</div>
+<p>In case you set many different markers, it would be helpful to have the ability to change their size individually.</p>
+<p>Add a new <code class="docutils literal notranslate"><span class="pre">style.size</span></code> option to <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>, allowing you to choose from the set of pre-defined sizes:</p>
+<div class="literal-block-wrapper docutils container" id="id36">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id36" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = colorType;
+<span class="w"> </span>        default = &quot;red&quot;;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      style.size = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.enum</span>
+<span class="gi">+          [ &quot;tiny&quot; &quot;small&quot; &quot;medium&quot; &quot;large&quot; ];</span>
+<span class="gi">+        default = &quot;medium&quot;;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Now add a mapping for the size parameter in <code class="docutils literal notranslate"><span class="pre">paramForMarker</span></code>, which selects an appropriate string to pass to the API:</p>
+<div class="literal-block-wrapper docutils container" id="id37">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id37" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    requestParams = let
+<span class="w"> </span>      paramForMarker = marker:
+<span class="w"> </span>        let
+<span class="gi">+          size = {</span>
+<span class="gi">+            tiny = &quot;tiny&quot;;</span>
+<span class="gi">+            small = &quot;small&quot;;</span>
+<span class="gi">+            medium = &quot;mid&quot;;</span>
+<span class="gi">+            large = null;</span>
+<span class="gi">+          }.${marker.style.size};</span>
+<span class="gi">+</span>
+</pre></div>
+</div>
+</div>
+<p>Finally, add another <code class="docutils literal notranslate"><span class="pre">lib.optional</span></code> call to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> string, making use of the selected size:</p>
+<div class="literal-block-wrapper docutils container" id="id38">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id38" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>          attributes =
+<span class="w"> </span>            lib.optional
+<span class="w"> </span>              (marker.style.label != null)
+<span class="w"> </span>              &quot;label:${marker.style.label}&quot;
+<span class="gi">+            ++ lib.optional</span>
+<span class="gi">+              (size != null)</span>
+<span class="gi">+              &quot;size:${size}&quot;</span>
+<span class="w"> </span>            ++ [
+<span class="w"> </span>              &quot;color:${marker.style.color}&quot;
+<span class="w"> </span>              &quot;$(${config.scripts.geocode}/bin/geocode ${
+</pre></div>
+</div>
+</div>
+</section>
+<section id="the-pathtype-submodule">
+<h2><span class="section-number">2.19. </span>The <code class="docutils literal notranslate"><span class="pre">pathType</span></code> submodule<a class="headerlink" href="#the-pathtype-submodule" title="連結到這個標頭">#</a></h2>
+<p>So far, you've created an option for declaring a <em>departure</em> marker, as well as several options for configuring the marker's visual representation.</p>
+<p>Now we want to compute and display a route from the user's location to some destination.</p>
+<p>The new option defined in the next section will allow you to set an <em>arrival</em> marker, which together with a departure allows you to draw <em>paths</em> on the map using the new module defined below.</p>
+<p>To start, create a new <code class="docutils literal notranslate"><span class="pre">path.nix</span></code> file with the following contents:</p>
+<div class="literal-block-wrapper docutils container" id="id39">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id39" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> lib<span class="p">,</span> config<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">pathType</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>submodule <span class="p">{</span>
+    <span class="ss">options</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="ss">locations</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+        <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>listOf lib<span class="o">.</span>types<span class="o">.</span>str<span class="p">;</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nb">map</span><span class="o">.</span><span class="ss">paths</span> <span class="o">=</span> lib<span class="o">.</span>mkOption <span class="p">{</span>
+      <span class="ss">type</span> <span class="o">=</span> lib<span class="o">.</span>types<span class="o">.</span>listOf pathType<span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+  <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">requestParams</span> <span class="o">=</span>
+      <span class="k">let</span>
+        <span class="ss">attrForLocation</span> <span class="o">=</span> loc<span class="p">:</span>
+          <span class="s2">&quot;$(</span><span class="si">${</span>config<span class="o">.</span>scripts<span class="o">.</span>geocode<span class="si">}</span><span class="s2">/bin/geocode </span><span class="si">${</span>lib<span class="o">.</span>escapeShellArg loc<span class="si">}</span><span class="s2">)&quot;</span><span class="p">;</span>
+        <span class="ss">paramForPath</span> <span class="o">=</span> path<span class="p">:</span>
+          <span class="k">let</span>
+            <span class="ss">attributes</span> <span class="o">=</span>
+              <span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span> attrForLocation path<span class="o">.</span>locations<span class="p">;</span>
+          <span class="k">in</span>
+          <span class="s s-Multiline">&#39;&#39;path=&quot;</span><span class="si">${</span>lib<span class="o">.</span>concatStringsSep <span class="s2">&quot;|&quot;</span> attributes<span class="si">}</span><span class="s s-Multiline">&quot;&#39;&#39;</span><span class="p">;</span>
+      <span class="k">in</span>
+      <span class="nb">builtins</span><span class="o">.</span><span class="nb">map</span> paramForPath config<span class="o">.</span><span class="nb">map</span><span class="o">.</span>paths<span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">path.nix</span></code> module declares an option for defining a list of paths on our <code class="docutils literal notranslate"><span class="pre">map</span></code>, where each path is a list of strings for geographic locations.</p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute we augment the API call by setting the <code class="docutils literal notranslate"><span class="pre">requestParams</span></code> option value with the coordinates transformed appropriately, which will be concatenated with request parameters set elsewhere.</p>
+<p>Now import this new <code class="docutils literal notranslate"><span class="pre">path.nix</span></code> module from your <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code> module:</p>
+<div class="literal-block-wrapper docutils container" id="id40">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id40" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>in {
+
+<span class="gi">+  imports = [</span>
+<span class="gi">+    ./path.nix</span>
+<span class="gi">+  ];</span>
+<span class="gi">+</span>
+<span class="w"> </span>  options = {
+
+<span class="w"> </span>    users = lib.mkOption {
+</pre></div>
+</div>
+</div>
+<p>Copy the <code class="docutils literal notranslate"><span class="pre">departure</span></code> option declaration to a new <code class="docutils literal notranslate"><span class="pre">arrival</span></code> option in <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code>, to complete the initial path implementation:</p>
+<div class="literal-block-wrapper docutils container" id="id41">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id41" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = markerType;
+<span class="w"> </span>        default = {};
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      arrival = lib.mkOption {</span>
+<span class="gi">+        type = markerType;</span>
+<span class="gi">+        default = {};</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+</pre></div>
+</div>
+</div>
+<p>Next, add an <code class="docutils literal notranslate"><span class="pre">arrival.style.label</span></code> attribute to the <code class="docutils literal notranslate"><span class="pre">config</span></code> block, mirroring the <code class="docutils literal notranslate"><span class="pre">departure.style.label</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id42">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id42" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    config = {
+<span class="w"> </span>      departure.style.label = lib.mkDefault
+<span class="w"> </span>        (firstUpperAlnum name);
+<span class="gi">+      arrival.style.label = lib.mkDefault</span>
+<span class="gi">+        (firstUpperAlnum name);</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  });
+</pre></div>
+</div>
+</div>
+<p>Finally, update the return list in the function passed to <code class="docutils literal notranslate"><span class="pre">concatMap</span></code> in <code class="docutils literal notranslate"><span class="pre">map.markers</span></code> to also include the <code class="docutils literal notranslate"><span class="pre">arrival</span></code> marker for each user:</p>
+<div class="literal-block-wrapper docutils container" id="id43">
+<div class="code-block-caption"><span class="caption-text">marker.nix</span><a class="headerlink" href="#id43" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    map.markers = lib.filter
+<span class="w"> </span>      (marker: marker.location != null)
+<span class="w"> </span>      (lib.concatMap (user: [
+<span class="gd">-        user.departure</span>
+<span class="gi">+        user.departure user.arrival</span>
+<span class="w"> </span>      ]) (lib.attrValues config.users));
+
+<span class="w"> </span>    map.center = lib.mkIf
+</pre></div>
+</div>
+</div>
+<p>Now you have the basis to define paths on the map, connecting pairs of departure and arrival points.</p>
+<p>In the path module, define a path connecting every user's departure and arrival locations:</p>
+<div class="literal-block-wrapper docutils container" id="id44">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id44" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  config = {
+<span class="gi">+</span>
+<span class="gi">+    map.paths = builtins.map (user: {</span>
+<span class="gi">+      locations = [</span>
+<span class="gi">+        user.departure.location</span>
+<span class="gi">+        user.arrival.location</span>
+<span class="gi">+      ];</span>
+<span class="gi">+    }) (lib.filter (user:</span>
+<span class="gi">+      user.departure.location != null</span>
+<span class="gi">+      &amp;&amp; user.arrival.location != null</span>
+<span class="gi">+    ) (lib.attrValues config.users));</span>
+<span class="gi">+</span>
+<span class="w"> </span>    requestParams = let
+<span class="w"> </span>      attrForLocation = loc:
+<span class="w"> </span>        &quot;$(geocode ${lib.escapeShellArg loc})&quot;;
+</pre></div>
+</div>
+</div>
+<p>The new <code class="docutils literal notranslate"><span class="pre">map.paths</span></code> attribute contains a list of all valid paths defined for all users.</p>
+<p>A path is valid only if the <code class="docutils literal notranslate"><span class="pre">departure</span></code> and <code class="docutils literal notranslate"><span class="pre">arrival</span></code> attributes are set for that user.</p>
+</section>
+<section id="the-between-constraint-on-integer-values">
+<h2><span class="section-number">2.20. </span>The <code class="docutils literal notranslate"><span class="pre">between</span></code> constraint on integer values<a class="headerlink" href="#the-between-constraint-on-integer-values" title="連結到這個標頭">#</a></h2>
+<p>Your users have spoken, and they demand the ability to customize the styles of their paths with a <code class="docutils literal notranslate"><span class="pre">weight</span></code> option.</p>
+<p>As before, you'll now declare a new submodule for the path style.</p>
+<p>While you could also directly declare the <code class="docutils literal notranslate"><span class="pre">style.weight</span></code> option, in this case you should use the submodule to be able to reuse the path style type later.</p>
+<p>Add the <code class="docutils literal notranslate"><span class="pre">pathStyleType</span></code> submodule option to the <code class="docutils literal notranslate"><span class="pre">let</span></code> block in <code class="docutils literal notranslate"><span class="pre">path.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id45">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id45" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ lib, config, ... }:
+<span class="w"> </span>let
+<span class="gi">+</span>
+<span class="gi">+  pathStyleType = lib.types.submodule {</span>
+<span class="gi">+    options = {</span>
+<span class="gi">+      weight = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.ints.between 1 20;</span>
+<span class="gi">+        default = 5;</span>
+<span class="gi">+      };</span>
+<span class="gi">+    };</span>
+<span class="gi">+  };</span>
+<span class="gi">+</span>
+<span class="w"> </span>  pathType = lib.types.submodule {
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">ints.between</span> <span class="pre">&lt;lower&gt;</span> <span class="pre">&lt;upper&gt;</span></code> type allows integers in the given (inclusive) range.</p>
+</div>
+<p>The path weight will default to 5, but can be set to any integer value in the 1 to 20 range, with higher weights producing thicker paths on the map.</p>
+<p>Now add a <code class="docutils literal notranslate"><span class="pre">style</span></code> option to the <code class="docutils literal notranslate"><span class="pre">options</span></code> set further down the file:</p>
+<div class="literal-block-wrapper docutils container" id="id46">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id46" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>    options = {
+<span class="w"> </span>      locations = lib.mkOption {
+<span class="w"> </span>        type = lib.types.listOf lib.types.str;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      style = lib.mkOption {</span>
+<span class="gi">+        type = pathStyleType;</span>
+<span class="gi">+        default = {};</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Finally, update the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> list in <code class="docutils literal notranslate"><span class="pre">paramForPath</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id47">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id47" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>      paramForPath = path:
+<span class="w"> </span>        let
+<span class="w"> </span>          attributes =
+<span class="gd">-            builtins.map attrForLocation path.locations;</span>
+<span class="gi">+            [</span>
+<span class="gi">+              &quot;weight:${toString path.style.weight}&quot;</span>
+<span class="gi">+            ]</span>
+<span class="gi">+            ++ builtins.map attrForLocation path.locations;</span>
+<span class="w"> </span>        in &quot;path=\&quot;${lib.concatStringsSep &quot;|&quot; attributes}\&quot;&quot;;
+</pre></div>
+</div>
+</div>
+</section>
+<section id="the-pathstyle-submodule">
+<h2><span class="section-number">2.21. </span>The <code class="docutils literal notranslate"><span class="pre">pathStyle</span></code> submodule<a class="headerlink" href="#the-pathstyle-submodule" title="連結到這個標頭">#</a></h2>
+<p>Users still cannot actually customize the path style yet.
+Introduce a new <code class="docutils literal notranslate"><span class="pre">pathStyle</span></code> option for each user.</p>
+<p>The module system allows you to declare values for an option multiple times, and if the types permit doing so, takes care of merging each declaration's values together.</p>
+<p>This makes it possible to have a definition for the <code class="docutils literal notranslate"><span class="pre">users</span></code> option in the <code class="docutils literal notranslate"><span class="pre">marker.nix</span></code> module, as well as a <code class="docutils literal notranslate"><span class="pre">users</span></code> definition in <code class="docutils literal notranslate"><span class="pre">path.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id48">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id48" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>in {
+<span class="w"> </span>  options = {
+<span class="gi">+</span>
+<span class="gi">+    users = lib.mkOption {</span>
+<span class="gi">+      type = lib.types.attrsOf (lib.types.submodule {</span>
+<span class="gi">+        options.pathStyle = lib.mkOption {</span>
+<span class="gi">+          type = pathStyleType;</span>
+<span class="gi">+          default = {};</span>
+<span class="gi">+        };</span>
+<span class="gi">+      });</span>
+<span class="gi">+    };</span>
+<span class="gi">+</span>
+<span class="w"> </span>    map.paths = lib.mkOption {
+<span class="w"> </span>      type = lib.types.listOf pathType;
+<span class="w"> </span>    };
+</pre></div>
+</div>
+</div>
+<p>Then add a line using the <code class="docutils literal notranslate"><span class="pre">user.pathStyle</span></code> option in <code class="docutils literal notranslate"><span class="pre">map.paths</span></code> where each user's paths are processed:</p>
+<div class="literal-block-wrapper docutils container" id="id49">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id49" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        user.departure.location
+<span class="w"> </span>        user.arrival.location
+<span class="w"> </span>      ];
+<span class="gi">+      style = user.pathStyle;</span>
+<span class="w"> </span>    }) (lib.filter (user:
+<span class="w"> </span>      user.departure.location != null
+<span class="w"> </span>      &amp;&amp; user.arrival.location != null
+</pre></div>
+</div>
+</div>
+</section>
+<section id="path-styling-color">
+<h2><span class="section-number">2.22. </span>Path styling: color<a class="headerlink" href="#path-styling-color" title="連結到這個標頭">#</a></h2>
+<p>As with markers, paths should have customizable colors.</p>
+<p>You can accomplish this using types you've already encountered by now.</p>
+<p>Add a new <code class="docutils literal notranslate"><span class="pre">colorType</span></code> block to <code class="docutils literal notranslate"><span class="pre">path.nix</span></code>, specifying the allowed color names and RGB/RGBA hexadecimal values:</p>
+<div class="literal-block-wrapper docutils container" id="id50">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id50" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ lib, config, ... }:
+<span class="w"> </span>let
+
+<span class="gi">+  # Either a color name, `0xRRGGBB` or `0xRRGGBBAA`</span>
+<span class="gi">+  colorType = lib.types.either</span>
+<span class="gi">+    (lib.types.strMatching &quot;0x[0-9A-F]{6}([0-9A-F]{2})?&quot;)</span>
+<span class="gi">+    (lib.types.enum [</span>
+<span class="gi">+      &quot;black&quot; &quot;brown&quot; &quot;green&quot; &quot;purple&quot; &quot;yellow&quot;</span>
+<span class="gi">+      &quot;blue&quot; &quot;gray&quot; &quot;orange&quot; &quot;red&quot; &quot;white&quot;</span>
+<span class="gi">+    ]);</span>
+<span class="gi">+</span>
+<span class="w"> </span>  pathStyleType = lib.types.submodule {
+</pre></div>
+</div>
+</div>
+<p>Under the <code class="docutils literal notranslate"><span class="pre">weight</span></code> option, add a new <code class="docutils literal notranslate"><span class="pre">color</span></code> option to use the new <code class="docutils literal notranslate"><span class="pre">colorType</span></code> value:</p>
+<div class="literal-block-wrapper docutils container" id="id51">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id51" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = lib.types.ints.between 1 20;
+<span class="w"> </span>        default = 5;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      color = lib.mkOption {</span>
+<span class="gi">+        type = colorType;</span>
+<span class="gi">+        default = &quot;blue&quot;;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Finally, add a line using the <code class="docutils literal notranslate"><span class="pre">color</span></code> option to the <code class="docutils literal notranslate"><span class="pre">attributes</span></code> list:</p>
+<div class="literal-block-wrapper docutils container" id="id52">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id52" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>          attributes =
+<span class="w"> </span>            [
+<span class="w"> </span>              &quot;weight:${toString path.style.weight}&quot;
+<span class="gi">+              &quot;color:${path.style.color}&quot;</span>
+<span class="w"> </span>            ]
+<span class="w"> </span>            ++ map attrForLocation path.locations;
+<span class="w"> </span>        in &quot;path=${
+</pre></div>
+</div>
+</div>
+</section>
+<section id="further-styling">
+<h2><span class="section-number">2.23. </span>Further styling<a class="headerlink" href="#further-styling" title="連結到這個標頭">#</a></h2>
+<p>Now that you've got this far, to further improve the aesthetics of the rendered map, add another style option allowing paths to be drawn as <em>geodesics</em>, the shortest &quot;as the crow flies&quot; distance between two points on Earth.</p>
+<p>Since this feature can be turned on or off, you can do this using the <code class="docutils literal notranslate"><span class="pre">bool</span></code> type, which can be <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<p>Make the following changes to <code class="docutils literal notranslate"><span class="pre">path.nix</span></code> now:</p>
+<div class="literal-block-wrapper docutils container" id="id53">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id53" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>        type = colorType;
+<span class="w"> </span>        default = &quot;blue&quot;;
+<span class="w"> </span>      };
+<span class="gi">+</span>
+<span class="gi">+      geodesic = lib.mkOption {</span>
+<span class="gi">+        type = lib.types.bool;</span>
+<span class="gi">+        default = false;</span>
+<span class="gi">+      };</span>
+<span class="w"> </span>    };
+<span class="w"> </span>  };
+</pre></div>
+</div>
+</div>
+<p>Make sure to also add a line to use that value in <code class="docutils literal notranslate"><span class="pre">attributes</span></code> list, so the option value is included in the API call:</p>
+<div class="literal-block-wrapper docutils container" id="id54">
+<div class="code-block-caption"><span class="caption-text">path.nix</span><a class="headerlink" href="#id54" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>            [
+<span class="w"> </span>              &quot;weight:${toString path.style.weight}&quot;
+<span class="w"> </span>              &quot;color:${path.style.color}&quot;
+<span class="gi">+              &quot;geodesic:${lib.boolToString path.style.geodesic}&quot;</span>
+<span class="w"> </span>            ]
+<span class="w"> </span>            ++ map attrForLocation path.locations;
+<span class="w"> </span>        in &quot;path=${
+</pre></div>
+</div>
+</div>
+</section>
+<section id="wrapping-up">
+<h2><span class="section-number">2.24. </span>Wrapping up<a class="headerlink" href="#wrapping-up" title="連結到這個標頭">#</a></h2>
+<p>In this tutorial, you've learned how to write custom Nix modules to bring external services under declarative control, with the help of several new utility functions from the Nixpkgs <code class="docutils literal notranslate"><span class="pre">lib</span></code>.</p>
+<p>You defined several modules in multiple files, each with separate submodules making use of the module system's type checking.</p>
+<p>These modules exposed features of the external API in a declarative way.</p>
+<p>You can now conquer the world with Nix.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="a-basic-module/index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>A basic module</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../nixos/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">NixOS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">2.1. 概覽</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">2.1.1. 您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">2.1.2. 您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-empty-module">2.2. The empty module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaring-options">2.3. Declaring options</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-modules">2.4. Evaluating modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#type-checking">2.5. Type checking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interlude-reproducible-scripts">2.6. Interlude: reproducible scripts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#declaring-more-options">2.7. Declaring more options</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies-between-options">2.8. Dependencies between options</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accessing-option-values">2.8.1. Accessing option values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-definitions">2.9. Conditional definitions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">2.10. Default values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-shell-commands">2.11. Wrapping shell commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#splitting-modules">2.12. Splitting modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-submodule-type">2.13. The <code class="docutils literal notranslate"><span class="pre">submodule</span></code> type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-options-in-other-modules">2.14. Defining options in other modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nested-submodules">2.15. Nested submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-strmatching-type">2.16. The <code class="docutils literal notranslate"><span class="pre">strMatching</span></code> type</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions-as-submodule-arguments">2.17. Functions as submodule arguments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-either-and-enum-types">2.18. The <code class="docutils literal notranslate"><span class="pre">either</span></code> and <code class="docutils literal notranslate"><span class="pre">enum</span></code> types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pathtype-submodule">2.19. The <code class="docutils literal notranslate"><span class="pre">pathType</span></code> submodule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-between-constraint-on-integer-values">2.20. The <code class="docutils literal notranslate"><span class="pre">between</span></code> constraint on integer values</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-pathstyle-submodule">2.21. The <code class="docutils literal notranslate"><span class="pre">pathStyle</span></code> submodule</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#path-styling-color">2.22. Path styling: color</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-styling">2.23. Further styling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapping-up">2.24. Wrapping up</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

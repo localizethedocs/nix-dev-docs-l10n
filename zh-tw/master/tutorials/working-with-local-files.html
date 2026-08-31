@@ -1,0 +1,1101 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Working with local files &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=cbf116e0"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/working-with-local-files';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/working-with-local-files.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜尋" href="../search.html" />
+    <link rel="next" title="交叉編譯" href="cross-compilation.html" />
+    <link rel="prev" title="Package parameters and overrides with callPackage" href="callpackage.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/working-with-local-files.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Working with local files</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-sets">File sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-project">Example project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-files-to-the-nix-store">Adding files to the Nix store</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#difference">Difference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-files">Missing files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-explicitly-exclude-files">Union (explicitly exclude files)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-explicitly-include-files">Union (explicitly include files)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-files-tracked-by-git">Matching files tracked by Git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intersection">Intersection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="working-with-local-files">
+<span id="file-sets-tutorial"></span><h1>Working with local files<a class="headerlink" href="#working-with-local-files" title="連結到這個標頭">#</a></h1>
+<p>To build a local project in a Nix derivation, source files must be accessible to its <a class="reference external" href="https://nix.dev/manual/nix/stable/language/derivations#attr-builder"><code class="docutils literal notranslate"><span class="pre">builder</span></code> executable</a>.
+By default, the <code class="docutils literal notranslate"><span class="pre">builder</span></code> runs in an <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/conf-file.html#conf-sandbox">isolated environment</a> that only allows reading from the Nix store.
+The Nix language has built-in features to copy local files to the store and expose the resulting store paths.</p>
+<p>Using these features directly can be tricky however:</p>
+<ul class="simple">
+<li><p>Coercion of paths to strings, such as the wide-spread pattern of <code class="docutils literal notranslate"><span class="pre">src</span> <span class="pre">=</span> <span class="pre">./.</span></code>,
+makes the derivation dependent on the name of the current directory.
+Furthermore, it always adds the entire directory to the store, including unneeded files,
+which causes unnecessary new builds when they change.</p></li>
+<li><p>The <a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-path"><code class="docutils literal notranslate"><span class="pre">builtins.path</span></code></a> function
+(and equivalently <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.sources.cleanSourceWith"><code class="docutils literal notranslate"><span class="pre">lib.sources.cleanSourceWith</span></code></a>)
+can address these problems.
+However, it's often hard to express the desired path selection using the <code class="docutils literal notranslate"><span class="pre">filter</span></code> function interface.</p></li>
+</ul>
+<p>In this tutorial you'll learn how to use the Nixpkgs <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-functions-library-fileset"><code class="docutils literal notranslate"><span class="pre">lib.fileset</span></code> library</a> to work with local files in derivations.
+It abstracts over built-in functionality and offers a safer and more convenient interface.</p>
+<section id="file-sets">
+<h2>File sets<a class="headerlink" href="#file-sets" title="連結到這個標頭">#</a></h2>
+<p>A <em>file set</em> is a data type representing a collection of local files.
+File sets can be created, composed, and manipulated with the various functions of the library.</p>
+<p>You can explore and learn about the library with <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-repl"><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code></a>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix<span class="w"> </span>repl<span class="w"> </span>-f<span class="w"> </span>channel:nixos-23.11
+<span class="go">...</span>
+<span class="go">nix-repl&gt; fs = lib.fileset</span>
+</pre></div>
+</div>
+<p>The <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.trace"><code class="docutils literal notranslate"><span class="pre">trace</span></code></a> function pretty-prints the files included in a given file set:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-repl&gt; fs.trace ./. null</span>
+<span class="go">trace: /home/user (all files in directory)</span>
+<span class="go">null</span>
+</pre></div>
+</div>
+<p>All functions that expect a file set for an argument can also accept a <a class="reference external" href="https://nix.dev/manual/nix/stable/language/values#type-path">path</a>.
+Such path arguments are then <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-fileset-path-coercion">implicitly turned into sets</a> that contain <em>all</em> files under the given path.
+In the previous trace this is indicated by <code class="docutils literal notranslate"><span class="pre">(all</span> <span class="pre">files</span> <span class="pre">in</span> <span class="pre">directory)</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">trace</span></code> function pretty-prints its first argument and returns its second argument.
+But since you often just need the pretty-printing in <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code>, you can omit the second argument:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-repl&gt; fs.trace ./.</span>
+<span class="go">trace: /home/user (all files in directory)</span>
+<span class="go">«lambda @ /nix/store/1czr278x24s3bl6qdnifpvm5z03wfi2p-nixpkgs-src/lib/fileset/default.nix:555:8»</span>
+</pre></div>
+</div>
+</div>
+<p>Even though file sets conceptually contain local files, these files are <em>never</em> added to the Nix store unless explicitly requested.
+Therefore you don't have to worry as much about accidentally copying secrets into the world-readable store.</p>
+<p>In this example, although you pretty-printed the home directory, no files were copied.
+This is in contrast to coercion of paths to strings such as in <code class="docutils literal notranslate"><span class="pre">&quot;${./.}&quot;</span></code>,
+which copies the whole directory to the Nix store on evaluation.</p>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>When using the <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake"><code class="docutils literal notranslate"><span class="pre">flakes</span></code> and <code class="docutils literal notranslate"><span class="pre">nix-command</span></code> experimental features</a>,
+a local directory within a Flake is always copied into the Nix store <em>completely</em> unless it is a Git repository.</p>
+</div>
+<p>This implicit coercion also works for files:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>touch<span class="w"> </span>some-file
+</pre></div>
+</div>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-repl&gt; fs.trace ./some-file</span>
+<span class="go">trace: /home/user</span>
+<span class="go">trace: - some-file (regular)</span>
+</pre></div>
+</div>
+<p>In addition to the included file, this also prints its <a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-readFileType">file type</a>.</p>
+</section>
+<section id="example-project">
+<h2>Example project<a class="headerlink" href="#example-project" title="連結到這個標頭">#</a></h2>
+<p>To further experiment with the library, make a sample project.
+Create a new directory, enter it, and set up <code class="docutils literal notranslate"><span class="pre">npins</span></code> to pin the Nixpkgs dependency:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>fileset
+<span class="gp">$ </span><span class="nb">cd</span><span class="w"> </span>fileset
+<span class="gp">$ </span>nix-shell<span class="w"> </span>-p<span class="w"> </span>npins<span class="w"> </span>--run<span class="w"> </span><span class="s2">&quot;npins init --bare; npins add github nixos nixpkgs --branch nixos-23.11&quot;</span>
+</pre></div>
+</div>
+<p>Then create a <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> file with the following contents:</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-text">default.nix</span><a class="headerlink" href="#id1" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  system <span class="o">?</span> <span class="nb">builtins</span><span class="o">.</span>currentSystem<span class="p">,</span>
+  sources <span class="o">?</span> <span class="nb">import</span> <span class="l">./npins</span><span class="p">,</span>
+<span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> sources<span class="o">.</span>nixpkgs <span class="p">{</span>
+    <span class="ss">config</span> <span class="o">=</span> <span class="p">{</span> <span class="p">};</span>
+    <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[</span> <span class="p">];</span>
+    <span class="k">inherit</span> system<span class="p">;</span>
+  <span class="p">};</span>
+<span class="k">in</span>
+pkgs<span class="o">.</span>callPackage <span class="l">./build.nix</span> <span class="p">{</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>Add two source files to work with:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span>hello<span class="w"> </span>&gt;<span class="w"> </span>hello.txt
+<span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span>world<span class="w"> </span>&gt;<span class="w"> </span>world.txt
+</pre></div>
+</div>
+</section>
+<section id="adding-files-to-the-nix-store">
+<h2>Adding files to the Nix store<a class="headerlink" href="#adding-files-to-the-nix-store" title="連結到這個標頭">#</a></h2>
+<p>Files in a given file set can be added to the Nix store with <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.toSource"><code class="docutils literal notranslate"><span class="pre">toSource</span></code></a>.
+The argument to this function requires a <code class="docutils literal notranslate"><span class="pre">root</span></code> attribute to determine which source directory to copy to the store.
+Only the files in the <code class="docutils literal notranslate"><span class="pre">fileset</span></code> attribute are included in the result.</p>
+<p>Define <code class="docutils literal notranslate"><span class="pre">build.nix</span></code> as follows:</p>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id2" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> stdenv<span class="p">,</span> lib <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">fs</span> <span class="o">=</span> lib<span class="o">.</span>fileset<span class="p">;</span>
+  <span class="ss">sourceFiles</span> <span class="o">=</span> <span class="l">./hello.txt</span><span class="p">;</span>
+<span class="k">in</span>
+
+fs<span class="o">.</span>trace sourceFiles
+
+stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;fileset&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> fs<span class="o">.</span>toSource <span class="p">{</span>
+    <span class="ss">root</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span>
+    <span class="ss">fileset</span> <span class="o">=</span> sourceFiles<span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">postInstall</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">    mkdir $out</span>
+<span class="s s-Multiline">    cp -v hello.txt $out</span>
+<span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The call to <code class="docutils literal notranslate"><span class="pre">fs.trace</span></code> prints the file set that will be used as a derivation input.</p>
+<p>Try building it:</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>It will take a while to fetch Nixpkgs the first time around.</p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset
+trace: - hello.txt (regular)
+this derivation will be built:
+  /nix/store/3ci6avmjaijx5g8jhb218i183xi7bi2n-fileset.drv
+...
+&#39;hello.txt&#39; -&gt; &#39;/nix/store/sa4g6h13v0zbpfw6pzva860kp5aks44n-fileset/hello.txt&#39;
+...
+/nix/store/sa4g6h13v0zbpfw6pzva860kp5aks44n-fileset
+</pre></div>
+</div>
+<p>But the real benefit of the file set library comes from its facilities for composing file sets in different ways.</p>
+</section>
+<section id="difference">
+<h2>Difference<a class="headerlink" href="#difference" title="連結到這個標頭">#</a></h2>
+<p>To be able to copy both files <code class="docutils literal notranslate"><span class="pre">hello.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">world.txt</span></code> to the output, add the whole project directory as a source again:</p>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id3" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ stdenv, lib }:
+<span class="w"> </span>let
+<span class="w"> </span>  fs = lib.fileset;
+<span class="gd">-  sourceFiles = ./hello.txt;</span>
+<span class="gi">+  sourceFiles = ./.;</span>
+<span class="w"> </span>in
+
+<span class="w"> </span>fs.trace sourceFiles
+
+<span class="w"> </span>stdenv.mkDerivation {
+<span class="w"> </span>  name = &quot;fileset&quot;;
+<span class="w"> </span>  src = fs.toSource {
+<span class="w"> </span>    root = ./.;
+<span class="w"> </span>    fileset = sourceFiles;
+<span class="w"> </span>  };
+<span class="w"> </span>  postInstall = &#39;&#39;
+<span class="w"> </span>    mkdir $out
+<span class="gd">-    cp -v hello.txt $out</span>
+<span class="gi">+    cp -v {hello,world}.txt $out</span>
+<span class="w"> </span>  &#39;&#39;;
+<span class="w"> </span>}
+</pre></div>
+</div>
+</div>
+<p>This will work as expected:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset (all files in directory)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/fsihp8872vv9ngbkc7si5jcbigs81727-fileset.drv</span>
+<span class="go">...</span>
+<span class="go">&#39;hello.txt&#39; -&gt; &#39;/nix/store/wmsxfgbylagmf033nkazr3qfc96y7mwk-fileset/hello.txt&#39;</span>
+<span class="go">&#39;world.txt&#39; -&gt; &#39;/nix/store/wmsxfgbylagmf033nkazr3qfc96y7mwk-fileset/world.txt&#39;</span>
+<span class="go">...</span>
+<span class="go">/nix/store/wmsxfgbylagmf033nkazr3qfc96y7mwk-fileset</span>
+</pre></div>
+</div>
+<p>However, if you run <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> again, the output path will be different!</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset (all files in directory)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/nlh7ismrf27xsnl3m20vfz6rvwlbbbca-fileset.drv</span>
+<span class="go">...</span>
+<span class="go">&#39;hello.txt&#39; -&gt; &#39;/nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset/hello.txt&#39;</span>
+<span class="go">&#39;world.txt&#39; -&gt; &#39;/nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset/world.txt&#39;</span>
+<span class="go">...</span>
+<span class="go">/nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset</span>
+</pre></div>
+</div>
+<p>The problem here is that <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> by default creates a <code class="docutils literal notranslate"><span class="pre">result</span></code> symlink in the working directory, which points to the store path just produced:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls -l result
+result -&gt; /nix/store/xknflcvjaa8dj6a6vkg629zmcrgz10rh-fileset
+</pre></div>
+</div>
+<p>Since <code class="docutils literal notranslate"><span class="pre">src</span></code> refers to the whole directory, and its contents change when <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> succeeds, Nix will have to start over every time.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>This will also happen without the file set library, e.g. when setting <code class="docutils literal notranslate"><span class="pre">src</span> <span class="pre">=</span> <span class="pre">./.;</span></code> directly.</p>
+</div>
+<p>The <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.difference"><code class="docutils literal notranslate"><span class="pre">difference</span></code></a> function subtracts one file set from another.
+The result is a new file set that contains all files from the first argument that aren't in the second argument.</p>
+<p>Use it to filter out <code class="docutils literal notranslate"><span class="pre">./result</span></code> by changing the <code class="docutils literal notranslate"><span class="pre">sourceFiles</span></code> definition:</p>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id4" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ stdenv, lib }:
+<span class="w"> </span>let
+<span class="w"> </span>  fs = lib.fileset;
+<span class="gd">-  sourceFiles = ./.;</span>
+<span class="gi">+  sourceFiles = fs.difference ./. ./result;</span>
+<span class="w"> </span>in
+</pre></div>
+</div>
+</div>
+<p>Building this, the file set library will specify which files are taken from the directory:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset</span>
+<span class="go">trace: - build.nix (regular)</span>
+<span class="go">trace: - default.nix (regular)</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - npins (all files in directory)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/zr19bv51085zz005yk7pw4s9sglmafvn-fileset.drv</span>
+<span class="go">...</span>
+<span class="go">&#39;hello.txt&#39; -&gt; &#39;/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset/hello.txt&#39;</span>
+<span class="go">&#39;world.txt&#39; -&gt; &#39;/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset/world.txt&#39;</span>
+<span class="go">...</span>
+<span class="go">/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset</span>
+</pre></div>
+</div>
+<p>An attempt to repeat the build will re-use the existing store path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset
+trace: - build.nix (regular)
+trace: - default.nix (regular)
+trace: - hello.txt (regular)
+trace: - npins (all files in directory)
+trace: - world.txt (regular)
+/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset
+</pre></div>
+</div>
+</section>
+<section id="missing-files">
+<h2>Missing files<a class="headerlink" href="#missing-files" title="連結到這個標頭">#</a></h2>
+<p>Removing the <code class="docutils literal notranslate"><span class="pre">./result</span></code> symlink creates a new problem, though:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>rm<span class="w"> </span>result
+<span class="gp">$ </span>nix-build
+<span class="go">error: lib.fileset.difference: Second argument (negative set)</span>
+<span class="go">  (/home/user/fileset/result) is a path that does not exist.</span>
+<span class="go">  To create a file set from a path that may not exist, use `lib.fileset.maybeMissing`.</span>
+</pre></div>
+</div>
+<p>Follow the instructions in the error message, and use <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.maybeMissing"><code class="docutils literal notranslate"><span class="pre">maybeMissing</span></code></a> to create a file set from a path that may not exist (in which case the file set will be empty):</p>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id5" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>{ stdenv, lib }:
+<span class="w"> </span>let
+<span class="w"> </span>  fs = lib.fileset;
+<span class="gd">-  sourceFiles = fs.difference ./. ./result;</span>
+<span class="gi">+  sourceFiles = fs.difference ./. (fs.maybeMissing ./result);</span>
+<span class="w"> </span>in
+</pre></div>
+</div>
+</div>
+<p>This now works, using the whole directory since <code class="docutils literal notranslate"><span class="pre">./result</span></code> is not present:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset (all files in directory)
+this derivation will be built:
+  /nix/store/zr19bv51085zz005yk7pw4s9sglmafvn-fileset.drv
+...
+/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset
+</pre></div>
+</div>
+<p>Another build attempt will produce a different trace, but the same output path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset
+trace: - build.nix (regular)
+trace: - default.nix (regular)
+trace: - hello.txt (regular)
+trace: - npins (all files in directory)
+trace: - world.txt (regular)
+/nix/store/vhyhk6ij39gjapqavz1j1x3zbiy3qc1a-fileset
+</pre></div>
+</div>
+</section>
+<section id="union-explicitly-exclude-files">
+<h2>Union (explicitly exclude files)<a class="headerlink" href="#union-explicitly-exclude-files" title="連結到這個標頭">#</a></h2>
+<p>There is still a problem:
+Changing <em>any</em> of the included files causes the derivation to be built again, even though it doesn't depend on those files.</p>
+<p>Append an empty line to <code class="docutils literal notranslate"><span class="pre">build.nix</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span>&gt;&gt;<span class="w"> </span>build.nix
+</pre></div>
+</div>
+<p>Again, Nix will start from scratch:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset</span>
+<span class="go">trace: - default.nix (regular)</span>
+<span class="go">trace: - npins (all files in directory)</span>
+<span class="go">trace: - build.nix (regular)</span>
+<span class="go">trace: - string.txt (regular)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/zmgpqlpfz2jq0w9rdacsnpx8ni4n77cn-filesets.drv</span>
+<span class="go">...</span>
+<span class="go">/nix/store/6pffjljjy3c7kla60nljk3fad4q4kkzn-filesets</span>
+</pre></div>
+</div>
+<p>One way to fix this is to use <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.unions"><code class="docutils literal notranslate"><span class="pre">unions</span></code></a>.</p>
+<p>Create a file set containing a union of the files to exclude (<code class="docutils literal notranslate"><span class="pre">fs.unions</span> <span class="pre">[</span> <span class="pre">...</span> <span class="pre">]</span></code>), and subtract it (<code class="docutils literal notranslate"><span class="pre">difference</span></code>) from the complete directory (<code class="docutils literal notranslate"><span class="pre">./.</span></code>):</p>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id6" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>  <span class="ss">sourceFiles</span> <span class="o">=</span>
+    fs<span class="o">.</span>difference
+      <span class="l">./.</span>
+      <span class="p">(</span>fs<span class="o">.</span>unions <span class="p">[</span>
+        <span class="p">(</span>fs<span class="o">.</span>maybeMissing <span class="l">./result</span><span class="p">)</span>
+        <span class="l">./default.nix</span>
+        <span class="l">./build.nix</span>
+        <span class="l">./npins</span>
+      <span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<p>This will work as expected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset
+trace: - hello.txt (regular)
+trace: - world.txt (regular)
+this derivation will be built:
+  /nix/store/gr2hw3gdjc28fmv0as1ikpj7lya4r51f-fileset.drv
+...
+/nix/store/ckn40y7hgqphhbhyrq64h9r6rvdh973r-fileset
+</pre></div>
+</div>
+<p>Changing any of the excluded files now doesn't necessarily cause a new build anymore:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo &gt;&gt; build.nix
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-build
+trace: /home/user/fileset
+trace: - hello.txt (regular)
+trace: - world.txt (regular)
+/nix/store/ckn40y7hgqphhbhyrq64h9r6rvdh973r-fileset
+</pre></div>
+</div>
+</section>
+<section id="filter">
+<h2>Filter<a class="headerlink" href="#filter" title="連結到這個標頭">#</a></h2>
+<p>The <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.fileFilter"><code class="docutils literal notranslate"><span class="pre">fileFilter</span></code></a> function allows filtering file sets such that each included file satisfies the given criteria.</p>
+<p>Use it to select all files with a name ending in <code class="docutils literal notranslate"><span class="pre">.nix</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id7">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id7" title="連結到這個程式碼">#</a></div>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>  sourceFiles =
+<span class="w"> </span>    fs.difference
+<span class="w"> </span>      ./.
+<span class="w"> </span>      (fs.unions [
+<span class="w"> </span>        (fs.maybeMissing ./result)
+<span class="gd">-        ./default.nix</span>
+<span class="gd">-        ./build.nix</span>
+<span class="gi">+        (fs.fileFilter (file: file.hasExt &quot;nix&quot;) ./.)</span>
+<span class="w"> </span>        ./npins
+<span class="w"> </span>      ]);
+</pre></div>
+</div>
+</div>
+<p>This does not change the result, even if we add a new <code class="docutils literal notranslate"><span class="pre">.nix</span></code> file.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">/nix/store/ckn40y7hgqphhbhyrq64h9r6rvdh973r-fileset</span>
+</pre></div>
+</div>
+<p>Notably, the approach of using <code class="docutils literal notranslate"><span class="pre">difference</span> <span class="pre">./.</span></code> explicitly selects the files to <em>exclude</em>, which means that new files added to the source directory are included by default.
+Depending on your project, this might be a better fit than the alternative in the next section.</p>
+</section>
+<section id="union-explicitly-include-files">
+<h2>Union (explicitly include files)<a class="headerlink" href="#union-explicitly-include-files" title="連結到這個標頭">#</a></h2>
+<p>To contrast the previous approach, <code class="docutils literal notranslate"><span class="pre">unions</span></code> can also be used to select only the files to <em>include</em>.
+This means that new files added to the current directory would be ignored by default.</p>
+<p>Create some additional files:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>mkdir<span class="w"> </span>src
+<span class="gp">$ </span>touch<span class="w"> </span>build.sh<span class="w"> </span>src/select.<span class="o">{</span>c,h<span class="o">}</span>
+</pre></div>
+</div>
+<p>Then create a file set from only the files to be included explicitly:</p>
+<div class="literal-block-wrapper docutils container" id="id8">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id8" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> stdenv<span class="p">,</span> lib <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">fs</span> <span class="o">=</span> lib<span class="o">.</span>fileset<span class="p">;</span>
+  <span class="ss">sourceFiles</span> <span class="o">=</span> fs<span class="o">.</span>unions <span class="p">[</span>
+    <span class="l">./hello.txt</span>
+    <span class="l">./world.txt</span>
+    <span class="l">./build.sh</span>
+    <span class="p">(</span>fs<span class="o">.</span>fileFilter
+      <span class="p">(</span>file<span class="p">:</span> file<span class="o">.</span>hasExt <span class="s2">&quot;c&quot;</span> <span class="o">||</span> file<span class="o">.</span>hasExt <span class="s2">&quot;h&quot;</span><span class="p">)</span>
+      <span class="l">./src</span>
+    <span class="p">)</span>
+  <span class="p">];</span>
+<span class="k">in</span>
+
+fs<span class="o">.</span>trace sourceFiles
+
+stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;fileset&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> fs<span class="o">.</span>toSource <span class="p">{</span>
+    <span class="ss">root</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span>
+    <span class="ss">fileset</span> <span class="o">=</span> sourceFiles<span class="p">;</span>
+  <span class="p">};</span>
+  <span class="ss">postInstall</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">    cp -vr . $out</span>
+<span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">postInstall</span></code> script is simplified to rely on the sources to be pre-filtered appropriately:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">trace: /home/user/fileset</span>
+<span class="go">trace: - build.sh (regular)</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - src (all files in directory)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/sjzkn07d6a4qfp60p6dc64pzvmmdafff-fileset.drv</span>
+<span class="go">...</span>
+<span class="go">&#39;.&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset&#39;</span>
+<span class="go">&#39;./build.sh&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/build.sh&#39;</span>
+<span class="go">&#39;./hello.txt&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/hello.txt&#39;</span>
+<span class="go">&#39;./world.txt&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/world.txt&#39;</span>
+<span class="go">&#39;./src&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/src&#39;</span>
+<span class="go">&#39;./src/select.c&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/src/select.c&#39;</span>
+<span class="go">&#39;./src/select.h&#39; -&gt; &#39;/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset/src/select.h&#39;</span>
+<span class="go">...</span>
+<span class="go">/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset</span>
+</pre></div>
+</div>
+<p>Only the specified files are used, even when a new one is added:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>touch<span class="w"> </span>src/select.o<span class="w"> </span>README.md
+
+<span class="gp">$ </span>nix-build
+<span class="go">trace: - build.sh (regular)</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - src</span>
+<span class="go">trace:   - select.c (regular)</span>
+<span class="go">trace:   - select.h (regular)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset</span>
+</pre></div>
+</div>
+</section>
+<section id="matching-files-tracked-by-git">
+<h2>Matching files tracked by Git<a class="headerlink" href="#matching-files-tracked-by-git" title="連結到這個標頭">#</a></h2>
+<p>If a directory is part of a Git repository, passing it to <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.fileset.gitTracked"><code class="docutils literal notranslate"><span class="pre">gitTracked</span></code></a> gives you a file set that only includes files tracked by Git.</p>
+<p>Create a local Git repository and add all files except <code class="docutils literal notranslate"><span class="pre">src/select.o</span></code> and <code class="docutils literal notranslate"><span class="pre">./result</span></code> to it:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>git<span class="w"> </span>init
+<span class="go">Initialized empty Git repository in /home/user/fileset/.git/</span>
+<span class="gp">$ </span>git<span class="w"> </span>add<span class="w"> </span>-A
+<span class="gp">$ </span>git<span class="w"> </span>reset<span class="w"> </span>src/select.o<span class="w"> </span>result
+</pre></div>
+</div>
+<p>Re-use this selection of files with <code class="docutils literal notranslate"><span class="pre">gitTracked</span></code>:</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id9" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>  <span class="ss">sourceFiles</span> <span class="o">=</span> fs<span class="o">.</span>gitTracked <span class="l">./.</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<p>Build it again:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">warning: Git tree &#39;/home/user/fileset&#39; is dirty</span>
+<span class="go">trace: /home/vg/src/nix.dev/fileset</span>
+<span class="go">trace: - README.md (regular)</span>
+<span class="go">trace: - build.nix (regular)</span>
+<span class="go">trace: - build.sh (regular)</span>
+<span class="go">trace: - default.nix (regular)</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - npins (all files in directory)</span>
+<span class="go">trace: - src</span>
+<span class="go">trace:   - select.c (regular)</span>
+<span class="go">trace:   - select.h (regular)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/p9aw3fl5xcjbgg9yagykywvskzgrmk5y-fileset.drv</span>
+<span class="go">...</span>
+<span class="go">/nix/store/cw4bza1r27iimzrdbfl4yn5xr36d6k5l-fileset</span>
+</pre></div>
+</div>
+<p>This includes too much though, as not all of these files are needed to build the derivation as originally intended.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>When using the <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake"><code class="docutils literal notranslate"><span class="pre">flakes</span></code> and <code class="docutils literal notranslate"><span class="pre">nix-command</span></code> experimental features</a>,
+this function isn't needed, because <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">build</span></code> by default only allows access to files tracked by Git.
+However, to provide the same developer experience for stable Nix, use of this function is nevertheless recommended.</p>
+</div>
+</section>
+<section id="intersection">
+<h2>Intersection<a class="headerlink" href="#intersection" title="連結到這個標頭">#</a></h2>
+<p>This is where <code class="docutils literal notranslate"><span class="pre">intersection</span></code> comes in.
+It allows creating a file set that consists only of files that are in <em>both</em> of two given file sets.</p>
+<p>Select all files that are both tracked by Git <em>and</em> relevant for the build:</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">build.nix</span><a class="headerlink" href="#id10" title="連結到這個程式碼">#</a></div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>  <span class="ss">sourceFiles</span> <span class="o">=</span>
+    fs<span class="o">.</span>intersection
+      <span class="p">(</span>fs<span class="o">.</span>gitTracked <span class="l">./.</span><span class="p">)</span>
+      <span class="p">(</span>fs<span class="o">.</span>unions <span class="p">[</span>
+        <span class="l">./hello.txt</span>
+        <span class="l">./world.txt</span>
+        <span class="l">./build.sh</span>
+        <span class="l">./src</span>
+      <span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<p>This will produce the same output as in the other approach and therefore re-use a previous build result:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build
+<span class="go">warning: Git tree &#39;/home/user/fileset&#39; is dirty</span>
+<span class="go">trace: - build.sh (regular)</span>
+<span class="go">trace: - hello.txt (regular)</span>
+<span class="go">trace: - src</span>
+<span class="go">trace:   - select.c (regular)</span>
+<span class="go">trace:   - select.h (regular)</span>
+<span class="go">trace: - world.txt (regular)</span>
+<span class="go">/nix/store/zl4n1g6is4cmsqf02dci5b2h5zd0ia4r-fileset</span>
+</pre></div>
+</div>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="連結到這個標頭">#</a></h2>
+<p>We have shown some examples on how to use all of the fundamental file set functions.
+For more complex use cases, they can be composed as needed.</p>
+<p>For the complete list and more details, see the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-functions-library-fileset"><code class="docutils literal notranslate"><span class="pre">lib.fileset</span></code> reference documentation</a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="callpackage.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cross-compilation.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">交叉編譯</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#file-sets">File sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-project">Example project</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-files-to-the-nix-store">Adding files to the Nix store</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#difference">Difference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-files">Missing files</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-explicitly-exclude-files">Union (explicitly exclude files)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#filter">Filter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#union-explicitly-include-files">Union (explicitly include files)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matching-files-tracked-by-git">Matching files tracked by Git</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intersection">Intersection</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
