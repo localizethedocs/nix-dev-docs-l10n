@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,69 +21,77 @@ msgstr ""
 msgid "A basic module"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:3
+#: ../../../tutorials/module-system/a-basic-module/index.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/module-system/a-basic-module/index.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/module-system/a-basic-module/index.md:8
 msgid "What is a module?"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:5
+#: ../../../tutorials/module-system/a-basic-module/index.md:10
 msgid ""
 "A module is a function that takes an attribute set and returns an attribute "
 "set."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:6
+#: ../../../tutorials/module-system/a-basic-module/index.md:11
 msgid ""
 "It may declare options, telling which attributes are allowed in the final "
 "outcome."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:7
+#: ../../../tutorials/module-system/a-basic-module/index.md:12
 msgid "It may define values, for options declared by itself or other modules."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:8
+#: ../../../tutorials/module-system/a-basic-module/index.md:13
 msgid ""
 "When evaluated by the module system, it produces an attribute set based on "
 "the declarations and definitions."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:10
+#: ../../../tutorials/module-system/a-basic-module/index.md:15
 msgid ""
 "The simplest possible module is a function that takes any attributes and "
 "returns an empty attribute set:"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:12
-#: ../../../tutorials/module-system/a-basic-module/index.md:26
+#: ../../../tutorials/module-system/a-basic-module/index.md:17
+#: ../../../tutorials/module-system/a-basic-module/index.md:31
 msgid "options.nix"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:12
+#: ../../../tutorials/module-system/a-basic-module/index.md:17
 msgid ""
 "{ ... }:\n"
 "{\n"
 "}"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:19
+#: ../../../tutorials/module-system/a-basic-module/index.md:24
 msgid ""
 "To define any values, the module system first has to know which ones are "
 "allowed. This is done by declaring *options* that specify which attributes "
 "can be set and used elsewhere."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:22
+#: ../../../tutorials/module-system/a-basic-module/index.md:27
 msgid "Declaring options"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:24
+#: ../../../tutorials/module-system/a-basic-module/index.md:29
 msgid ""
 "Options are declared under the top-level `options` attribute with [`lib."
 "mkOption`](https://nixos.org/manual/nixpkgs/stable/#function-library-lib."
 "options.mkOption)."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:26
+#: ../../../tutorials/module-system/a-basic-module/index.md:31
 msgid ""
 "{ lib, ... }:\n"
 "{\n"
@@ -93,51 +101,51 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:32
+#: ../../../tutorials/module-system/a-basic-module/index.md:37
 msgid ""
 "The `lib` argument is passed automatically by the module system. This makes "
 "[Nixpkgs library functions](https://nixos.org/manual/nixpkgs/stable/#chap-"
 "functions) available in each module's function body."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:35
+#: ../../../tutorials/module-system/a-basic-module/index.md:40
 msgid ""
 "The ellipsis `...` is necessary because the module system can pass arbitrary "
 "arguments to modules."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:39
+#: ../../../tutorials/module-system/a-basic-module/index.md:44
 msgid ""
 "The attribute `type` in the argument to `lib.mkOption` specifies which "
 "values are valid for an option. There are several types available under "
 "[`lib.types`](https://nixos.org/manual/nixos/stable/#sec-option-types-basic)."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:42
+#: ../../../tutorials/module-system/a-basic-module/index.md:47
 msgid ""
 "Here we have declared an option `name` of type `str`: The module system will "
 "expect a string when a value is defined."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:45
+#: ../../../tutorials/module-system/a-basic-module/index.md:50
 msgid ""
 "Now that we have declared an option, we would naturally want to give it a "
 "value."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:47
+#: ../../../tutorials/module-system/a-basic-module/index.md:52
 msgid "Defining values"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:49
+#: ../../../tutorials/module-system/a-basic-module/index.md:54
 msgid "Options are set or *defined* under the top-level `config` attribute:"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:51
+#: ../../../tutorials/module-system/a-basic-module/index.md:56
 msgid "config.nix"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:51
+#: ../../../tutorials/module-system/a-basic-module/index.md:56
 msgid ""
 "{ ... }:\n"
 "{\n"
@@ -147,24 +155,24 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:56
+#: ../../../tutorials/module-system/a-basic-module/index.md:61
 msgid ""
 "In our option declaration, we created an option `name` with a string type. "
 "Here, in our option definition, we have set that same option to a string."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:59
+#: ../../../tutorials/module-system/a-basic-module/index.md:64
 msgid ""
 "Option declarations and option definitions don't need to be in the same "
 "file. Which modules will contribute to the resulting attribute set is "
 "specified when setting up module system evaluation."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:62
+#: ../../../tutorials/module-system/a-basic-module/index.md:67
 msgid "Evaluating modules"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:64
+#: ../../../tutorials/module-system/a-basic-module/index.md:69
 msgid ""
 "Modules are evaluated by [`lib.evalModules`](https://nixos.org/manual/"
 "nixpkgs/stable/#module-system-lib-evalModules) from the Nixpkgs library. It "
@@ -172,17 +180,17 @@ msgid ""
 "list of modules to merge and evaluate."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:67
+#: ../../../tutorials/module-system/a-basic-module/index.md:72
 msgid ""
 "The output of `evalModules` contains information about all evaluated "
 "modules, and the final values appear in the attribute `config`."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:69
+#: ../../../tutorials/module-system/a-basic-module/index.md:74
 msgid "default.nix"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:69
+#: ../../../tutorials/module-system/a-basic-module/index.md:74
 msgid ""
 "let\n"
 "  pkgs = import <nixpkgs> { };\n"
@@ -196,22 +204,22 @@ msgid ""
 "result.config\n"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:74
+#: ../../../tutorials/module-system/a-basic-module/index.md:79
 msgid ""
 "Here's a helper script to parse and evaluate our `default.nix` file with "
 "[`nix-instantiate --eval`](https://nix.dev/manual/nix/stable/command-ref/nix-"
 "instantiate) and print the output as JSON:"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:76
+#: ../../../tutorials/module-system/a-basic-module/index.md:81
 msgid "eval.bash"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:76
+#: ../../../tutorials/module-system/a-basic-module/index.md:81
 msgid "nix-shell -p jq --run \"nix-instantiate --eval --json --strict | jq\"\n"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:81
+#: ../../../tutorials/module-system/a-basic-module/index.md:86
 msgid ""
 "As long as every definition has a corresponding declaration, evaluation will "
 "be successful. If there is an option definition that has not been declared, "
@@ -219,13 +227,13 @@ msgid ""
 "error."
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:84
+#: ../../../tutorials/module-system/a-basic-module/index.md:89
 msgid ""
 "Running the script (`./eval.bash`) should show an output that matches what "
 "we have configured:"
 msgstr ""
 
-#: ../../../tutorials/module-system/a-basic-module/index.md:86
+#: ../../../tutorials/module-system/a-basic-module/index.md:91
 msgid ""
 "{\n"
 "  \"name\": \"Boaty McBoatface\"\n"

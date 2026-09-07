@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,18 @@ msgstr ""
 
 #: ../../../_templates/download-links.html:1
 msgid "nix.dev as <a href=\"/nix-dev.pdf\">PDF"
+msgstr ""
+
+#: ../../../_templates/search.html:8
+msgid "Search"
+msgstr ""
+
+#: ../../../_templates/search.html:11
+msgid "Error"
+msgstr ""
+
+#: ../../../_templates/search.html:12
+msgid "Please activate JavaScript to enable the search functionality."
 msgstr ""
 
 #: extension.py:58
@@ -2019,10 +2031,6 @@ msgstr ""
 msgid "Danger"
 msgstr ""
 
-#: locale/__init__.py:231
-msgid "Error"
-msgstr ""
-
 #: locale/__init__.py:232
 msgid "Hint"
 msgstr ""
@@ -2630,11 +2638,6 @@ msgstr ""
 #: themes/agogo/layout.html:29 themes/basic/globaltoc.html:2
 #: themes/basic/localtoc.html:4 themes/scrolls/layout.html:32
 msgid "Table of Contents"
-msgstr ""
-
-#: themes/agogo/layout.html:34 themes/basic/layout.html:130
-#: themes/basic/search.html:3 themes/basic/search.html:15
-msgid "Search"
 msgstr ""
 
 #: themes/agogo/layout.html:37 themes/basic/searchbox.html:8

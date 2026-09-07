@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,70 +21,78 @@ msgstr ""
 msgid "Reproducible interpreted scripts"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:5
+#: ../../../tutorials/first-steps/reproducible-scripts.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/first-steps/reproducible-scripts.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/first-steps/reproducible-scripts.md:10
 msgid ""
 "In this tutorial, you will learn how to use Nix to create and run "
 "reproducible interpreted scripts, also known as [shebang] scripts."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:7
+#: ../../../tutorials/first-steps/reproducible-scripts.md:12
 msgid "Requirements"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:9
+#: ../../../tutorials/first-steps/reproducible-scripts.md:14
 msgid "A working {ref}`Nix installation <install-nix>`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:10
+#: ../../../tutorials/first-steps/reproducible-scripts.md:15
 msgid "Familiarity with [Bash]"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:12
+#: ../../../tutorials/first-steps/reproducible-scripts.md:17
 msgid "A trivial script with non-trivial dependencies"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:14
+#: ../../../tutorials/first-steps/reproducible-scripts.md:19
 msgid ""
 "Take the following script, which fetches the content XML of a URL, converts "
 "it to JSON, and formats it for better readability:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:16
+#: ../../../tutorials/first-steps/reproducible-scripts.md:21
 msgid ""
 "#! /bin/bash\n"
 "\n"
 "curl https://github.com/NixOS/nixpkgs/releases.atom | xml2json | jq .\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:22
+#: ../../../tutorials/first-steps/reproducible-scripts.md:27
 msgid ""
 "It requires the programs `curl`, `xml2json`, and `jq`. It also requires the "
 "`bash` interpreter. If any of these dependencies are not present on the "
 "system running the script, it will fail partially or altogether."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:26
+#: ../../../tutorials/first-steps/reproducible-scripts.md:31
 msgid ""
 "With Nix, we can declare all dependencies explicitly, and produce a script "
 "that will always run on any machine that supports Nix and the required "
 "packages taken from Nixpkgs."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:28
+#: ../../../tutorials/first-steps/reproducible-scripts.md:33
 msgid "The script"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:30
+#: ../../../tutorials/first-steps/reproducible-scripts.md:35
 msgid ""
 "A [shebang] determines which program to use for running an interpreted "
 "script."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:35
+#: ../../../tutorials/first-steps/reproducible-scripts.md:40
 msgid "We will use the shebang line `#!/usr/bin/env nix-shell`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:37
+#: ../../../tutorials/first-steps/reproducible-scripts.md:42
 msgid ""
 "[`env`] is a program available on most modern Unix-like operating systems at "
 "the file system path `/usr/bin/env`. It takes a command name as argument and "
@@ -92,41 +100,41 @@ msgid ""
 "listed in the environment variable `$PATH`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:42
+#: ../../../tutorials/first-steps/reproducible-scripts.md:47
 msgid ""
 "We use [`nix-shell` as a shebang interpreter]. It takes the following "
 "parameters relevant for our use case:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:45
+#: ../../../tutorials/first-steps/reproducible-scripts.md:50
 msgid "`-i` tells which program to use for interpreting the rest of the file"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:46
+#: ../../../tutorials/first-steps/reproducible-scripts.md:51
 msgid "`--pure` excludes most environment variables when the script is run"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:47
+#: ../../../tutorials/first-steps/reproducible-scripts.md:52
 msgid ""
 "`-p` lists packages that should be present in the interpreter's environment"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:48
+#: ../../../tutorials/first-steps/reproducible-scripts.md:53
 msgid "`-I` explicitly sets [the search path] for packages"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:50
+#: ../../../tutorials/first-steps/reproducible-scripts.md:55
 msgid ""
 "More details on the options can be found in the [`nix-shell` reference "
 "documentation](https://nix.dev/manual/nix/stable/command-ref/nix-shell."
 "html#options)."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:55
+#: ../../../tutorials/first-steps/reproducible-scripts.md:60
 msgid "Create a file named `nixpkgs-releases.sh` with the following content:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:57
+#: ../../../tutorials/first-steps/reproducible-scripts.md:62
 msgid ""
 "#!/usr/bin/env nix-shell\n"
 "#! nix-shell -i bash --pure\n"
@@ -137,87 +145,87 @@ msgid ""
 "curl https://github.com/NixOS/nixpkgs/releases.atom | xml2json | jq .\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:66
+#: ../../../tutorials/first-steps/reproducible-scripts.md:71
 msgid ""
 "The first line is a standard shebang. The additional shebang lines are a Nix-"
 "specific construct:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:69
+#: ../../../tutorials/first-steps/reproducible-scripts.md:74
 msgid ""
 "With the `-i` option, `bash` is specified as the interpreter for the rest of "
 "the file."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:71
+#: ../../../tutorials/first-steps/reproducible-scripts.md:76
 msgid ""
 "In this case, the `--pure` option is enabled to prevent the script from "
 "implicitly using programs that may already exist on the system on which the "
 "script is run."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:73
+#: ../../../tutorials/first-steps/reproducible-scripts.md:78
 msgid "The `-p` option lists the packages required for the script to run."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:75
+#: ../../../tutorials/first-steps/reproducible-scripts.md:80
 msgid ""
 "The command `xml2json` is provided by the package `python3Packages.xmljson`, "
 "while `bash`, `jq`, and `curl` are provided by packages of the same name. "
 "`cacert` must be present for SSL authentication to work."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:79
+#: ../../../tutorials/first-steps/reproducible-scripts.md:84
 msgid ""
 "Use [search.nixos.org](https://search.nixos.org/packages) to find packages "
 "providing the program you need."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:82
+#: ../../../tutorials/first-steps/reproducible-scripts.md:87
 msgid ""
 "The parameter of `-I` refers to a specific Git commit of the Nixpkgs "
 "repository."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:84
+#: ../../../tutorials/first-steps/reproducible-scripts.md:89
 msgid ""
 "This ensures that the script will always run with the exact same package "
 "versions, everywhere."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:86
+#: ../../../tutorials/first-steps/reproducible-scripts.md:91
 msgid "Make the script executable:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:88
+#: ../../../tutorials/first-steps/reproducible-scripts.md:93
 msgid "chmod +x nixpkgs-releases.sh\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:92
+#: ../../../tutorials/first-steps/reproducible-scripts.md:97
 msgid "Run the script:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:94
+#: ../../../tutorials/first-steps/reproducible-scripts.md:99
 msgid "./nixpkgs-releases.sh\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:98
+#: ../../../tutorials/first-steps/reproducible-scripts.md:103
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:100
+#: ../../../tutorials/first-steps/reproducible-scripts.md:105
 msgid ""
 "{ref}`reading-nix-language` to learn about the Nix language, which is used "
 "to declare packages and configurations."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:101
+#: ../../../tutorials/first-steps/reproducible-scripts.md:106
 msgid ""
 "{ref}`declarative-reproducible-envs` to create reproducible shell "
 "environments with a declarative configuration file."
 msgstr ""
 
-#: ../../../tutorials/first-steps/reproducible-scripts.md:102
+#: ../../../tutorials/first-steps/reproducible-scripts.md:107
 msgid ""
 "[Garbage Collection](https://nix.dev/manual/nix/stable/package-management/"
 "garbage-collection.html) – free up storage used by the programs made "

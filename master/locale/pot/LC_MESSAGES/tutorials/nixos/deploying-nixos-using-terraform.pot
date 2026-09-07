@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,11 @@ msgstr ""
 msgid "Deploying NixOS using Terraform"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:11
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:14
 msgid ""
 "This tutorial assumes you're [familiar with the basics of Terraform](https://"
 "www.terraform.io/intro/index.html). By the end, you will have provisioned an "
@@ -37,61 +41,61 @@ msgid ""
 "incremental changes to NixOS running on the instance."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:14
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:17
 msgid ""
 "We'll look at how to boot a NixOS machine and how to deploy the incremental "
 "changes."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:16
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:19
 msgid "Booting NixOS image"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:18
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:21
 msgid "Start by providing the Terraform executable:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:20
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:23
 msgid "$ nix-shell -p terraform\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:24
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:27
 msgid ""
 "We are using [Terraform Cloud](https://app.terraform.io) as a [state/locking "
 "backend](https://www.terraform.io/docs/state/purpose.html):"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:26
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:29
 msgid "$ terraform login\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:30
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:33
 msgid ""
 "Make sure to [create an organization](https://app.terraform.io/app/"
 "organizations/new), like `myorganization`, in your Terraform Cloud account."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:31
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:34
 msgid ""
 "Inside `myorganization`, [create a workspace](https://app.terraform.io/app/"
 "cachix/workspaces/new) by choosing **CLI-driven workflow** and pick a name, "
 "like  `myapp`."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:32
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:35
 msgid ""
 "Inside your workspace, under `Settings / General`, change Execution Mode to "
 "`Local`."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:33
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:36
 msgid ""
 "Inside a new directory, create a `main.tf` file with the following contents. "
 "This will start an AWS instance with the NixOS image using one SSH keypair "
 "and an SSH security group:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:35
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:38
 msgid ""
 "terraform {\n"
 "    backend \"remote\" {\n"
@@ -161,11 +165,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:102
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:105
 msgid "The only NixOS specific snippet is:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:104
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:107
 msgid ""
 "module \"nixos_image\" {\n"
 "  source = \"git::https://github.com/tweag/terraform-nixos.git/"
@@ -174,7 +178,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:112
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:115
 msgid ""
 "The `aws_image_nixos` module will return a NixOS AMI given a [NixOS release "
 "number](https://status.nixos.org) so that the `aws_instance` resource can "
@@ -183,39 +187,39 @@ msgid ""
 "argument."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:116
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:119
 msgid ""
 "Make sure to [configure AWS credentials](https://registry.terraform.io/"
 "providers/hashicorp/aws/latest/docs#authentication)."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:117
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:120
 msgid "Applying the Terraform configuration should get you a running NixOS:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:119
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:152
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:122
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:155
 msgid ""
 "$ terraform init\n"
 "$ terraform apply\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:124
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:127
 msgid "Deploying NixOS changes"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:126
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:129
 msgid ""
 "Once the AWS instance is running a NixOS image via Terraform, we can teach "
 "Terraform to always build the latest NixOS configuration and apply those "
 "changes to your instance."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:128
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:131
 msgid "Create `configuration.nix` with the following contents:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:130
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:133
 msgid ""
 "{ config, lib, pkgs, ... }: {\n"
 "  imports = [ <nixpkgs/nixos/modules/virtualisation/amazon-image.nix> ];\n"
@@ -224,11 +228,11 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:138
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:141
 msgid "Append the following snippet to your `main.tf`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:140
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:143
 msgid ""
 "module \"deploy_nixos\" {\n"
 "    source = \"git::https://github.com/tweag/terraform-nixos.git//"
@@ -240,48 +244,48 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:150
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:153
 msgid "Deploy:"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:157
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:160
 msgid "Caveats"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:159
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:162
 msgid ""
 "The `deploy_nixos` module requires NixOS to be installed on the target "
 "machine and Nix on the host machine."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:160
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:163
 msgid ""
 "The `deploy_nixos` module doesn't work when the client and target "
 "architectures are different (unless you use [distributed builds](https://nix."
 "dev/manual/nix/stable/advanced-topics/distributed-builds.html))."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:161
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:164
 msgid "If you need to inject a value into Nix, there is no elegant solution."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:162
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:165
 msgid ""
 "Each machine is evaluated separately, so note that your memory requirements "
 "will grow linearly with the number of machines."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:164
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:167
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:166
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:169
 msgid ""
 "It's possible to [switch to Google Compute Engine](https://github.com/tweag/"
 "terraform-nixos/tree/master/google_image_nixos#readme)."
 msgstr ""
 
-#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:167
+#: ../../../tutorials/nixos/deploying-nixos-using-terraform.md:170
 msgid ""
 "The [`deploy_nixos` module](https://github.com/tweag/terraform-nixos/tree/"
 "master/deploy_nixos#readme) supports a number of arguments, for example to "

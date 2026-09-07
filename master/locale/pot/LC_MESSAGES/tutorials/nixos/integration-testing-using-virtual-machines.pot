@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,40 +21,48 @@ msgstr ""
 msgid "Integration testing with NixOS virtual machines"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:5
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:0
+msgid "Authors"
+msgstr ""
+
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:10
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:7
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:12
 msgid ""
 "This tutorial introduces Nixpkgs functionality for testing NixOS "
 "configurations. It also shows how to set up distributed test scenarios that "
 "involve multiple machines."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:10
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:15
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:12
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:17
 msgid ""
 "A working [Nix installation](<install-nix>) on Linux, or [NixOS](https://"
 "nixos.org/manual/nixos/stable/index.html#sec-installation)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:13
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:18
 msgid "Basic knowledge of the [Nix language](<reading-nix-language>)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:14
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:19
 msgid "Basic knowledge of [NixOS configuration](<nixos-vms>)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:16
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:21
 msgid "Introduction"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:18
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:23
 msgid ""
 "Nixpkgs provides a [test environment](https://nixos.org/manual/nixos/stable/"
 "index.html#sec-nixos-tests) to automate integration testing for distributed "
@@ -67,23 +75,23 @@ msgid ""
 "machine[^darwin]."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:25
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:30
 msgid ""
 "Nix's design properties make integration tests reproducible, which makes "
 "them valuable in a continuous integration (CI) pipeline."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:27
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:32
 msgid "The `testers.runNixOSTest` function"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:29
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:34
 msgid ""
 "NixOS VM tests are defined using the `testers.runNixOSTest` function. The "
 "pattern for NixOS VM tests looks like this:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:32
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:37
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -107,7 +115,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:54
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:59
 msgid ""
 "The function `testers.runNixOSTest` takes a [module](https://nixos.org/"
 "manual/nixos/stable/#sec-writing-modules) to specify the [test options]"
@@ -116,17 +124,17 @@ msgid ""
 "the abbreviated module notation."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:57
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:62
 msgid "The following configuration values must be set:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:59
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:64
 msgid ""
 "[`name`](https://nixos.org/manual/nixos/stable/index.html#test-opt-name) "
 "defines the name of the test."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:61
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:66
 msgid ""
 "[`nodes`](https://nixos.org/manual/nixos/stable/index.html#test-opt-nodes) "
 "contains a set of named configurations, because a test script can involve "
@@ -134,7 +142,7 @@ msgid ""
 "configuration."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:64
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:69
 msgid ""
 "[`testScript`](https://nixos.org/manual/nixos/stable/index.html#test-opt-"
 "testScript) defines the Python test script, either as literal string or as a "
@@ -146,31 +154,31 @@ msgid ""
 "these configurations."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:70
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:75
 msgid ""
 "The test framework automatically starts the virtual machines and runs the "
 "Python script."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:72
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:77
 msgid "Minimal example"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:74
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:79
 msgid ""
 "As a minimal test on the default configuration, we will check if the user "
 "`root` and `alice` can run Firefox. We will build the example up from "
 "scratch."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:77
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:82
 msgid ""
 "Use a [pinned version of Nixpkgs](ref-pinning-nixpkgs), and [explicitly set "
 "configuration options and overlays](nixpkgs-config) to avoid them being "
 "inadvertently overridden by global configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:79
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:84
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -183,15 +191,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:90
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:95
 msgid "Label the test with a descriptive name:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:92
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:97
 msgid "name = \"minimal-test\";\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:96
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:101
 msgid ""
 "Because this example only uses one virtual machine, the node we specify is "
 "simply called `machine`. This name is arbitrary and can be chosen freely. As "
@@ -199,7 +207,7 @@ msgid ""
 "[which we used in a previous tutorial](<nixos-vms>):"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:100
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:105
 msgid ""
 "nodes.machine = { config, pkgs, ... }: {\n"
 "  users.users.alice = {\n"
@@ -215,24 +223,24 @@ msgid ""
 "};\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:115
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:120
 msgid "This is the test script:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:117
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:122
 msgid ""
 "machine.wait_for_unit(\"default.target\")\n"
 "machine.succeed(\"su -- alice -c 'which firefox'\")\n"
 "machine.fail(\"su -- root -c 'which firefox'\")\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:123
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:128
 msgid ""
 "This Python script refers to `machine` which is the name chosen for the "
 "virtual machine configuration used in the `nodes` attribute set."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:125
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:130
 msgid ""
 "The script waits until systemd reaches `default.target`. It uses the `su` "
 "command to switch between users and the `which` command to check if the user "
@@ -240,15 +248,15 @@ msgid ""
 "succeed for user `alice` and to fail for `root`."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:129
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:134
 msgid "This script will be the value of the `testScript` attribute."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:131
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:136
 msgid "The complete `minimal-test.nix` file content looks like the following:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:133
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:138
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -281,19 +289,19 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:164
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:169
 msgid "Running tests"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:166
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:171
 msgid "To set up all machines and run the test script:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:168
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:173
 msgid "$ nix-build minimal-test.nix\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:172
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:177
 msgid ""
 "...\n"
 "test script finished in 10.96s\n"
@@ -303,79 +311,79 @@ msgid ""
 "/nix/store/bx7z3imvxxpwkkza10vb23czhw7873w2-vm-test-run-minimal-test\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:179
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:184
 msgid "Interactive Python shell in the virtual machine"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:181
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:186
 msgid ""
 "When developing tests or when something breaks, it’s useful to interactively "
 "tinker with the test or access a terminal for a machine."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:183
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:188
 msgid "To start an interactive Python session with the testing framework:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:185
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:190
 msgid ""
 "$ $(nix-build -A driverInteractive minimal-test.nix)/bin/nixos-test-driver\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:189
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:194
 msgid ""
 "Here you can run any of the testing operations. Execute the `testScript` "
 "attribute from `minimal-test.nix` with the `test_script()` function."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:192
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:197
 msgid ""
 "If a virtual machine is not yet started, the test environment takes care of "
 "it on the first call of a method on a `machine` object."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:194
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:199
 msgid ""
 "But you can also manually trigger the start of the virtual machine with:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:196
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:201
 msgid ">>> machine.start()\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:199
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:204
 msgid "for a specific node,"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:201
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:206
 msgid "or"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:203
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:208
 msgid ">>> start_all()\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:206
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:211
 msgid "for all nodes."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:208
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:213
 msgid "You can enter an interactive shell on the virtual machine using:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:210
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:215
 msgid ">>> machine.shell_interact()\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:214
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:219
 msgid "and run shell commands like:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:216
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:221
 msgid "uname -a\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:220
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:225
 msgid ""
 "Linux server 5.10.37 #1-NixOS SMP Fri May 14 07:50:46 UTC 2021 x86_64 GNU/"
 "Linux\n"
@@ -385,13 +393,13 @@ msgstr ""
 msgid "Re-running successful tests"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:225
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:230
 msgid ""
 "<!-- FIXME: this should be a separate recipe that can be linked to, as it's "
 "a bit of knowledge one will need now and again. -->\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:227
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:232
 msgid ""
 "Because test results are kept in the Nix store, a successful test is cached. "
 "This means that Nix will not run the test a second time as long as the test "
@@ -399,17 +407,17 @@ msgid ""
 "Therefore, to run a test again, one needs to remove the result."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:231
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:236
 msgid ""
 "If you would try to delete the result using the symbolic link, you will get "
 "the following error:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:233
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:238
 msgid "nix-store --delete ./result\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:237
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:242
 msgid ""
 "finding garbage collector roots...\n"
 "0 store paths deleted, 0.00 MiB freed\n"
@@ -418,64 +426,64 @@ msgid ""
 "query --roots\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:241
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:246
 msgid ""
 "Instead, remove the symbolic link and only then remove the cached result:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:243
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:248
 msgid ""
 "rm ./result\n"
 "nix-store --delete /nix/store/4klj06bsilkqkn6h2sia8dcsi72wbcfl-vm-test-run-"
 "unnamed\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:248
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:253
 msgid "This can be also done with one command:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:250
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:255
 msgid ""
 "result=$(readlink -f ./result) rm ./result && nix-store --delete $result\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:255
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:260
 msgid "Tests with multiple virtual machines"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:257
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:262
 msgid ""
 "Tests can involve multiple virtual machines, for example to test client-"
 "server-communication."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:259
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:264
 msgid "The following example setup includes:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:260
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:265
 msgid ""
 "A virtual machine named `server` running [nginx](https://nginx.org/en/) with "
 "default configuration."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:261
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:266
 msgid ""
 "A virtual machine named `client` that has `curl` available to make an HTTP "
 "request."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:262
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:267
 msgid ""
 "A `testScript` orchestrating testing logic between `client` and `server`."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:264
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:269
 msgid ""
 "The complete `client-server-test.nix` file content looks like the following:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:266
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:271
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -513,84 +521,84 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:301
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:306
 msgid "The test script performs the following steps:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:302
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:307
 msgid "Start the server and wait for it to be ready."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:303
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:308
 msgid "Start the client and wait for it to be ready."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:304
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:309
 msgid ""
 "Run `curl` on the client and use `grep` to check the expected return string. "
 "The test passes or fails based on the return value."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:307
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:312
 msgid "Run the test:"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:309
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:314
 msgid "$ nix-build client-server-test.nix\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:313
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:318
 msgid "Additional information regarding NixOS tests"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:315
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:320
 msgid ""
 "Running integration tests on CI requires hardware acceleration, which many "
 "CIs do not support."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:317
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:322
 msgid ""
 "To run integration tests in [GitHub Actions](<github-actions>) see [how to "
 "disable hardware acceleration](https://github.com/cachix/install-nix-"
 "action#how-do-i-run-nixos-tests)."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:319
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:324
 msgid ""
 "NixOS comes with a large set of tests that can serve as educational examples."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:321
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:326
 msgid ""
 "A good inspiration is [Matrix bridging with an IRC](https://github.com/NixOS/"
 "nixpkgs/blob/master/nixos/tests/matrix/appservice-irc.nix)."
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:323
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:328
 msgid ""
 "<!-- TODO: move examples from https://wiki.nixos.org/wiki/"
 "NixOS_Testing_library to the NixOS manual and troubleshooting tips to nix."
 "dev -->\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:325
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:330
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:327
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:332
 msgid "[](module-system-deep-dive)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:328
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:333
 msgid "[](bootable-iso-image)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:329
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:334
 msgid "[](nixos-docker-images)"
 msgstr ""
 
-#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:23
+#: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:28
 msgid ""
 "Support for [running NixOS VM tests on macOS](https://github.com/NixOS/"
 "nixpkgs/issues/108984) is also implemented but [currently undocumented]"
