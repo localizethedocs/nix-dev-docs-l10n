@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,15 @@ msgstr ""
 msgid "Setting up an HTTP binary cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:11
+#: ../../../tutorials/nixos/binary-cache-setup.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/nixos/binary-cache-setup.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/nixos/binary-cache-setup.md:16
 msgid ""
 "A binary cache stores pre-built [Nix store objects](https://nix.dev/manual/"
 "nix/latest/store/store-object) and provides them to other machines over the "
@@ -37,59 +45,59 @@ msgid ""
 "machines."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:14
+#: ../../../tutorials/nixos/binary-cache-setup.md:19
 msgid "Introduction"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:16
+#: ../../../tutorials/nixos/binary-cache-setup.md:21
 msgid ""
 "In this tutorial you set up a Nix binary cache that serves store objects "
 "from a NixOS machine over HTTP or HTTPS."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:18
+#: ../../../tutorials/nixos/binary-cache-setup.md:23
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:20
+#: ../../../tutorials/nixos/binary-cache-setup.md:25
 msgid "You'll learn how to:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:21
+#: ../../../tutorials/nixos/binary-cache-setup.md:26
 msgid "Set up signing keys for your cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:22
+#: ../../../tutorials/nixos/binary-cache-setup.md:27
 msgid "Enable the right services on the NixOS machine serving the cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:23
+#: ../../../tutorials/nixos/binary-cache-setup.md:28
 msgid "Check that the setup works as intended"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:25
+#: ../../../tutorials/nixos/binary-cache-setup.md:30
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:27
+#: ../../../tutorials/nixos/binary-cache-setup.md:32
 msgid "A working [Nix installation](<install-nix>) on your local machine"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:29
+#: ../../../tutorials/nixos/binary-cache-setup.md:34
 msgid "SSH access to a NixOS machine to use as a cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:31
+#: ../../../tutorials/nixos/binary-cache-setup.md:36
 msgid ""
 "If you're new to NixOS, learn about the [module system](module-system-"
 "tutorial) and configure your first system with [](nixos-vms)."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:33
+#: ../../../tutorials/nixos/binary-cache-setup.md:38
 msgid "(optional) A public IP and DNS domain"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:35
+#: ../../../tutorials/nixos/binary-cache-setup.md:40
 msgid ""
 "If you don't host yourself, check [NixOS-friendly hosters](https://wiki."
 "nixos.org/wiki/NixOS_friendly_hosters) on the NixOS Wiki. Follow the "
@@ -97,50 +105,50 @@ msgid ""
 "configuration."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:38
+#: ../../../tutorials/nixos/binary-cache-setup.md:43
 msgid "For a cache on a local network, we assume:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:39
+#: ../../../tutorials/nixos/binary-cache-setup.md:44
 msgid "The hostname is `cache` (replace it with yours, or an IP address)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:40
+#: ../../../tutorials/nixos/binary-cache-setup.md:45
 msgid "The host serves store objects via HTTP on port 80 (this is the default)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:42
+#: ../../../tutorials/nixos/binary-cache-setup.md:47
 msgid "For a publicly accessible cache, we assume:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:43
+#: ../../../tutorials/nixos/binary-cache-setup.md:48
 msgid "The domain name is `cache.example.com` (replace it with yours)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:44
+#: ../../../tutorials/nixos/binary-cache-setup.md:49
 msgid ""
 "The host serves store objects via HTTPS on port 443 (this is the default)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:46
+#: ../../../tutorials/nixos/binary-cache-setup.md:51
 msgid "How long will it take?"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:48
+#: ../../../tutorials/nixos/binary-cache-setup.md:53
 msgid "25 minutes"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:50
+#: ../../../tutorials/nixos/binary-cache-setup.md:55
 msgid "Set up services"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:52
+#: ../../../tutorials/nixos/binary-cache-setup.md:57
 msgid ""
 "For the NixOS machine hosting the cache, create a new configuration module "
 "in `binary-cache.nix`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:54
+#: ../../../tutorials/nixos/binary-cache-setup.md:59
 msgid ""
 "{ config, ... }:\n"
 "\n"
@@ -165,29 +173,29 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:77
+#: ../../../tutorials/nixos/binary-cache-setup.md:82
 msgid ""
 "The options under [`services.nix-serve`] configure the binary cache service."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:79
+#: ../../../tutorials/nixos/binary-cache-setup.md:84
 msgid ""
 "`nix-serve` doesn't support IPv6 or SSL/HTTPS. The [`services.nginx`] "
 "options are used to set up a proxy, which does support IPv6, to handle "
 "requests to the hostname `cache`."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:86
+#: ../../../tutorials/nixos/binary-cache-setup.md:91
 msgid ""
 "There is an [optional HTTPS section](https-binary-cache) at the end of this "
 "tutorial."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:89
+#: ../../../tutorials/nixos/binary-cache-setup.md:94
 msgid "Add the new NixOS module to the existing machine configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:91
+#: ../../../tutorials/nixos/binary-cache-setup.md:96
 msgid ""
 "{ config, ... }:\n"
 "\n"
@@ -200,96 +208,96 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:103
+#: ../../../tutorials/nixos/binary-cache-setup.md:108
 msgid "From your local machine, deploy the new configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:105
+#: ../../../tutorials/nixos/binary-cache-setup.md:110
 msgid "nixos-rebuild switch --no-flake --target-host root@cache\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:110
+#: ../../../tutorials/nixos/binary-cache-setup.md:115
 msgid ""
 "The binary cache daemon will report errors because there is no secret key "
 "file yet."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:113
+#: ../../../tutorials/nixos/binary-cache-setup.md:118
 msgid "Generate a signing key pair"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:115
+#: ../../../tutorials/nixos/binary-cache-setup.md:120
 msgid ""
 "You need a pair of private and public keys to ensure that the store objects "
 "in the cache are authentic."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:117
+#: ../../../tutorials/nixos/binary-cache-setup.md:122
 msgid ""
 "<!-- TODO: link to the remote builds tutorial for the case where store "
 "objects are signed after building them -->\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:119
+#: ../../../tutorials/nixos/binary-cache-setup.md:124
 msgid ""
 "To generate a key pair for the binary cache, replace the example hostname "
 "`cache.example.com` with your hostname:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:121
+#: ../../../tutorials/nixos/binary-cache-setup.md:126
 msgid ""
 "nix-store --generate-binary-cache-key cache.example.com cache-private-key."
 "pem cache-public-key.pem\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:125
+#: ../../../tutorials/nixos/binary-cache-setup.md:130
 msgid ""
 "`cache-private-key.pem` will be used by the binary cache daemon to sign the "
 "binaries as they are served. Copy it to the location configured in `services."
 "nix-serve.secretKeyFile` on the machine hosting the cache:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:128
+#: ../../../tutorials/nixos/binary-cache-setup.md:133
 msgid ""
 "scp cache-private-key.pem root@cache:/var/secrets/cache-private-key.pem\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:132
+#: ../../../tutorials/nixos/binary-cache-setup.md:137
 msgid ""
 "Up until now, the binary cache daemon was in a restart loop due to the "
 "missing secret key file. Check that it now works correctly:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:135
+#: ../../../tutorials/nixos/binary-cache-setup.md:140
 msgid "ssh root@cache systemctl status nix-serve.service\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:140
+#: ../../../tutorials/nixos/binary-cache-setup.md:145
 msgid ""
 "[](custom-binary-cache) using `cache-public-key.pem` on your local machine."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:143
+#: ../../../tutorials/nixos/binary-cache-setup.md:148
 msgid "Test availability"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:145
+#: ../../../tutorials/nixos/binary-cache-setup.md:150
 msgid ""
 "The following steps check if everything is set up correctly and may help "
 "with identifying problems."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:147
+#: ../../../tutorials/nixos/binary-cache-setup.md:152
 msgid "Check general availability"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:149
+#: ../../../tutorials/nixos/binary-cache-setup.md:154
 msgid ""
 "Test if the binary cache, reverse proxy, and firewall rules work as intended "
 "by querying the cache:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:151
+#: ../../../tutorials/nixos/binary-cache-setup.md:156
 msgid ""
 "$ curl http://cache/nix-cache-info\n"
 "StoreDir: /nix/store\n"
@@ -297,18 +305,18 @@ msgid ""
 "Priority: 30\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:158
+#: ../../../tutorials/nixos/binary-cache-setup.md:163
 msgid "Check store object signing"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:160
+#: ../../../tutorials/nixos/binary-cache-setup.md:165
 msgid ""
 "To test if store objects are signed correctly, inspect the metadata of a "
 "sample derivation. On the binary cache host, build the `hello` package and "
 "get the `.narinfo` file from the cache:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:163
+#: ../../../tutorials/nixos/binary-cache-setup.md:168
 msgid ""
 "$ hash=$(nix-build '<nixpkgs>' -A pkgs.hello | awk -F '/' '{print $4}' | awk "
 "-F '-' '{print $1}')\n"
@@ -318,17 +326,17 @@ msgid ""
 "GyBFzocLAeLEFd0hr2noK84VzPUw0ArCNYEnrm1YXakdsC5FkO2Bkj2JH8Xjou+wxeXMjFKa0YP2AML7nBWsAg==\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:170
+#: ../../../tutorials/nixos/binary-cache-setup.md:175
 msgid ""
 "Make sure that the output contains this line prefixed with `Sig:` and shows "
 "the public key you generated."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:173
+#: ../../../tutorials/nixos/binary-cache-setup.md:178
 msgid "Serving the binary cache via HTTPS"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:175
+#: ../../../tutorials/nixos/binary-cache-setup.md:180
 msgid ""
 "If the binary cache is publicly accessible, it is possible to enforce HTTPS "
 "with [Let's Encrypt](https://letsencrypt.org/) SSL certificates. Edit your "
@@ -336,7 +344,7 @@ msgid ""
 "mail address with yours:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:178
+#: ../../../tutorials/nixos/binary-cache-setup.md:183
 msgid ""
 "   services.nginx = {\n"
 "     enable = true;\n"
@@ -363,68 +371,68 @@ msgid ""
 "   ];"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:203
+#: ../../../tutorials/nixos/binary-cache-setup.md:208
 msgid "Rebuild the system to deploy these changes:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:205
+#: ../../../tutorials/nixos/binary-cache-setup.md:210
 msgid "nixos-rebuild switch --no-flake --target-host root@cache.example.com\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:209
+#: ../../../tutorials/nixos/binary-cache-setup.md:214
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:211
+#: ../../../tutorials/nixos/binary-cache-setup.md:216
 msgid ""
 "If your binary cache is already a [remote build machine](https://nix.dev/"
 "manual/nix/latest/advanced-topics/distributed-builds), it will serve all "
 "store objects in its Nix store."
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:213
+#: ../../../tutorials/nixos/binary-cache-setup.md:218
 msgid ""
 "[](custom-binary-cache) using the binary cache's hostname and the generated "
 "public key"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:214
+#: ../../../tutorials/nixos/binary-cache-setup.md:219
 msgid "[](post-build-hooks) to upload store objects to the binary cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:215
+#: ../../../tutorials/nixos/binary-cache-setup.md:220
 msgid "[](distributed-build-setup-tutorial)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:217
+#: ../../../tutorials/nixos/binary-cache-setup.md:222
 msgid ""
 "To save storage space, please refer to the following NixOS configuration "
 "attributes:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:219
+#: ../../../tutorials/nixos/binary-cache-setup.md:224
 msgid ""
 "[`nix.gc`](https://search.nixos.org/options?query=nix.gc): Options for "
 "automatic garbage collection"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:220
+#: ../../../tutorials/nixos/binary-cache-setup.md:225
 msgid ""
 "[`nix.optimise`](https://search.nixos.org/options?query=nix.optimise): "
 "Options for periodic Nix store optimisation"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:222
+#: ../../../tutorials/nixos/binary-cache-setup.md:227
 msgid "Alternatives"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:224
+#: ../../../tutorials/nixos/binary-cache-setup.md:229
 msgid ""
 "[`nix-serve-ng`](https://github.com/aristanetworks/nix-serve-ng): A drop-in "
 "replacement for `nix-serve`, written in Haskell"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:226
+#: ../../../tutorials/nixos/binary-cache-setup.md:231
 msgid ""
 "The [SSH Store](https://nix.dev/manual/nix/latest/store/types/ssh-store), "
 "[Experimental SSH Store](https://nix.dev/manual/nix/latest/store/types/"
@@ -434,42 +442,42 @@ msgid ""
 "storage, for example:"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:228
+#: ../../../tutorials/nixos/binary-cache-setup.md:233
 msgid "Amazon S3"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:229
+#: ../../../tutorials/nixos/binary-cache-setup.md:234
 msgid "Tigris"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:230
+#: ../../../tutorials/nixos/binary-cache-setup.md:235
 msgid "Cloudflare R2"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:232
+#: ../../../tutorials/nixos/binary-cache-setup.md:237
 msgid ""
 "[attic](https://github.com/zhaofengli/attic): Nix binary cache server backed "
 "by an S3-compatible storage provider"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:234
+#: ../../../tutorials/nixos/binary-cache-setup.md:239
 msgid "[Cachix](https://www.cachix.org): Nix binary cache as a service"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:236
+#: ../../../tutorials/nixos/binary-cache-setup.md:241
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:238
+#: ../../../tutorials/nixos/binary-cache-setup.md:243
 msgid ""
 "[Nix Manual on HTTP Binary Cache Store](https://nix.dev/manual/nix/latest/"
 "store/types/http-binary-cache-store)"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:239
+#: ../../../tutorials/nixos/binary-cache-setup.md:244
 msgid "[`services.nix-serve` module options][`services.nix-serve`]"
 msgstr ""
 
-#: ../../../tutorials/nixos/binary-cache-setup.md:240
+#: ../../../tutorials/nixos/binary-cache-setup.md:245
 msgid "[`services.nginx` module options][`services.nginx`]"
 msgstr ""

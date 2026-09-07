@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,31 +21,35 @@ msgstr ""
 msgid "Flakes"
 msgstr ""
 
-#: ../../../concepts/flakes.md:4
+#: ../../../concepts/flakes.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../concepts/flakes.md:8
 msgid "What are flakes?"
 msgstr ""
 
-#: ../../../concepts/flakes.md:6
+#: ../../../concepts/flakes.md:10
 msgid ""
 "Flakes offer an entrypoint file `flake.nix` aimed at sharing Nix code. They "
 "make it easy to build programs with the same version."
 msgstr ""
 
-#: ../../../concepts/flakes.md:9
+#: ../../../concepts/flakes.md:13
 msgid ""
 "`flake.nix` is a file that declares inputs and outputs with a [standard "
 "structure]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:11
+#: ../../../concepts/flakes.md:15
 msgid "Note: [Experimental], requires [Nix 2.4]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:13
+#: ../../../concepts/flakes.md:17
 msgid "This file can look like:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:15
+#: ../../../concepts/flakes.md:19
 msgid ""
 "{\n"
 "  description = \"My example flake\";\n"
@@ -63,65 +67,65 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:32
+#: ../../../concepts/flakes.md:36
 msgid ""
 "[`outputs`] include various [built-in types], but can be [extended]. You can "
 "find an overview of these on the [wiki]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:35
+#: ../../../concepts/flakes.md:39
 msgid "[`inputs`] let you declare dependencies."
 msgstr ""
 
-#: ../../../concepts/flakes.md:37
+#: ../../../concepts/flakes.md:41
 msgid ""
 "Nix creates a [`flake.lock`] to pin dependencies once you run a [`nix` "
 "command]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:39
+#: ../../../concepts/flakes.md:43
 msgid ""
 "If these dependencies have `inputs` of their own, Nix will check _their_ "
 "lock files to find the versions to use. Using the same versions helps make "
 "sure programs work as intended, but you can override these."
 msgstr ""
 
-#: ../../../concepts/flakes.md:42
+#: ../../../concepts/flakes.md:46
 msgid "[`nix` command]s natively integrate with flakes by default."
 msgstr ""
 
-#: ../../../concepts/flakes.md:44
+#: ../../../concepts/flakes.md:48
 msgid "nix build github:NixOS/nixpkgs#hello\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:48
+#: ../../../concepts/flakes.md:52
 msgid ""
 "You may pass [references] to local (e.g. `.`) or remote (e.g. `github:NixOS/"
 "nixpkgs`) project directories. For further details see the reference on "
 "[`nix` command]s."
 msgstr ""
 
-#: ../../../concepts/flakes.md:51
+#: ../../../concepts/flakes.md:55
 msgid ""
 "Aliases to flakes are stored in a [registry]. This can be extended by "
 "[command-line] or by {term}`NixOS` option [`nix.registry`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:60
+#: ../../../concepts/flakes.md:64
 msgid "The NixOS manual further explains [flake-based installs]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:80
+#: ../../../concepts/flakes.md:84
 msgid "Should I use flakes in my project?"
 msgstr ""
 
-#: ../../../concepts/flakes.md:82
+#: ../../../concepts/flakes.md:86
 msgid ""
 "Flakes are an experimental extension format with outstanding issues. Its "
 "functionality can generally be achieved without them as well."
 msgstr ""
 
-#: ../../../concepts/flakes.md:85
+#: ../../../concepts/flakes.md:89
 msgid ""
 "If you need to run existing software that already used flakes, or want to "
 "contribute to their development, feel free to use them. If you want to write "
@@ -130,194 +134,194 @@ msgid ""
 "preserving compatibility."
 msgstr ""
 
-#: ../../../concepts/flakes.md:93
+#: ../../../concepts/flakes.md:97
 msgid "Discoverability"
 msgstr ""
 
-#: ../../../concepts/flakes.md:95
+#: ../../../concepts/flakes.md:99
 msgid ""
 "A first step in use of flakes is to add a `flake.nix` file specifying "
 "`outputs`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:97 ../../../concepts/flakes.md:168
-#: ../../../concepts/flakes.md:240 ../../../concepts/flakes.md:272
+#: ../../../concepts/flakes.md:101 ../../../concepts/flakes.md:172
+#: ../../../concepts/flakes.md:241 ../../../concepts/flakes.md:273
 msgid "Pros:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:99
+#: ../../../concepts/flakes.md:103
 msgid "Use the code from other flake projects."
 msgstr ""
 
-#: ../../../concepts/flakes.md:100
+#: ../../../concepts/flakes.md:104
 msgid "Nix checks `flake.nix`'s structure is valid."
 msgstr ""
 
-#: ../../../concepts/flakes.md:102 ../../../concepts/flakes.md:184
-#: ../../../concepts/flakes.md:245 ../../../concepts/flakes.md:276
+#: ../../../concepts/flakes.md:106 ../../../concepts/flakes.md:188
+#: ../../../concepts/flakes.md:246 ../../../concepts/flakes.md:277
 msgid "Cons:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:104
+#: ../../../concepts/flakes.md:108
 msgid ""
 "Flakes have no [parameters]. This means `flake.nix` and its end-user must be "
 "explicit about the used [`system`]. This is made easier by say [`flake-"
 "utils`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:107
+#: ../../../concepts/flakes.md:111
 msgid "As an experimental feature, flakes can still change."
 msgstr ""
 
-#: ../../../concepts/flakes.md:113 ../../../concepts/flakes.md:195
-#: ../../../concepts/flakes.md:255 ../../../concepts/flakes.md:280
+#: ../../../concepts/flakes.md:117 ../../../concepts/flakes.md:199
+#: ../../../concepts/flakes.md:256 ../../../concepts/flakes.md:281
 msgid "Alternatives:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:115
+#: ../../../concepts/flakes.md:119
 msgid ""
 "Use flakes as thin wrappers over existing Nix code. This way, code can be "
 "used in both ways."
 msgstr ""
 
-#: ../../../concepts/flakes.md:117
+#: ../../../concepts/flakes.md:121
 msgid "Use Nix modules: flake users can import these with `flake = false;`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:118
+#: ../../../concepts/flakes.md:122
 msgid ""
 "Since NixOS 26.05, one or more NixOS configurations can be loaded from a "
 "single [`system.nix` entrypoint]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:123
+#: ../../../concepts/flakes.md:127
 msgid "Running commands"
 msgstr ""
 
-#: ../../../concepts/flakes.md:125
+#: ../../../concepts/flakes.md:129
 msgid ""
 "Flakes are used from Nix's [v3 `nix` command line interface]. It can build "
 "or run programs by a reference like `.` or `github:NixOS/nixpkgs`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:128
+#: ../../../concepts/flakes.md:132
 msgid "You can enable this for one command by adding:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:130
+#: ../../../concepts/flakes.md:134
 msgid " --experimental-features 'nix-command flakes'\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:134
+#: ../../../concepts/flakes.md:138
 msgid "Or permanently in NixOS or Home Manager configurations using:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:136
+#: ../../../concepts/flakes.md:140
 msgid "nix.settings.experimental-features = [ \"nix-command\" \"flakes\" ];\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:140
+#: ../../../concepts/flakes.md:144
 msgid ""
 "To build the derivation in your `flake.nix`'s `packages.x86_64-linux."
 "default`, run:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:142
+#: ../../../concepts/flakes.md:146
 msgid "nix build .#packages.x86_64-linux.default\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:146
+#: ../../../concepts/flakes.md:150
 msgid "You can shorten this to `nix build .#default`, or just `nix build`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:148
+#: ../../../concepts/flakes.md:152
 msgid ""
 "`nix run` runs programs in `outputs.apps`. `nix run .#default` runs `outputs."
 "apps.default`. Just `nix run` also runs that."
 msgstr ""
 
-#: ../../../concepts/flakes.md:152
+#: ../../../concepts/flakes.md:156
 msgid "For example, to run the `hello` package from {term}`Nixpkgs`:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:154
+#: ../../../concepts/flakes.md:158
 msgid "nix run nixpkgs#hello -- --greeting \"hello from flakes\"\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:158
+#: ../../../concepts/flakes.md:162
 msgid "This uses the version set by your registry's alias `nixpkgs`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:160
+#: ../../../concepts/flakes.md:164
 msgid ""
 "To run the `hello` package from {term}`Nixpkgs`' `nixpkgs-unstable` branch:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:162
+#: ../../../concepts/flakes.md:166
 msgid "nix run github:NixOS/nixpkgs/nixpkgs-unstable#hello\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:170
+#: ../../../concepts/flakes.md:174
 msgid ""
 "Flakes cache builds to save time on later identical builds. This can save "
 "time if you run unchanged builds in Continuous Integration, for example."
 msgstr ""
 
-#: ../../../concepts/flakes.md:172
+#: ../../../concepts/flakes.md:176
 msgid ""
 "Flakes promote making programs easy to run, also from remote repositories."
 msgstr ""
 
-#: ../../../concepts/flakes.md:173
+#: ../../../concepts/flakes.md:177
 msgid ""
 "Flakes default to running in [pure mode]. This promotes a style of writing "
 "programs more likely to make them reproducible[^reproducible]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:175
+#: ../../../concepts/flakes.md:179
 msgid ""
 "Flakes build only tracked files, for projects using [Git]. This helps "
 "prevent rebuilds."
 msgstr ""
 
-#: ../../../concepts/flakes.md:186
+#: ../../../concepts/flakes.md:190
 msgid ""
 "Builds copy the whole flake directory to the Nix store. This caches them, "
 "but can be [slower] for large repositories like {term}`Nixpkgs`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:188
+#: ../../../concepts/flakes.md:192
 msgid "The implementation still has issues for both [flakes] and the [v3 CLI]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:189
+#: ../../../concepts/flakes.md:193
 msgid "Files must be staged for flakes to see them."
 msgstr ""
 
-#: ../../../concepts/flakes.md:197
+#: ../../../concepts/flakes.md:201
 msgid ""
 "Plain Nix files can be used with the [v2 commands] (like [`nix-build`], "
 "[`nix-shell`]), or with v3 commands' [`--file` flag] or `-f`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:198
+#: ../../../concepts/flakes.md:202
 msgid ""
 "In {term}`NixOS`, you can make v3 commands' `nixpkgs` to a package set "
 "`pkgs` by setting [`nixpkgs.flake.source = pkgs.path;`] in your NixOS "
 "configuration. Also see [managing dependencies]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:200
+#: ../../../concepts/flakes.md:204
 msgid ""
 "Using [`builtins.fetchTree`] from experimental feature [`fetch-tree`], [`nix "
 "run`] may be emulated[^emulated] for non-flake entrypoints."
 msgstr ""
 
-#: ../../../concepts/flakes.md:216
+#: ../../../concepts/flakes.md:220
 msgid "Dependency management"
 msgstr ""
 
-#: ../../../concepts/flakes.md:218
+#: ../../../concepts/flakes.md:222
 msgid ""
 "Flakes' `inputs` attribute can manage dependencies. By default this handles "
 "recursive dependencies implicitly. In case a library is used multiple times, "
@@ -325,7 +329,7 @@ msgid ""
 "if you want using `follows` statements:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:223
+#: ../../../concepts/flakes.md:227
 msgid ""
 "{\n"
 "  inputs = {\n"
@@ -338,77 +342,70 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../concepts/flakes.md:235
+#: ../../../concepts/flakes.md:239
 msgid "This way, Home Manager's inputs reuse your chosen `nixpkgs`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:237
-msgid ""
-"If you don't want to load a dependency, you can also disable it. In the "
-"above example, that could look like `inputs.home-manager.inputs.nixpkgs = "
-"null;`."
-msgstr ""
-
-#: ../../../concepts/flakes.md:242
+#: ../../../concepts/flakes.md:243
 msgid ""
 "Make it easy to reproduce published software, following the versions they "
 "used."
 msgstr ""
 
-#: ../../../concepts/flakes.md:243
+#: ../../../concepts/flakes.md:244
 msgid "You can override recursive inputs."
 msgstr ""
 
-#: ../../../concepts/flakes.md:247
+#: ../../../concepts/flakes.md:248
 msgid ""
 "Flakes by default follow versions from dependencies' `flake.lock`, so if you "
 "don't override these with `follows`, you may get:"
 msgstr ""
 
-#: ../../../concepts/flakes.md:248
+#: ../../../concepts/flakes.md:249
 msgid "multiple versions of the same dependency."
 msgstr ""
 
-#: ../../../concepts/flakes.md:249
+#: ../../../concepts/flakes.md:250
 msgid "outdated dependencies, if their versions are not actively updated."
 msgstr ""
 
-#: ../../../concepts/flakes.md:250
+#: ../../../concepts/flakes.md:251
 msgid "Dependencies are fetched eagerly, loading dependencies you may not use."
 msgstr ""
 
-#: ../../../concepts/flakes.md:251
+#: ../../../concepts/flakes.md:252
 msgid ""
 "Dependencies managed by flake inputs are hard to override if you don't also "
 "use flakes."
 msgstr ""
 
-#: ../../../concepts/flakes.md:252
+#: ../../../concepts/flakes.md:253
 msgid ""
 "If your flake is used as a library, you need to add `follows` statements for "
 "all recursive inputs. Otherwise downstream consumers cannot add their "
 "`follows` on your indirect inputs."
 msgstr ""
 
-#: ../../../concepts/flakes.md:257
+#: ../../../concepts/flakes.md:258
 msgid "Handle dependencies with [`npins`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:258
+#: ../../../concepts/flakes.md:259
 msgid ""
 "Handle dependencies inline using functions such as the [fetchers] or "
 "[`builtins.fetchTree`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:259
+#: ../../../concepts/flakes.md:260
 msgid "Use `inputs.<name>.flake = false;`"
 msgstr ""
 
-#: ../../../concepts/flakes.md:265
+#: ../../../concepts/flakes.md:266
 msgid "Flake-only Nix"
 msgstr ""
 
-#: ../../../concepts/flakes.md:267
+#: ../../../concepts/flakes.md:268
 msgid ""
 "As flakes (largely[^subset]) use Nix as an internal language, you could even "
 "place all Nix code in flake files. In the community, such a coding style is "
@@ -417,98 +414,98 @@ msgid ""
 "lets you spread code over different flake-like files."
 msgstr ""
 
-#: ../../../concepts/flakes.md:274
+#: ../../../concepts/flakes.md:275
 msgid "Helps use flakes' schema and inputs from any such Nix code."
 msgstr ""
 
-#: ../../../concepts/flakes.md:278
+#: ../../../concepts/flakes.md:279
 msgid "Makes it harder to access this code without using flakes."
 msgstr ""
 
-#: ../../../concepts/flakes.md:282
+#: ../../../concepts/flakes.md:283
 msgid ""
 "Use flakes as thin wrappers over existing Nix code, so code can be used in "
 "both ways."
 msgstr ""
 
-#: ../../../concepts/flakes.md:283
+#: ../../../concepts/flakes.md:284
 msgid ""
 "Use library [`flake-compat`] to expose a flake's default package or shell to "
 "non-flake users."
 msgstr ""
 
-#: ../../../concepts/flakes.md:284
+#: ../../../concepts/flakes.md:285
 msgid ""
 "Propagate needed parameters across modules explicitly or with NixOS's "
 "[`specialArgs`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:289
+#: ../../../concepts/flakes.md:290
 msgid "History"
 msgstr ""
 
-#: ../../../concepts/flakes.md:291
+#: ../../../concepts/flakes.md:292
 msgid "Conception"
 msgstr ""
 
-#: ../../../concepts/flakes.md:292
+#: ../../../concepts/flakes.md:293
 msgid "Flakes were proposed in [RFC 49], and introduced in a [blog post]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:293
+#: ../../../concepts/flakes.md:294
 msgid "Design"
 msgstr ""
 
-#: ../../../concepts/flakes.md:294
+#: ../../../concepts/flakes.md:295
 msgid ""
 "The flakes proposal was criticised for trying to solve too many problems at "
 "once and at the wrong abstraction layer."
 msgstr ""
 
-#: ../../../concepts/flakes.md:295
+#: ../../../concepts/flakes.md:296
 msgid ""
 "The design still has [various problems] including around versioning, "
 "composability, cross-compilation, and tight coupling with nixpkgs."
 msgstr ""
 
-#: ../../../concepts/flakes.md:296
+#: ../../../concepts/flakes.md:297
 msgid "There are also still many [open design questions] around the `nix` CLI."
 msgstr ""
 
-#: ../../../concepts/flakes.md:297
+#: ../../../concepts/flakes.md:298
 msgid "Implementation"
 msgstr ""
 
-#: ../../../concepts/flakes.md:298
+#: ../../../concepts/flakes.md:299
 msgid "There are still [problems with the implementation]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:299
+#: ../../../concepts/flakes.md:300
 msgid "Process"
 msgstr ""
 
-#: ../../../concepts/flakes.md:300
+#: ../../../concepts/flakes.md:301
 msgid ""
 "While there were still outstanding concerns about the design, the "
 "implementation was merged without the RFC having been accepted (and in fact "
 "being withdrawn on merge), raising questions about proper process."
 msgstr ""
 
-#: ../../../concepts/flakes.md:303
+#: ../../../concepts/flakes.md:304
 msgid "The RFC was closed with no timeline to conclude the experiment."
 msgstr ""
 
-#: ../../../concepts/flakes.md:304
+#: ../../../concepts/flakes.md:305
 msgid ""
 "Flakes had become depended on by many projects, making it harder to iterate "
 "on their design without breaking many people's code."
 msgstr ""
 
-#: ../../../concepts/flakes.md:305
+#: ../../../concepts/flakes.md:306
 msgid "Community"
 msgstr ""
 
-#: ../../../concepts/flakes.md:306
+#: ../../../concepts/flakes.md:307
 msgid ""
 "The design had not been accepted by all parts of the community, with e.g. "
 "{term}`Nixpkgs` not using it in its internal tooling. As a result of this, "
@@ -520,22 +517,22 @@ msgid ""
 "propelled the flakes experiment in the first place."
 msgstr ""
 
-#: ../../../concepts/flakes.md:319
+#: ../../../concepts/flakes.md:320
 msgid "Further reading"
 msgstr ""
 
-#: ../../../concepts/flakes.md:321
+#: ../../../concepts/flakes.md:322
 msgid "[wiki article](https://wiki.nixos.org/wiki/Flakes)"
 msgstr ""
 
-#: ../../../concepts/flakes.md:322
+#: ../../../concepts/flakes.md:323
 msgid ""
 "[Flakes aren't real and cannot hurt you: a guide to using Nix flakes the non-"
 "flake way](https://jade.fyi/blog/flakes-arent-real/) (Jade Lovelace, January "
 "2024)"
 msgstr ""
 
-#: ../../../concepts/flakes.md:323
+#: ../../../concepts/flakes.md:324
 msgid ""
 "[Nix Flakes is an experiment that did too much at once...](https://samuel."
 "dionne-riel.com/blog/2023/09/06/flakes-is-an-experiment-that-did-too-much-at-"
@@ -544,7 +541,7 @@ msgid ""
 "2023)"
 msgstr ""
 
-#: ../../../concepts/flakes.md:324
+#: ../../../concepts/flakes.md:325
 msgid ""
 "[Experimental does not mean unstable](https://determinate.systems/posts/"
 "experimental-does-not-mean-unstable) ([comments](https://discourse.nixos.org/"
@@ -552,23 +549,23 @@ msgid ""
 "flakes/32703)) (Graham Christensen, September 2023)"
 msgstr ""
 
-#: ../../../concepts/flakes.md:325
+#: ../../../concepts/flakes.md:326
 msgid ""
 "[The Nix Hour: comparing flakes to traditional Nix](https://www.youtube.com/"
 "watch?v=atmoYyBAhF4) (Silvan Mosberger, November 2022)"
 msgstr ""
 
-#: ../../../concepts/flakes.md:91
+#: ../../../concepts/flakes.md:95
 msgid ""
 "Nix repositories offering only flake entrypoints may be imported using "
 "[`flake-inputs`]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:180
+#: ../../../concepts/flakes.md:184
 msgid "Even in pure mode, reproducibility is [not actually guaranteed]."
 msgstr ""
 
-#: ../../../concepts/flakes.md:213
+#: ../../../concepts/flakes.md:217
 msgid ""
 "`nix run github:NixOS/nixpkgs#hello` for non-flake projects may look like "
 "`nix-shell -p '(import (builtins.fetchTree \"github:NixOS/nixpkgs\").outPath "
@@ -579,7 +576,7 @@ msgid ""
 "outPath { }).$(cut -d \"#\" -f 2 <<< \"$1\")\"); }; run'`."
 msgstr ""
 
-#: ../../../concepts/flakes.md:54
+#: ../../../concepts/flakes.md:58
 msgid ""
 "Flakes default to pure mode, isolating builds from the host environment. "
 "This is also called hermetic evaluation, and prevents evaluating (non-"

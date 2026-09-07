@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,99 +29,108 @@ msgstr ""
 msgid "Continuous integration with GitHub Actions"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:12
+#: ../../../guides/recipes/continuous-integration-github-actions.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:16
 msgid ""
 "Set up [GitHub Actions](https://github.com/features/actions) as your "
 "continuous integration (CI) workflow for commits and pull requests."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:14
+#: ../../../guides/recipes/continuous-integration-github-actions.md:18
 msgid ""
 "Nix lets CI build and cache developer environments for every project on "
 "every branch using binary caches."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:16
+#: ../../../guides/recipes/continuous-integration-github-actions.md:20
 msgid ""
 "Build time is a key CI metric. Cachix (below) is the most straightforward "
 "caching option."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:18
+#: ../../../guides/recipes/continuous-integration-github-actions.md:22
 msgid "Caching builds using Cachix"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:20
+#: ../../../guides/recipes/continuous-integration-github-actions.md:24
 msgid ""
 "Using [Cachix](https://cachix.org/) you'll never have to waste time building "
 "a derivation twice, and you'll share built derivations with all your "
 "developers."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:22
+#: ../../../guides/recipes/continuous-integration-github-actions.md:26
 msgid "After each job, just-built derivations are pushed to your binary cache."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:24
+#: ../../../guides/recipes/continuous-integration-github-actions.md:28
 msgid ""
 "Before each job, derivations to be built are first substituted (if they "
 "exist) from your binary cache."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:26
+#: ../../../guides/recipes/continuous-integration-github-actions.md:30
 msgid "1. Creating your first binary cache"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:28
+#: ../../../guides/recipes/continuous-integration-github-actions.md:32
 msgid ""
 "It's recommended to have different binary caches per team, depending on who "
 "will have write/read access to it."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:30
+#: ../../../guides/recipes/continuous-integration-github-actions.md:34
 msgid ""
 "Fill out the form on the [create binary cache](https://app.cachix.org/cache) "
 "page."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:32
+#: ../../../guides/recipes/continuous-integration-github-actions.md:36
 msgid ""
 "On your freshly created binary cache, follow the **Push binaries** tab "
 "instructions."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:34
+#: ../../../guides/recipes/continuous-integration-github-actions.md:38
 msgid "2. Setting up secrets"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:36
+#: ../../../guides/recipes/continuous-integration-github-actions.md:40
 msgid ""
 "On your GitHub repository or organization (for use across all repositories):"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:38
+#: ../../../guides/recipes/continuous-integration-github-actions.md:42
 msgid "Click on `Settings`."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:39
-msgid "Click on `Secrets`."
+#: ../../../guides/recipes/continuous-integration-github-actions.md:43
+msgid ""
+"Click on `Secrets and variables` and click on `Actions` in dropdown list"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:40
+#: ../../../guides/recipes/continuous-integration-github-actions.md:44
+msgid "Click on `New repository secret`."
+msgstr ""
+
+#: ../../../guides/recipes/continuous-integration-github-actions.md:45
 msgid ""
 "Add your previously generated secrets (`CACHIX_SIGNING_KEY` and/or "
 "`CACHIX_AUTH_TOKEN`)."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:42
+#: ../../../guides/recipes/continuous-integration-github-actions.md:47
 msgid "3. Setting up GitHub Actions"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:44
+#: ../../../guides/recipes/continuous-integration-github-actions.md:49
 msgid "Create `.github/workflows/test.yml` with:"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:46
+#: ../../../guides/recipes/continuous-integration-github-actions.md:51
 msgid ""
 "name: \"Test\"\n"
 "on:\n"
@@ -147,23 +156,23 @@ msgid ""
 "    - run: nix-shell --run \"echo OK\"\n"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:70
+#: ../../../guides/recipes/continuous-integration-github-actions.md:75
 msgid ""
 "Once you commit and push to your GitHub repository, you should see status "
 "checks appearing on commits and PRs."
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:73
+#: ../../../guides/recipes/continuous-integration-github-actions.md:78
 msgid "Next steps"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:75
+#: ../../../guides/recipes/continuous-integration-github-actions.md:80
 msgid ""
 "See [GitHub Actions workflow syntax](https://docs.github.com/en/actions/"
 "reference/workflow-syntax-for-github-actions)"
 msgstr ""
 
-#: ../../../guides/recipes/continuous-integration-github-actions.md:76
+#: ../../../guides/recipes/continuous-integration-github-actions.md:81
 msgid ""
 "To quickly set up a Nix project read through [Getting started Nix template]"
 "(https://github.com/nix-dot-dev/getting-started-nix-template)."

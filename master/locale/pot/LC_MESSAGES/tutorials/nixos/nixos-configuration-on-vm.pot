@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,52 +21,61 @@ msgstr ""
 msgid "NixOS virtual machines"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:5
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:0
+msgid "Authors"
+msgstr ""
+
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:10
 msgid ""
 "One of the most important features of NixOS is the ability to configure the "
 "entire system declaratively, including packages to be installed, services to "
 "be run, as well as other settings and options."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:7
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:12
 msgid ""
 "NixOS configurations can be used to test and use NixOS using a virtual "
-"machine, independent of an installation on a \"bare metal\" computer."
+"machine, which is a lighter weight option compared to a full \"bare metal\" "
+"installation."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:9
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:14
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:11
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:16
 msgid ""
 "This tutorial serves as an introduction to creating NixOS virtual machines. "
 "Virtual machines are a practical tool for experimenting with or debugging "
 "NixOS configurations."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:14
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:19
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:16
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:21
 msgid "A Linux system with virtualisation support"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:17
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:22
 msgid ""
 "(optional) A graphical environment for running a graphical virtual machine"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:18
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:23
 msgid "A working [Nix installation](https://nix.dev/install-nix)"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:19
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:24
 msgid "Basic knowledge of the [Nix language](reading-nix-language)"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:22
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:27
 msgid ""
 "A NixOS configuration is a Nix language function following the [NixOS module]"
 "(https://nixos.org/manual/nixos/stable/index.html#sec-writing-modules) "
@@ -74,22 +83,22 @@ msgid ""
 "(module-system-deep-dive) tutorial."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:26
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:31
 msgid "Starting from a default NixOS configuration"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:29
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:34
 msgid ""
 "This tutorial starts with building up your `configuration.nix` from first "
 "principles, explaining each step. If you prefer, you can skip ahead to the "
 "[sample configuration](sample-nixos-config) section."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:33
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:38
 msgid "We start with a minimal `configuration.nix`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:35
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:40
 msgid ""
 "{ config, pkgs, ... }:\n"
 "\n"
@@ -101,12 +110,12 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:46
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:51
 msgid ""
 "To be able to log in, add the following lines to the returned attribute set:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:48
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:53
 msgid ""
 "  users.users.alice = {\n"
 "    isNormalUser = true;\n"
@@ -114,22 +123,22 @@ msgid ""
 "  };\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:55
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:60
 msgid ""
 "Additionally, you need to specify a password for this user. For the purpose "
 "of demonstration only, you specify an insecure, plain text password by "
 "adding the `initialPassword` option to the user configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:58
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:63
 msgid "   initialPassword = \"test\";\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:62
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:67
 msgid "We add two lightweight programs as an example:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:64
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:69
 msgid ""
 "  environment.systemPackages = with pkgs; [\n"
 "    cowsay\n"
@@ -137,7 +146,7 @@ msgid ""
 "  ];\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:72
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:77
 msgid ""
 "Do not use plain text passwords outside of this example unless you know what "
 "you are doing. See [`initialHashedPassword`](https://nixos.org/manual/nixos/"
@@ -147,16 +156,16 @@ msgid ""
 "secure alternatives."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:76
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:81
 msgid "Sample configuration"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:78
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:218
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:83
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:223
 msgid "The complete `configuration.nix` file looks like this:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:80
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:85
 msgid ""
 "{ config, pkgs, ... }:\n"
 "{\n"
@@ -178,21 +187,21 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:101
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:106
 msgid "Creating a QEMU based virtual machine from a NixOS configuration"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:103
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:108
 msgid "A NixOS virtual machine is created with the `nix-build` command:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:105
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:110
 msgid ""
 "$ nix-build '<nixpkgs/nixos>' -A vm -I nixpkgs=channel:nixos-24.05 -I nixos-"
 "config=./configuration.nix\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:109
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:114
 msgid ""
 "This command builds the attribute `vm` from the `nixos-24.05` release of "
 "NixOS, using the NixOS configuration as specified in the relative path."
@@ -202,7 +211,7 @@ msgstr ""
 msgid "Detailed explanation"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:113
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:118
 msgid ""
 "The positional argument to [`nix-build`](https://nix.dev/manual/nix/stable/"
 "command-ref/nix-build.html) is a path to the derivation to be built. That "
@@ -210,51 +219,51 @@ msgid ""
 "(derivations)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:116
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:121
 msgid ""
 "The virtual machine build helper is defined in NixOS, which is part of the "
 "[`nixpkgs` repository](https://github.com/NixOS/nixpkgs). Therefore we use "
 "the [lookup path](lookup-path-tutorial) `<nixpkgs/nixos>`."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:119
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:124
 msgid ""
 "The [`-A` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
 "html#opt-attr) specifies the attribute to pick from the provided Nix "
 "expression `<nixpkgs/nixos>`."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:121
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:126
 msgid ""
 "To build the virtual machine, we choose the `vm` attribute as defined in "
 "[`nixos/default.nix`](https://github.com/NixOS/nixpkgs/"
 "blob/7c164f4bea71d74d98780ab7be4f9105630a2eba/nixos/default.nix#L19)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:123
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:128
 msgid ""
 "The [`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
 "html#opt-I) prepends entries to the search path."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:125
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:130
 msgid ""
 "Here we set `nixpkgs` to refer to a [specific version of Nixpkgs](ref-"
 "pinning-nixpkgs) and set `nix-config` to the `configuration.nix` file in the "
 "current directory."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:128
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:133
 msgid "Running the virtual machine"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:130
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:135
 msgid ""
 "The previous command created a link with the name `result` in the working "
 "directory. It links to the directory that contains the virtual machine."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:133
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:138
 msgid ""
 "$ ls -R ./result\n"
 "result:\n"
@@ -264,52 +273,52 @@ msgid ""
 "run-nixos-vm\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:142
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:147
 msgid "Run the virtual machine:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:144
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:149
 msgid ""
 "$ QEMU_KERNEL_PARAMS=console=ttyS0 ./result/bin/run-nixos-vm -nographic; "
 "reset\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:148
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:153
 msgid ""
 "This command will run QEMU in the current terminal due to `-nographic`. "
 "`console=ttyS0` will also show the boot process, which ends at the console "
 "login screen."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:151
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:156
 msgid ""
 "Log in as `alice` with the password `test`. Check that the programs are "
 "indeed available as specified:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:154
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:159
 msgid "$ cowsay hello | lolcat\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:158
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:163
 msgid "Exit the virtual machine by shutting it down:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:160
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:165
 msgid "$ sudo poweroff\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:165
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:170
 msgid ""
 "If you forgot to add the user to `wheel` or didn't set a password, stop the "
 "virtual machine from a different terminal:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:167
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:172
 msgid "$ sudo pkill qemu\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:172
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:177
 msgid ""
 "Running the virtual machine will create a `nixos.qcow2` file in the current "
 "directory. This disk image file contains the dynamic state of the virtual "
@@ -317,25 +326,25 @@ msgid ""
 "runs, for example the user password."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:176
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:181
 msgid "Delete this file when you change the configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:178
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:183
 msgid "$ rm nixos.qcow2\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:182
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:187
 msgid "Running GNOME on a graphical VM"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:184
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:189
 msgid ""
 "To create a virtual machine with a graphical user interface, add the "
 "following lines to the configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:186
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:191
 msgid ""
 "  # Enable the X11 windowing system.\n"
 "  services.xserver.enable = true;\n"
@@ -345,19 +354,19 @@ msgid ""
 "  services.xserver.desktopManager.gnome.enable = true;\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:195
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:200
 msgid ""
 "These three lines activate X11, the GDM display manager (to be able to "
 "login) and Gnome as desktop manager."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:199
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:204
 msgid ""
 "You can also use the `installation-cd-graphical-gnome.nix` module to "
 "generate the configuration file from scratch:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:201
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:206
 msgid ""
 "nix-shell -I nixpkgs=channel:nixos-24.05 -p \"$(cat <<EOF\n"
 "  let\n"
@@ -370,11 +379,11 @@ msgid ""
 ")\"\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:212
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:217
 msgid "$ nixos-generate-config --dir ./\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:220
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:225
 msgid ""
 "{ config, pkgs, ... }:\n"
 "{\n"
@@ -396,39 +405,39 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:241
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:246
 msgid ""
 "To get graphical output, run the virtual machine without special options:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:243
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:248
 msgid ""
 "$ nix-build '<nixpkgs/nixos>' -A vm -I nixpkgs=channel:nixos-24.05 -I nixos-"
 "config=./configuration.nix\n"
 "$ ./result/bin/run-nixos-vm\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:248
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:253
 msgid "Running Sway as Wayland compositor on a VM"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:250
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:255
 msgid ""
 "To change to a Wayland compositor, disable `services.xserver.desktopManager."
 "gnome` and enable `programs.sway`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:252
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:257
 msgid "configuration.nix"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:252
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:257
 msgid ""
 "-  services.xserver.desktopManager.gnome.enable = true;\n"
 "+  programs.sway.enable = true;"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:259
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:264
 msgid ""
 "Running Wayland compositors in a virtual machine might lead to complications "
 "with the display drivers used by QEMU. You need to choose from the available "
@@ -437,15 +446,15 @@ msgid ""
 "possibility is the `virtio-vga` driver:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:264
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:269
 msgid "$ ./result/bin/run-nixos-vm -device virtio-vga\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:268
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:273
 msgid "Arguments to QEMU can also be added to the configuration file:"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:270
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:275
 msgid ""
 "{ config, pkgs, ... }:\n"
 "{\n"
@@ -472,91 +481,91 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:298
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:303
 msgid ""
 "The NixOS manual has chapters on [X11](https://nixos.org/manual/nixos/stable/"
 "#sec-x11) and [Wayland](https://nixos.org/manual/nixos/stable/#sec-wayland) "
 "listing alternative window managers."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:300
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:305
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:302
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:307
 msgid ""
 "[NixOS Manual: NixOS Configuration](https://nixos.org/manual/nixos/stable/"
 "index.html#ch-configuration)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:303
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:308
 msgid ""
 "[NixOS Manual: Modules](https://nixos.org/manual/nixos/stable/index.html#sec-"
 "writing-modules)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:304
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:309
 msgid ""
 "[NixOS Manual Options reference](https://nixos.org/manual/nixos/stable/"
 "options.html)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:305
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:310
 msgid ""
 "[NixOS Manual: Changing the configuration](https://nixos.org/manual/nixos/"
 "stable/#sec-changing-config)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:306
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:311
 msgid ""
 "[NixOS source code: `configuration template` in `tools.nix`](https://github."
 "com/NixOS/nixpkgs/blob/4e0525a8cdb370d31c1e1ba2641ad2a91fded57d/nixos/"
 "modules/installer/tools/tools.nix#L122-L226)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:307
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:312
 msgid ""
 "[NixOS source code: `vm` attribute in `default.nix`](https://github.com/"
 "NixOS/nixpkgs/blob/master/nixos/default.nix)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:308
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:313
 msgid ""
 "[Nix manual: `nix-build`](https://nix.dev/manual/nix/stable/command-ref/nix-"
 "build.html)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:309
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:314
 msgid ""
 "[Nix manual: common command-line options](https://nix.dev/manual/nix/stable/"
 "command-ref/opt-common.html)."
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:310
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:315
 msgid ""
 "[QEMU User Documentation](https://www.qemu.org/docs/master/system/qemu-"
 "manpage.html) for more runtime options"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:311
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:316
 msgid ""
 "[NixOS option search: `virtualisation.qemu`](https://search.nixos.org/"
 "options?query=virtualisation.qemu) for declarative virtual machine "
 "configuration"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:313
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:318
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:315
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:320
 msgid "[](module-system-deep-dive)"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:316
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:321
 msgid "[](integration-testing-vms)"
 msgstr ""
 
-#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:317
+#: ../../../tutorials/nixos/nixos-configuration-on-vm.md:322
 msgid "[](bootable-iso-image)"
 msgstr ""

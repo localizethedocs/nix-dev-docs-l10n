@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,35 +21,43 @@ msgstr ""
 msgid "Ad hoc shell environments"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:5
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:10
 msgid ""
 "In a Nix shell environment, you can immediately use any program packaged "
 "with Nix, without installing it permanently."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:7
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:12
 msgid ""
 "You can also share the command invoking such a shell with others, and it "
 "will work on all Linux distributions, WSL, and macOS[^1]."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:11
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:16
 msgid "Create a shell environment"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:13
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:18
 msgid ""
 "Once you {ref}`install Nix <install-nix>`, you can use it to create new "
 "*shell environments* with programs that you want to use."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:15
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:20
 msgid ""
 "In this section you will run two exotic programs called `cowsay` and "
 "`lolcat` that you will probably not have installed on your machine:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:17
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:22
 msgid ""
 "$ cowsay no can do\n"
 "The program ‘cowsay’ is currently not installed.\n"
@@ -58,19 +66,19 @@ msgid ""
 "The program ‘lolcat’ is currently not installed.\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:25
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:30
 msgid ""
 "Use `nix-shell` with the `-p` (`--packages`) option to specify that we need "
 "the `cowsay` and `lolcat` packages:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:28
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:33
 msgid ""
 "The first invocation of `nix-shell` for these packages may take a while to "
 "download all dependencies."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:31
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:36
 msgid ""
 "$ nix-shell -p cowsay lolcat\n"
 "these 3 derivations will be built:\n"
@@ -81,22 +89,22 @@ msgid ""
 "[nix-shell:~]$\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:41
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:46
 msgid ""
 "Within the Nix shell, you can use the programs provided by these packages:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:43
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:48
 msgid "[nix-shell:~]$ cowsay Hello, Nix! | lolcat\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:47
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:52
 msgid ""
 "Type `exit` or press `CTRL-D` to exit the shell, and the programs won't be "
 "available anymore."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:49
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:54
 msgid ""
 "[nix-shell:~]$ exit\n"
 "exit\n"
@@ -108,81 +116,81 @@ msgid ""
 "The program ‘lolcat’ is currently not installed.\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:60
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:65
 msgid "Running programs once"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:62
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:67
 msgid "You can go even faster, by running any program directly:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:64
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:69
 msgid "$ nix-shell -p cowsay --run \"cowsay Nix\"\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:68
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:73
 msgid "If the command consists only of the program name, no quotes are needed:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:70
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:75
 msgid "$ nix-shell -p hello --run hello\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:74
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:79
 msgid "Search for packages"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:76
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:81
 msgid ""
 "What can you put in a shell environment? If you can think of it, there's "
 "probably a Nix package of it."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:80
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:85
 msgid ""
 "Enter the program name you want to run in [search.nixos.org](https://search."
 "nixos.org/packages) to find packages that provide it."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:83
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:88
 msgid "For the following example, find the package names for these programs:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:85
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:90
 msgid "`git`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:86
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:91
 msgid "`nvim`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:87
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:92
 msgid "`npm`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:89
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:94
 msgid ""
 "In the search results, each item shows the package name, and the details "
 "list the available programs.[^2]"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:94
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:99
 msgid "Run any combination of programs"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:96
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:101
 msgid ""
 "Once you have the package name, you can start a shell with that package. The "
 "`-p` (`--packages`) argument can take multiple package names."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:99
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:104
 msgid ""
 "Start a Nix shell with the packages providing `git`, `nvim`, and `npm`. "
 "Again, the first invocation may take a while to download all dependencies."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:102
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:107
 msgid ""
 "$ nix-shell -p git neovim nodejs\n"
 "these 9 derivations will be built:\n"
@@ -206,17 +214,17 @@ msgid ""
 "[nix-shell:~]$\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:124
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:129
 msgid "Check package versions"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:126
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:131
 msgid ""
 "Check that you have the specific version of these programs provided by Nix, "
 "even if you had any of them already installed on your machine."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:128
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:133
 msgid ""
 "[nix-shell:~]$ which git\n"
 "/nix/store/3cdi52xh6lk3h1fb51jkxs3p561p37wg-git-2.38.3/bin/git\n"
@@ -237,18 +245,18 @@ msgid ""
 "8.19.2\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:148
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:153
 msgid "Nested shell sessions"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:150
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:155
 msgid ""
 "If you need an additional program temporarily, you can run a nested Nix "
 "shell. The programs provided by the specified packages will be added to the "
 "current environment."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:153
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:158
 msgid ""
 "[nix-shell:~]$ nix-shell -p python3\n"
 "this path will be fetched (11.42 MiB download, 62.64 MiB unpacked):\n"
@@ -260,35 +268,35 @@ msgid ""
 "Python 3.10.11\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:163
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:168
 msgid "Exit the shell as usual to return to the previous environment."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:166
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:171
 msgid "Towards reproducibility"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:168
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:173
 msgid ""
 "These shell environments are very convenient, but the examples so far are "
 "not reproducible yet. Running these commands on another machine may fetch "
 "different versions of packages, depending on when Nix was installed there."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:171
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:176
 msgid ""
 "What do we mean by reproducible? A fully reproducible example would give "
 "exactly the same results no matter when or where you run the command. The "
 "environment provided would be identical each time."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:175
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:180
 msgid ""
 "The following example creates a fully reproducible environment. You can run "
 "it anywhere, anytime to obtain the exact same version of the `git`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:178
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:183
 msgid ""
 "$ nix-shell -p git --run \"git --version\" --pure -I nixpkgs=https://github."
 "com/NixOS/nixpkgs/tarball/2a601aafdc5605a5133a2ca506a34a3a73377247\n"
@@ -296,30 +304,30 @@ msgid ""
 "git version 2.33.1\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:184
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:189
 msgid "There are three things going on here:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:186
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:191
 msgid ""
 "`--run` executes the given [Bash command](https://www.gnu.org/software/bash/"
 "manual/bash.html#Shell-Commands) within the environment created by Nix, and "
 "exits when it's done."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:188
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:193
 msgid ""
 "You can use this with `nix-shell` whenever you want to quickly run a program "
 "you don't have installed on your machine."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:190
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:195
 msgid ""
 "`--pure` discards most environment variables set on your system when running "
 "the shell."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:192
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:197
 msgid ""
 "It means that only the `git` provided by Nix is available inside that shell. "
 "This is useful for simple one-liners such as in the example. While "
@@ -328,77 +336,77 @@ msgid ""
 "environments, and to add it only when the extra isolation is needed."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:197
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:202
 msgid "`-I` determines what to use as a source of package declarations."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:199
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:204
 msgid ""
 "Here we provided [a specific Git revision of `nixpkgs`](https://github.com/"
 "NixOS/nixpkgs/tree/2a601aafdc5605a5133a2ca506a34a3a73377247), leaving no "
 "doubt about which version of the packages in that collection will be used."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:202
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:207
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:204
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:209
 msgid ""
 "[Nix manual: `nix-shell`](https://nix.dev/manual/nix/stable/command-ref/nix-"
 "shell) (or run `man nix-shell`)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:205
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:210
 msgid ""
 "[Nix manual: `-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-"
 "common.html#opt-I)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:207
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:212
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:209
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:214
 msgid "{ref}`reproducible-scripts` – use Nix for reproducible scripts"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:210
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:215
 msgid ""
 "{ref}`reading-nix-language` – learn reading the Nix language, which is used "
 "to declare packages and configurations"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:211
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:216
 msgid ""
 "{ref}`declarative-reproducible-envs` – create reproducible shell "
 "environments with a declarative configuration file"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:212
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:217
 msgid ""
 "{ref}`pinning-nixpkgs` – learn different ways of specifying exact versions "
 "of package sources"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:214
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:219
 msgid ""
 "If you're done trying out Nix for now, you may want to free up some disk "
 "space occupied by the different versions of programs you downloaded by "
 "running the examples:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:216
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:221
 msgid "$ nix-collect-garbage\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:9
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:14
 msgid ""
 "Not all packages are supported for both Linux and macOS. Especially support "
 "for graphical programs may vary."
 msgstr ""
 
-#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:91
+#: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:96
 msgid ""
 "A package name is not the same as a program name. Many packages provide "
 "multiple programs, or no programs at all if they are libraries. Even for "

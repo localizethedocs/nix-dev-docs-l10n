@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,33 +25,41 @@ msgstr ""
 msgid "Declarative shell environments with `shell.nix`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:10
-msgid "Overview"
+#: ../../../tutorials/first-steps/declarative-shell.md:0
+msgid "Authors"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:12
-msgid "Declarative shell environments allow you to:"
+#: ../../../tutorials/first-steps/declarative-shell.md:0
+msgid "Editor"
 msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:14
-msgid "Automatically run bash commands during environment activation"
-msgstr ""
-
-#: ../../../tutorials/first-steps/declarative-shell.md:15
-msgid "Automatically set environment variables"
+msgid "Overview"
 msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:16
+msgid "Declarative shell environments allow you to:"
+msgstr ""
+
+#: ../../../tutorials/first-steps/declarative-shell.md:18
+msgid "Automatically run bash commands during environment activation"
+msgstr ""
+
+#: ../../../tutorials/first-steps/declarative-shell.md:19
+msgid "Automatically set environment variables"
+msgstr ""
+
+#: ../../../tutorials/first-steps/declarative-shell.md:20
 msgid ""
 "Put the environment definition under version control and reproduce it on "
 "other machines"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:18
+#: ../../../tutorials/first-steps/declarative-shell.md:22
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:20
+#: ../../../tutorials/first-steps/declarative-shell.md:24
 msgid ""
 "In the {ref}`ad-hoc-envs` tutorial, you learned how to imperatively create "
 "shell environments using `nix-shell -p`. This is great when you want to "
@@ -60,7 +68,7 @@ msgid ""
 "commit as an argument, to recreate the same environment used previously."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:24
+#: ../../../tutorials/first-steps/declarative-shell.md:28
 msgid ""
 "In this tutorial we'll take a look at how to create reproducible shell "
 "environments with a declarative configuration in a {term}`Nix file`. This "
@@ -68,69 +76,69 @@ msgid ""
 "different machine."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:27
+#: ../../../tutorials/first-steps/declarative-shell.md:31
 msgid "How long will it take?"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:29
+#: ../../../tutorials/first-steps/declarative-shell.md:33
 msgid "30 minutes"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:31
+#: ../../../tutorials/first-steps/declarative-shell.md:35
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:33
+#: ../../../tutorials/first-steps/declarative-shell.md:37
 msgid "Familiarity with the Unix shell"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:34
+#: ../../../tutorials/first-steps/declarative-shell.md:38
 msgid "A rudimentary understanding of the [Nix language](reading-nix-language)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:36
+#: ../../../tutorials/first-steps/declarative-shell.md:40
 msgid "Entering a temporary shell"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:38
+#: ../../../tutorials/first-steps/declarative-shell.md:42
 msgid ""
 "Suppose we want an environment where `cowsay` and `lolcat` are available. "
 "The simplest possible way to accomplish this is via the `nix-shell -p` "
 "command:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:41
+#: ../../../tutorials/first-steps/declarative-shell.md:45
 msgid "$ nix-shell -p cowsay lolcat\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:45
+#: ../../../tutorials/first-steps/declarative-shell.md:49
 msgid "This command works, but there's a number of drawbacks:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:46
+#: ../../../tutorials/first-steps/declarative-shell.md:50
 msgid "You have to type out `-p cowsay lolcat` every time you enter the shell."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:47
+#: ../../../tutorials/first-steps/declarative-shell.md:51
 msgid ""
 "It doesn't (ergonomically) allow you any further customization of your shell "
 "environment."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:49
+#: ../../../tutorials/first-steps/declarative-shell.md:53
 msgid ""
 "A better solution is to create our shell environment from a `shell.nix` file."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:51
+#: ../../../tutorials/first-steps/declarative-shell.md:55
 msgid "A basic `shell.nix` file"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:53
+#: ../../../tutorials/first-steps/declarative-shell.md:57
 msgid "Create a file called `shell.nix` with these contents:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:56
+#: ../../../tutorials/first-steps/declarative-shell.md:60
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -150,7 +158,7 @@ msgstr ""
 msgid "Detailed explanation"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:71
+#: ../../../tutorials/first-steps/declarative-shell.md:75
 msgid ""
 "We use a version of [Nixpkgs pinned to a release branch](<ref-pinning-"
 "nixpkgs>). If you followed the [](ad-hoc-envs) tutorial and don't want to "
@@ -158,7 +166,7 @@ msgid ""
 "section [](towards-reproducibility):"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:75
+#: ../../../tutorials/first-steps/declarative-shell.md:79
 msgid ""
 "let\n"
 "  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/"
@@ -167,14 +175,14 @@ msgid ""
 "in\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:82
+#: ../../../tutorials/first-steps/declarative-shell.md:86
 msgid ""
 "We explicitly set `config` and `overlays` to avoid them being inadvertently "
 "overridden by [global configuration](https://nixos.org/manual/nixpkgs/stable/"
 "#chap-packageconfig)."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:84
+#: ../../../tutorials/first-steps/declarative-shell.md:88
 msgid ""
 "`mkShellNoCC` is a function that takes as an argument an attribute set. Here "
 "we give it an attribute `packages` with a list containing two items from the "
@@ -185,7 +193,7 @@ msgstr ""
 msgid "Side note on `mkShell`"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:89
+#: ../../../tutorials/first-steps/declarative-shell.md:93
 msgid ""
 "`nix-shell` and `mkShell` were originally conceived as a way to construct a "
 "shell environment containing the [tools needed to debug package builds]"
@@ -195,7 +203,7 @@ msgid ""
 "produces such an environment, but without a compiler toolchain."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:93
+#: ../../../tutorials/first-steps/declarative-shell.md:97
 msgid ""
 "You may encounter examples of `mkShell` or `mkShellNoCC` that add packages "
 "to the `buildInputs` or `nativeBuildInputs` attributes instead. "
@@ -206,25 +214,25 @@ msgid ""
 "`nativeBuildInputs`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:99
+#: ../../../tutorials/first-steps/declarative-shell.md:103
 msgid ""
 "Enter the environment by running `nix-shell` in the same directory as `shell."
 "nix`:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:102
+#: ../../../tutorials/first-steps/declarative-shell.md:106
 msgid ""
 "The first invocation of `nix-shell` on this file may take a while to "
 "download all dependencies."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:105
+#: ../../../tutorials/first-steps/declarative-shell.md:109
 msgid ""
 "$ nix-shell\n"
 "[nix-shell]$ cowsay hello | lolcat\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:110
+#: ../../../tutorials/first-steps/declarative-shell.md:114
 msgid ""
 "`nix-shell` by default looks for a file called `shell.nix` in the current "
 "directory and builds a shell environment from the Nix expression in this "
@@ -232,21 +240,21 @@ msgid ""
 "`$PATH`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:113
+#: ../../../tutorials/first-steps/declarative-shell.md:117
 msgid "Environment variables"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:115
+#: ../../../tutorials/first-steps/declarative-shell.md:119
 msgid ""
 "You may want to automatically export certain environment variables when you "
 "enter a shell environment."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:117
+#: ../../../tutorials/first-steps/declarative-shell.md:121
 msgid "Set `GREETING` so it can be used in the shell environment:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:119
+#: ../../../tutorials/first-steps/declarative-shell.md:123
 msgid ""
 " let\n"
 "   nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -264,56 +272,56 @@ msgid ""
 " }\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:135
+#: ../../../tutorials/first-steps/declarative-shell.md:139
 msgid ""
 "Any attribute name passed to `mkShellNoCC` that is not reserved otherwise "
 "and has a value which can be coerced to a string will end up as an "
 "environment variable."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:137
+#: ../../../tutorials/first-steps/declarative-shell.md:141
 msgid ""
 "Try it out. Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
 "start it again with `nix-shell`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:140
+#: ../../../tutorials/first-steps/declarative-shell.md:144
 msgid "[nix-shell]$ echo $GREETING\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:145
+#: ../../../tutorials/first-steps/declarative-shell.md:149
 msgid "Some variables are protected from being set as described above."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:147
+#: ../../../tutorials/first-steps/declarative-shell.md:151
 msgid ""
 "For example, the shell prompt format for most shells is set by the `PS1` "
 "environment variable, but `nix-shell` already sets this by default, and will "
 "ignore a `PS1` attribute set in the argument."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:149
+#: ../../../tutorials/first-steps/declarative-shell.md:153
 msgid ""
 "If you need to override these protected environment variables, use the "
 "`shellHook` attribute as described in the next section."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:152
+#: ../../../tutorials/first-steps/declarative-shell.md:156
 msgid "Startup commands"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:154
+#: ../../../tutorials/first-steps/declarative-shell.md:158
 msgid ""
 "You may want to run some shell commands before entering the interactive "
 "shell environment. These commands can be placed in the `shellHook` attribute "
 "provided to `mkShellNoCC`."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:157
+#: ../../../tutorials/first-steps/declarative-shell.md:161
 msgid "Set `shellHook` to output a colorful greeting:"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:159
+#: ../../../tutorials/first-steps/declarative-shell.md:163
 msgid ""
 " let\n"
 "   nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
@@ -335,50 +343,50 @@ msgid ""
 " }\n"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:179
+#: ../../../tutorials/first-steps/declarative-shell.md:183
 msgid ""
 "Try it again. Exit the shell by typing `exit` or pressing `Ctrl`+`D`, then "
 "start it again with `nix-shell` to observe the effect."
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:182
+#: ../../../tutorials/first-steps/declarative-shell.md:186
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:184
+#: ../../../tutorials/first-steps/declarative-shell.md:188
 msgid ""
 "[`mkShell` documentation](https://nixos.org/manual/nixpkgs/stable/#sec-pkgs-"
 "mkShell)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:185
+#: ../../../tutorials/first-steps/declarative-shell.md:189
 msgid ""
 "Nixpkgs [shell functions and utilities](https://nixos.org/manual/nixpkgs/"
 "stable/#ssec-stdenv-functions) documentation"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:186
+#: ../../../tutorials/first-steps/declarative-shell.md:190
 msgid ""
 "[`nix-shell` documentation](https://nix.dev/manual/nix/stable/command-ref/"
 "nix-shell)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:188
+#: ../../../tutorials/first-steps/declarative-shell.md:192
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:190
+#: ../../../tutorials/first-steps/declarative-shell.md:194
 msgid "[](reading-nix-language)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:191
+#: ../../../tutorials/first-steps/declarative-shell.md:195
 msgid "[](automatic-direnv)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:192
+#: ../../../tutorials/first-steps/declarative-shell.md:196
 msgid "[](../../guides/recipes/sharing-dependencies.md)"
 msgstr ""
 
-#: ../../../tutorials/first-steps/declarative-shell.md:193
+#: ../../../tutorials/first-steps/declarative-shell.md:197
 msgid "[](../../guides/recipes/dependency-management.md)"
 msgstr ""

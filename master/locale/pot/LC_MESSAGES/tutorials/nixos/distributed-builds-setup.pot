@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nix.dev master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"POT-Creation-Date: 2026-09-07 13:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,125 +26,133 @@ msgstr ""
 msgid "Nix, builds, distribution, scaling"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:11
+#: ../../../tutorials/nixos/distributed-builds-setup.md:0
+msgid "Author"
+msgstr ""
+
+#: ../../../tutorials/nixos/distributed-builds-setup.md:0
+msgid "Editor"
+msgstr ""
+
+#: ../../../tutorials/nixos/distributed-builds-setup.md:16
 msgid ""
 "Nix can speed up builds by spreading the work across multiple computers at "
 "once."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:13
+#: ../../../tutorials/nixos/distributed-builds-setup.md:18
 msgid "Introduction"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:15
+#: ../../../tutorials/nixos/distributed-builds-setup.md:20
 msgid ""
 "In this tutorial, you'll set up a separate build machine and configure your "
 "local machine to offload builds to it."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:17
+#: ../../../tutorials/nixos/distributed-builds-setup.md:22
 msgid "What will you learn?"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:19
+#: ../../../tutorials/nixos/distributed-builds-setup.md:24
 msgid "You'll learn how to"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:20
+#: ../../../tutorials/nixos/distributed-builds-setup.md:25
 msgid ""
 "Create a new user for remote build access from a local machine to the remote "
 "builder"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:21
+#: ../../../tutorials/nixos/distributed-builds-setup.md:26
 msgid "Configure remote builders with a sustainable setup"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:22
+#: ../../../tutorials/nixos/distributed-builds-setup.md:27
 msgid "Test remote builder connectivity and authentication"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:23
+#: ../../../tutorials/nixos/distributed-builds-setup.md:28
 msgid "Configure the local machine to automatically distribute builds"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:25
+#: ../../../tutorials/nixos/distributed-builds-setup.md:30
 msgid "What do you need?"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:27
+#: ../../../tutorials/nixos/distributed-builds-setup.md:32
 msgid "Familiarity with the [Nix language](reading-nix-language)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:28
+#: ../../../tutorials/nixos/distributed-builds-setup.md:33
 msgid "Familiarity with the [](module-system-tutorial)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:30
+#: ../../../tutorials/nixos/distributed-builds-setup.md:35
 msgid "A *local machine* (example hostname: `localmachine`)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:32
+#: ../../../tutorials/nixos/distributed-builds-setup.md:37
 msgid ""
 "The computer [with Nix installed](install-nix) that distributes builds to "
 "other machines."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:34
+#: ../../../tutorials/nixos/distributed-builds-setup.md:39
 msgid "A *remote machine* (example hostname: `remotemachine`)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:36
+#: ../../../tutorials/nixos/distributed-builds-setup.md:41
 msgid ""
 "A computer running NixOS that accepts build jobs from the *local machine*. "
 "Follow [](provisioning-remote-machines-tutorial) to set up a remote NixOS "
 "system."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:39
+#: ../../../tutorials/nixos/distributed-builds-setup.md:44
 msgid "How long will it take?"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:41
+#: ../../../tutorials/nixos/distributed-builds-setup.md:46
 msgid "25 minutes"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:43
+#: ../../../tutorials/nixos/distributed-builds-setup.md:48
 msgid "Create an SSH key pair"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:45
+#: ../../../tutorials/nixos/distributed-builds-setup.md:50
 msgid ""
 "The *local machine*'s Nix daemon runs as the `root` user and will need the "
 "*private* key file to authenticate itself to remote machines. The *remote "
 "machine* will need the *public* key to recognize the *local machine*."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:48
+#: ../../../tutorials/nixos/distributed-builds-setup.md:53
 msgid ""
 "On the *local machine*, run the following command as `root` to create an SSH "
 "key pair:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:50
+#: ../../../tutorials/nixos/distributed-builds-setup.md:55
 msgid "# ssh-keygen -f /root/.ssh/remotebuild\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:55
+#: ../../../tutorials/nixos/distributed-builds-setup.md:60
 msgid "The name and location of the key pair files can be freely chosen."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:59
+#: ../../../tutorials/nixos/distributed-builds-setup.md:64
 msgid "Set up the remote builder"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:61
+#: ../../../tutorials/nixos/distributed-builds-setup.md:66
 msgid ""
 "In the NixOS configuration directory of the *remote machine*, create the "
 "file `remote-builder.nix`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:63
+#: ../../../tutorials/nixos/distributed-builds-setup.md:68
 msgid ""
 "{\n"
 "  users.users.remotebuild = {\n"
@@ -161,24 +169,24 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:79
+#: ../../../tutorials/nixos/distributed-builds-setup.md:84
 msgid "Copy the file `remotebuild.pub` into this directory."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:81
+#: ../../../tutorials/nixos/distributed-builds-setup.md:86
 msgid ""
 "This configuration module creates a new user `remotebuild` with no home "
 "directory. The `root` user on the *local machine* will be able to log into "
 "the remote builder via SSH using the previously generated SSH key."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:84
+#: ../../../tutorials/nixos/distributed-builds-setup.md:89
 msgid ""
 "Add the new NixOS module to the existing configuration of the *remote "
 "machine*:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:86
+#: ../../../tutorials/nixos/distributed-builds-setup.md:91
 msgid ""
 "{\n"
 "  imports = [\n"
@@ -189,58 +197,58 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:96
+#: ../../../tutorials/nixos/distributed-builds-setup.md:101
 msgid "Activate the new configuration as root:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:98
+#: ../../../tutorials/nixos/distributed-builds-setup.md:103
 msgid "nixos-rebuild switch --no-flake --target-host root@remotemachine\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:102
+#: ../../../tutorials/nixos/distributed-builds-setup.md:107
 msgid "Test authentication"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:104
+#: ../../../tutorials/nixos/distributed-builds-setup.md:109
 msgid ""
 "Make sure that the SSH connection and authentication work. On the *local "
 "machine*, run as `root`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:107
+#: ../../../tutorials/nixos/distributed-builds-setup.md:112
 msgid ""
 "# ssh remotebuild@remotemachine -i /root/.ssh/remotebuild \"echo hello\"\n"
 "hello\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:112
+#: ../../../tutorials/nixos/distributed-builds-setup.md:117
 msgid "If the `hello` message is visible, the authentication works."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:114
+#: ../../../tutorials/nixos/distributed-builds-setup.md:119
 msgid ""
 "This test login also adds the host key of the remote builder to the `/root/."
 "ssh/known_hosts` file of the local machine. Future logins will not be "
 "interrupted by host key checks."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:118
+#: ../../../tutorials/nixos/distributed-builds-setup.md:123
 msgid "Set up distributed builds"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:121
+#: ../../../tutorials/nixos/distributed-builds-setup.md:126
 msgid ""
 "If your *local machine* runs NixOS, skip this section and [configure Nix "
 "through module options](distributed-builds-config-nixos)."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:124
+#: ../../../tutorials/nixos/distributed-builds-setup.md:129
 msgid ""
 "Configure Nix to use the remote builder by adding to the [Nix configuration "
 "file](https://nix.dev/manual/nix/2.23/command-ref/conf-file) as `root`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:126
+#: ../../../tutorials/nixos/distributed-builds-setup.md:131
 msgid ""
 "# cat << EOF >> /etc/nix/nix.conf\n"
 "builders = ssh-ng://remotebuild@remotebuilder $(nix-instantiate --eval -E "
@@ -253,52 +261,52 @@ msgstr ""
 msgid "Detailed explanation"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:133
+#: ../../../tutorials/nixos/distributed-builds-setup.md:138
 msgid ""
 "The first line registers the remote machine as a remote builder by specifying"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:134
+#: ../../../tutorials/nixos/distributed-builds-setup.md:139
 msgid "The protocol, user, and hostname"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:135
+#: ../../../tutorials/nixos/distributed-builds-setup.md:140
 msgid ""
 "The *local machine*'s [system type](https://nix.dev/manual/nix/2.23/command-"
 "ref/conf-file#conf-system)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:137
-#: ../../../tutorials/nixos/distributed-builds-setup.md:201
+#: ../../../tutorials/nixos/distributed-builds-setup.md:142
+#: ../../../tutorials/nixos/distributed-builds-setup.md:206
 msgid "This will delegate jobs for that system type to the *remote machine*."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:139
-#: ../../../tutorials/nixos/distributed-builds-setup.md:198
+#: ../../../tutorials/nixos/distributed-builds-setup.md:144
+#: ../../../tutorials/nixos/distributed-builds-setup.md:203
 msgid "The location of the SSH key"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:140
-#: ../../../tutorials/nixos/distributed-builds-setup.md:203
+#: ../../../tutorials/nixos/distributed-builds-setup.md:145
+#: ../../../tutorials/nixos/distributed-builds-setup.md:208
 msgid ""
 "A list of [supported system features](https://nix.dev/manual/nix/2.23/"
 "command-ref/conf-file#conf-system-features)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:142
-#: ../../../tutorials/nixos/distributed-builds-setup.md:205
+#: ../../../tutorials/nixos/distributed-builds-setup.md:147
+#: ../../../tutorials/nixos/distributed-builds-setup.md:210
 msgid ""
 "This particular list must be specified to delegate building compilers and "
 "running [NixOS VM tests](integration-testing-vms) to remote machines."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:144
+#: ../../../tutorials/nixos/distributed-builds-setup.md:149
 msgid ""
 "See the [reference documentation on the  `builders` setting](https://nix.dev/"
 "manual/nix/2.23/command-ref/conf-file#conf-builders) for details."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:146
+#: ../../../tutorials/nixos/distributed-builds-setup.md:151
 msgid ""
 "The second line instructs all remote builders to obtain dependencies from "
 "its own binary caches instead of from the *local machine*. This assumes that "
@@ -306,7 +314,7 @@ msgid ""
 "machine's internet connection."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:150
+#: ../../../tutorials/nixos/distributed-builds-setup.md:155
 msgid "To activate this configuration, restart the Nix daemon:"
 msgstr ""
 
@@ -314,11 +322,11 @@ msgstr ""
 msgid "Linux"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:155
+#: ../../../tutorials/nixos/distributed-builds-setup.md:160
 msgid "On Linux with `systemd`, run as `root`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:157
+#: ../../../tutorials/nixos/distributed-builds-setup.md:162
 msgid "# systemctl restart nix-daemon.service\n"
 msgstr ""
 
@@ -326,27 +334,27 @@ msgstr ""
 msgid "macOS"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:163
+#: ../../../tutorials/nixos/distributed-builds-setup.md:168
 msgid "On macOS, run as `root`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:165
+#: ../../../tutorials/nixos/distributed-builds-setup.md:170
 msgid ""
 "# sudo launchctl stop org.nixos.nix-daemon\n"
 "# sudo launchctl start org.nixos.nix-daemon\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:173
+#: ../../../tutorials/nixos/distributed-builds-setup.md:178
 msgid "NixOS"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:175
+#: ../../../tutorials/nixos/distributed-builds-setup.md:180
 msgid ""
 "If your *local machine* runs NixOS, in its configuration directory create "
 "the file `distributed-builds.nix`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:177
+#: ../../../tutorials/nixos/distributed-builds-setup.md:182
 msgid ""
 "{ pkgs, ... }:\n"
 "{\n"
@@ -365,29 +373,29 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:196
+#: ../../../tutorials/nixos/distributed-builds-setup.md:201
 msgid ""
 "This configuration module enables distributed builds and adds the remote "
 "builder, specifying:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:197
+#: ../../../tutorials/nixos/distributed-builds-setup.md:202
 msgid "The SSH hostname and username"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:199
+#: ../../../tutorials/nixos/distributed-builds-setup.md:204
 msgid ""
 "Which  *local machine*'s [system type](https://nix.dev/manual/nix/2.23/"
 "command-ref/conf-file#conf-system)"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:207
+#: ../../../tutorials/nixos/distributed-builds-setup.md:212
 msgid ""
 "See the [NixOS option documentation on `nix.buildMachines`](https://search."
 "nixos.org/options?query=nix.buildMachines) for details."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:209
+#: ../../../tutorials/nixos/distributed-builds-setup.md:214
 msgid ""
 "The `builders-use-substitutes` instructs all remote builders to obtain "
 "dependencies from its own binary caches instead of from the *local machine*. "
@@ -395,11 +403,11 @@ msgid ""
 "fast as the local machine's internet connection."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:213
+#: ../../../tutorials/nixos/distributed-builds-setup.md:218
 msgid "Add the new NixOS module to the existing machine configuration:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:215
+#: ../../../tutorials/nixos/distributed-builds-setup.md:220
 msgid ""
 "{\n"
 "  imports = [\n"
@@ -410,23 +418,23 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:225
+#: ../../../tutorials/nixos/distributed-builds-setup.md:230
 msgid "Activate the new configuration as `root`:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:227
+#: ../../../tutorials/nixos/distributed-builds-setup.md:232
 msgid "# nixos-rebuild switch\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:232
+#: ../../../tutorials/nixos/distributed-builds-setup.md:237
 msgid "Test distributed builds"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:234
+#: ../../../tutorials/nixos/distributed-builds-setup.md:239
 msgid "Try building a new derivation on the *local machine*:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:236
+#: ../../../tutorials/nixos/distributed-builds-setup.md:241
 msgid ""
 "$ nix-build --max-jobs 0 -E \"$(cat << EOF\n"
 "(import <nixpkgs> {}).writeText \"test\" \"$(date)\"\n"
@@ -443,7 +451,7 @@ msgid ""
 "/nix/store/hvj5vyg4723nly1qh5a8daifbi1yisb3-test\n"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:250
+#: ../../../tutorials/nixos/distributed-builds-setup.md:255
 msgid ""
 "The resulting derivation changes on every invocation because it depends on "
 "the current system time, and thus can never be in the local cache. The [`--"
@@ -451,24 +459,24 @@ msgid ""
 "ref/conf-file#conf-max-jobs) forces Nix to build it on the remote builder."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:253
+#: ../../../tutorials/nixos/distributed-builds-setup.md:258
 msgid ""
 "The last output line contains the output path and indicates that build "
 "distribution works as expected."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:255
+#: ../../../tutorials/nixos/distributed-builds-setup.md:260
 msgid "Optimise the remote builder configuration"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:257
+#: ../../../tutorials/nixos/distributed-builds-setup.md:262
 msgid ""
 "To maximise parallelism, enable automatic garbage collection, and prevent "
 "Nix builds from consuming all memory, add the following lines to your "
 "`remote-builder.nix` configuration module:"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:259
+#: ../../../tutorials/nixos/distributed-builds-setup.md:264
 msgid ""
 " {\n"
 "   users.users.remotebuild = {\n"
@@ -503,14 +511,14 @@ msgid ""
 "}"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:294
+#: ../../../tutorials/nixos/distributed-builds-setup.md:299
 msgid ""
 "Refer to the [Nix reference manual](https://nix.dev/manual/nix/latest/"
 "command-ref/conf-file) for details on the options available in [`nix."
 "settings`](https://search.nixos.org/options?show=nix.settings)."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:297
+#: ../../../tutorials/nixos/distributed-builds-setup.md:302
 msgid ""
 "Remote builders can have different performance characteristics. For each "
 "`nix.buildMachines` item, set the `maxJobs`, `speedFactor`, and "
@@ -518,32 +526,32 @@ msgid ""
 "This helps Nix on the *local machine* distributing builds the optimal way."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:302
+#: ../../../tutorials/nixos/distributed-builds-setup.md:307
 msgid ""
 "Refer to the [NixOS option documentation on `nix.buildMachines`](https://"
 "search.nixos.org/options?query=nix.buildMachines) for details."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:305
+#: ../../../tutorials/nixos/distributed-builds-setup.md:310
 msgid ""
 "Set the `nix.buildMachines.*.publicHostKey` field to each remote builder's "
 "public host key to secure build distribution against man-in-the-middle "
 "scenarios."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:307
+#: ../../../tutorials/nixos/distributed-builds-setup.md:312
 msgid "Next steps"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:309
+#: ../../../tutorials/nixos/distributed-builds-setup.md:314
 msgid "[](custom-binary-cache) on each remote builder"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:310
+#: ../../../tutorials/nixos/distributed-builds-setup.md:315
 msgid "[](post-build-hooks) to upload store objects to a binary cache"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:312
+#: ../../../tutorials/nixos/distributed-builds-setup.md:317
 msgid ""
 "To set up multiple builders, repeat the instructions in the [](set-up-remote-"
 "builder) section for each remote builder. Add all new remote builders to the "
@@ -551,38 +559,38 @@ msgid ""
 "section."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:316
+#: ../../../tutorials/nixos/distributed-builds-setup.md:321
 msgid ""
 "Configure remote build machines to [host a binary cache](setup-http-binary-"
 "cache) and use them as [preferred binary caches](custom-binary-cache) to "
 "reduce your external traffic."
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:319
+#: ../../../tutorials/nixos/distributed-builds-setup.md:324
 msgid "Alternatives"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:321
+#: ../../../tutorials/nixos/distributed-builds-setup.md:326
 msgid "[nixbuild.net](https://nixbuild.net) - Nix remote builders as a service"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:322
+#: ../../../tutorials/nixos/distributed-builds-setup.md:327
 msgid ""
 "[Hercules CI](https://hercules-ci.com/) - Continuous integration with "
 "automatic build distribution"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:323
+#: ../../../tutorials/nixos/distributed-builds-setup.md:328
 msgid ""
 "[garnix](https://garnix.io/) - Hosted continuous integration with build "
 "distribution"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:325
+#: ../../../tutorials/nixos/distributed-builds-setup.md:330
 msgid "References"
 msgstr ""
 
-#: ../../../tutorials/nixos/distributed-builds-setup.md:327
+#: ../../../tutorials/nixos/distributed-builds-setup.md:332
 msgid ""
 "[Nix reference manual: Settings for distributed builds](https://nix.dev/"
 "manual/nix/latest/command-ref/conf-file#conf-builders)"
