@@ -1,0 +1,158 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../guides/troubleshooting.md:1
+msgid "Troubleshooting"
+msgstr "疑難排解"
+
+#: ../../../guides/troubleshooting.md:3
+msgid ""
+"This page is a collection of tips to solve problems you may encounter when "
+"using Nix."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:5
+msgid "What to do if a binary cache is down or unreachable?"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:7
+msgid ""
+"Pass [`--option substitute false`](https://nix.dev/manual/nix/stable/command-"
+"ref/conf-file#conf-substitute) to Nix commands."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:9
+msgid "How to force Nix to re-check if something exists in the binary cache?"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:11
+msgid ""
+"Nix keeps track of what's available in binary caches so it doesn't have to "
+"query them on every command. This includes negative answers, that is, if a "
+"given store path cannot be substituted."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:14
+msgid ""
+"Pass the [`--narinfo-cache-negative-ttl`](https://nix.dev/manual/nix/stable/"
+"command-ref/conf-file.html#conf-narinfo-cache-negative-ttl) option to set "
+"the cache timeout in seconds."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:16
+msgid ""
+"How to fix: `error: querying path in database: database disk image is "
+"malformed`"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:18
+msgid "This is a [known issue](https://github.com/NixOS/nix/issues/1353). Try:"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:21
+msgid "$ sqlite3 /nix/var/nix/db/db.sqlite \"pragma integrity_check\"\n"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:25
+msgid ""
+"Which will print the errors in the [database](https://nix.dev/manual/nix/"
+"stable/glossary#gloss-nix-database). If the errors are due to missing "
+"references, the following may work:"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:28
+msgid ""
+"$ mv /nix/var/nix/db/db.sqlite /nix/var/nix/db/db.sqlite-bkp\n"
+"$ sqlite3 /nix/var/nix/db/db.sqlite-bkp \".dump\" | sqlite3 /nix/var/nix/db/"
+"db.sqlite\n"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:33
+msgid ""
+"How to fix: `error: current Nix store schema is version 10, but I only "
+"support 7`"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:35
+msgid "This is a [known issue](https://github.com/NixOS/nix/issues/1251)."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:37
+msgid ""
+"It means that using a new version of Nix upgraded the SQLite schema of the "
+"[database](https://nix.dev/manual/nix/stable/glossary#gloss-nix-database), "
+"and then you tried to use an older version of Nix."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:39
+msgid ""
+"The solution is to dump the database, and use the old Nix version to re-"
+"import the data:"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:41
+msgid ""
+"$ /path/to/nix/unstable/bin/nix-store --dump-db > /tmp/db.dump\n"
+"$ mv /nix/var/nix/db /nix/var/nix/db.toonew\n"
+"$ mkdir /nix/var/nix/db\n"
+"$ nix-store --load-db < /tmp/db.dump\n"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:48
+msgid "How to fix: `writing to file: Connection reset by peer`"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:50
+msgid ""
+"This may mean you are trying to import too large a file or directory into "
+"the [Nix store](https://nix.dev/manual/nix/stable/glossary#gloss-store), or "
+"your machine is running out of resources, such as disk space or memory."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:52
+msgid ""
+"Try to reduce the size of the directory to import, or run [garbage "
+"collection](https://nix.dev/manual/nix/stable/command-ref/nix-collect-"
+"garbage)."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:54
+msgid "macOS update breaks Nix installation"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:56
+msgid ""
+"This is a [known issue](https://github.com/NixOS/nix/issues/3616). The [Nix "
+"installer](https://nix.dev/manual/nix/latest/installation/installing-binary) "
+"modifies `/etc/zshrc`. When macOS is updated, it will typically overwrite `/"
+"etc/zshrc` again."
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:60
+msgid ""
+"As a workaround, add the following code snippet to the end of `/etc/zshrc` "
+"and restart the shell:"
+msgstr ""
+
+#: ../../../guides/troubleshooting.md:62
+msgid ""
+"if [ -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then\n"
+"  . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'\n"
+"fi\n"
+msgstr ""
