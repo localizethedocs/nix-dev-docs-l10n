@@ -1,0 +1,2248 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ko-KR" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Nix language basics &#8212; nix.dev  문서</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=ac244655"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/nix-language';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/nix-language.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="색인" href="../genindex.html" />
+    <link rel="search" title="검색" href="../search.html" />
+    <link rel="next" title="Packaging existing software with Nix" href="packaging-existing-software.html" />
+    <link rel="prev" title="Towards reproducibility: pinning Nixpkgs" href="first-steps/towards-reproducibility-pinning-nixpkgs.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ko-KR"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Nix 활용을 위한 공식 문서.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">Nix 설치</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross-compilation.html">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nixos/nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="nixos/installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/deploying-nixos-using-terraform.html">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../concepts/index.html">개념</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">Contributing documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="소스 저장소"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/nix-language.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="소스 파일 다운로드"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDF로 인쇄"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="전체 화면으로보기"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="검색" aria-label="검색" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Nix language basics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 내용 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">What will you learn?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">What do you need?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-does-it-take">How long does it take?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-run-the-examples">How to run the examples?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-evaluation">Interactive evaluation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-nix-files">Evaluating Nix files</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-whitespace">Notes on whitespace</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#names-and-values">Names and values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-set">Attribute set <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-attribute-set-rec">Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-in"><code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-access">Attribute access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with"><code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">...;</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inherit"><code class="docutils literal notranslate"><span class="pre">inherit</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#string-interpolation">String interpolation <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indented-strings">Indented strings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-system-paths">File system paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-paths">Lookup paths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-functions">Calling functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-arguments">Multiple arguments</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-set-argument">Attribute set argument</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">Default values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-attributes">Additional attributes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#named-attribute-set-argument">Named attribute set argument</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-libraries">Function libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#builtins"><code class="docutils literal notranslate"><span class="pre">builtins</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#import"><code class="docutils literal notranslate"><span class="pre">import</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgs-lib"><code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impurities">Impurities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paths">Paths</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetchers">Fetchers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivations">Derivations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#worked-examples">Worked examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-environment">Shell environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nixos-configuration">NixOS configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#package">Package</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-things-done">Get things done</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="nix-language-basics">
+<span id="reading-nix-language"></span><h1>Nix language basics<a class="headerlink" href="#nix-language-basics" title="Link to this heading">#</a></h1>
+<p>The Nix language is designed for conveniently creating and composing <em>derivations</em> – precise descriptions of how contents of existing files are used to derive new files.
+It is a domain-specific, purely functional, lazily evaluated, dynamically typed programming language.</p>
+<div class="note admonition">
+<p class="admonition-title">Notable uses of the Nix language</p>
+<ul>
+<li><p><a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a></p>
+<p>The largest, most up-to-date software distribution in the world, and written in the Nix language.</p>
+</li>
+<li><p><a class="reference internal" href="../reference/glossary.html#term-NixOS"><span class="xref std std-term">NixOS</span></a></p>
+<p>A Linux distribution that can be configured fully declaratively and is based on Nix and Nixpkgs.</p>
+<p>Its underlying modular configuration system is written in the Nix language, and uses packages from Nixpkgs.
+The operating system environment and services it provides are configured with the Nix language.</p>
+</li>
+</ul>
+</div>
+<p>You may quickly encounter Nix language expressions that look very complicated.
+As with any programming language, the required amount of Nix language code closely matches the complexity of the problem it is supposed to solve, and reflects how well the problem – and its solution – is understood.
+Building software is a complex undertaking, and Nix both <em>exposes</em> and <em>allows managing</em> this complexity with the Nix language.</p>
+<p>Yet, the Nix language itself has only a few basic concepts that will be introduced in this tutorial, and which can be combined arbitrarily.
+What may look complicated comes not from the language, but from how it is used.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>This is an introduction to <strong>reading the Nix language</strong>, for the purpose of following other tutorials and examples.</p>
+<p><strong>Using the Nix language</strong> in practice entails multiple things:</p>
+<ul class="simple">
+<li><p>Language: syntax and semantics</p></li>
+<li><p>Libraries: <code class="docutils literal notranslate"><span class="pre">builtins</span></code> and <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code></p></li>
+<li><p>Developer tools: testing, debugging, linting, formatting, …</p></li>
+<li><p>Generic build mechanisms: <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code>, trivial builders, …</p></li>
+<li><p>Composition and configuration mechanisms: <code class="docutils literal notranslate"><span class="pre">override</span></code>, <code class="docutils literal notranslate"><span class="pre">overrideAttrs</span></code>, overlays, <code class="docutils literal notranslate"><span class="pre">callPackage</span></code>, …</p></li>
+<li><p>Ecosystem-specific packaging mechanisms: <code class="docutils literal notranslate"><span class="pre">buildGoModule</span></code>, <code class="docutils literal notranslate"><span class="pre">buildPythonApplication</span></code>, …</p></li>
+<li><p>NixOS module system: <code class="docutils literal notranslate"><span class="pre">config</span></code>, <code class="docutils literal notranslate"><span class="pre">option</span></code>, …</p></li>
+</ul>
+<p>This tutorial only covers the most important language features, briefly discusses libraries, and at the end will direct you to reference material and resources on the other components.</p>
+<section id="what-will-you-learn">
+<h3>What will you learn?<a class="headerlink" href="#what-will-you-learn" title="Link to this heading">#</a></h3>
+<p>This tutorial should enable you to read typical Nix language code and understand its structure.
+Its goal is to highlight where the Nix language may differ from languages you are used to.</p>
+<p>It therefore shows the most common and distinguishing patterns in the Nix language:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#names-values"><span class="std std-ref">Assigning names and accessing values</span></a></p></li>
+<li><p>Declaring and calling <a class="reference internal" href="#functions"><span class="std std-ref">functions</span></a></p></li>
+<li><p><a class="reference internal" href="#libraries"><span class="std std-ref">Built-in and library functions</span></a></p></li>
+<li><p><a class="reference internal" href="#impurities"><span class="std std-ref">Impurities</span></a> to obtain build inputs</p></li>
+<li><p><a class="reference internal" href="#derivations"><span class="std std-ref">Derivations</span></a> that describe build tasks</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">중요</p>
+<p>This tutorial <em>does not</em> explain all Nix language features in detail and <em>does not</em> go into specifics of syntactical rules.
+For instance, this tutorial skips over commonplace constructs such as <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">...</span> <span class="pre">then</span> <span class="pre">...</span> <span class="pre">else</span> <span class="pre">...</span></code>.</p>
+<p>See the <a class="reference external" href="https://nix.dev/manual/nix/stable/language/index.html">Nix manual</a> for a full language reference.</p>
+</div>
+</section>
+<section id="what-do-you-need">
+<h3>What do you need?<a class="headerlink" href="#what-do-you-need" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Familiarity with software development</p></li>
+<li><p>Familiarity with Unix shell, to read command line examples <!-- TODO: link to yet-to-be instructions on "how to read command line examples" --></p></li>
+<li><p>A <a class="reference internal" href="../install-nix.html#install-nix"><span class="std std-ref">Nix installation</span></a> to run the examples</p></li>
+</ul>
+</section>
+<section id="how-long-does-it-take">
+<h3>How long does it take?<a class="headerlink" href="#how-long-does-it-take" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>No experience with functional programming: 2 hours</p></li>
+<li><p>Familiar with functional programming: 1 hour</p></li>
+<li><p>Proficient with functional programming: 30 minutes</p></li>
+</ul>
+<p>Run all examples.
+Play with them to validate your assumptions and test what you have learned.
+Read detailed explanations if you want to make sure you fully understand the examples.</p>
+</section>
+<section id="how-to-run-the-examples">
+<h3>How to run the examples?<a class="headerlink" href="#how-to-run-the-examples" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>A piece of Nix language code is a <em>Nix expression</em>.</p></li>
+<li><p>Evaluating a Nix expression produces a <em>Nix value</em>.</p></li>
+<li><p>The content of a <em>Nix file</em> (file extension <code class="docutils literal notranslate"><span class="pre">.nix</span></code>) is a Nix expression.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>To <em>evaluate</em> means to transform an expression into a value according to the language rules.</p>
+</div>
+<p>This tutorial contains many examples of Nix expressions.
+Each one is followed by the expected evaluation result.</p>
+<p>The following example is a Nix expression adding two numbers:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<section id="interactive-evaluation">
+<h4>Interactive evaluation<a class="headerlink" href="#interactive-evaluation" title="Link to this heading">#</a></h4>
+<p>Use <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-repl.html"><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code></a> to evaluate Nix expressions interactively (by typing them on the command line):</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix<span class="w"> </span>repl
+<span class="go">Welcome to Nix 2.13.3. Type :? for help.</span>
+
+<span class="go">nix-repl&gt; 1 + 2</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The Nix language uses lazy evaluation, and <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code> by default only computes values when needed.</p>
+<p>Some examples show a fully evaluated data structure for clarity.
+If your output does not match the example, try prepending <code class="docutils literal notranslate"><span class="pre">:p</span></code> to the input expression.</p>
+<p>Example:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-repl&gt; { a.b.c = 1; }</span>
+<span class="go">{ a = { ... }; }</span>
+
+<span class="go">nix-repl&gt; :p { a.b.c = 1; }</span>
+<span class="go">{ a = { b = { c = 1; }; }; }</span>
+</pre></div>
+</div>
+<p>Type <code class="docutils literal notranslate"><span class="pre">:q</span></code> to exit <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-repl.html"><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code></a>.</p>
+</div>
+</section>
+<section id="evaluating-nix-files">
+<h4>Evaluating Nix files<a class="headerlink" href="#evaluating-nix-files" title="Link to this heading">#</a></h4>
+<p>Use <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-instantiate.html"><code class="docutils literal notranslate"><span class="pre">nix-instantiate</span> <span class="pre">--eval</span></code></a> to evaluate the expression in a Nix file.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>+<span class="w"> </span><span class="m">2</span><span class="w"> </span>&gt;<span class="w"> </span>file.nix
+<span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>file.nix
+<span class="go">3</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The first command writes <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span></code> to a file <code class="docutils literal notranslate"><span class="pre">file.nix</span></code> in the current directory.
+The contents of <code class="docutils literal notranslate"><span class="pre">file.nix</span></code> are now <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span></code>, which you can check with</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span>file.nix
+<span class="go">1 + 2</span>
+</pre></div>
+</div>
+<p class="sd-card-text">The second command runs <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code> with the <code class="docutils literal notranslate"><span class="pre">--eval</span></code> option on <code class="docutils literal notranslate"><span class="pre">file.nix</span></code>, which reads the file and evaluates the contained Nix expression.
+The resulting value is printed as output.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">--eval</span></code> is required to evaluate the file and do nothing else.
+If <code class="docutils literal notranslate"><span class="pre">--eval</span></code> is omitted, <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code> expects the expression in the given file to evaluate to a special value called a <em>derivation</em>, covered at the end of this tutorial in <a class="reference internal" href="#derivations"><span class="std std-ref">Derivations</span></a>.</p>
+</div>
+</details><div class="admonition note">
+<p class="admonition-title">참고</p>
+<p><code class="docutils literal notranslate"><span class="pre">nix-instantiate</span> <span class="pre">--eval</span></code> will try to read from <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> if no file name is specified.</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>+<span class="w"> </span><span class="m">2</span><span class="w"> </span>&gt;<span class="w"> </span>default.nix
+<span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval
+<span class="go">3</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The Nix language uses lazy evaluation, and <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code> by default only computes values when needed.</p>
+<p>Some examples show a fully evaluated data structure for clarity.
+If your output does not match the example, try adding the <code class="docutils literal notranslate"><span class="pre">--strict</span></code> option to <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code>.</p>
+<p>Example:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;{ a.b.c = 1; }&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file.nix
+<span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>file.nix
+<span class="go">{ a = &lt;CODE&gt;; }</span>
+</pre></div>
+</div>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;{ a.b.c = 1; }&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file.nix
+<span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>--strict<span class="w"> </span>file.nix
+<span class="go">{ a = { b = { c = 1; }; }; }</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="notes-on-whitespace">
+<h3>Notes on whitespace<a class="headerlink" href="#notes-on-whitespace" title="Link to this heading">#</a></h3>
+<p>White space is used to delimit <a class="reference external" href="https://en.wikipedia.org/wiki/Lexical_analysis#Lexical_token_and_lexical_tokenization">lexical tokens</a>, where required.
+It is otherwise insignificant.</p>
+<p>Line breaks, indentation, and additional spaces are for the reader’s convenience.</p>
+<p>The following are equivalent:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+ <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+ <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">in</span> x <span class="o">+</span> y
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="ss">x</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="ss">y</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="k">in</span> x<span class="o">+</span>y
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="names-and-values">
+<span id="names-values"></span><h2>Names and values<a class="headerlink" href="#names-and-values" title="Link to this heading">#</a></h2>
+<p>Values in the Nix language can be primitive data types, lists, attribute sets, and functions.</p>
+<p>Examples of primitive data types and lists appear in the context of <a class="reference internal" href="#attrset"><span class="std std-ref">attribute sets</span></a>.
+Later in this section, you will encounter special features of character strings: <a class="reference internal" href="#string-interpolation"><span class="std std-ref">string interpolation</span></a>, <a class="reference internal" href="#file-system-paths"><span class="std std-ref">file system paths</span></a>, and <a class="reference internal" href="#indented-strings"><span class="std std-ref">indented strings</span></a>.
+<a class="reference internal" href="#functions"><span class="std std-ref">Functions</span></a> are covered separately.</p>
+<p><a class="reference internal" href="#attrset"><span class="std std-ref">Attribute sets</span></a> and <a class="reference internal" href="#let"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">let</span></code> expressions</span></a> are used to assign names to values.
+Assignments are denoted by a single equal sign (<code class="docutils literal notranslate"><span class="pre">=</span></code>).</p>
+<p>Whenever you encounter an equal sign (<code class="docutils literal notranslate"><span class="pre">=</span></code>) in Nix language code:</p>
+<ul class="simple">
+<li><p>On its left is the assigned name.</p></li>
+<li><p>On its right is the value, delimited by a semicolon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p></li>
+</ul>
+<section id="attribute-set">
+<span id="attrset"></span><h3>Attribute set <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code><a class="headerlink" href="#attribute-set" title="Link to this heading">#</a></h3>
+<p>An attribute set is a collection of name-value-pairs, where names must be unique.</p>
+<p>The following example shows all primitive data types, lists, and attribute sets.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>If you are familiar with JSON, imagine the Nix language as <em>JSON with functions</em>.</p>
+<p>Nix language data types <em>without functions</em> work just like their counterparts in JSON and look very similar.</p>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-column docutils">
+<p><strong>Nix</strong></p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span>  <span class="ss">string</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">integer</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos"> 4</span>  <span class="ss">float</span> <span class="o">=</span> <span class="mf">3.141</span><span class="p">;</span>
+<span class="linenos"> 5</span>  <span class="ss">bool</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos"> 6</span>  <span class="no">null</span> <span class="o">=</span> <span class="no">null</span><span class="p">;</span>
+<span class="linenos"> 7</span>  <span class="ss">list</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">1</span> <span class="s2">&quot;two&quot;</span> <span class="no">false</span> <span class="p">];</span>
+<span class="linenos"> 8</span>  <span class="ss">attribute-set</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="ss">a</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>    <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="linenos">11</span>    <span class="ss">c</span> <span class="o">=</span> <span class="mf">2.718</span><span class="p">;</span>
+<span class="linenos">12</span>    <span class="ss">d</span> <span class="o">=</span> <span class="no">false</span><span class="p">;</span>
+<span class="linenos">13</span>  <span class="p">};</span> <span class="c1"># comments are supported</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column docutils">
+<p><strong>JSON</strong></p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;string&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;integer&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;float&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">3.141</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;bool&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;null&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;list&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;two&quot;</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;object&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;a&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;hello&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;b&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;c&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">2.718</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;d&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<ul class="simple">
+<li><p>Attribute names usually do not need quotes.<a class="footnote-reference brackets" href="#attrnames" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p></li>
+<li><p>List elements are separated by white space.<a class="footnote-reference brackets" href="#list-whitespace" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p></li>
+</ul>
+</div>
+<section id="recursive-attribute-set-rec">
+<span id="rec-attrset"></span><h4>Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code><a class="headerlink" href="#recursive-attribute-set-rec" title="Link to this heading">#</a></h4>
+<p>You will sometimes see attribute sets declared with <code class="docutils literal notranslate"><span class="pre">rec</span></code> prepended.
+This allows access to attributes from within the set.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">rec</span> <span class="p">{</span>
+  <span class="ss">one</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">two</span> <span class="o">=</span> one <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">three</span> <span class="o">=</span> two <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">one</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">three</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">two</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Elements in an attribute set can be declared in any order, and are ordered on evaluation.</p>
+</div>
+<p>Counter-example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="ss">one</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">two</span> <span class="o">=</span> one <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">three</span> <span class="o">=</span> two <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span>error: undefined variable &#39;one&#39;
+
+       at «string»:3:9:
+
+            2|   one = 1;
+            3|   two = one + 1;
+             |         ^
+            4|   three = two + 1;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="let-in">
+<span id="let"></span><h3><code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span> <span class="pre">...</span></code><a class="headerlink" href="#let-in" title="Link to this heading">#</a></h3>
+<p>Also known as “<code class="docutils literal notranslate"><span class="pre">let</span></code> expression” or “<code class="docutils literal notranslate"><span class="pre">let</span></code> binding”</p>
+<p><code class="docutils literal notranslate"><span class="pre">let</span></code> expressions allow assigning names to values for repeated use.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span>
+a <span class="o">+</span> a
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Assignments are placed between the keywords <code class="docutils literal notranslate"><span class="pre">let</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>.
+In this example we assign <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p class="sd-card-text">After <code class="docutils literal notranslate"><span class="pre">in</span></code> comes the expression in which the assignments are valid, i.e., where assigned names can be used.
+In this example the expression is <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">a</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code> refers to <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p class="sd-card-text">By replacing the names with their assigned values, <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">a</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+</div>
+</details><p>Names can be assigned in any order, and expressions on the right of the assignment (<code class="docutils literal notranslate"><span class="pre">=</span></code>) can refer to other assigned names.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span>
+a <span class="o">+</span> b
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Assignments are placed between the keywords <code class="docutils literal notranslate"><span class="pre">let</span></code> and <code class="docutils literal notranslate"><span class="pre">in</span></code>.
+In this example we assign <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p>
+<p class="sd-card-text">The order of assignments does not matter.
+Therefore the following example, where the assignments are in reverse order, is equivalent:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span>
+a <span class="o">+</span> b
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Note that the <code class="docutils literal notranslate"><span class="pre">a</span></code> in <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">1</span></code> refers to <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p class="sd-card-text">After <code class="docutils literal notranslate"><span class="pre">in</span></code> comes the expression in which the assignments are valid.
+In this example the expression is <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code> refers to <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">=</span> <span class="pre">1</span></code>, and <code class="docutils literal notranslate"><span class="pre">b</span></code> refers to <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">+</span> <span class="pre">1</span></code>.</p>
+<p class="sd-card-text">By replacing the names with their assigned values, <code class="docutils literal notranslate"><span class="pre">a</span> <span class="pre">+</span> <span class="pre">b</span></code> evaluates to <code class="docutils literal notranslate"><span class="pre">3</span></code>.</p>
+<p class="sd-card-text">This is similar to <a class="reference internal" href="#rec-attrset"><span class="std std-ref">recursive attribute sets</span></a>:
+in both, the order of assignments does not matter, and names on the left can be used in expressions on the right of the assignment (<code class="docutils literal notranslate"><span class="pre">=</span></code>).</p>
+<p class="sd-card-text">Example:</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-column docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span> <span class="pre">...</span></code></p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">c</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> <span class="p">{</span>  <span class="ss">c</span> <span class="o">=</span> c<span class="p">;</span> <span class="ss">a</span> <span class="o">=</span> a<span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> b<span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-column docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">rec</span> <span class="p">{</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">c</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<p class="sd-card-text">The difference is that while a recursive attribute set evaluates to an <a class="reference internal" href="#attrset"><span class="std std-ref">attribute set</span></a>, any expression can follow after the <code class="docutils literal notranslate"><span class="pre">in</span></code> keyword.</p>
+<p class="sd-card-text">In the following example we use the <code class="docutils literal notranslate"><span class="pre">let</span></code> expression to form a list:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">c</span> <span class="o">=</span> a <span class="o">+</span> b<span class="p">;</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> <span class="p">[</span> a b c <span class="p">]</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details><p>Only expressions within the <code class="docutils literal notranslate"><span class="pre">let</span></code> expression itself can access the newly declared names.
+The bindings have local scope.</p>
+<p>Counter-example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="k">let</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">in</span> x<span class="p">;</span>
+  <span class="ss">b</span> <span class="o">=</span> x<span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span>error: undefined variable &#39;x&#39;
+
+       at «string»:3:7:
+
+            2|   a = let x = 1; in x;
+            3|   b = x;
+             |       ^
+            4| }
+</pre></div>
+</div>
+<!-- TODO: exercise - use let to reuse a value in an attribute set -->
+</section>
+<section id="attribute-access">
+<h3>Attribute access<a class="headerlink" href="#attribute-access" title="Link to this heading">#</a></h3>
+<p>Attributes in a set are accessed with a dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>) and the attribute name.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">attrset</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">in</span>
+attrset<span class="o">.</span>x
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Accessing nested attributes works the same way.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">attrset</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">b</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span> <span class="p">};</span> <span class="p">};</span>
+<span class="k">in</span>
+attrset<span class="o">.</span>a<span class="o">.</span>b<span class="o">.</span>c
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>The dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>) notation can also be used for assigning attributes.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> a<span class="o">.</span>b<span class="o">.</span><span class="ss">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="p">{</span> <span class="n">b</span> <span class="o">=</span> <span class="p">{</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span> <span class="p">};</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="with">
+<span id="id3"></span><h3><code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">...;</span> <span class="pre">...</span></code><a class="headerlink" href="#with" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">with</span></code> expression allows access to attributes without repeatedly referencing their attribute set.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="ss">z</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="k">in</span>
+<span class="k">with</span> a<span class="p">;</span> <span class="p">[</span> x y z <span class="p">]</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>The expression</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> a<span class="p">;</span> <span class="p">[</span> x y z <span class="p">]</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> a<span class="o">.</span>x a<span class="o">.</span>y a<span class="o">.</span>z <span class="p">]</span>
+</pre></div>
+</div>
+<p>Attributes made available through <code class="docutils literal notranslate"><span class="pre">with</span></code> are only in scope of the expression following the semicolon (<code class="docutils literal notranslate"><span class="pre">;</span></code>).</p>
+<p>Counter-example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="ss">z</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="ss">b</span> <span class="o">=</span> <span class="k">with</span> a<span class="p">;</span> <span class="p">[</span> x y z <span class="p">];</span>
+  <span class="ss">c</span> <span class="o">=</span> x<span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span>error: undefined variable &#39;x&#39;
+
+       at «string»:10:7:
+
+            9|   b = with a; [ x y z ];
+           10|   c = x;
+             |       ^
+           11| }
+</pre></div>
+</div>
+</section>
+<section id="inherit">
+<span id="id4"></span><h3><code class="docutils literal notranslate"><span class="pre">inherit</span> <span class="pre">...</span></code><a class="headerlink" href="#inherit" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">inherit</span></code> is shorthand for assigning the value of a name from an existing scope to the same name in a nested scope.
+It is for convenience to avoid repeating the same name multiple times.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="k">inherit</span> x y<span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>The fragment</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">inherit</span> x y<span class="p">;</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="ss">x</span> <span class="o">=</span> x<span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> y<span class="p">;</span>
+</pre></div>
+</div>
+<p>It is also possible to <code class="docutils literal notranslate"><span class="pre">inherit</span></code> names from a specific attribute set with parentheses (<code class="docutils literal notranslate"><span class="pre">inherit</span> <span class="pre">(...)</span> <span class="pre">...</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">in</span>
+<span class="p">{</span>
+  <span class="k">inherit</span> <span class="p">(</span>a<span class="p">)</span> x y<span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>The fragment</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">inherit</span> <span class="p">(</span>a<span class="p">)</span> x y<span class="p">;</span>
+</pre></div>
+</div>
+<p>is equivalent to</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="ss">x</span> <span class="o">=</span> a<span class="o">.</span>x<span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> a<span class="o">.</span>y<span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">inherit</span></code> also works inside <code class="docutils literal notranslate"><span class="pre">let</span></code> expressions.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="k">inherit</span> <span class="p">({</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">})</span> x y<span class="p">;</span>
+<span class="k">in</span> <span class="p">[</span> x y <span class="p">]</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">1</span> <span class="mi">2</span> <span class="p">]</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">While this example is contrived, in more complex code you will regularly see nested <code class="docutils literal notranslate"><span class="pre">let</span></code> expressions that re-use names from their outer scope.</p>
+<p class="sd-card-text">Here we use the attribute set <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">1;</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">2;</span> <span class="pre">}</span></code> to have something non-trivial to inherit from.
+The <code class="docutils literal notranslate"><span class="pre">let</span></code> expression inherits <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> from that attribute set using <code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>, which is equivalent to writing:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">x</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span><span class="o">.</span>x<span class="p">;</span>
+  <span class="ss">y</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span><span class="o">.</span>y<span class="p">;</span>
+<span class="k">in</span>
+</pre></div>
+</div>
+<p class="sd-card-text">The new inner scope now contains <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>, which are used in the list <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">x</span> <span class="pre">y</span> <span class="pre">]</span></code>.</p>
+</div>
+</details></section>
+<section id="string-interpolation">
+<span id="id5"></span><h3>String interpolation <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">...</span> <span class="pre">}</span></code><a class="headerlink" href="#string-interpolation" title="Link to this heading">#</a></h3>
+<p>Previously known as “antiquotation”.</p>
+<p>The value of a Nix expression can be inserted into a character string with the dollar-sign and braces (<code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">}</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;Nix&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="s2">&quot;hello </span><span class="si">${</span>name<span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;hello Nix&quot;</span>
+</pre></div>
+</div>
+<p>Only character strings or values that can be represented as a character string are allowed.</p>
+<p>Counter-example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="s2">&quot;</span><span class="si">${</span>x<span class="si">}</span><span class="s2"> + </span><span class="si">${</span>x<span class="si">}</span><span class="s2"> = </span><span class="si">${</span>x <span class="o">+</span> x<span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span>error: cannot coerce an integer to a string
+
+       at «string»:4:2:
+
+            3| in
+            4| &quot;${x} + ${x} = ${x + x}&quot;
+             |  ^
+            5|
+</pre></div>
+</div>
+<p>Interpolated expressions can be arbitrarily nested.</p>
+<p>(This can become hard to read. Avoid it in practice.)</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="s2">&quot;no&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="s2">&quot;</span><span class="si">${</span>a <span class="o">+</span> <span class="s2">&quot; </span><span class="si">${</span>a <span class="o">+</span> <span class="s2">&quot; </span><span class="si">${</span>a<span class="si">}</span><span class="s2">&quot;</span><span class="si">}</span><span class="s2">&quot;</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;no no no&quot;</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Any Nix expression where the value can be represented as a string can be used within <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">}</span></code>.</p>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">+</span></code> sign in the above expression is the <a class="reference external" href="https://nix.dev/manual/nix/latest/language/operators#string-concatenation">string concatenation operator</a>, which takes two strings and produces a new string.</p>
+<p class="sd-card-text">The expression in the example is deliberately confusing to demonstrate that arbitrarily nested string interpolations are possible, but tend to be hard to read.</p>
+<p class="sd-card-text">It denotes a string that contains the interpolation of concatenating the value of <code class="docutils literal notranslate"><span class="pre">a</span></code> with a string that starts with a space and is followed by another interpolated string.
+That second interpolated string is again the result of concatenating the value of <code class="docutils literal notranslate"><span class="pre">a</span></code> and yet another string that starts with a space and is followed by an interpolation of <code class="docutils literal notranslate"><span class="pre">a</span></code>.</p>
+<p class="sd-card-text">Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="s2">&quot;one&quot;</span><span class="p">;</span>
+  <span class="ss">b</span> <span class="o">=</span> <span class="s2">&quot;two&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="s2">&quot;</span><span class="si">${</span>a <span class="o">+</span> b<span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;onetwo&quot;</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Built-in functions are discussed in a <a class="reference internal" href="#libraries"><span class="std std-ref">later section</span></a>.</p>
+</div>
+</details><div class="admonition warning">
+<p class="admonition-title">경고</p>
+<p>You may encounter strings that use the dollar sign (<code class="docutils literal notranslate"><span class="pre">$</span></code>) before an assigned name, but no braces (<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code>):</p>
+<p>These are <em>not</em> interpolated strings, but usually denote variables in a shell script.</p>
+<p>In such cases, the use of names from the surrounding Nix expression is a coincidence.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">out</span> <span class="o">=</span> <span class="s2">&quot;Nix&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+<span class="s2">&quot;echo </span><span class="si">${</span>out<span class="si">}</span><span class="s2"> &gt; $out&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;echo Nix &gt; $out&quot;</span>
+</pre></div>
+</div>
+</div>
+<!-- TODO: link to escaping rules -->
+</section>
+<section id="indented-strings">
+<span id="id6"></span><h3>Indented strings<a class="headerlink" href="#indented-strings" title="Link to this heading">#</a></h3>
+<p>Also known as “multi-line strings”.</p>
+<p>The Nix language offers convenience syntax for character strings which span multiple lines that have common indentation.</p>
+<p>Indented strings are denoted by <em>double single quotes</em> (<code class="docutils literal notranslate"><span class="pre">''</span> <span class="pre">''</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">multi</span>
+<span class="s s-Multiline">line</span>
+<span class="s s-Multiline">string</span>
+<span class="s s-Multiline">&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;multi</span><span class="se">\n</span><span class="s2">line</span><span class="se">\n</span><span class="s2">string</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Equal amounts of prepended white space are trimmed from the result.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">  one</span>
+<span class="s s-Multiline">   two</span>
+<span class="s s-Multiline">    three</span>
+<span class="s s-Multiline">&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;one</span><span class="se">\n</span><span class="s2"> two</span><span class="se">\n</span><span class="s2">  three</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Indented strings also support <a class="reference internal" href="#string-interpolation"><span class="std std-ref">string interpolation</span></a>.
+For details check the <a class="reference external" href="https://nix.dev/manual/nix/2.24/language/syntax#string-literal">documentation on string literals in the Nix language</a>.</p>
+</div>
+</section>
+<section id="file-system-paths">
+<span id="id7"></span><h3>File system paths<a class="headerlink" href="#file-system-paths" title="Link to this heading">#</a></h3>
+<p>The Nix language offers convenience syntax for file system paths.</p>
+<p>Absolute paths always start with a slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">/absolute/path</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>Paths are relative when they contain at least one slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>) but do not start with one.
+They evaluate to the path relative to the file containing the expression.</p>
+<p>The following examples assume the containing Nix file is in <code class="docutils literal notranslate"><span class="pre">/current/directory</span></code> (or <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code> is run in <code class="docutils literal notranslate"><span class="pre">/current/directory</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">./relative</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">current</span><span class="o">/</span><span class="n">directory</span><span class="o">/</span><span class="n">relative</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">relative/path</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">current</span><span class="o">/</span><span class="n">directory</span><span class="o">/</span><span class="n">relative</span><span class="o">/</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>One dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>) denotes the current directory within the given path.</p>
+<p>You will often see the following expression, which specifies a Nix file’s directory.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">./.</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">current</span><span class="o">/</span><span class="n">directory</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Since relative paths must contain a slash (<code class="docutils literal notranslate"><span class="pre">/</span></code>) but must not start with one, and the dot (<code class="docutils literal notranslate"><span class="pre">.</span></code>) denotes no change of directory, the combination <code class="docutils literal notranslate"><span class="pre">./.</span></code> specifies the current directory as a relative path.</p>
+</div>
+</details><p>Two dots (<code class="docutils literal notranslate"><span class="pre">..</span></code>) denote the parent directory.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">../.</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">current</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Paths can be used in interpolated expressions – an <a class="reference internal" href="#impurities"><span class="std std-ref">impure operation</span></a> covered in detail in a <a class="reference internal" href="#path-impurities"><span class="std std-ref">later section</span></a>.</p>
+</div>
+<section id="lookup-paths">
+<span id="lookup-path-tutorial"></span><h4>Lookup paths<a class="headerlink" href="#lookup-paths" title="Link to this heading">#</a></h4>
+<p>Also known as “angle bracket syntax”.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">&lt;nixpkgs&gt;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">nix</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">nix</span><span class="o">/</span><span class="n">profiles</span><span class="o">/</span><span class="n">per</span><span class="o">-</span><span class="n">user</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">channels</span><span class="o">/</span><span class="n">nixpkgs</span>
+</pre></div>
+</div>
+<p>The value of a <a class="reference external" href="https://nix.dev/manual/nix/2.22/language/constructs/lookup-path">lookup path</a> is a file system path that depends on the value of <a class="reference external" href="https://nix.dev/manual/nix/2.22/language/builtin-constants#builtins-nixPath"><code class="docutils literal notranslate"><span class="pre">builtins.nixPath</span></code></a>.</p>
+<p>In practice, <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code> points to the file system path of some revision of <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a>.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs/lib&gt;</span></code> points to the subdirectory <code class="docutils literal notranslate"><span class="pre">lib</span></code> of that file system path:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">&lt;nixpkgs/lib&gt;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">nix</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">nix</span><span class="o">/</span><span class="n">profiles</span><span class="o">/</span><span class="n">per</span><span class="o">-</span><span class="n">user</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">channels</span><span class="o">/</span><span class="n">nixpkgs</span><span class="o">/</span><span class="n">lib</span>
+</pre></div>
+</div>
+<p>While you will encounter many such examples, <a class="reference internal" href="../guides/best-practices.html#search-path"><span class="std std-ref">avoid lookup paths</span></a> in production code, as they are <a class="reference internal" href="#impurities"><span class="std std-ref">impurities</span></a> which are not reproducible.</p>
+</section>
+</section>
+</section>
+<section id="functions">
+<span id="id8"></span><h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
+<p>Functions are everywhere in the Nix language and deserve particular attention.</p>
+<p>A function always takes exactly one argument.
+Argument and function body are separated by a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>).</p>
+<p>Wherever you find a colon (<code class="docutils literal notranslate"><span class="pre">:</span></code>) in Nix language code:</p>
+<ul class="simple">
+<li><p>On its left is the function argument</p></li>
+<li><p>On its right is the function body.</p></li>
+</ul>
+<p>Function arguments are the third way, apart from <a class="reference internal" href="#attrset"><span class="std std-ref">attribute sets</span></a> and <a class="reference internal" href="#let"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">let</span></code> expressions</span></a>, to assign names to values.
+Notably, values are not known in advance: the names are placeholders that are filled when <a class="reference internal" href="#calling-functions"><span class="std std-ref">calling a function</span></a>.</p>
+<p>Function declarations in the Nix language can appear in different forms.
+Each of them is explained in the following, and here is an overview:</p>
+<ul>
+<li><p>Single argument</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Multiple arguments via nesting</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Attribute set argument</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> a<span class="p">,</span> b <span class="p">}:</span> a <span class="o">+</span> b
+</pre></div>
+</div>
+<ul>
+<li><p>With default attributes</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> a<span class="p">,</span> b <span class="o">?</span> <span class="mi">0</span> <span class="p">}:</span> a <span class="o">+</span> b
+</pre></div>
+</div>
+</li>
+<li><p>With additional attributes allowed</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> a <span class="o">+</span> b
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p>Named attribute set argument</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span>args<span class="p">@{</span> a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> a <span class="o">+</span> b <span class="o">+</span> args<span class="o">.</span>c
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span> <span class="p">}@</span>args<span class="p">:</span> a <span class="o">+</span> b <span class="o">+</span> args<span class="o">.</span>c
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Functions in the Nix language have no names.
+They are anonymous, and such a function is called a <em>lambda</em>.<a class="footnote-reference brackets" href="#lambda" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span>x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">&lt;LAMBDA&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;LAMBDA&gt;</span></code> indicates the resulting value is an anonymous function.</p>
+<p>As with any other value, functions can be assigned to a name.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> f
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">&lt;LAMBDA&gt;</span>
+</pre></div>
+</div>
+<section id="calling-functions">
+<span id="id10"></span><h3>Calling functions<a class="headerlink" href="#calling-functions" title="Link to this heading">#</a></h3>
+<p>Also known as “function application”.</p>
+<p>Calling a function with an argument means writing the argument after the function.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> f <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x<span class="o">.</span>a<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>The above example calls <code class="docutils literal notranslate"><span class="pre">f</span></code> on a literal attribute set.
+One can also pass arguments by name.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x<span class="o">.</span>a<span class="p">;</span>
+  <span class="ss">v</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span>
+<span class="k">in</span>
+f v
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Since function and argument are separated by white space, sometimes parentheses (<code class="docutils literal notranslate"><span class="pre">(</span> <span class="pre">)</span></code>) are required to achieve the desired result.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This expression applies an anonymous function <code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">1</span></code>.
+The function has to be written in parentheses to distinguish it from the argument.</p>
+</div>
+</details><p>Example:</p>
+<p>List elements are also separated by white space, therefore the following are different:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+ <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+ <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> <span class="p">[</span> <span class="p">(</span>f a<span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">2</span> <span class="p">]</span>
+</pre></div>
+</div>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+ <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+ <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> <span class="p">[</span> f a <span class="p">]</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span> <span class="mi">1</span> <span class="p">]</span>
+</pre></div>
+</div>
+<p>The first example reads: apply <code class="docutils literal notranslate"><span class="pre">f</span></code> to <code class="docutils literal notranslate"><span class="pre">a</span></code>, and put the result in a list.
+The resulting list has one element.</p>
+<p>The second example reads: put <code class="docutils literal notranslate"><span class="pre">f</span></code> and <code class="docutils literal notranslate"><span class="pre">a</span></code> in a list.
+The resulting list has two elements.</p>
+<section id="multiple-arguments">
+<h4>Multiple arguments<a class="headerlink" href="#multiple-arguments" title="Link to this heading">#</a></h4>
+<p>Also known as “<a class="reference external" href="https://en.wikipedia.org/wiki/Currying">curried</a> functions”.</p>
+<p>Nix functions take exactly one argument.
+Multiple arguments can be handled by nesting functions.</p>
+<p>Such a nested function can be used like a function that takes multiple arguments, but offers additional flexibility.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span>x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>The above function is equivalent to</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span>x<span class="p">:</span> <span class="p">(</span>y<span class="p">:</span> x <span class="o">+</span> y<span class="p">)</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This function takes one argument and returns another function <code class="docutils literal notranslate"><span class="pre">y:</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code> with <code class="docutils literal notranslate"><span class="pre">x</span></code> set to the value of that argument.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+<span class="k">in</span>
+f <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Applying the function which results from <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">1</span></code> to another argument yields the inner body <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">y</span></code> (with <code class="docutils literal notranslate"><span class="pre">x</span></code> set to <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> set to the other argument), which can now be fully evaluated.</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> x<span class="p">:</span> y<span class="p">:</span> x <span class="o">+</span> y<span class="p">;</span>
+<span class="k">in</span>
+f <span class="mi">1</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<!-- TODO: exercise - assign the lambda a name and do something with it -->
+</section>
+</section>
+<section id="attribute-set-argument">
+<h3>Attribute set argument<a class="headerlink" href="#attribute-set-argument" title="Link to this heading">#</a></h3>
+<p>Also known as “keyword arguments” or “destructuring”.</p>
+<p>Nix functions can be declared to require an attribute set with specific structure as argument.</p>
+<p>This is denoted by listing the expected attribute names separated by commas (<code class="docutils literal notranslate"><span class="pre">,</span></code>) and enclosed in braces (<code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">}</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>a<span class="p">,</span> b<span class="p">}:</span> a <span class="o">+</span> b
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="l">&lt;LAMBDA&gt;</span>
+</pre></div>
+</div>
+<p>The argument defines the exact attributes that have to be in that set.
+Leaving out or passing additional attributes is an error.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a<span class="p">,</span> b<span class="p">}:</span> a <span class="o">+</span> b<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>Counter-example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a<span class="p">,</span> b<span class="p">}:</span> a <span class="o">+</span> b<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span>error: &#39;f&#39; at (string):2:7 called with unexpected argument &#39;c&#39;
+
+       at «string»:4:1:
+
+            3| in
+            4| f { a = 1; b = 2; c = 3; }
+             | ^
+            5|
+</pre></div>
+</div>
+<!-- TODO: not the same as x: x.a + x.b (!!!!) -->
+<section id="default-values">
+<h4>Default values<a class="headerlink" href="#default-values" title="Link to this heading">#</a></h4>
+<p>Also known as “default arguments”.</p>
+<p>Destructured arguments can have default values for attributes.</p>
+<p>This is denoted by separating the attribute name and its default value with a question mark (<code class="docutils literal notranslate"><span class="pre">?</span></code>).</p>
+<p>Attributes in the argument are not required if they have a default value.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a<span class="p">,</span> b <span class="o">?</span> <span class="mi">0</span><span class="p">}:</span> a <span class="o">+</span> b<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a <span class="o">?</span> <span class="mi">0</span><span class="p">,</span> b <span class="o">?</span> <span class="mi">0</span><span class="p">}:</span> a <span class="o">+</span> b<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="p">}</span> <span class="c1"># empty attribute set</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="additional-attributes">
+<h4>Additional attributes<a class="headerlink" href="#additional-attributes" title="Link to this heading">#</a></h4>
+<p>Additional attributes are allowed with an ellipsis (<code class="docutils literal notranslate"><span class="pre">...</span></code>):</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> a <span class="o">+</span> b
+</pre></div>
+</div>
+<p>Unlike in the previous counter-example, passing an argument that contains additional attributes is not an error.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> a <span class="o">+</span> b<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="named-attribute-set-argument">
+<h3>Named attribute set argument<a class="headerlink" href="#named-attribute-set-argument" title="Link to this heading">#</a></h3>
+<p>Also known as “&#64; pattern”, “&#64; syntax”, or “‘at’ syntax”.</p>
+<p>An attribute set argument can be given a name to be accessible as a whole.</p>
+<p>This is denoted by prepending or appending the name to the attribute set argument, separated by the at sign (<code class="docutils literal notranslate"><span class="pre">&#64;</span></code>).</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}@</span>args<span class="p">:</span> a <span class="o">+</span> b <span class="o">+</span> args<span class="o">.</span>c
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>or</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span>args<span class="p">@{</span>a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}:</span> a <span class="o">+</span> b <span class="o">+</span> args<span class="o">.</span>c
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">f</span> <span class="o">=</span> <span class="p">{</span>a<span class="p">,</span> b<span class="p">,</span> <span class="o">...</span><span class="p">}@</span>args<span class="p">:</span> a <span class="o">+</span> b <span class="o">+</span> args<span class="o">.</span>c<span class="p">;</span>
+<span class="k">in</span>
+f <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="mi">6</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="function-libraries">
+<span id="libraries"></span><h2>Function libraries<a class="headerlink" href="#function-libraries" title="Link to this heading">#</a></h2>
+<p>In addition to the <a class="reference external" href="https://nix.dev/manual/nix/stable/language/operators.html">built-in operators</a> (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">==</span></code>, <code class="docutils literal notranslate"><span class="pre">&amp;&amp;</span></code>, etc.), there are two widely used libraries that <em>together</em> can be considered standard for the Nix language.
+You need to know about both to understand and navigate Nix language code.</p>
+<!-- TODO: find a place for operators -->
+<p>Skim them to familiarise yourself with what is available.</p>
+<section id="builtins">
+<span id="id11"></span><h3><code class="docutils literal notranslate"><span class="pre">builtins</span></code><a class="headerlink" href="#builtins" title="Link to this heading">#</a></h3>
+<p>Also known as “primitive operations” or “primops”.</p>
+<p>Nix comes with many functions that are built into the language.
+They are implemented in C++ as part of the Nix language interpreter.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The Nix manual lists all <a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html">Built-in Functions</a>, and shows how to use them.</p>
+</div>
+<p>These functions are available under the <code class="docutils literal notranslate"><span class="pre">builtins</span></code> constant.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="nb">builtins</span><span class="o">.</span><span class="nb">toString</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">PRIMOP</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<section id="import">
+<span id="reading-nix-language-import"></span><h4><code class="docutils literal notranslate"><span class="pre">import</span></code><a class="headerlink" href="#import" title="Link to this heading">#</a></h4>
+<p>Most built-in functions are only accessible through <code class="docutils literal notranslate"><span class="pre">builtins</span></code>.
+A notable exception is <code class="docutils literal notranslate"><span class="pre">import</span></code>, which is also available at the top level.</p>
+<p><code class="docutils literal notranslate"><span class="pre">import</span></code> takes a path to a Nix file, reads it to evaluate the contained Nix expression, and returns the resulting value.
+If the path points to a directory, the file <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> in that directory is used instead.</p>
+<p>Example:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>+<span class="w"> </span><span class="m">2</span><span class="w"> </span>&gt;<span class="w"> </span>file.nix
+</pre></div>
+</div>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="nb">import</span> <span class="l">./file.nix</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The preceding shell command writes the contents <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">+</span> <span class="pre">2</span></code> to the file <code class="docutils literal notranslate"><span class="pre">file.nix</span></code> in the current directory.</p>
+<p class="sd-card-text">The above Nix expression refers to this file as <code class="docutils literal notranslate"><span class="pre">./file.nix</span></code>.
+<code class="docutils literal notranslate"><span class="pre">import</span></code> reads the file and evaluates to the contained Nix expression.</p>
+<p class="sd-card-text">It is an error if the file system path does not exist.</p>
+<p class="sd-card-text">After reading <code class="docutils literal notranslate"><span class="pre">file.nix</span></code> the Nix expression is equivalent to the file contents:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+</div>
+</details><p>Since a Nix file can contain any Nix expression, <code class="docutils literal notranslate"><span class="pre">import</span></code>ed functions can be applied to arguments immediately.</p>
+<p>Whenever you find additional tokens after a call to <code class="docutils literal notranslate"><span class="pre">import</span></code>, the returned value is a function.
+Anything that follows are arguments to that function.</p>
+<p>Example:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;x: x + 1&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>file.nix
+</pre></div>
+</div>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="nb">import</span> <span class="l">./file.nix</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The preceding shell command writes the contents <code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> to the file <code class="docutils literal notranslate"><span class="pre">file.nix</span></code> in the current directory.</p>
+<p class="sd-card-text">The above Nix expression refers to this file as <code class="docutils literal notranslate"><span class="pre">./file.nix</span></code>.
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">./file.nix</span></code> reads the file and evaluates to the contained Nix expression.</p>
+<p class="sd-card-text">It is an error if the file system path does not exist.</p>
+<p class="sd-card-text">After reading the file, the Nix expression <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">./file.nix</span></code> is equivalent to the file contents:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">(</span>x<span class="p">:</span> x <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<p class="sd-card-text">This applies the function <code class="docutils literal notranslate"><span class="pre">x:</span> <span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span></code> to the argument <code class="docutils literal notranslate"><span class="pre">1</span></code>, and therefore evaluates to <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p class="sd-card-text">Parentheses are required to separate function declaration from function application.</p>
+</div>
+</div>
+</details></section>
+</section>
+<section id="pkgs-lib">
+<span id="id12"></span><h3><code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code><a class="headerlink" href="#pkgs-lib" title="Link to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://github.com/NixOS/nixpkgs"><code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code></a> repository contains an attribute set called <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/lib/default.nix"><code class="docutils literal notranslate"><span class="pre">lib</span></code></a>, which provides a large number of useful functions.
+They are implemented in the Nix language, as opposed to <a class="reference internal" href="#builtins"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">builtins</span></code></span></a>, which are part of the language itself.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The Nixpkgs manual lists all <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-functions-library">Nixpkgs library functions</a>.</p>
+</div>
+<p>These functions are usually accessed through <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code>, as the Nixpkgs attribute set is given the name <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> by convention.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+<span class="k">in</span>
+pkgs<span class="o">.</span>lib<span class="o">.</span>strings<span class="o">.</span>toUpper <span class="s2">&quot;lookup paths considered harmful&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LOOKUP</span> <span class="n">PATHS</span> <span class="n">CONSIDERED</span> <span class="n">HARMFUL</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">This is a more complex example, but by now you should be familiar with all its components.</p>
+<p class="sd-card-text">The name <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> is declared to be the expression <code class="docutils literal notranslate"><span class="pre">import</span></code>ed from some file.
+That file’s path is determined by the value of the lookup path <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code>, which in turn is determined by the <code class="docutils literal notranslate"><span class="pre">$NIX_PATH</span></code> environment variable at the time this expression is evaluated.
+As this expression happens to be a function, it requires an argument to evaluate, and in this case passing an empty attribute set <code class="docutils literal notranslate"><span class="pre">{}</span></code> is sufficient.</p>
+<p class="sd-card-text">Now that <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> is in scope of <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span> <span class="pre">...</span></code>, its attributes can be accessed.
+From the Nixpkgs manual one can determine that there exists a function under <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.strings.toUpper"><code class="docutils literal notranslate"><span class="pre">lib.strings.toUpper</span></code></a>.</p>
+<p class="sd-card-text">For brevity, this example uses a lookup path to obtain <em>some version</em> of Nixpkgs.
+The function <code class="docutils literal notranslate"><span class="pre">toUpper</span></code> is trivial enough that we can expect it not to produce different results for different versions of Nixpkgs.
+Yet, more sophisticated software is likely to suffer from such problems.
+A fully reproducible example would therefore look like this:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/archive/06278c77b5d162e62df170fec307e83f1812d94b.tar.gz&quot;</span><span class="p">;</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{};</span>
+<span class="k">in</span>
+pkgs<span class="o">.</span>lib<span class="o">.</span>strings<span class="o">.</span>toUpper <span class="s2">&quot;always pin your sources&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ALWAYS</span> <span class="n">PIN</span> <span class="n">YOUR</span> <span class="n">SOURCES</span>
+</pre></div>
+</div>
+<p class="sd-card-text">See <a class="reference internal" href="first-steps/towards-reproducibility-pinning-nixpkgs.html#pinning-nixpkgs"><span class="std std-ref">Towards reproducibility: pinning Nixpkgs</span></a> for details.</p>
+<p class="sd-card-text">What you will also often see is that <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> is passed as an argument to a function.
+By convention one can assume that it refers to the Nixpkgs attribute set, which has a <code class="docutils literal notranslate"><span class="pre">lib</span></code> attribute:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+pkgs<span class="o">.</span>lib<span class="o">.</span>strings<span class="o">.</span>removePrefix <span class="s2">&quot;no &quot;</span> <span class="s2">&quot;no true scotsman&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p class="sd-card-text">To make this function produce a result, you can write it to a file (e.g. <code class="docutils literal notranslate"><span class="pre">file.nix</span></code>) and pass it an argument through <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>file.nix<span class="w"> </span>--arg<span class="w"> </span>pkgs<span class="w"> </span><span class="s1">&#39;import &lt;nixpkgs&gt; {}&#39;</span>
+<span class="go">&quot;true scotsman&quot;</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Oftentimes you will see in NixOS configurations, and also within Nixpkgs, that <code class="docutils literal notranslate"><span class="pre">lib</span></code> is passed directly.
+In that case one can assume that this <code class="docutils literal notranslate"><span class="pre">lib</span></code> is equivalent to <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code> where only <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> is available.</p>
+<p class="sd-card-text">Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> lib<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">to-be</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="k">in</span>
+lib<span class="o">.</span>trivial<span class="o">.</span><span class="ow">or</span> to-be <span class="p">(</span><span class="o">!</span> to-be<span class="p">)</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">LAMBDA</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p class="sd-card-text">To make this function produce a result, you can write it to a file (e.g. <code class="docutils literal notranslate"><span class="pre">file.nix</span></code>) and pass it an argument through <code class="docutils literal notranslate"><span class="pre">nix-instantiate</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-instantiate<span class="w"> </span>--eval<span class="w"> </span>file.nix<span class="w"> </span>--arg<span class="w"> </span>lib<span class="w"> </span><span class="s1">&#39;(import &lt;nixpkgs&gt; {}).lib&#39;</span>
+<span class="go">true</span>
+</pre></div>
+</div>
+<p class="sd-card-text">Sometimes both <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> and <code class="docutils literal notranslate"><span class="pre">lib</span></code> are passed as arguments.
+In that case, one can assume <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code> and <code class="docutils literal notranslate"><span class="pre">lib</span></code> to be equivalent.
+This is done to improve readability by avoiding repeated use of <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code>.</p>
+<p class="sd-card-text">Example:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> pkgs<span class="p">,</span> lib<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="c1"># ... multiple uses of `pkgs`</span>
+<span class="c1"># ... multiple uses of `lib`</span>
+</pre></div>
+</div>
+</div>
+</details><p>For historical reasons, some of the functions in <code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code> are equivalent to <a class="reference internal" href="#builtins"><span class="std std-ref"><code class="docutils literal notranslate"><span class="pre">builtins</span></code></span></a> of the same name.</p>
+</section>
+</section>
+<section id="impurities">
+<span id="id13"></span><h2>Impurities<a class="headerlink" href="#impurities" title="Link to this heading">#</a></h2>
+<p>So far this tutorial has only covered <em>pure expressions</em>:
+declaring data and transforming it with functions.</p>
+<p>In practice, describing derivations – the Nix language’s defining feature, which enables functional programming with the file system – requires observing the outside world.
+<a class="reference internal" href="#derivations"><span class="std std-ref">Derivations</span></a> are discussed later in the tutorial.</p>
+<p>There is only one impurity in the Nix language that is relevant here:
+reading files from the file system as <em>build inputs</em>.</p>
+<p>Derivations refer to build inputs to describe how to derive new files.
+When run, a derivation will only have access to explicitly declared build inputs.</p>
+<p>The only way to specify build inputs in the Nix language is explicitly with:</p>
+<ul class="simple">
+<li><p>File system paths</p></li>
+<li><p>Dedicated functions</p></li>
+</ul>
+<p>Nix and the Nix language refer to files by their content hash. If file contents are not known in advance, it’s unavoidable to read files during expression evaluation.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Nix supports other types of impure expressions, such as <a class="reference internal" href="../guides/best-practices.html#search-path"><span class="std std-ref">lookup paths</span></a> or the constant <a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtin-constants.html#builtins-currentSystem"><code class="docutils literal notranslate"><span class="pre">builtins.currentSystem</span></code></a>.
+These are not covered here in more detail, as they do not matter for how the Nix language works in principle, and because they are discouraged for the very reason of breaking reproducibility.</p>
+</div>
+<section id="paths">
+<span id="path-impurities"></span><h3>Paths<a class="headerlink" href="#paths" title="Link to this heading">#</a></h3>
+<p>Whenever a file system path is used in <a class="reference internal" href="#string-interpolation"><span class="std std-ref">string interpolation</span></a>, the contents of that file are copied to a special location in the file system, the <em>Nix store</em>, as a side effect.</p>
+<p>The evaluated string then contains the Nix store path assigned to that file.</p>
+<!-- TODO: link to explanation of the Nix store -->
+<p>Example:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="nb">echo</span><span class="w"> </span><span class="m">123</span><span class="w"> </span>&gt;<span class="w"> </span>data
+</pre></div>
+</div>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;</span><span class="si">${</span><span class="l">./data</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;/nix/store/h1qj5h5n05b5dl5q4nldrqq8mdg7dhqk-data&quot;</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The preceding shell command writes the characters <code class="docutils literal notranslate"><span class="pre">123</span></code> to the file <code class="docutils literal notranslate"><span class="pre">data</span></code> in the current directory.</p>
+<p class="sd-card-text">The above Nix expression refers to this file as <code class="docutils literal notranslate"><span class="pre">./data</span></code> and converts the file system path to an <a class="reference internal" href="#string-interpolation"><span class="std std-ref">interpolated string</span></a> <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">...</span> <span class="pre">}</span></code>.</p>
+<p class="sd-card-text">Such interpolated expressions must evaluate to something that can be represented as a character string.
+A file system path is such a value, and its character string representation is the corresponding Nix store path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">nix</span><span class="o">/</span><span class="n">store</span><span class="o">/&lt;</span><span class="nb">hash</span><span class="o">&gt;-&lt;</span><span class="n">name</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p class="sd-card-text">The Nix store path is obtained by taking the hash of the file’s contents (<code class="docutils literal notranslate"><span class="pre">&lt;hash&gt;</span></code>) and combining it with the file name (<code class="docutils literal notranslate"><span class="pre">&lt;name&gt;</span></code>).
+The file is copied into the Nix store directory <code class="docutils literal notranslate"><span class="pre">/nix/store</span></code> as a side effect of evaluation.
+It is an error if the file system path does not exist.</p>
+</div>
+</details><p>For directories the same thing happens: The entire directory (including nested files and directories) is copied to the Nix store, and the evaluated string becomes the Nix store path of the directory.</p>
+</section>
+<section id="fetchers">
+<h3>Fetchers<a class="headerlink" href="#fetchers" title="Link to this heading">#</a></h3>
+<p>Files to be used as build inputs do not have to come from the file system.</p>
+<p>The Nix language provides built-in impure functions to fetch files over the network during evaluation:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-fetchurl"><code class="docutils literal notranslate"><span class="pre">builtins.fetchurl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-fetchTarball"><code class="docutils literal notranslate"><span class="pre">builtins.fetchTarball</span></code></a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-fetchGit"><code class="docutils literal notranslate"><span class="pre">builtins.fetchGit</span></code></a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-fetchClosure"><code class="docutils literal notranslate"><span class="pre">builtins.fetchClosure</span></code></a></p></li>
+</ul>
+<p>These functions evaluate to a file system path in the Nix store.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="nb">builtins</span><span class="o">.</span>fetchurl <span class="s2">&quot;https://github.com/NixOS/nix/archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;/nix/store/7dhgs330clj36384akg86140fqkgh8zf-7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz&quot;</span>
+</pre></div>
+</div>
+<p>Some of them add extra convenience, such as automatically unpacking archives.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="nb">builtins</span><span class="o">.</span>fetchTarball <span class="s2">&quot;https://github.com/NixOS/nix/archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;/nix/store/d59llm96vgis5fy231x6m7nrijs0ww36-source&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The Nixpkgs manual on <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers">Fetchers</a> lists numerous additional library functions to fetch files over the network.</p>
+</div>
+<p>It is an error if the network request fails.</p>
+</section>
+</section>
+<section id="derivations">
+<span id="id14"></span><h2>Derivations<a class="headerlink" href="#derivations" title="Link to this heading">#</a></h2>
+<p>Derivations are at the core of both Nix and the Nix language:</p>
+<ul class="simple">
+<li><p>The Nix language is used to describe derivations.</p></li>
+<li><p>Nix runs derivations to produce <em>build results</em>.</p></li>
+<li><p>Build results can in turn be used as inputs for other derivations.</p></li>
+</ul>
+<p>The Nix language primitive to declare a derivation is the built-in impure function <code class="docutils literal notranslate"><span class="pre">derivation</span></code>.</p>
+<p>It is usually wrapped by the Nixpkgs build mechanism <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code>, which hides much of the complexity involved in non-trivial build procedures.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>You will probably never encounter <code class="docutils literal notranslate"><span class="pre">derivation</span></code> in practice.</p>
+</div>
+<p>Whenever you encounter <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code>, it denotes something that Nix will eventually <em>build</em>.</p>
+<p>Example: <a class="reference internal" href="#mkderivation-example"><span class="std std-ref">a package using <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code></span></a></p>
+<p>The evaluation result of <code class="docutils literal notranslate"><span class="pre">derivation</span></code> (and <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code>) is an <a class="reference internal" href="#attrset"><span class="std std-ref">attribute set</span></a> with a certain structure and a special property:
+It can be used in <a class="reference internal" href="#string-interpolation"><span class="std std-ref">string interpolation</span></a>, and in that case evaluates to the Nix store path of its build result.</p>
+<p>Example:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+<span class="k">in</span> <span class="s2">&quot;</span><span class="si">${</span>pkgs<span class="o">.</span>nix<span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;/nix/store/sv2srrjddrp2isghmrla8s6lazbzmikd-nix-2.11.0&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>Your output may differ.
+It may produce a different hash or even a different package version.</p>
+<p>A derivation’s output path is fully determined by its inputs, which in this case come from <em>some</em> version of Nixpkgs.</p>
+<p>This is why <a class="reference internal" href="../guides/best-practices.html#search-path"><span class="std std-ref">avoid lookup paths</span></a> to ensure predictable outcomes, except in examples intended for illustration only.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The example imports the Nix expression from the lookup path <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code>, and applies the resulting function to an empty attribute set <code class="docutils literal notranslate"><span class="pre">{}</span></code>.
+Its output is assigned the name <code class="docutils literal notranslate"><span class="pre">pkgs</span></code>.</p>
+<p class="sd-card-text">Converting the attribute <code class="docutils literal notranslate"><span class="pre">pkgs.nix</span></code> to a string with <a class="reference internal" href="#string-interpolation"><span class="std std-ref">string interpolation</span></a> is allowed, as <code class="docutils literal notranslate"><span class="pre">pkgs.nix</span></code> is a derivation.
+That is, ultimately <code class="docutils literal notranslate"><span class="pre">pkgs.nix</span></code> boils down to a call to <code class="docutils literal notranslate"><span class="pre">derivation</span></code>.</p>
+<p class="sd-card-text">The resulting string is the file system path where the build result of that derivation will end up.</p>
+<p class="sd-card-text">There is more depth to the inner workings of derivations, but at this point it should be enough to know that such expressions evaluate to Nix store paths.</p>
+</div>
+</details><p>String interpolation on derivations is used to refer to their build results as file system paths when declaring new derivations.</p>
+<p>This allows constructing arbitrarily complex compositions of derivations with the Nix language.</p>
+</section>
+<section id="worked-examples">
+<h2>Worked examples<a class="headerlink" href="#worked-examples" title="Link to this heading">#</a></h2>
+<p>So far the examples have been artificial illustrations of the Nix language constructs.</p>
+<p>You should now be able to read Nix language code for simple packages and configurations, and come up with similar explanations of the following practical examples.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p>The goal of the following exercises is not to understand what the code means or how it works, but how it is structured in terms of functions, attribute sets, and other Nix language data types.</p>
+</div>
+<section id="shell-environment">
+<h3>Shell environment<a class="headerlink" href="#shell-environment" title="Link to this heading">#</a></h3>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> pkgs <span class="o">?</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{}</span> <span class="p">}:</span>
+<span class="k">let</span>
+  <span class="ss">message</span> <span class="o">=</span> <span class="s2">&quot;hello world&quot;</span><span class="p">;</span>
+<span class="k">in</span>
+pkgs<span class="o">.</span>mkShellNoCC <span class="p">{</span>
+  <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span> cowsay <span class="p">];</span>
+  <span class="ss">shellHook</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">    cowsay </span><span class="si">${</span>message<span class="si">}</span>
+<span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example declares a shell environment (which runs the <code class="docutils literal notranslate"><span class="pre">shellHook</span></code> on initialization).</p>
+<p>Explanation:</p>
+<ul class="simple">
+<li><p>This expression is a function that takes an attribute set as its argument.</p></li>
+<li><p>If the argument has the attribute <code class="docutils literal notranslate"><span class="pre">pkgs</span></code>, it will be used in the function body.
+Otherwise, by default, import the Nix expression in the file found on the lookup path <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code> (which is a function in this case), call the function with an empty attribute set, and use the resulting value.</p></li>
+<li><p>The name <code class="docutils literal notranslate"><span class="pre">message</span></code> is bound to the string value <code class="docutils literal notranslate"><span class="pre">&quot;hello</span> <span class="pre">world&quot;</span></code>.</p></li>
+<li><p>The attribute <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> of the <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> set is a function that is passed an attribute set as argument.
+Its return value is also the result of the outer function.</p></li>
+<li><p>The attribute set passed to <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> has the attributes <code class="docutils literal notranslate"><span class="pre">packages</span></code> (set to a list with one element: the <code class="docutils literal notranslate"><span class="pre">cowsay</span></code> attribute from <code class="docutils literal notranslate"><span class="pre">pkgs</span></code>) and <code class="docutils literal notranslate"><span class="pre">shellHook</span></code> (set to an indented string).</p></li>
+<li><p>The indented string contains an interpolated expression, which will expand the value of <code class="docutils literal notranslate"><span class="pre">message</span></code> to yield <code class="docutils literal notranslate"><span class="pre">&quot;hello</span> <span class="pre">world&quot;</span></code>.</p></li>
+</ul>
+</section>
+<section id="nixos-configuration">
+<h3>NixOS configuration<a class="headerlink" href="#nixos-configuration" title="Link to this heading">#</a></h3>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+
+  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> <span class="l">./hardware-configuration.nix</span> <span class="p">];</span>
+
+  environment<span class="o">.</span><span class="ss">systemPackages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span> git <span class="p">];</span>
+
+  <span class="c1"># ...</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example is (part of) a NixOS configuration.</p>
+<p>Explanation:</p>
+<ul>
+<li><p>This expression is a function that takes an attribute set as an argument.
+It returns an attribute set.</p></li>
+<li><p>The argument must at least have the attributes <code class="docutils literal notranslate"><span class="pre">config</span></code> and <code class="docutils literal notranslate"><span class="pre">pkgs</span></code>, and may have more attributes.</p></li>
+<li><p>The returned attribute set contains the attributes <code class="docutils literal notranslate"><span class="pre">imports</span></code> and <code class="docutils literal notranslate"><span class="pre">environment</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imports</span></code> is a list with one element: a path to a file next to this Nix file, called <code class="docutils literal notranslate"><span class="pre">hardware-configuration.nix</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">참고</p>
+<p><code class="docutils literal notranslate"><span class="pre">imports</span></code> is not the impure built-in <code class="docutils literal notranslate"><span class="pre">import</span></code>, but a regular attribute name!</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">environment</span></code> is itself an attribute set with one attribute <code class="docutils literal notranslate"><span class="pre">systemPackages</span></code>, which will evaluate to a list with one element: the <code class="docutils literal notranslate"><span class="pre">git</span></code> attribute from the <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> set.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">config</span></code> argument is not (shown to be) used.</p></li>
+</ul>
+</section>
+<section id="package">
+<span id="mkderivation-example"></span><h3>Package<a class="headerlink" href="#package" title="Link to this heading">#</a></h3>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> lib<span class="p">,</span> stdenv<span class="p">,</span> fetchurl <span class="p">}:</span>
+
+stdenv<span class="o">.</span>mkDerivation <span class="k">rec</span> <span class="p">{</span>
+
+  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+
+  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.12&quot;</span><span class="p">;</span>
+
+  <span class="ss">src</span> <span class="o">=</span> fetchurl <span class="p">{</span>
+    <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;mirror://gnu/</span><span class="si">${</span>pname<span class="si">}</span><span class="s2">/</span><span class="si">${</span>pname<span class="si">}</span><span class="s2">-</span><span class="si">${</span>version<span class="si">}</span><span class="s2">.tar.gz&quot;</span><span class="p">;</span>
+    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;1ayhp9v4m4rdhjmnl2bq3cibrbqqkgjbl3s7yk2nhlh8vj3ay16g&quot;</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="ss">meta</span> <span class="o">=</span> <span class="k">with</span> lib<span class="p">;</span> <span class="p">{</span>
+    <span class="ss">license</span> <span class="o">=</span> licenses<span class="o">.</span>gpl3Plus<span class="p">;</span>
+  <span class="p">};</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This example is a (simplified) package declaration from Nixpkgs.</p>
+<p>Explanation:</p>
+<ul class="simple">
+<li><p>This expression is a function that takes an attribute set which must have exactly the attributes <code class="docutils literal notranslate"><span class="pre">lib</span></code>, <code class="docutils literal notranslate"><span class="pre">stdenv</span></code>, and <code class="docutils literal notranslate"><span class="pre">fetchurl</span></code>.</p></li>
+<li><p>It returns the result of evaluating the function <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code>, which is an attribute of <code class="docutils literal notranslate"><span class="pre">stdenv</span></code>, applied to a recursive set.</p></li>
+<li><p>The recursive set passed to <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code> uses its own <code class="docutils literal notranslate"><span class="pre">pname</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code> attributes in the argument to the function <code class="docutils literal notranslate"><span class="pre">fetchurl</span></code>.
+<code class="docutils literal notranslate"><span class="pre">fetchurl</span></code> itself comes from the outer function’s arguments.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">meta</span></code> attribute is itself an attribute set, where the <code class="docutils literal notranslate"><span class="pre">license</span></code> attribute has the value that was assigned to the nested attribute <code class="docutils literal notranslate"><span class="pre">lib.licenses.gpl3Plus</span></code>.</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/index.html">Nix manual: Nix language</a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/string-interpolation.html">Nix manual: String interpolation</a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html">Nix manual: Built-in Functions</a></p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-repl.html">Nix manual: <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code></a></p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-functions-library">Nixpkgs manual: Functions reference</a></p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers">Nixpkgs manual: Fetchers</a></p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<section id="get-things-done">
+<h3>Get things done<a class="headerlink" href="#get-things-done" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="first-steps/declarative-shell.html#declarative-reproducible-envs"><span class="std std-ref">Declarative shell environments with shell.nix</span></a> – create reproducible shell environments from a Nix file</p></li>
+<li><p><a class="reference internal" href="packaging-existing-software.html"><span class="std std-doc">Packaging existing software with Nix</span></a> – make more software available through Nix</p></li>
+</ul>
+<p>If you want to take a longer break from learning Nix, you can remove unused build results from the Nix store with:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-collect-garbage
+</pre></div>
+</div>
+</section>
+<section id="learn-more">
+<h3>Learn more<a class="headerlink" href="#learn-more" title="Link to this heading">#</a></h3>
+<p>If you worked through the examples, you will have noticed that reading the Nix language reveals the structure of the code, but does not necessarily tell what the code actually means.</p>
+<p>Often it is not possible to determine from the code at hand</p>
+<ul class="simple">
+<li><p>the data type of a named value or function argument.</p></li>
+<li><p>the data type a called function accepts for its argument.</p></li>
+<li><p>which attributes are present in a given attribute set.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> x<span class="p">,</span> y<span class="p">,</span> z <span class="p">}:</span> <span class="p">(</span>x y<span class="p">)</span> z<span class="o">.</span>a
+</pre></div>
+</div>
+<p>How do you know…</p>
+<ul class="simple">
+<li><p>that <code class="docutils literal notranslate"><span class="pre">x</span></code> will be a function that, given an argument, returns a function?</p></li>
+<li><p>that, given <code class="docutils literal notranslate"><span class="pre">x</span></code> is a function, <code class="docutils literal notranslate"><span class="pre">y</span></code> will be an appropriate argument to <code class="docutils literal notranslate"><span class="pre">x</span></code>?</p></li>
+<li><p>that, given <code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">y)</span></code> is a function, <code class="docutils literal notranslate"><span class="pre">z.a</span></code> will be an appropriate argument to <code class="docutils literal notranslate"><span class="pre">(x</span> <span class="pre">y)</span></code>?</p></li>
+<li><p>that <code class="docutils literal notranslate"><span class="pre">z</span></code> will be an attribute set at all?</p></li>
+<li><p>that, given <code class="docutils literal notranslate"><span class="pre">z</span></code> is an attribute set, it will have an attribute <code class="docutils literal notranslate"><span class="pre">a</span></code>?</p></li>
+<li><p>which data type <code class="docutils literal notranslate"><span class="pre">y</span></code> and <code class="docutils literal notranslate"><span class="pre">z.a</span></code> will be?</p></li>
+<li><p>the data type of the end result?</p></li>
+</ul>
+<p>And how does the caller of this function know that it requires an attribute set with attributes <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code>?</p>
+<p>Answering such questions requires knowing the context in which a given expression is supposed to be used.</p>
+<p>The Nix ecosystem and code style is driven by conventions.
+Most names you will encounter in Nix language code come from Nixpkgs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/guides/nix-pills/">Nix Pills</a> - a detailed explanation of derivations and how Nixpkgs is constructed from first principles</p></li>
+</ul>
+<p>Nixpkgs provides generic build mechanisms that are widely used:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-stdenv"><code class="docutils literal notranslate"><span class="pre">stdenv</span></code></a> - most importantly <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code></p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-trivial-builders">Trivial Builders</a> - to create files and shell scripts</p></li>
+</ul>
+<p>Packages from Nixpkgs can be modified through multiple mechanisms:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-overrides">overrides</a> – specifically <code class="docutils literal notranslate"><span class="pre">override</span></code> and <code class="docutils literal notranslate"><span class="pre">overrideAttrs</span></code> to modify single packages</p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-overlays">overlays</a> – to produce a custom variant of Nixpkgs with individually modified packages</p></li>
+</ul>
+<p>Different language ecosystems and frameworks have different requirements to accommodating them into Nixpkgs:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-language-support">Languages and frameworks</a> lists tools provided by Nixpkgs to build language- or framework-specific packages with Nix.</p></li>
+</ul>
+<p>The NixOS Linux distribution has a modular configuration system that imposes its own conventions:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#sec-writing-modules">NixOS modules</a> shows how NixOS configurations are organized.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="attrnames" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Details: <a class="reference external" href="https://nix.dev/manual/nix/stable/language/syntax#attrs-literal">Nix manual - attribute set</a></p>
+</aside>
+<aside class="footnote brackets" id="list-whitespace" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Details: <a class="reference external" href="https://nix.dev/manual/nix/stable/language/syntax#list-literal">Nix manual - list</a></p>
+</aside>
+<aside class="footnote brackets" id="lambda" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">3</a><span class="fn-bracket">]</span></span>
+<p>The term <em>lambda</em> is a shorthand for <a class="reference external" href="https://en.wikipedia.org/wiki/Lambda_calculus#lambdaAbstr">lambda abstraction</a> in the <a class="reference external" href="https://en.wikipedia.org/wiki/Lambda_calculus">lambda calculus</a>.</p>
+</aside>
+</aside>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="first-steps/towards-reproducibility-pinning-nixpkgs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">이전</p>
+        <p class="prev-next-title">Towards reproducibility: pinning Nixpkgs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="packaging-existing-software.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">다음</p>
+        <p class="prev-next-title">Packaging existing software with Nix</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 내용
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">What will you learn?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">What do you need?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-does-it-take">How long does it take?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-run-the-examples">How to run the examples?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-evaluation">Interactive evaluation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-nix-files">Evaluating Nix files</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notes-on-whitespace">Notes on whitespace</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#names-and-values">Names and values</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-set">Attribute set <code class="docutils literal notranslate"><span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-attribute-set-rec">Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#let-in"><code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-access">Attribute access</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with"><code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">...;</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inherit"><code class="docutils literal notranslate"><span class="pre">inherit</span> <span class="pre">...</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#string-interpolation">String interpolation <code class="docutils literal notranslate"><span class="pre">${</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indented-strings">Indented strings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#file-system-paths">File system paths</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-paths">Lookup paths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-functions">Calling functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-arguments">Multiple arguments</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-set-argument">Attribute set argument</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#default-values">Default values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-attributes">Additional attributes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#named-attribute-set-argument">Named attribute set argument</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#function-libraries">Function libraries</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#builtins"><code class="docutils literal notranslate"><span class="pre">builtins</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#import"><code class="docutils literal notranslate"><span class="pre">import</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pkgs-lib"><code class="docutils literal notranslate"><span class="pre">pkgs.lib</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#impurities">Impurities</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#paths">Paths</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetchers">Fetchers</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivations">Derivations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#worked-examples">Worked examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-environment">Shell environment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nixos-configuration">NixOS configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#package">Package</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#get-things-done">Get things done</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learn-more">Learn more</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+으로 the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

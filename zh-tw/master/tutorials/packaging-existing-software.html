@@ -1,0 +1,1192 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Packaging Existing Software With Nix" lang="en" name="description" xml:lang="en" />
+<meta content="Nix, packaging" name="keywords" />
+
+    <title>使用 Nix 打包現有軟體 &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=cbf116e0"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/packaging-existing-software';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/packaging-existing-software.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜尋" href="../search.html" />
+    <link rel="next" title="Package parameters and overrides with callPackage" href="callpackage.html" />
+    <link rel="prev" title="Nix 語言基礎" href="nix-language.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/packaging-existing-software.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>使用 Nix 打包現有軟體</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-does-it-take">How long does it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-first-package">Your first package</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-package-function">A package function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-with-nix-build">Building with <code class="docutils literal notranslate"><span class="pre">nix-build</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-file-hash">尋找檔案雜湊</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-result">建置結果</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-package-with-dependencies">A package with dependencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-source-from-github">Fetching source from GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-dependencies">Missing dependencies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-packages">Finding packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#search-nixos-org"><code class="docutils literal notranslate"><span class="pre">search.nixos.org</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-code-search">Local code search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-derivation-search">Local derivation search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-package-sets-as-dependencies">Adding package sets as dependencies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixing-build-failures">Fixing build failures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installphase"><code class="docutils literal notranslate"><span class="pre">installPhase</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phases-and-hooks">Phases and hooks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-successful-build">A successful build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="packaging-existing-software-with-nix">
+<span id="packaging-tutorial"></span><h1>使用 Nix 打包現有軟體<a class="headerlink" href="#packaging-existing-software-with-nix" title="連結到這個標頭">#</a></h1>
+<p>One of Nix's primary use-cases is in addressing common difficulties encountered with packaging software, such as specifying and obtaining dependencies.</p>
+<p>In the long term, Nix alleviates such problems.
+But when <em>first</em> packaging existing software with Nix, it's common to encounter errors that seem inscrutable.</p>
+<section id="introduction">
+<h2>簡介<a class="headerlink" href="#introduction" title="連結到這個標頭">#</a></h2>
+<p>In this tutorial, you'll create your first <a class="reference external" href="https://nix.dev/manual/nix/stable/language/derivations">Nix derivations</a> to package C/C++ software.
+You'll take advantage of the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#part-stdenv">Nixpkgs Standard Environment</a> (<code class="docutils literal notranslate"><span class="pre">stdenv</span></code>), which automates much of the work involved.</p>
+<section id="what-will-you-learn">
+<h3>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h3>
+<p>The tutorial begins with <code class="docutils literal notranslate"><span class="pre">hello</span></code>, an implementation of &quot;hello world&quot; which only requires dependencies already provided by <code class="docutils literal notranslate"><span class="pre">stdenv</span></code>.
+Next, you build more complex packages with their own dependencies, which leads to using additional derivation features.</p>
+<p>You'll encounter and address Nix error messages, build failures, and a host of other issues, developing your iterative debugging techniques along the way.</p>
+</section>
+<section id="what-do-you-need">
+<h3>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h3>
+<ul class="simple">
+<li><p>Familiarity with the Unix shell and plain text editors</p></li>
+<li><p>You should be confident with <a class="reference internal" href="nix-language.html#reading-nix-language"><span class="std std-ref">reading the Nix language</span></a>. Feel free to go back and work through the tutorial first.</p></li>
+</ul>
+</section>
+<section id="how-long-does-it-take">
+<h3>How long does it take?<a class="headerlink" href="#how-long-does-it-take" title="連結到這個標頭">#</a></h3>
+<p>Going through all the steps carefully will take around 60 minutes.</p>
+</section>
+</section>
+<section id="your-first-package">
+<h2>Your first package<a class="headerlink" href="#your-first-package" title="連結到這個標頭">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<!--
+TODO: link to the Nix manual glossary entry once it's in a released build:
+https://hydra.nixos.org/job/nix/master/build.x86_64-linux/latest/download/manual/glossary.html#package
+-->
+<p>A <em>package</em> is a loosely defined concept that refers to either a collection of files and other data, or a <a class="reference internal" href="../reference/glossary.html#term-Nix-expression"><span class="xref std std-term">Nix expression</span></a> representing such a collection before it comes into being.
+Packages in Nixpkgs have a conventional structure, allowing them to be discovered in searches and composed in environments alongside other packages.</p>
+<p>For the purposes of this tutorial, a &quot;package&quot; is a Nix language function that will evaluate to a derivation.
+It will enable you or others to produce an artifact for practical use, as a consequence of having &quot;packaged existing software with Nix&quot;.</p>
+</div>
+<p>To start, consider this skeleton derivation:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="p">{</span> stdenv <span class="p">}:</span>
+<span class="linenos">2</span>
+<span class="linenos">3</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>	<span class="p">}</span>
+</pre></div>
+</div>
+<p>This is a function which takes an attribute set containing <code class="docutils literal notranslate"><span class="pre">stdenv</span></code>, and produces a derivation (which currently does nothing).</p>
+<section id="a-package-function">
+<h3>A package function<a class="headerlink" href="#a-package-function" title="連結到這個標頭">#</a></h3>
+<p>GNU Hello is an implementation of the &quot;hello world&quot; program, with source code accessible <a class="reference external" href="https://ftp.gnu.org/gnu/hello/">from the GNU Project's FTP server</a>.</p>
+<p>To begin, add a <code class="docutils literal notranslate"><span class="pre">pname</span></code> attribute to the set passed to <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code>.
+Every package needs a name and a version, and Nix will throw <code class="docutils literal notranslate"><span class="pre">error:</span> <span class="pre">derivation</span> <span class="pre">name</span> <span class="pre">missing</span></code> without one.</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span>stdenv.mkDerivation {
+<span class="gi">+ pname = &quot;hello&quot;;</span>
+<span class="gi">+ version = &quot;2.12.1&quot;;</span>
+</pre></div>
+</div>
+<p>Next, declare a dependency on the latest version of <code class="docutils literal notranslate"><span class="pre">hello</span></code>, and instruct Nix to use <code class="docutils literal notranslate"><span class="pre">fetchzip</span></code> to download the <a class="reference external" href="https://ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz">source code archive</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p><code class="docutils literal notranslate"><span class="pre">fetchzip</span></code> can fetch <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#fetchurl">more archives</a> than just zip files!</p>
+</div>
+<p>The hash cannot be known until after the archive has been downloaded and unpacked.
+Nix will complain if the hash supplied to <code class="docutils literal notranslate"><span class="pre">fetchzip</span></code> is incorrect.
+Set the <code class="docutils literal notranslate"><span class="pre">hash</span></code> attribute to an empty string and then use the resulting error message to determine the correct hash:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># hello.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchzip<span class="p">,</span>
+<span class="linenos"> 5</span><span class="p">}:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+<span class="linenos"> 9</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.12.1&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  <span class="ss">src</span> <span class="o">=</span> fetchzip <span class="p">{</span>
+<span class="linenos">12</span>    <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>  <span class="p">};</span>
+<span class="linenos">15</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Save this file to <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code> and run <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> to observe your first build failure:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>hello.nix
+<span class="go">error: cannot evaluate a function that has an argument without a value (&#39;stdenv&#39;)</span>
+<span class="go">       Nix attempted to evaluate a function as a top level expression; in</span>
+<span class="go">       this case it must have its arguments supplied either by default</span>
+<span class="go">       values, or passed explicitly with &#39;--arg&#39; or &#39;--argstr&#39;. See</span>
+<span class="go">       https://nix.dev/manual/nix/stable/language/constructs.html#functions.</span>
+
+<span class="go">       at /home/nix-user/hello.nix:3:3:</span>
+
+<span class="go">            2| {</span>
+<span class="go">            3|   stdenv,</span>
+<span class="go">             |   ^</span>
+<span class="go">            4|   fetchzip,</span>
+</pre></div>
+</div>
+<p>Problem: the expression in <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code> is a <em>function</em>, which only produces its intended output if it is passed the correct <em>arguments</em>.</p>
+</section>
+<section id="building-with-nix-build">
+<h3>Building with <code class="docutils literal notranslate"><span class="pre">nix-build</span></code><a class="headerlink" href="#building-with-nix-build" title="連結到這個標頭">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stdenv</span></code> is available from <a class="reference external" href="https://github.com/NixOS/nixpkgs/"><code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code></a>, which must be imported with another Nix expression to pass it as an argument to this derivation.</p>
+<p>The recommended way to do this is to create a <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> file in the same directory as <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code>, with the following contents:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># default.nix</span>
+<span class="linenos">2</span><span class="k">let</span>
+<span class="linenos">3</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-24.05&quot;</span><span class="p">;</span>
+<span class="linenos">4</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos">5</span><span class="k">in</span>
+<span class="linenos">6</span><span class="p">{</span>
+<span class="linenos">7</span>  <span class="ss">hello</span> <span class="o">=</span> pkgs<span class="o">.</span>callPackage <span class="l">./hello.nix</span> <span class="p">{</span> <span class="p">};</span>
+<span class="linenos">8</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>This allows you to run <code class="docutils literal notranslate"><span class="pre">nix-build</span> <span class="pre">-A</span> <span class="pre">hello</span></code> to realize the derivation in <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code>, similar to the current convention used in Nixpkgs.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p><code class="docutils literal notranslate"><span class="pre">callPackage</span></code> automatically passes attributes from <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> to the given function, if they match attributes required by that function's argument attribute set.
+In this case, <code class="docutils literal notranslate"><span class="pre">callPackage</span></code> will supply <code class="docutils literal notranslate"><span class="pre">stdenv</span></code> and <code class="docutils literal notranslate"><span class="pre">fetchzip</span></code> to the function defined in <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code>.</p>
+<p>The tutorial <a class="reference internal" href="callpackage.html"><span class="std std-doc">Package parameters and overrides with callPackage</span></a> goes into detail on how this works.</p>
+</div>
+<p>Now run the <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> command with the new argument:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>-A<span class="w"> </span>hello
+<span class="go">error: hash mismatch in fixed-output derivation &#39;/nix/store/pd2kiyfa0c06giparlhd1k31bvllypbb-source.drv&#39;:</span>
+<span class="go">         specified: sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</span>
+<span class="go">            got:    sha256-1kJjhtlsAkpNB7f6tZEs+dbKd8z7KoNHyDHEJ0tmhnc=</span>
+<span class="go">error: 1 dependencies of derivation &#39;/nix/store/b4mjwlv73nmiqgkdabsdjc4zq9gnma1l-hello-2.12.1.drv&#39; failed to build</span>
+</pre></div>
+</div>
+</section>
+<section id="finding-the-file-hash">
+<h3>尋找檔案雜湊<a class="headerlink" href="#finding-the-file-hash" title="連結到這個標頭">#</a></h3>
+<p>As expected, the incorrect file hash caused an error, and Nix helpfully provided the correct one.
+In <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code>, replace the empty string with the correct hash:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># hello.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchzip<span class="p">,</span>
+<span class="linenos"> 5</span><span class="p">}:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span><span class="p">;</span>
+<span class="linenos"> 9</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;2.12.1&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  <span class="ss">src</span> <span class="o">=</span> fetchzip <span class="p">{</span>
+<span class="linenos">12</span>    <span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;https://ftp.gnu.org/gnu/hello/hello-2.12.1.tar.gz&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;sha256-1kJjhtlsAkpNB7f6tZEs+dbKd8z7KoNHyDHEJ0tmhnc=&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>  <span class="p">};</span>
+<span class="linenos">15</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now run the previous command again:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>-A<span class="w"> </span>hello
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/rbq37s3r76rr77c7d8x8px7z04kw2mk7-hello.drv</span>
+<span class="go">building &#39;/nix/store/rbq37s3r76rr77c7d8x8px7z04kw2mk7-hello.drv&#39;...</span>
+<span class="go">...</span>
+<span class="go">configuring</span>
+<span class="go">...</span>
+<span class="go">configure: creating ./config.status</span>
+<span class="go">config.status: creating Makefile</span>
+<span class="go">...</span>
+<span class="go">building</span>
+<span class="go">... &lt;many more lines omitted&gt;</span>
+</pre></div>
+</div>
+<p>The derivation built successfully.</p>
+<p>The console output shows that <code class="docutils literal notranslate"><span class="pre">configure</span></code> was called, which produced a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> that was then used to build the project.
+It wasn't necessary to write any build instructions in this case because the <code class="docutils literal notranslate"><span class="pre">stdenv</span></code> build system is based on <a class="reference external" href="https://www.gnu.org/software/autoconf/">GNU Autoconf</a>, which automatically detected the structure of the project directory.</p>
+</section>
+<section id="build-result">
+<h3>建置結果<a class="headerlink" href="#build-result" title="連結到這個標頭">#</a></h3>
+<p>Check your working directory for the result:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls
+<span class="go">default.nix hello.nix  result</span>
+</pre></div>
+</div>
+<p>This <code class="docutils literal notranslate"><span class="pre">result</span></code> is a <a class="reference external" href="https://en.wikipedia.org/wiki/Symbolic_link">symbolic link</a> to a Nix store location containing the built binary; you can call <code class="docutils literal notranslate"><span class="pre">./result/bin/hello</span></code> to execute this program:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>./result/bin/hello
+<span class="go">Hello, world!</span>
+</pre></div>
+</div>
+<p>Congratulations, you have successfully packaged your first program with Nix!</p>
+<p>Next, you'll package another piece of software with external-to-<code class="docutils literal notranslate"><span class="pre">stdenv</span></code> dependencies that present new challenges, requiring you to make use of more <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code> features.</p>
+</section>
+</section>
+<section id="a-package-with-dependencies">
+<h2>A package with dependencies<a class="headerlink" href="#a-package-with-dependencies" title="連結到這個標頭">#</a></h2>
+<p>Now add a second, somewhat more complicated, program: <a class="reference external" href="https://github.com/atextor/icat"><code class="docutils literal notranslate"><span class="pre">icat</span></code></a> (which renders images in your terminal).</p>
+<p>Change the <code class="docutils literal notranslate"><span class="pre">default.nix</span></code> from the previous section by adding a new attribute for <code class="docutils literal notranslate"><span class="pre">icat</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c1"># default.nix</span>
+<span class="linenos">2</span><span class="k">let</span>
+<span class="linenos">3</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-24.05&quot;</span><span class="p">;</span>
+<span class="linenos">4</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos">5</span><span class="k">in</span>
+<span class="linenos">6</span><span class="p">{</span>
+<span class="linenos">7</span>  <span class="ss">hello</span> <span class="o">=</span> pkgs<span class="o">.</span>callPackage <span class="l">./hello.nix</span> <span class="p">{</span> <span class="p">};</span>
+<span class="linenos">8</span>  <span class="ss">icat</span> <span class="o">=</span> pkgs<span class="o">.</span>callPackage <span class="l">./icat.nix</span> <span class="p">{</span> <span class="p">};</span>
+<span class="linenos">9</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Copy <code class="docutils literal notranslate"><span class="pre">hello.nix</span></code> to a new file <code class="docutils literal notranslate"><span class="pre">icat.nix</span></code>, and update the <code class="docutils literal notranslate"><span class="pre">pname</span></code> and <code class="docutils literal notranslate"><span class="pre">version</span></code> attributes in that file:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchzip<span class="p">,</span>
+<span class="linenos"> 5</span><span class="p">}:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos"> 9</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  <span class="ss">src</span> <span class="o">=</span> fetchzip <span class="p">{</span>
+<span class="linenos">12</span>    <span class="c1"># ...</span>
+<span class="linenos">13</span>  <span class="p">};</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Now to download the source code.
+<code class="docutils literal notranslate"><span class="pre">icat</span></code>'s upstream repository is hosted on <a class="reference external" href="https://github.com/atextor/icat">GitHub</a>, so you should replace the previous <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers">source fetcher</a>.
+This time, use <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#fetchfromgithub"><code class="docutils literal notranslate"><span class="pre">fetchFromGitHub</span></code></a> instead of <code class="docutils literal notranslate"><span class="pre">fetchzip</span></code>, by updating the argument attribute set to the function accordingly:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchFromGitHub<span class="p">,</span>
+<span class="linenos"> 5</span><span class="p">}:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos"> 9</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+<span class="linenos">12</span>    <span class="c1"># ...</span>
+<span class="linenos">13</span>  <span class="p">};</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+<section id="fetching-source-from-github">
+<h3>Fetching source from GitHub<a class="headerlink" href="#fetching-source-from-github" title="連結到這個標頭">#</a></h3>
+<p>While <code class="docutils literal notranslate"><span class="pre">fetchzip</span></code> required <code class="docutils literal notranslate"><span class="pre">url</span></code> and <code class="docutils literal notranslate"><span class="pre">sha256</span></code> arguments, more are needed for <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#fetchfromgithub"><code class="docutils literal notranslate"><span class="pre">fetchFromGitHub</span></code></a>.</p>
+<p>The source URL is <code class="docutils literal notranslate"><span class="pre">https://github.com/atextor/icat</span></code>, which already gives the first two arguments:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">owner</span></code>: the name of the account controlling the repository</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">owner</span> <span class="o">=</span> <span class="s2">&quot;atextor&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">repo</span></code>: the name of the repository to fetch</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repo</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Navigate to the project's <a class="reference external" href="https://github.com/atextor/icat/tags">Tags page</a> to find a suitable <a class="reference external" href="https://git-scm.com/docs/revisions">Git revision</a> (<code class="docutils literal notranslate"><span class="pre">rev</span></code>), such as the Git commit hash or tag (e.g. <code class="docutils literal notranslate"><span class="pre">v1.0</span></code>) corresponding to the release you want to fetch.</p>
+<p>In this case, the latest release tag is <code class="docutils literal notranslate"><span class="pre">v0.5</span></code>.</p>
+<p>As in the <code class="docutils literal notranslate"><span class="pre">hello</span></code> example, a hash must also be supplied.
+This time, instead of using the empty string and letting <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> report the correct one in an error, you can fetch the correct hash in the first place with the <code class="docutils literal notranslate"><span class="pre">nix-prefetch-url</span></code> command.</p>
+<p>You need the SHA256 hash of the <em>contents</em> of the tarball (as opposed to the hash of the tarball file itself).
+Therefore pass the <code class="docutils literal notranslate"><span class="pre">--unpack</span></code> and <code class="docutils literal notranslate"><span class="pre">--type</span> <span class="pre">sha256</span></code> arguments:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-prefetch-url<span class="w"> </span>--unpack<span class="w"> </span>https://github.com/atextor/icat/archive/refs/tags/v0.5.tar.gz<span class="w"> </span>--type<span class="w"> </span>sha256
+<span class="go">path is &#39;/nix/store/p8jl1jlqxcsc7ryiazbpm7c1mqb6848b-v0.5.tar.gz&#39;</span>
+<span class="go">0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka</span>
+</pre></div>
+</div>
+<p>Set the correct hash for <code class="docutils literal notranslate"><span class="pre">fetchFromGitHub</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchFromGitHub<span class="p">,</span>
+<span class="linenos"> 5</span><span class="p">}:</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos"> 9</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+<span class="linenos">12</span>    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;atextor&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>    <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="ss">rev</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka&quot;</span><span class="p">;</span>
+<span class="linenos">16</span>  <span class="p">};</span>
+<span class="linenos">17</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="missing-dependencies">
+<h3>Missing dependencies<a class="headerlink" href="#missing-dependencies" title="連結到這個標頭">#</a></h3>
+<p>Running <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> on only the new <code class="docutils literal notranslate"><span class="pre">icat</span></code> attribute, an entirely new issue is reported:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>-A<span class="w"> </span>icat
+<span class="go">these 2 derivations will be built:</span>
+<span class="go">  /nix/store/86q9x927hsyyzfr4lcqirmsbimysi6mb-source.drv</span>
+<span class="go">  /nix/store/l5wz9inkvkf0qhl8kpl39vpg2xfm2qpy-icat.drv</span>
+<span class="go">...</span>
+<span class="go">error: builder for &#39;/nix/store/l5wz9inkvkf0qhl8kpl39vpg2xfm2qpy-icat.drv&#39; failed with exit code 2;</span>
+<span class="go">       last 10 log lines:</span>
+<span class="go">       &gt;                  from /nix/store/hkj250rjsvxcbr31fr1v81cv88cdfp4l-glibc-2.37-8-dev/include/stdio.h:27,</span>
+<span class="go">       &gt;                  from icat.c:31:</span>
+<span class="go">       &gt; /nix/store/hkj250rjsvxcbr31fr1v81cv88cdfp4l-glibc-2.37-8-dev/include/features.h:195:3: warning: #warning &quot;_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE&quot; [8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp8;;]</span>
+<span class="go">       &gt;   195 | # warning &quot;_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE&quot;</span>
+<span class="go">       &gt;       |   ^~~~~~~</span>
+<span class="go">       &gt; icat.c:39:10: fatal error: Imlib2.h: No such file or directory</span>
+<span class="go">       &gt;    39 | #include &lt;Imlib2.h&gt;</span>
+<span class="go">       &gt;       |          ^~~~~~~~~~</span>
+<span class="go">       &gt; compilation terminated.</span>
+<span class="go">       &gt; make: *** [Makefile:16: icat.o] Error 1</span>
+<span class="go">       For full logs, run &#39;nix log /nix/store/l5wz9inkvkf0qhl8kpl39vpg2xfm2qpy-icat.drv&#39;.</span>
+</pre></div>
+</div>
+<p>A compiler error.
+The <code class="docutils literal notranslate"><span class="pre">icat</span></code> source was pulled from GitHub, and Nix tried to build what it found, but compilation failed due to a missing dependency: the <code class="docutils literal notranslate"><span class="pre">imlib2</span></code> header.</p>
+<p>If you <a class="reference external" href="https://search.nixos.org/packages?query=imlib2">search for <code class="docutils literal notranslate"><span class="pre">imlib2</span></code> on search.nixos.org</a>, you'll find that <code class="docutils literal notranslate"><span class="pre">imlib2</span></code> is already in Nixpkgs.</p>
+<p>Add this package to your build environment by adding <code class="docutils literal notranslate"><span class="pre">imlib2</span></code> to the arguments of the function in <code class="docutils literal notranslate"><span class="pre">icat.nix</span></code>.
+Then add the argument's value <code class="docutils literal notranslate"><span class="pre">imlib2</span></code> to the list of <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code> in <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchFromGitHub<span class="p">,</span>
+<span class="linenos"> 5</span>  imlib2<span class="p">,</span>
+<span class="linenos"> 6</span><span class="p">}:</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos"> 9</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">10</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+<span class="linenos">13</span>    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;atextor&quot;</span><span class="p">;</span>
+<span class="linenos">14</span>    <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="ss">rev</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">16</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka&quot;</span><span class="p">;</span>
+<span class="linenos">17</span>  <span class="p">};</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> imlib2 <span class="p">];</span>
+<span class="linenos">20</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">nix-build</span> <span class="pre">-A</span> <span class="pre">icat</span></code> again and you'll encounter another error, but compilation proceeds further this time:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>-A<span class="w"> </span>icat
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/bw2d4rp2k1l5rg49hds199ma2mz36x47-icat.drv</span>
+<span class="go">...</span>
+<span class="go">error: builder for &#39;/nix/store/bw2d4rp2k1l5rg49hds199ma2mz36x47-icat.drv&#39; failed with exit code 2;</span>
+<span class="go">       last 10 log lines:</span>
+<span class="go">       &gt;                  from icat.c:31:</span>
+<span class="go">       &gt; /nix/store/hkj250rjsvxcbr31fr1v81cv88cdfp4l-glibc-2.37-8-dev/include/features.h:195:3: warning: #warning &quot;_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE&quot; [8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp8;;]</span>
+<span class="go">       &gt;   195 | # warning &quot;_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE&quot;</span>
+<span class="go">       &gt;       |   ^~~~~~~</span>
+<span class="go">       &gt; In file included from icat.c:39:</span>
+<span class="go">       &gt; /nix/store/4fvrh0sjc8sbkbqda7dfsh7q0gxmnh9p-imlib2-1.11.1-dev/include/Imlib2.h:45:10: fatal error: X11/Xlib.h: No such file or directory</span>
+<span class="go">       &gt;    45 | #include &lt;X11/Xlib.h&gt;</span>
+<span class="go">       &gt;       |          ^~~~~~~~~~~~</span>
+<span class="go">       &gt; compilation terminated.</span>
+<span class="go">       &gt; make: *** [Makefile:16: icat.o] Error 1</span>
+<span class="go">       For full logs, run &#39;nix log /nix/store/bw2d4rp2k1l5rg49hds199ma2mz36x47-icat.drv&#39;.</span>
+</pre></div>
+</div>
+<p>You can see a few warnings which should be corrected in the upstream code.
+But the important bit for this tutorial is <code class="docutils literal notranslate"><span class="pre">fatal</span> <span class="pre">error:</span> <span class="pre">X11/Xlib.h:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory</span></code>: another dependency is missing.</p>
+</section>
+</section>
+<section id="finding-packages">
+<h2>Finding packages<a class="headerlink" href="#finding-packages" title="連結到這個標頭">#</a></h2>
+<p>Determining from where to source a dependency is currently somewhat involved, because package names don't always correspond to library or program names.</p>
+<p>You need the <code class="docutils literal notranslate"><span class="pre">Xlib.h</span></code> headers from the <code class="docutils literal notranslate"><span class="pre">X11</span></code> C package.
+The Nixpkgs derivation for this is <code class="docutils literal notranslate"><span class="pre">libX11</span></code>, available in the <code class="docutils literal notranslate"><span class="pre">xorg</span></code> package set.
+There are multiple ways to figure this out:</p>
+<section id="search-nixos-org">
+<h3><code class="docutils literal notranslate"><span class="pre">search.nixos.org</span></code><a class="headerlink" href="#search-nixos-org" title="連結到這個標頭">#</a></h3>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>The easiest way to find what you need is on <a class="reference external" href="http://search.nixos.org/packages">search.nixos.org/packages</a>.</p>
+</div>
+<p>Unfortunately in this case, <a class="reference external" href="https://search.nixos.org/packages?query=x11">searching for <code class="docutils literal notranslate"><span class="pre">x11</span></code></a> produces too many irrelevant results because X11 is ubiquitous.
+On the left side bar there is a list package sets, and <a class="reference external" href="https://search.nixos.org/packages?buckets=%7B%22package_attr_set%22%3A%5B%22xorg%22%5D%2C%22package_license_set%22%3A%5B%5D%2C%22package_maintainers_set%22%3A%5B%5D%2C%22package_platforms%22%3A%5B%5D%7D&amp;amp;query=x11">selecting <code class="docutils literal notranslate"><span class="pre">xorg</span></code></a> shows something promising.</p>
+<p>In case all else fails, it helps to become familiar with searching the <a class="reference external" href="https://github.com/nixos/nixpkgs">Nixpkgs source code</a> for keywords.</p>
+</section>
+<section id="local-code-search">
+<h3>Local code search<a class="headerlink" href="#local-code-search" title="連結到這個標頭">#</a></h3>
+<p>To find name assignments in the source, search for <code class="docutils literal notranslate"><span class="pre">&quot;&lt;keyword&gt;</span> <span class="pre">=&quot;</span></code>.
+For example, these are the search results for <a class="reference external" href="https://github.com/search?q=repo%3ANixOS%2Fnixpkgs+%22x11+%3D%22&amp;amp;type=code"><code class="docutils literal notranslate"><span class="pre">&quot;x11</span> <span class="pre">=</span> <span class="pre">&quot;</span></code></a> or <a class="reference external" href="https://github.com/search?q=repo%3ANixOS%2Fnixpkgs+%22libx11+%3D%22&amp;amp;type=code"><code class="docutils literal notranslate"><span class="pre">&quot;libx11</span> <span class="pre">=&quot;</span></code></a> on Github.</p>
+<p>Or fetch a clone of the <a class="reference external" href="https://github.com/nixos/nixpkgs">Nixpkgs repository</a> and search the code locally.</p>
+<p>Start a shell that makes the required tools available – <code class="docutils literal notranslate"><span class="pre">git</span></code> for version control, and <code class="docutils literal notranslate"><span class="pre">rg</span></code> for code search (provided by the <a class="reference external" href="https://search.nixos.org/packages?show=ripgrep"><code class="docutils literal notranslate"><span class="pre">ripgrep</span></code> package</a>):</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell<span class="w"> </span>-p<span class="w"> </span>git<span class="w"> </span>ripgrep
+<span class="gp">[nix-shell:~]$</span>
+</pre></div>
+</div>
+<p>The Nixpkgs repository is huge.
+Only clone the latest revision to avoid waiting a long time for a full clone:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[nix-shell:~]$ </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/NixOS/nixpkgs<span class="w"> </span>--depth<span class="w"> </span><span class="m">1</span>
+<span class="go">...</span>
+<span class="gp">[nix-shell:~]$ </span><span class="nb">cd</span><span class="w"> </span>nixpkgs/
+</pre></div>
+</div>
+<p>To narrow down results, only search the <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> subdirectory, which holds all the package recipes:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[nix-shell:~]$ </span>rg<span class="w"> </span><span class="s2">&quot;x11 =&quot;</span><span class="w"> </span>pkgs
+<span class="go">pkgs/tools/X11/primus/default.nix</span>
+<span class="go">21:  primus = if useNvidia then primusLib_ else primusLib_.override { nvidia_x11 = null; };</span>
+<span class="go">22:  primus_i686 = if useNvidia then primusLib_i686_ else primusLib_i686_.override { nvidia_x11 = null; };</span>
+
+<span class="go">pkgs/applications/graphics/imv/default.nix</span>
+<span class="go">38:    x11 = [ libGLU xorg.libxcb xorg.libX11 ];</span>
+
+<span class="go">pkgs/tools/X11/primus/lib.nix</span>
+<span class="go">14:    if nvidia_x11 == null then libGL</span>
+
+<span class="go">pkgs/top-level/linux-kernels.nix</span>
+<span class="go">573:    ati_drivers_x11 = throw &quot;ati drivers are no longer supported by any kernel &gt;=4.1&quot;; # added 2021-05-18;</span>
+<span class="go">... &lt;a lot more results&gt;</span>
+</pre></div>
+</div>
+<p>Since <code class="docutils literal notranslate"><span class="pre">rg</span></code> is case sensitive by default,
+Add <code class="docutils literal notranslate"><span class="pre">-i</span></code> to make sure you don't miss anything:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[nix-shell:~]$ rg -i &quot;libx11 =&quot; pkgs
+pkgs/applications/version-management/monotone-viz/graphviz-2.0.nix
+55:    ++ lib.optional (libX11 == null) &quot;--without-x&quot;;
+
+pkgs/top-level/all-packages.nix
+14191:    libX11 = xorg.libX11;
+
+pkgs/servers/x11/xorg/default.nix
+1119:  libX11 = callPackage ({ stdenv, pkg-config, fetchurl, xorgproto, libpthreadstubs, libxcb, xtrans, testers }: stdenv.mkDerivation (finalAttrs: {
+
+pkgs/servers/x11/xorg/overrides.nix
+147:  libX11 = super.libX11.overrideAttrs (attrs: {
+</pre></div>
+</div>
+</section>
+<section id="local-derivation-search">
+<h3>Local derivation search<a class="headerlink" href="#local-derivation-search" title="連結到這個標頭">#</a></h3>
+<p>To search derivations on the command line, use <code class="docutils literal notranslate"><span class="pre">nix-locate</span></code> from the <a class="reference external" href="https://github.com/nix-community/nix-index"><code class="docutils literal notranslate"><span class="pre">nix-index</span></code></a>.</p>
+</section>
+<section id="adding-package-sets-as-dependencies">
+<h3>Adding package sets as dependencies<a class="headerlink" href="#adding-package-sets-as-dependencies" title="連結到這個標頭">#</a></h3>
+<p>Add <code class="docutils literal notranslate"><span class="pre">xorg</span></code> to your derivation's input attribute set and use <code class="docutils literal notranslate"><span class="pre">xorg.libX11</span></code> in <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchFromGitHub<span class="p">,</span>
+<span class="linenos"> 5</span>  imlib2<span class="p">,</span>
+<span class="linenos"> 6</span>  xorg<span class="p">,</span>
+<span class="linenos"> 7</span><span class="p">}:</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos">10</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">11</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+<span class="linenos">14</span>    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;atextor&quot;</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">16</span>    <span class="ss">rev</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">17</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka&quot;</span><span class="p">;</span>
+<span class="linenos">18</span>  <span class="p">};</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> imlib2 xorg<span class="o">.</span>libX11 <span class="p">];</span>
+<span class="linenos">21</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>Because the Nix language is lazily evaluated, accessing only <code class="docutils literal notranslate"><span class="pre">xorg.libX11</span></code> means that the remaining contents of the <code class="docutils literal notranslate"><span class="pre">xorg</span></code> attribute set are never processed.</p>
+</div>
+</section>
+</section>
+<section id="fixing-build-failures">
+<h2>Fixing build failures<a class="headerlink" href="#fixing-build-failures" title="連結到這個標頭">#</a></h2>
+<p>Run the last command again:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>-A<span class="w"> </span>icat
+<span class="go">this derivation will be built:</span>
+<span class="go">  /nix/store/x1d79ld8jxqdla5zw2b47d2sl87mf56k-icat.drv</span>
+<span class="go">...</span>
+<span class="go">error: builder for &#39;/nix/store/x1d79ld8jxqdla5zw2b47d2sl87mf56k-icat.drv&#39; failed with exit code 2;</span>
+<span class="go">       last 10 log lines:</span>
+<span class="go">       &gt;   195 | # warning &quot;_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE&quot;</span>
+<span class="go">       &gt;       |   ^~~~~~~</span>
+<span class="go">       &gt; icat.c: In function &#39;main&#39;:</span>
+<span class="go">       &gt; icat.c:319:33: warning: ignoring return value of &#39;write&#39; declared with attribute &#39;warn_unused_result&#39; [8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-result-Wunused-result8;;]</span>
+<span class="go">       &gt;   319 |                                 write(tempfile, &amp;buf, 1);</span>
+<span class="go">       &gt;       |                                 ^~~~~~~~~~~~~~~~~~~~~~~~</span>
+<span class="go">       &gt; gcc -o icat icat.o -lImlib2</span>
+<span class="go">       &gt; installing</span>
+<span class="go">       &gt; install flags: SHELL=/nix/store/8fv91097mbh5049i9rglc73dx6kjg3qk-bash-5.2-p15/bin/bash install</span>
+<span class="go">       &gt; make: *** No rule to make target &#39;install&#39;.  Stop.</span>
+<span class="go">       For full logs, run &#39;nix log /nix/store/x1d79ld8jxqdla5zw2b47d2sl87mf56k-icat.drv&#39;.</span>
+</pre></div>
+</div>
+<p>The missing dependency error is solved, but there is now another problem: <code class="docutils literal notranslate"><span class="pre">make:</span> <span class="pre">***</span> <span class="pre">No</span> <span class="pre">rule</span> <span class="pre">to</span> <span class="pre">make</span> <span class="pre">target</span> <span class="pre">'install'.</span>&#160; <span class="pre">Stop.</span></code></p>
+<section id="installphase">
+<h3><code class="docutils literal notranslate"><span class="pre">installPhase</span></code><a class="headerlink" href="#installphase" title="連結到這個標頭">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">stdenv</span></code> is automatically working with the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> that comes with <code class="docutils literal notranslate"><span class="pre">icat</span></code>.
+The console output shows that <code class="docutils literal notranslate"><span class="pre">configure</span></code> and <code class="docutils literal notranslate"><span class="pre">make</span></code> are executed without issue, so the <code class="docutils literal notranslate"><span class="pre">icat</span></code> binary is compiling successfully.</p>
+<p>The failure occurs when the <code class="docutils literal notranslate"><span class="pre">stdenv</span></code> attempts to run <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">install</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> included in the project happens to lack an <code class="docutils literal notranslate"><span class="pre">install</span></code> target.
+The <code class="docutils literal notranslate"><span class="pre">README</span></code> in the <code class="docutils literal notranslate"><span class="pre">icat</span></code> repository only mentions using <code class="docutils literal notranslate"><span class="pre">make</span></code> to build the tool, leaving the installation step up to users.</p>
+<p>To add this step to your derivation, use the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#ssec-install-phase"><code class="docutils literal notranslate"><span class="pre">installPhase</span></code> attribute</a>.
+It contains a list of command strings that are executed to perform the installation.</p>
+<p>Because <code class="docutils literal notranslate"><span class="pre">make</span></code> finishes successfully, the <code class="docutils literal notranslate"><span class="pre">icat</span></code> executable is available in the build directory.
+You only need to copy it from there to the output directory.</p>
+<p>In Nix, the output directory is stored in the <code class="docutils literal notranslate"><span class="pre">$out</span></code> variable.
+That variable is accessible in the derivation's <a class="reference external" href="https://nix.dev/manual/nix/2.19/language/derivations#builder-execution"><code class="docutils literal notranslate"><span class="pre">builder</span></code> execution environment</a>.
+Create a <code class="docutils literal notranslate"><span class="pre">bin</span></code> directory within the <code class="docutils literal notranslate"><span class="pre">$out</span></code> directory and copy the <code class="docutils literal notranslate"><span class="pre">icat</span></code> binary there:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span><span class="p">{</span>
+<span class="linenos"> 3</span>  stdenv<span class="p">,</span>
+<span class="linenos"> 4</span>  fetchFromGitHub<span class="p">,</span>
+<span class="linenos"> 5</span>  imlib2<span class="p">,</span>
+<span class="linenos"> 6</span>  xorg<span class="p">,</span>
+<span class="linenos"> 7</span><span class="p">}:</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+<span class="linenos">10</span>  <span class="ss">pname</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">11</span>  <span class="ss">version</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">12</span>
+<span class="linenos">13</span>  <span class="ss">src</span> <span class="o">=</span> fetchFromGitHub <span class="p">{</span>
+<span class="linenos">14</span>    <span class="ss">owner</span> <span class="o">=</span> <span class="s2">&quot;atextor&quot;</span><span class="p">;</span>
+<span class="linenos">15</span>    <span class="ss">repo</span> <span class="o">=</span> <span class="s2">&quot;icat&quot;</span><span class="p">;</span>
+<span class="linenos">16</span>    <span class="ss">rev</span> <span class="o">=</span> <span class="s2">&quot;v0.5&quot;</span><span class="p">;</span>
+<span class="linenos">17</span>    <span class="ss">sha256</span> <span class="o">=</span> <span class="s2">&quot;0wyy2ksxp95vnh71ybj1bbmqd5ggp13x3mk37pzr99ljs9awy8ka&quot;</span><span class="p">;</span>
+<span class="linenos">18</span>  <span class="p">};</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> imlib2 xorg<span class="o">.</span>libX11 <span class="p">];</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>  <span class="ss">installPhase</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos">23</span><span class="s s-Multiline">    mkdir -p $out/bin</span>
+<span class="linenos">24</span><span class="s s-Multiline">    cp icat $out/bin</span>
+<span class="linenos">25</span><span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">26</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="phases-and-hooks">
+<h3>Phases and hooks<a class="headerlink" href="#phases-and-hooks" title="連結到這個標頭">#</a></h3>
+<p>Nixpkgs <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code> derivations are separated into <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-stdenv-phases">phases</a>.
+Each is intended to control some aspect of the build process.</p>
+<p>Earlier you observed how <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code> expected the project's <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> to have an <code class="docutils literal notranslate"><span class="pre">install</span></code> target, and failed when it didn't.
+To fix this, you defined a custom <code class="docutils literal notranslate"><span class="pre">installPhase</span></code> containing instructions for copying the <code class="docutils literal notranslate"><span class="pre">icat</span></code> binary to the correct output location, in effect installing it.
+Up to that point, the <code class="docutils literal notranslate"><span class="pre">stdenv.mkDerivation</span></code> automatically determined the <code class="docutils literal notranslate"><span class="pre">buildPhase</span></code> information for the <code class="docutils literal notranslate"><span class="pre">icat</span></code> package.</p>
+<p>During derivation realisation, there are a number of shell functions (&quot;hooks&quot;, in Nixpkgs) which may execute in each derivation phase.
+Hooks do things like set variables, source files, create directories, and so on.</p>
+<p>These are specific to each phase, and run both before and after that phase's execution.
+They modify the build environment for common operations during the build.</p>
+<p>Include calls to these hooks in the derivation phases you define, even when you don't make direct use of them.
+This facilitates easy <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-overrides">overriding</a> of specific parts of the derivation later.
+And it keeps the code tidy and makes it easier to read.</p>
+<p>Adjust your <code class="docutils literal notranslate"><span class="pre">installPhase</span></code> to call the appropriate hooks:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c1"># icat.nix</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="c1"># ...</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>  <span class="ss">installPhase</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos"> 6</span><span class="s s-Multiline">    runHook preInstall</span>
+<span class="linenos"> 7</span><span class="s s-Multiline">    mkdir -p $out/bin</span>
+<span class="linenos"> 8</span><span class="s s-Multiline">    cp icat $out/bin</span>
+<span class="linenos"> 9</span><span class="s s-Multiline">    runHook postInstall</span>
+<span class="linenos">10</span><span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span><span class="c1"># ...</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="a-successful-build">
+<h2>A successful build<a class="headerlink" href="#a-successful-build" title="連結到這個標頭">#</a></h2>
+<p>Running the <code class="docutils literal notranslate"><span class="pre">nix-build</span> <span class="pre">-A</span> <span class="pre">icat</span></code> command once more will finally do what you want, repeatably.
+Call <code class="docutils literal notranslate"><span class="pre">ls</span></code> in the local directory to find a <code class="docutils literal notranslate"><span class="pre">result</span></code> symlink to a location in the Nix store:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ls
+<span class="go">default.nix hello.nix icat.nix result</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">result/bin/icat</span></code> is the executable built previously. Success!</p>
+<p>Running <code class="docutils literal notranslate"><span class="pre">nix-build</span></code> (without specifying an attribute) builds all attributes at once.
+The first (<code class="docutils literal notranslate"><span class="pre">hello</span></code>) appears under <code class="docutils literal notranslate"><span class="pre">result/bin/</span></code>, while the second (<code class="docutils literal notranslate"><span class="pre">icat</span></code>) appears under <code class="docutils literal notranslate"><span class="pre">result-2/bin/</span></code>.
+Adding more attributes produces additional <code class="docutils literal notranslate"><span class="pre">result-n</span></code> symlinks.</p>
+</section>
+<section id="references">
+<h2>參考<a class="headerlink" href="#references" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/unstable/#part-stdenv">Nixpkgs Manual - Standard Environment</a></p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>下一步<a class="headerlink" href="#next-steps" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="callpackage.html#callpackage-tutorial"><span class="std std-ref">Package parameters and overrides with callPackage</span></a></p></li>
+<li><p><a class="reference internal" href="../guides/recipes/sharing-dependencies.html#sharing-dependencies"><span class="std std-ref">開發外殼中的相依項</span></a></p></li>
+<li><p><a class="reference internal" href="../guides/recipes/direnv.html#automatic-direnv"><span class="std std-ref">Automatic environment activation with direnv</span></a></p></li>
+<li><p><a class="reference internal" href="../guides/recipes/python-environment.html#python-dev-environment"><span class="std std-ref">Setting up a Python development environment</span></a></p></li>
+<li><p><a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/CONTRIBUTING.md">Add your own new packages to Nixpkgs</a></p>
+<ul>
+<li><p><a class="reference internal" href="../contributing/how-to-contribute.html"><span class="std std-doc">如何貢獻</span></a></p></li>
+<li><p><a class="reference internal" href="../contributing/how-to-get-help.html"><span class="std std-doc">How to get help</span></a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="nix-language.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">Nix 語言基礎</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="callpackage.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-does-it-take">How long does it take?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#your-first-package">Your first package</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-package-function">A package function</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-with-nix-build">Building with <code class="docutils literal notranslate"><span class="pre">nix-build</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-the-file-hash">尋找檔案雜湊</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#build-result">建置結果</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-package-with-dependencies">A package with dependencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-source-from-github">Fetching source from GitHub</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-dependencies">Missing dependencies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#finding-packages">Finding packages</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#search-nixos-org"><code class="docutils literal notranslate"><span class="pre">search.nixos.org</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-code-search">Local code search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#local-derivation-search">Local derivation search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-package-sets-as-dependencies">Adding package sets as dependencies</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixing-build-failures">Fixing build failures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#installphase"><code class="docutils literal notranslate"><span class="pre">installPhase</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#phases-and-hooks">Phases and hooks</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-successful-build">A successful build</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

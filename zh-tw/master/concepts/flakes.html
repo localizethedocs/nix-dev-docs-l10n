@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Flakes &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=cbf116e0"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'concepts/flakes';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/concepts/flakes.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜尋" href="../search.html" />
+    <link rel="next" title="常見問題集" href="faq.html" />
+    <link rel="prev" title="概念" href="index.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/concepts/flakes.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Flakes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-flakes">What are flakes?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-i-use-flakes-in-my-project">我應該在我的專案中使用 flake 嗎？</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discoverability">Discoverability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-commands">Running commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-management">Dependency management</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flake-only-nix">Flake-only Nix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#history">History</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">延伸閱讀</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="flakes">
+<span id="flakes-definition"></span><h1>Flakes<a class="headerlink" href="#flakes" title="連結到這個標頭">#</a></h1>
+<section id="what-are-flakes">
+<h2>What are flakes?<a class="headerlink" href="#what-are-flakes" title="連結到這個標頭">#</a></h2>
+<p>Flakes offer an entrypoint file <code class="docutils literal notranslate"><span class="pre">flake.nix</span></code> aimed at sharing Nix code.
+They make it easy to build programs with the same version.</p>
+<p><code class="docutils literal notranslate"><span class="pre">flake.nix</span></code> is a file that declares inputs and outputs with a <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake.html#flake-format">standard structure</a>.</p>
+<blockquote>
+<div><p>Note: <a class="reference external" href="https://nix.dev/manual/nix/stable/development/experimental-features#xp-feature-flakes">Experimental</a>, requires <a class="reference external" href="https://nix.dev/manual/nix/stable/release-notes/rl-2.4.html#highlights">Nix 2.4</a>.</p>
+</div></blockquote>
+<p>This file can look like:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span>  <span class="ss">description</span> <span class="o">=</span> <span class="s2">&quot;My example flake&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>
+<span class="linenos"> 4</span>  <span class="ss">inputs</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 5</span>    nixpkgs<span class="o">.</span><span class="ss">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs?ref=nixos-unstable&quot;</span><span class="p">;</span>
+<span class="linenos"> 6</span>  <span class="p">};</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span>  <span class="ss">outputs</span> <span class="o">=</span> <span class="p">{</span> self<span class="p">,</span> nixpkgs <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos"> 9</span>    packages<span class="o">.</span><span class="ss">x86_64-linux</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">10</span>      <span class="ss">default</span> <span class="o">=</span> self<span class="o">.</span>packages<span class="o">.</span>x86_64-linux<span class="o">.</span>hello<span class="p">;</span>
+<span class="linenos">11</span>      <span class="ss">hello</span> <span class="o">=</span> nixpkgs<span class="o">.</span>legacyPackages<span class="o">.</span>x86_64-linux<span class="o">.</span>hello<span class="p">;</span>
+<span class="linenos">12</span>    <span class="p">};</span>
+<span class="linenos">13</span>  <span class="p">};</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+<p><a class="reference external" href="https://wiki.nixos.org/wiki/Flakes#Output_schema"><code class="docutils literal notranslate"><span class="pre">outputs</span></code></a> include various <a class="reference external" href="https://github.com/NixOS/nix/blob/38c755f168b7c38cd4687aacf5d7e59f049658d3/src/nix/flake.cc#L594-L769">built-in types</a>, but can be <a class="reference external" href="https://github.com/NixOS/nix/blob/38c755f168b7c38cd4687aacf5d7e59f049658d3/src/nix/flake.cc#L772-L776">extended</a>.
+You can find an overview of these on the <a class="reference external" href="https://wiki.nixos.org/wiki/Flakes#Output_schema">wiki</a>.</p>
+<p><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake.html#flake-inputs"><code class="docutils literal notranslate"><span class="pre">inputs</span></code></a> let you declare dependencies.</p>
+<p>Nix creates a <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake.html#lock-files"><code class="docutils literal notranslate"><span class="pre">flake.lock</span></code></a> to pin dependencies once you run a <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix.html"><code class="docutils literal notranslate"><span class="pre">nix</span></code> command</a>.</p>
+<p>If these dependencies have <code class="docutils literal notranslate"><span class="pre">inputs</span></code> of their own, Nix will check <em>their</em> lock files to find the versions to use.
+Using the same versions helps make sure programs work as intended, but you can override these.</p>
+<p><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix.html"><code class="docutils literal notranslate"><span class="pre">nix</span></code> command</a>s natively integrate with flakes by default.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>build<span class="w"> </span>github:NixOS/nixpkgs#hello
+</pre></div>
+</div>
+<p>You may pass <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-flake#flake-references">references</a> to local (e.g. <code class="docutils literal notranslate"><span class="pre">.</span></code>) or remote (e.g. <code class="docutils literal notranslate"><span class="pre">github:NixOS/nixpkgs</span></code>) project directories.
+For further details see the reference on <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix.html"><code class="docutils literal notranslate"><span class="pre">nix</span></code> command</a>s.</p>
+<p>Aliases to flakes are stored in a <a class="reference external" href="https://github.com/NixOS/flake-registry">registry</a>.
+This can be extended by <a class="reference external" href="https://nix.dev/manual/nix/2.28/command-ref/new-cli/nix3-registry.html">command-line</a> or by <a class="reference internal" href="../reference/glossary.html#term-NixOS"><span class="xref std std-term">NixOS</span></a> option <a class="reference external" href="https://search.nixos.org/options?channel=unstable&amp;amp;show=nix.registry&amp;amp;query=registry"><code class="docutils literal notranslate"><span class="pre">nix.registry</span></code></a>.</p>
+<p>The NixOS manual further explains <a class="reference external" href="https://nixos.org/manual/nixos/stable/#sec-installation-manual-installing">flake-based installs</a>.</p>
+</section>
+<section id="should-i-use-flakes-in-my-project">
+<h2>我應該在我的專案中使用 flake 嗎？<a class="headerlink" href="#should-i-use-flakes-in-my-project" title="連結到這個標頭">#</a></h2>
+<p>Flakes are an experimental extension format with outstanding issues.
+Its functionality can generally be achieved without them as well.</p>
+<p>If you need to run existing software that already used flakes, or want to contribute to their development, feel free to use them.
+If you want to write Nix code yourself, consider also our guide on <a class="reference external" href="https://nix.dev/guides/recipes/dependency-management.html">dependency management</a>.<a class="footnote-reference brackets" href="#flake-inputs" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+This overview can help get what you need from flakes while preserving compatibility.</p>
+<section id="discoverability">
+<h3>Discoverability<a class="headerlink" href="#discoverability" title="連結到這個標頭">#</a></h3>
+<p>A first step in use of flakes is to add a <code class="docutils literal notranslate"><span class="pre">flake.nix</span></code> file specifying <code class="docutils literal notranslate"><span class="pre">outputs</span></code>.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Use the code from other flake projects.</p></li>
+<li><p>Nix checks <code class="docutils literal notranslate"><span class="pre">flake.nix</span></code>'s structure is valid.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Flakes have no <a class="reference external" href="https://github.com/NixOS/nix/issues/2861">parameters</a>.
+This means <code class="docutils literal notranslate"><span class="pre">flake.nix</span></code> and its end-user must be explicit about the used <a class="reference external" href="https://github.com/NixOS/nix/issues/3843"><code class="docutils literal notranslate"><span class="pre">system</span></code></a>.
+This is made easier by say <a class="reference external" href="https://github.com/numtide/flake-utils"><code class="docutils literal notranslate"><span class="pre">flake-utils</span></code></a>.</p></li>
+<li><p>As an experimental feature, flakes can still change.</p></li>
+</ul>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>Use flakes as thin wrappers over existing Nix code.
+This way, code can be used in both ways.</p></li>
+<li><p>Use Nix modules: flake users can import these with <code class="docutils literal notranslate"><span class="pre">flake</span> <span class="pre">=</span> <span class="pre">false;</span></code>.</p></li>
+<li><p>Since NixOS 26.05, one or more NixOS configurations can be loaded from a single <a class="reference external" href="https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-26.05-highlights"><code class="docutils literal notranslate"><span class="pre">system.nix</span></code> entrypoint</a>.</p></li>
+</ul>
+</section>
+<section id="running-commands">
+<h3>Running commands<a class="headerlink" href="#running-commands" title="連結到這個標頭">#</a></h3>
+<p>Flakes are used from Nix's <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix.html">v3 <code class="docutils literal notranslate"><span class="pre">nix</span></code> command line interface</a>.
+It can build or run programs by a reference like <code class="docutils literal notranslate"><span class="pre">.</span></code> or <code class="docutils literal notranslate"><span class="pre">github:NixOS/nixpkgs</span></code>.</p>
+<p>You can enable this for one command by adding:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">--</span><span class="n">experimental</span><span class="o">-</span><span class="n">features</span> <span class="s1">&#39;nix-command flakes&#39;</span>
+</pre></div>
+</div>
+<p>Or permanently in NixOS or Home Manager configurations using:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nix</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">experimental</span><span class="o">-</span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;nix-command&quot;</span> <span class="s2">&quot;flakes&quot;</span> <span class="p">];</span>
+</pre></div>
+</div>
+<p>To build the derivation in your <code class="docutils literal notranslate"><span class="pre">flake.nix</span></code>'s <code class="docutils literal notranslate"><span class="pre">packages.x86_64-linux.default</span></code>, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>build<span class="w"> </span>.#packages.x86_64-linux.default
+</pre></div>
+</div>
+<p>You can shorten this to <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">build</span> <span class="pre">.#default</span></code>, or just <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">build</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span></code> runs programs in <code class="docutils literal notranslate"><span class="pre">outputs.apps</span></code>.
+<code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span> <span class="pre">.#default</span></code> runs <code class="docutils literal notranslate"><span class="pre">outputs.apps.default</span></code>.
+Just <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span></code> also runs that.</p>
+<p>For example, to run the <code class="docutils literal notranslate"><span class="pre">hello</span></code> package from <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>run<span class="w"> </span>nixpkgs#hello<span class="w"> </span>--<span class="w"> </span>--greeting<span class="w"> </span><span class="s2">&quot;hello from flakes&quot;</span>
+</pre></div>
+</div>
+<p>This uses the version set by your registry's alias <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code>.</p>
+<p>To run the <code class="docutils literal notranslate"><span class="pre">hello</span></code> package from <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a>' <code class="docutils literal notranslate"><span class="pre">nixpkgs-unstable</span></code> branch:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nix<span class="w"> </span>run<span class="w"> </span>github:NixOS/nixpkgs/nixpkgs-unstable#hello
+</pre></div>
+</div>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Flakes cache builds to save time on later identical builds.
+This can save time if you run unchanged builds in Continuous Integration, for example.</p></li>
+<li><p>Flakes promote making programs easy to run, also from remote repositories.</p></li>
+<li><p>Flakes default to running in <a class="reference external" href="https://nix.dev/manual/nix/stable/tutorials/nix-language.html#impurities">pure mode</a>.
+This promotes a style of writing programs more likely to make them reproducible<a class="footnote-reference brackets" href="#reproducible" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p></li>
+<li><p>Flakes build only tracked files, for projects using <a class="reference external" href="https://git-scm.com/">Git</a>.
+This helps prevent rebuilds.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Builds copy the whole flake directory to the Nix store.
+This caches them, but can be <a class="reference external" href="https://github.com/NixOS/nix/issues/3121">slower</a> for large repositories like <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a>.</p></li>
+<li><p>The implementation still has issues for both <a class="reference external" href="https://github.com/NixOS/nix/issues?q=is%3Aissue+is%3Aopen+label%3Aflakes+sort%3Areactions-%2B1-desc">flakes</a> and the <a class="reference external" href="https://github.com/NixOS/nix/issues?q=is%3Aissue+is%3Aopen+label%3Anew-cli+sort%3Areactions-%2B1-desc">v3 CLI</a>.</p></li>
+<li><p>Files must be staged for flakes to see them.</p></li>
+</ul>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>Plain Nix files can be used with the [v2 commands] (like <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-build.html"><code class="docutils literal notranslate"><span class="pre">nix-build</span></code></a>, <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-shell.html"><code class="docutils literal notranslate"><span class="pre">nix-shell</span></code></a>), or with v3 commands' <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-build.html#options-that-change-the-interpretation-of-installables"><code class="docutils literal notranslate"><span class="pre">--file</span></code> flag</a> or <code class="docutils literal notranslate"><span class="pre">-f</span></code>.</p></li>
+<li><p>In <a class="reference internal" href="../reference/glossary.html#term-NixOS"><span class="xref std std-term">NixOS</span></a>, you can make v3 commands' <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code> to a package set <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> by setting <a class="reference external" href="https://search.nixos.org/options?channel=unstable&amp;amp;show=nixpkgs.flake.source&amp;amp;query=nixpkgs.flake.source"><code class="docutils literal notranslate"><span class="pre">nixpkgs.flake.source</span> <span class="pre">=</span> <span class="pre">pkgs.path;</span></code></a> in your NixOS configuration.
+Also see <a class="reference external" href="https://nix.dev/guides/recipes/dependency-management#managing-nixos-configurations">managing dependencies</a>.</p></li>
+<li><p>Using <a class="reference external" href="https://noogle.dev/f/builtins/fetchTree"><code class="docutils literal notranslate"><span class="pre">builtins.fetchTree</span></code></a> from experimental feature <a class="reference external" href="https://nix.dev/manual/nix/stable/development/experimental-features#xp-feature-fetch-tree"><code class="docutils literal notranslate"><span class="pre">fetch-tree</span></code></a>, <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/new-cli/nix3-run.html"><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span></code></a> may be emulated<a class="footnote-reference brackets" href="#emulated" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> for non-flake entrypoints.</p></li>
+</ul>
+</section>
+<section id="dependency-management">
+<h3>Dependency management<a class="headerlink" href="#dependency-management" title="連結到這個標頭">#</a></h3>
+<p>Flakes' <code class="docutils literal notranslate"><span class="pre">inputs</span></code> attribute can manage dependencies.
+By default this handles recursive dependencies implicitly.
+In case a library is used multiple times, this can give different versions of the same library.
+You can override these if you want using <code class="docutils literal notranslate"><span class="pre">follows</span></code> statements:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">nixpkgs</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;github:nixos/nixpkgs?ref=nixos-unstable&quot;</span><span class="p">;</span>
+    <span class="n">home</span><span class="o">-</span><span class="n">manager</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;github:nix-community/home-manager&quot;</span><span class="p">;</span>
+      <span class="n">inputs</span><span class="o">.</span><span class="n">nixpkgs</span><span class="o">.</span><span class="n">follows</span> <span class="o">=</span> <span class="s2">&quot;nixpkgs&quot;</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>This way, Home Manager's inputs reuse your chosen <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code>.</p>
+<p>If you don't want to load a dependency, you can also disable it.
+In the above example, that could look like <code class="docutils literal notranslate"><span class="pre">inputs.home-manager.inputs.nixpkgs</span> <span class="pre">=</span> <span class="pre">null;</span></code>.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Make it easy to reproduce published software, following the versions they used.</p></li>
+<li><p>You can override recursive inputs.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Flakes by default follow versions from dependencies' <code class="docutils literal notranslate"><span class="pre">flake.lock</span></code>, so if you don't override these with <code class="docutils literal notranslate"><span class="pre">follows</span></code>, you may get:</p>
+<ul>
+<li><p>multiple versions of the same dependency.</p></li>
+<li><p>outdated dependencies, if their versions are not actively updated.</p></li>
+</ul>
+</li>
+<li><p>Dependencies are fetched eagerly, loading dependencies you may not use.</p></li>
+<li><p>Dependencies managed by flake inputs are hard to override if you don't also use flakes.</p></li>
+<li><p>If your flake is used as a library, you need to add <code class="docutils literal notranslate"><span class="pre">follows</span></code> statements for all recursive inputs.
+Otherwise downstream consumers cannot add their <code class="docutils literal notranslate"><span class="pre">follows</span></code> on your indirect inputs.</p></li>
+</ul>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>Handle dependencies with <a class="reference external" href="https://nix.dev/guides/recipes/dependency-management.html"><code class="docutils literal notranslate"><span class="pre">npins</span></code></a>.</p></li>
+<li><p>Handle dependencies inline using functions such as the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers">fetchers</a> or <a class="reference external" href="https://noogle.dev/f/builtins/fetchTree"><code class="docutils literal notranslate"><span class="pre">builtins.fetchTree</span></code></a>.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">inputs.&lt;name&gt;.flake</span> <span class="pre">=</span> <span class="pre">false;</span></code></p></li>
+</ul>
+</section>
+<section id="flake-only-nix">
+<h3>Flake-only Nix<a class="headerlink" href="#flake-only-nix" title="連結到這個標頭">#</a></h3>
+<p>As flakes (largely<a class="footnote-reference brackets" href="#subset" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>) use Nix as an internal language, you could even place all Nix code in flake files.
+In the community, such a coding style is called dendritic pattern.
+Using flakes, this pattern gets easier with library <a class="reference external" href="https://github.com/hercules-ci/flake-parts"><code class="docutils literal notranslate"><span class="pre">flake-parts</span></code></a>,
+which lets you spread code over different flake-like files.</p>
+<p>Pros:</p>
+<ul class="simple">
+<li><p>Helps use flakes' schema and inputs from any such Nix code.</p></li>
+</ul>
+<p>Cons:</p>
+<ul class="simple">
+<li><p>Makes it harder to access this code without using flakes.</p></li>
+</ul>
+<p>Alternatives:</p>
+<ul class="simple">
+<li><p>Use flakes as thin wrappers over existing Nix code, so code can be used in both ways.</p></li>
+<li><p>Use library <a class="reference external" href="https://github.com/NixOS/flake-compat"><code class="docutils literal notranslate"><span class="pre">flake-compat</span></code></a> to expose a flake's default package or shell to non-flake users.</p></li>
+<li><p>Propagate needed parameters across modules explicitly or with NixOS's <a class="reference external" href="https://nixos.org/manual/nixos/unstable/options#opt-_module.args"><code class="docutils literal notranslate"><span class="pre">specialArgs</span></code></a>.</p></li>
+</ul>
+</section>
+<section id="history">
+<h3>History<a class="headerlink" href="#history" title="連結到這個標頭">#</a></h3>
+<ul class="simple">
+<li><p>Conception</p>
+<ul>
+<li><p>Flakes were proposed in <a class="reference external" href="https://github.com/NixOS/rfcs/pull/49">RFC 49</a>, and introduced in a <a class="reference external" href="https://tweag.io/blog/2020-05-25-flakes/">blog post</a>.</p></li>
+</ul>
+</li>
+<li><p>Design</p>
+<ul>
+<li><p>The flakes proposal was criticised for trying to solve too many problems at once and at the wrong abstraction layer.</p></li>
+<li><p>The design still has <a class="reference external" href="https://wiki.lix.systems/books/lix-contributors/page/flakes-feature-freeze#bkmrk-design-issues-of-fla">various problems</a> including around versioning, composability, cross-compilation, and tight coupling with nixpkgs.</p></li>
+<li><p>There are also still many <a class="reference external" href="https://github.com/NixOS/nix/issues?q=is%3Aissue+is%3Aopen+label%3Anew-cli+sort%3Areactions-%2B1-desc">open design questions</a> around the <code class="docutils literal notranslate"><span class="pre">nix</span></code> CLI.</p></li>
+</ul>
+</li>
+<li><p>Implementation</p>
+<ul>
+<li><p>There are still <a class="reference external" href="https://github.com/NixOS/nix/issues?q=is%3Aissue+is%3Aopen+label%3Aflakes+sort%3Areactions-%2B1-desc">problems with the implementation</a>.</p></li>
+</ul>
+</li>
+<li><p>Process</p>
+<ul>
+<li><p>While there were still outstanding concerns about the design,
+the implementation was merged without the RFC having been accepted (and in fact being withdrawn on merge),
+raising questions about proper process.</p></li>
+<li><p>The RFC was closed with no timeline to conclude the experiment.</p></li>
+<li><p>Flakes had become depended on by many projects, making it harder to iterate on their design without breaking many people's code.</p></li>
+</ul>
+</li>
+<li><p>Community</p>
+<ul>
+<li><p>The design had not been accepted by all parts of the community, with e.g. <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a> not using it in its internal tooling.
+As a result of this, branching approaches to flakes have been made,
+with e.g. company Determinate Systems (which offers proprietary features around flakes) unilaterally declaring the feature stable,
+while community-driven Nix fork Lix <a class="reference external" href="https://wiki.lix.systems/books/lix-contributors/page/flake-stabilisation-proposal">consolidated the featureset</a> to a de-facto 'v1'.
+Such branching could potentially end up breaking the promise of a unified interface that propelled the flakes experiment in the first place.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="further-reading">
+<h2>延伸閱讀<a class="headerlink" href="#further-reading" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://wiki.nixos.org/wiki/Flakes">wiki article</a></p></li>
+<li><p><a class="reference external" href="https://jade.fyi/blog/flakes-arent-real/">Flakes aren't real and cannot hurt you: a guide to using Nix flakes the non-flake way</a> (Jade Lovelace, January 2024)</p></li>
+<li><p><a class="reference external" href="https://samuel.dionne-riel.com/blog/2023/09/06/flakes-is-an-experiment-that-did-too-much-at-once.html">Nix Flakes is an experiment that did too much at once...</a> (<a class="reference external" href="https://discourse.nixos.org/t/nix-flakes-is-an-experiment-that-did-too-much-at-once/32707">comments</a>) (Samuel Dionne-Riel, September 2023)</p></li>
+<li><p><a class="reference external" href="https://determinate.systems/posts/experimental-does-not-mean-unstable">Experimental does not mean unstable</a> (<a class="reference external" href="https://discourse.nixos.org/t/experimental-does-not-mean-unstable-detsyss-perspective-on-nix-flakes/32703">comments</a>) (Graham Christensen, September 2023)</p></li>
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=atmoYyBAhF4">The Nix Hour: comparing flakes to traditional Nix</a> (Silvan Mosberger, November 2022)</p></li>
+</ul>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="flake-inputs" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Nix repositories offering only flake entrypoints may be imported using <a class="reference external" href="https://github.com/fricklerhandwerk/flake-inputs"><code class="docutils literal notranslate"><span class="pre">flake-inputs</span></code></a>.</p>
+</aside>
+<aside class="footnote brackets" id="reproducible" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Even in pure mode, reproducibility is <a class="reference external" href="https://discourse.nixos.org/t/nix-flakes-explained-what-they-solve-why-they-matter-and-the-future/72302/7">not actually guaranteed</a>.</p>
+</aside>
+<aside class="footnote brackets" id="emulated" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p><code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span> <span class="pre">github:NixOS/nixpkgs#hello</span></code> for non-flake projects may look like <code class="docutils literal notranslate"><span class="pre">nix-shell</span> <span class="pre">-p</span> <span class="pre">'(import</span> <span class="pre">(builtins.fetchTree</span> <span class="pre">&quot;github:NixOS/nixpkgs&quot;).outPath</span> <span class="pre">{</span> <span class="pre">}).hello'</span> <span class="pre">--run</span> <span class="pre">'hello'</span></code>.
+A drop-in command <code class="docutils literal notranslate"><span class="pre">nix-run</span></code> using the <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">run</span></code> syntax could be defined using a Bash alias like <code class="docutils literal notranslate"><span class="pre">alias</span> <span class="pre">nix-run='run()</span> <span class="pre">{</span> <span class="pre">$(nix-instantiate</span> <span class="pre">--raw</span> <span class="pre">--impure</span> <span class="pre">--eval</span> <span class="pre">--expr</span> <span class="pre">&quot;(import</span> <span class="pre">&lt;nixpkgs&gt;</span> <span class="pre">{}).lib.getExe</span> <span class="pre">(import</span> <span class="pre">(builtins.fetchTree</span> <span class="pre">\&quot;$(cut</span> <span class="pre">-d</span> <span class="pre">&quot;#&quot;</span> <span class="pre">-f</span> <span class="pre">1</span> <span class="pre">&lt;&lt;&lt;</span> <span class="pre">&quot;$1&quot;)\&quot;).outPath</span> <span class="pre">{</span> <span class="pre">}).$(cut</span> <span class="pre">-d</span> <span class="pre">&quot;#&quot;</span> <span class="pre">-f</span> <span class="pre">2</span> <span class="pre">&lt;&lt;&lt;</span> <span class="pre">&quot;$1&quot;)&quot;);</span> <span class="pre">};</span> <span class="pre">run'</span></code>.</p>
+</aside>
+<aside class="footnote brackets" id="subset" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>Flakes default to pure mode, isolating builds from the host environment.
+This is also called hermetic evaluation, and prevents evaluating (non-network) [impure] functions.
+Flake <code class="docutils literal notranslate"><span class="pre">inputs</span></code> and metadata fields cannot be arbitrary Nix expressions.
+This is to prevent complex, possibly non-terminating computations.
+The <code class="docutils literal notranslate"><span class="pre">outputs</span></code> field's function parameter must be specified: it does not support <a class="reference external" href="https://wiki.haskell.org/Eta_conversion">eta-reduction</a>.</p>
+</aside>
+</aside>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">概念</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="faq.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">常見問題集</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-flakes">What are flakes?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-i-use-flakes-in-my-project">我應該在我的專案中使用 flake 嗎？</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discoverability">Discoverability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#running-commands">Running commands</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-management">Dependency management</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flake-only-nix">Flake-only Nix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#history">History</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">延伸閱讀</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

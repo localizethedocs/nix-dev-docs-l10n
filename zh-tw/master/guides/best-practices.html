@@ -1,0 +1,757 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>最佳實踐 &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=cbf116e0"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guides/best-practices';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/guides/best-practices.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜尋" href="../search.html" />
+    <link rel="next" title="疑難排解" href="troubleshooting.html" />
+    <link rel="prev" title="Continuous integration with GitHub Actions" href="recipes/continuous-integration-github-actions.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tutorials/nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tutorials/nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/guides/best-practices.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>最佳實踐</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#urls">URLs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-attribute-set-rec">Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#with-scopes"><code class="docutils literal notranslate"><span class="pre">with</span></code> scopes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-paths"><code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code> lookup paths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-nixpkgs-configuration">可重現的 Nixpkgs 組態</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-nested-attribute-sets">Updating nested attribute sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-source-paths">可重現的來源路徑</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="best-practices">
+<h1>最佳實踐<a class="headerlink" href="#best-practices" title="連結到這個標頭">#</a></h1>
+<section id="urls">
+<h2>URLs<a class="headerlink" href="#urls" title="連結到這個標頭">#</a></h2>
+<p>The Nix language syntax supports bare URLs, so one could write <code class="docutils literal notranslate"><span class="pre">https://example.com</span></code> instead of <code class="docutils literal notranslate"><span class="pre">&quot;https://example.com&quot;</span></code></p>
+<p><a class="reference external" href="https://github.com/NixOS/rfcs/pull/45">RFC 45</a> was accepted to deprecate unquoted URLs and provides
+a number of arguments for how this feature does more harm than good.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Always quote URLs.</p>
+</div>
+</section>
+<section id="recursive-attribute-set-rec">
+<span id="rec-expression"></span><h2>Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code><a class="headerlink" href="#recursive-attribute-set-rec" title="連結到這個標頭">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">rec</span></code> allows you to reference names within the same attribute set.</p>
+<p>範例：</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">rec</span> <span class="p">{</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>A common pitfall is to introduce a hard-to-debug error <code class="docutils literal notranslate"><span class="pre">infinite</span> <span class="pre">recursion</span></code> when shadowing a name.
+The simplest example for this is:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="k">in</span> <span class="k">rec</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> a<span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Avoid <code class="docutils literal notranslate"><span class="pre">rec</span></code>. Use <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">...</span> <span class="pre">in</span></code>.</p>
+<p>範例：</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">in</span> <span class="p">{</span>
+  <span class="ss">a</span> <span class="o">=</span> a<span class="p">;</span>
+  <span class="ss">b</span> <span class="o">=</span> a <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Self-reference can be achieved by explicitly naming the attribute set:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">argset</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="ss">b</span> <span class="o">=</span> argset<span class="o">.</span>a <span class="o">+</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="k">in</span>
+  argset
+</pre></div>
+</div>
+</div>
+</section>
+<section id="with-scopes">
+<h2><code class="docutils literal notranslate"><span class="pre">with</span></code> scopes<a class="headerlink" href="#with-scopes" title="連結到這個標頭">#</a></h2>
+<p>It's still common to see the following expression in the wild:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="p">(</span><span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{});</span>
+
+<span class="c1"># ... lots of code</span>
+</pre></div>
+</div>
+<p>This brings all attributes of the imported expression into scope of the current expression.</p>
+<p>This approach has problems:</p>
+<ul class="simple">
+<li><p>Static analysis can't reason about the code, because it would have to actually evaluate this file to see which names are in scope.</p></li>
+<li><p>When more than one <code class="docutils literal notranslate"><span class="pre">with</span></code> is used, it's not clear anymore where the names are coming from.</p></li>
+<li><p>Scoping rules for <code class="docutils literal notranslate"><span class="pre">with</span></code> are not intuitive, see this <a class="reference external" href="https://github.com/NixOS/nix/issues/490">Nix issue for details</a>.</p></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Do not use <code class="docutils literal notranslate"><span class="pre">with</span></code> at the top of a Nix file.
+Explicitly assign names in a <code class="docutils literal notranslate"><span class="pre">let</span></code> expression.</p>
+<p>範例：</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span>
+  <span class="k">inherit</span> <span class="p">(</span>pkgs<span class="p">)</span> curl jq<span class="p">;</span>
+<span class="k">in</span>
+
+<span class="c1"># ...</span>
+</pre></div>
+</div>
+</div>
+<p>Smaller scopes are usually less problematic, but can still lead to surprises due to scoping rules.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>If you want to avoid <code class="docutils literal notranslate"><span class="pre">with</span></code> altogether, try replacing expressions of this form</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="ss">buildInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span> curl jq <span class="p">];</span>
+</pre></div>
+</div>
+<p>with the following:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="ss">buildInputs</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>attrValues <span class="p">{</span>
+  <span class="k">inherit</span> <span class="p">(</span>pkgs<span class="p">)</span> curl jq<span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="lookup-paths">
+<span id="search-path"></span><h2><code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code> lookup paths<a class="headerlink" href="#lookup-paths" title="連結到這個標頭">#</a></h2>
+<p>You will often encounter Nix language code samples that refer to <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code> is special syntax that was <a class="reference external" href="https://github.com/NixOS/nix/commit/1ecc97b6bdb27e56d832ca48cdafd3dbb5185a04">introduced in 2011</a> to conveniently access values from the environment variable <a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/env-common.html#env-NIX_PATH"><code class="docutils literal notranslate"><span class="pre">$NIX_PATH</span></code></a>.</p>
+<p>This means the value of a lookup path depends on external system state.
+When using lookup paths, the same Nix expression can produce different results.</p>
+<p>In most cases, <code class="docutils literal notranslate"><span class="pre">$NIX_PATH</span></code> is set to the latest channel when Nix is installed, and is therefore likely to differ from machine to machine.</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-channel.html">Channels</a> are a mechanism for referencing remote Nix expressions and retrieving their latest version.</p>
+</div>
+<p>The state of a subscribed channel is external to the Nix expressions relying on it.
+It is not easily portable across machines.
+This may limit reproducibility.</p>
+<p>For example, two developers on different machines are likely to have <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code> point to different revisions of the <a class="reference internal" href="../reference/glossary.html#term-Nixpkgs"><span class="xref std std-term">Nixpkgs</span></a> repository.
+Builds may work for one and fail for the other, causing confusion.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Declare dependencies explicitly using the techniques shown in <a class="reference internal" href="../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html#pinning-nixpkgs"><span class="std std-ref">Towards reproducibility: pinning Nixpkgs</span></a>.</p>
+<p>Do not use lookup paths, except in minimal examples.</p>
+</div>
+<p>Some tools expect the lookup path to be set. In that case:</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">$NIX_PATH</span></code> to a known value in a central location under version control.</p>
+<div class="admonition-nixos admonition">
+<p class="admonition-title">NixOS</p>
+<p>On NixOS, <code class="docutils literal notranslate"><span class="pre">$NIX_PATH</span></code> can be set permanently with the <a class="reference external" href="https://search.nixos.org/options?show=nix.nixPath"><code class="docutils literal notranslate"><span class="pre">nix.nixPath</span></code></a> option.</p>
+</div>
+</div>
+</section>
+<section id="reproducible-nixpkgs-configuration">
+<span id="nixpkgs-config"></span><h2>可重現的 Nixpkgs 組態<a class="headerlink" href="#reproducible-nixpkgs-configuration" title="連結到這個標頭">#</a></h2>
+<p>To quickly obtain packages for demonstration, we use the following concise pattern:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>However, even when <code class="docutils literal notranslate"><span class="pre">&lt;nixpkgs&gt;</span></code> is replaced as shown in <a class="reference internal" href="../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html#pinning-nixpkgs"><span class="std std-ref">Towards reproducibility: pinning Nixpkgs</span></a>, the result may still not be fully reproducible.
+This is because for historical reasons the <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/default.nix">Nixpkgs top-level expression</a> by default impurely reads from the file system to obtain configuration parameters.
+Systems that have the appropriate files populated may end up with different results.</p>
+<p>It is a well-known problem that cannot be resolved without breaking existing setups.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Explicitly set <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-packageconfig"><code class="docutils literal notranslate"><span class="pre">config</span></code></a> and <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-overlays"><code class="docutils literal notranslate"><span class="pre">overlays</span></code></a> when importing Nixpkgs:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p>This is what we do in our tutorials to ensure that the examples will behave exactly as expected.
+We skip it in minimal examples to reduce distractions.</p>
+</section>
+<section id="updating-nested-attribute-sets">
+<h2>Updating nested attribute sets<a class="headerlink" href="#updating-nested-attribute-sets" title="連結到這個標頭">#</a></h2>
+<p>The <a class="reference external" href="https://nix.dev/manual/nix/stable/language/operators.html#update">attribute set update operator</a> merges two attribute sets.</p>
+<p>範例：</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span> <span class="o">//</span> <span class="p">{</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>However, names on the right take precedence, and updates are shallow.</p>
+<p>範例：</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span> <span class="p">}</span> <span class="o">//</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>Here, key <code class="docutils literal notranslate"><span class="pre">b</span></code> was completely removed, because the whole <code class="docutils literal notranslate"><span class="pre">a</span></code> value was replaced.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Use the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#function-library-lib.attrsets.recursiveUpdate"><code class="docutils literal notranslate"><span class="pre">pkgs.lib.recursiveUpdate</span></code></a> Nixpkgs function:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span> <span class="k">in</span>
+pkgs<span class="o">.</span>lib<span class="o">.</span>recursiveUpdate <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">};</span> <span class="p">}</span> <span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;};</span> <span class="p">}</span>
+</pre></div>
+</div>
+<div class="value highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="ss">a</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="ss">c</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="p">};</span> <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="reproducible-source-paths">
+<h2>可重現的來源路徑<a class="headerlink" href="#reproducible-source-paths" title="連結到這個標頭">#</a></h2>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span> <span class="k">in</span>
+
+pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If the Nix file containing this expression is in <code class="docutils literal notranslate"><span class="pre">/home/myuser/myproject</span></code>, then the store path of <code class="docutils literal notranslate"><span class="pre">src</span></code> will be <code class="docutils literal notranslate"><span class="pre">/nix/store/&lt;hash&gt;-myproject</span></code>.</p>
+<p>The problem is that now your build is no longer reproducible, as it depends on the parent directory name.
+That cannot be declared in the source code, and results in an impurity.</p>
+<p>If someone builds the project in a directory with a different name, they will get a different store path for <code class="docutils literal notranslate"><span class="pre">src</span></code> and everything that depends on it.
+This can be the cause of needless rebuilds.</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>Use <a class="reference external" href="https://nix.dev/manual/nix/stable/language/builtins.html#builtins-path"><code class="docutils literal notranslate"><span class="pre">builtins.path</span></code></a> with the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute set to something fixed.</p>
+<p>This will derive the symbolic name of the store path from <code class="docutils literal notranslate"><span class="pre">name</span></code> instead of the working directory:</p>
+<div class="expression highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">&lt;nixpkgs&gt;</span> <span class="p">{};</span> <span class="k">in</span>
+
+pkgs<span class="o">.</span>stdenv<span class="o">.</span>mkDerivation <span class="p">{</span>
+  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span><span class="p">;</span>
+  <span class="ss">src</span> <span class="o">=</span> <span class="nb">builtins</span><span class="o">.</span>path <span class="p">{</span> <span class="ss">path</span> <span class="o">=</span> <span class="l">./.</span><span class="p">;</span> <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;myproject&quot;</span><span class="p">;</span> <span class="p">};</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="recipes/continuous-integration-github-actions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">Continuous integration with GitHub Actions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="troubleshooting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">疑難排解</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#urls">URLs</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recursive-attribute-set-rec">Recursive attribute set <code class="docutils literal notranslate"><span class="pre">rec</span> <span class="pre">{</span> <span class="pre">...</span> <span class="pre">}</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#with-scopes"><code class="docutils literal notranslate"><span class="pre">with</span></code> scopes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lookup-paths"><code class="docutils literal notranslate"><span class="pre">&lt;...&gt;</span></code> lookup paths</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-nixpkgs-configuration">可重現的 Nixpkgs 組態</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#updating-nested-attribute-sets">Updating nested attribute sets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reproducible-source-paths">可重現的來源路徑</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
