@@ -1,0 +1,2074 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/module-system/deep-dive.md:2
+msgid "Module system deep dive"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:4
+msgid "Or: *Wrapping the world in modules*"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:6
+msgid ""
+"In this tutorial you will follow an extensive demonstration of how to wrap "
+"an existing API with Nix modules."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:8
+msgid "Overview"
+msgstr "概覽"
+
+#: ../../../tutorials/module-system/deep-dive.md:10
+msgid ""
+"This tutorial follows [@infinisil](https://github.com/infinisil)'s "
+"[presentation on modules](https://infinisil.com/modules.mp4)  ([source]"
+"(https://github.com/tweag/summer-of-nix-modules)) for  participants of "
+"[Summer of Nix](https://github.com/ngi-nix/summer-of-nix) 2021."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:12
+msgid ""
+"It may help to play it alongside this tutorial to better keep track of "
+"changes to the code you will work on."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:14
+msgid "What will you learn?"
+msgstr "您將會學到什麼？"
+
+#: ../../../tutorials/module-system/deep-dive.md:16
+msgid ""
+"You'll write modules to interact with the [Google Maps API](https://"
+"developers.google.com/maps/documentation/maps-static), declaring module "
+"options which represent map geometry, location pins, and more."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:18
+msgid ""
+"During the tutorial, you will first write some *incorrect* configurations, "
+"creating opportunities to discuss the resulting error messages and how to "
+"resolve them, particularly when discussing type checking."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:20
+msgid "What do you need?"
+msgstr "您需要什麼？"
+
+#: ../../../tutorials/module-system/deep-dive.md:22
+msgid ""
+"You will use two helper scripts for this exercise. Download {download}`map."
+"sh <files/map.sh>` and {download}`geocode.sh <files/geocode.sh>` to your "
+"working directory."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:26
+msgid ""
+"To run the examples in this tutorial, you will need a [Google API key]"
+"(https://developers.google.com/maps/documentation/maps-static/start#before-"
+"you-begin) in `$XDG_DATA_HOME/google-api/key`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:30
+msgid "The empty module"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:32
+msgid "Write the following into a file called `default.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:34
+#: ../../../tutorials/module-system/deep-dive.md:46
+#: ../../../tutorials/module-system/deep-dive.md:57
+#: ../../../tutorials/module-system/deep-dive.md:125
+#: ../../../tutorials/module-system/deep-dive.md:161
+#: ../../../tutorials/module-system/deep-dive.md:194
+#: ../../../tutorials/module-system/deep-dive.md:264
+#: ../../../tutorials/module-system/deep-dive.md:306
+#: ../../../tutorials/module-system/deep-dive.md:329
+#: ../../../tutorials/module-system/deep-dive.md:359
+#: ../../../tutorials/module-system/deep-dive.md:377
+#: ../../../tutorials/module-system/deep-dive.md:399
+#: ../../../tutorials/module-system/deep-dive.md:417
+#: ../../../tutorials/module-system/deep-dive.md:437
+#: ../../../tutorials/module-system/deep-dive.md:451
+#: ../../../tutorials/module-system/deep-dive.md:467
+#: ../../../tutorials/module-system/deep-dive.md:501
+msgid "default.nix"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:34
+msgid ""
+"{ ... }:\n"
+"{\n"
+"\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:42
+msgid "Declaring options"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:44
+msgid ""
+"We will need some helper functions, which will come from the [Nixpkgs "
+"library](https://github.com/NixOS/nixpkgs/tree/master/lib), which is passed "
+"by the module system as `lib`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:46
+msgid ""
+"- { ... }:\n"
+"+ { lib, ... }:\n"
+"{\n"
+"\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:55
+msgid ""
+"Using [`lib.mkOption`](https://nixos.org/manual/nixpkgs/stable/#function-"
+"library-lib.options.mkOption), declare the `scripts.output` option to have "
+"the type `lines`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:57
+msgid ""
+" { lib, ... }: {\n"
+"\n"
+"+ options = {\n"
+"+   scripts.output = lib.mkOption {\n"
+"+     type = lib.types.lines;\n"
+"+   };\n"
+"+ };\n"
+"\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:70
+msgid ""
+"The `lines` type means that the only valid values are strings, and that "
+"multiple definitions should be joined with newlines."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:73
+msgid ""
+"The name and attribute path of the option is arbitrary. Here we use "
+"`scripts`, because we will add another script later, and call this one "
+"`output`, because it will output the resulting map."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:77
+msgid "Evaluating modules"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:79
+msgid ""
+"Write a new file `eval.nix` to call [`lib.evalModules`](https://nixos.org/"
+"manual/nixpkgs/unstable/#module-system-lib-evalModules) and evaluate the "
+"module in `default.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:81
+#: ../../../tutorials/module-system/deep-dive.md:178
+msgid "eval.nix"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:81
+msgid ""
+"let\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"nixos-23.11\";\n"
+"  pkgs = import nixpkgs { config = {}; overlays = []; };\n"
+"in\n"
+"pkgs.lib.evalModules {\n"
+"  modules = [\n"
+"    ./default.nix\n"
+"  ];\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:94
+msgid "Run the following command:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:97
+msgid "This will result in an error."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:100
+msgid "nix-instantiate --eval eval.nix -A config.scripts.output\n"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:0
+msgid "Detailed explanation"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:105
+msgid ""
+"[`nix-instantiate --eval`](https://nix.dev/manual/nix/stable/command-ref/nix-"
+"instantiate) parses and evaluates the Nix file at the specified path, and "
+"prints the result. `evalModules` produces an attribute set where the final "
+"configuration values appear in the `config` attribute. Therefore we evaluate "
+"the Nix expression in `eval.nix` at the [attribute path](https://nix.dev/"
+"manual/nix/stable/language/operators#attribute-selection) `config.scripts."
+"output`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:110
+msgid ""
+"The error message indicates that the `scripts.output` option is used but not "
+"defined: a value must be set for the option before accessing it. You will do "
+"this in the next steps."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:113
+msgid "Type checking"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:115
+msgid "As previously mentioned, the `lines` type only permits string values."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:118
+msgid ""
+"In this section, you will set an invalid value and encounter a type error."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:121
+msgid "What happens if you instead try to assign an integer to the option?"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:123
+msgid "Add the following lines to `default.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:125
+msgid ""
+" { lib, ... }: {\n"
+"\n"
+"  options = {\n"
+"    scripts.output = lib.mkOption {\n"
+"      type = lib.types.lines;\n"
+"    };\n"
+"  };\n"
+"\n"
+"+ config = {\n"
+"+   scripts.output = 42;\n"
+"+ };\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:141
+msgid ""
+"Now try to execute the previous command, and witness your first module error:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:143
+msgid ""
+"$ nix-instantiate --eval eval.nix -A config.scripts.output\n"
+"error:\n"
+"...\n"
+"       error: A definition for option `scripts.output' is not of type "
+"`strings concatenated with \"\\n\"'. Definition values:\n"
+"       - In `/home/nix-user/default.nix': 42\n"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:151
+msgid ""
+"The definition `scripts.output = 42;` caused a type error: integers are not "
+"strings concatenated with the newline character."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:153
+msgid ""
+"To make this module pass the type checks and successfully evaluate the "
+"`scripts.output` option, you will now assign a string to `scripts.output`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:155
+msgid ""
+"In this case, you will assign a shell command that runs the {download}`map "
+"<files/map.sh>` script in the current directory. That in turn calls the "
+"Google Maps Static API to generate a world map. The output is passed on to "
+"display it with [`feh`](https://feh.finalrewind.org/), a minimalistic image "
+"viewer."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:159
+msgid ""
+"Update `default.nix` by changing the value of `scripts.output` to the "
+"following string:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:161
+msgid ""
+"   config = {\n"
+"-    scripts.output = 42;\n"
+"+    scripts.output = ''\n"
+"+      ./map.sh size=640x640 scale=2 | feh -\n"
+"+    '';\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:171
+msgid "Interlude: reproducible scripts"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:173
+msgid ""
+"That simple command will likely not work as intended on your system, as it "
+"may lack the required dependencies (curl and feh). We can solve this by "
+"packaging the raw {download}`map <files/map.sh>` script with `pkgs."
+"writeShellApplication`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:176
+msgid ""
+"First, make available a `pkgs` argument in your module evaluation by adding "
+"a module that sets `config._module.args`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:178
+msgid ""
+" pkgs.lib.evalModules {\n"
+"   modules = [\n"
+"+    ({ config, ... }: { config._module.args = { inherit pkgs; }; })\n"
+"     ./default.nix\n"
+"   ];\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:189
+msgid ""
+"This mechanism is currently only [documented in the module system code]"
+"(https://github.com/NixOS/nixpkgs/blob/master/lib/modules.nix#L140-L182), "
+"and that documentation is incomplete and out of date."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:192
+msgid "Then change `default.nix` to have the following contents:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:194
+msgid ""
+"{ pkgs, lib, ... }: {\n"
+"\n"
+"  options = {\n"
+"    scripts.output = lib.mkOption {\n"
+"      type = lib.types.package;\n"
+"    };\n"
+"  };\n"
+"\n"
+"  config = {\n"
+"    scripts.output = pkgs.writeShellApplication {\n"
+"      name = \"map\";\n"
+"      runtimeInputs = with pkgs; [ curl feh ];\n"
+"      text = ''\n"
+"        ${./map.sh} size=640x640 scale=2 | feh -\n"
+"      '';\n"
+"    };\n"
+"  };\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:216
+msgid ""
+"This will access the previously added `pkgs` argument so we can use "
+"dependencies, and copy the `map` file in the current directory into the Nix "
+"store so it's available to the wrapped script, which will also live in the "
+"Nix store."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:218
+msgid "Run the script with:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:220
+msgid ""
+"nix-build eval.nix -A config.scripts.output\n"
+"./result/bin/map\n"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:225
+msgid ""
+"To iterate more quickly, open a new terminal and set up [`entr`](https://"
+"github.com/eradman/entr) to re-run the script whenever any source file in "
+"the current directory changes:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:227
+msgid ""
+"nix-shell -p entr findutils bash --run \\\n"
+"  \"ls *.nix | \\\n"
+"   entr -rs ' \\\n"
+"     nix-build eval.nix -A config.scripts.output --no-out-link \\\n"
+"     | xargs printf -- \\\"%s/bin/map\\\" \\\n"
+"     | xargs bash \\\n"
+"   ' \\\n"
+"  \"\n"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:238
+msgid "This command does the following:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:239
+msgid "List all `.nix` files"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:240
+msgid ""
+"Make `entr` watch them for changes. Terminate the invoked command on each "
+"change with `-r`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:241
+msgid "On each change:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:242
+msgid ""
+"Run the `nix-build` invocation as above, but without adding a `./result` "
+"symlink"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:243
+msgid "Take the resulting store path and append `/bin/map` to it"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:244
+msgid "Run the executable at the path constructed this way"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:246
+msgid "Declaring more options"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:248
+msgid ""
+"Rather than setting all script parameters directly, we will do that through "
+"the module system. This will not just add some safety through type checking, "
+"but also allow building abstractions to manage growing complexity and "
+"changing requirements."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:251
+msgid ""
+"Let's begin by introducing another option, `requestParams`, which will "
+"represent the parameters of the request made to the Google Maps API."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:253
+msgid ""
+"Its type will be `listOf <elementType>`, which is a list of elements of one "
+"type."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:255
+msgid ""
+"Instead of `lines`, in this case you will want the type of the list elements "
+"to be `str`, a generic string type."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:257
+msgid ""
+"The difference between `str` and `lines` is in their merging behavior: "
+"Module option types not only check for valid values, but also specify how "
+"multiple definitions of an option are to be combined into one."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:259
+msgid ""
+"For `lines`, multiple definitions get merged by concatenation with newlines."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:260
+msgid ""
+"For `str`, multiple definitions are not allowed. This is not a problem here, "
+"since one can't define a list element multiple times."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:262
+msgid "Make the following additions to your `default.nix` file:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:264
+msgid ""
+"     scripts.output = lib.mkOption {\n"
+"       type = lib.types.package;\n"
+"     };\n"
+"+\n"
+"+    requestParams = lib.mkOption {\n"
+"+      type = lib.types.listOf lib.types.str;\n"
+"+    };\n"
+"   };\n"
+"\n"
+"  config = {\n"
+"    scripts.output = pkgs.writeShellApplication {\n"
+"      name = \"map\";\n"
+"      runtimeInputs = with pkgs; [ curl feh ];\n"
+"      text = ''\n"
+"        ${./map.sh} size=640x640 scale=2 | feh -\n"
+"      '';\n"
+"    };\n"
+"+\n"
+"+    requestParams = [\n"
+"+      \"size=640x640\"\n"
+"+      \"scale=2\"\n"
+"+    ];\n"
+"   };\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:292
+msgid "Dependencies between options"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:294
+msgid ""
+"A given module generally declares one option that produces a result to be "
+"used elsewhere, in this case `scripts.output`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:296
+msgid ""
+"Options can depend on other options, making it possible to build more useful "
+"abstractions."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:298
+msgid ""
+"Here, we want the `scripts.output` option to use the values of "
+"`requestParams` as arguments to the `./map` script."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:300
+msgid "Accessing option values"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:302
+msgid ""
+"To make option values available to a module, the arguments of the function "
+"declaring the module must include the `config` attribute."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:304
+msgid "Update `default.nix` to add the `config` attribute:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:306
+msgid ""
+"-{ pkgs, lib, ... }: {\n"
+"+{ pkgs, lib, config, ... }: {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:312
+msgid ""
+"When a module that sets options is evaluated, the resulting values can be "
+"accessed by their corresponding attribute names under `config`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:315
+msgid "Option values can't be accessed directly from the same module."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:317
+msgid ""
+"The module system evaluates all modules it receives, and any of them can "
+"define a particular option's value. What happens when an option is set by "
+"multiple modules is determined by that option's type."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:322
+msgid ""
+"The `config` *argument* is **not** the same as the `config` *attribute*:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:323
+msgid ""
+"The `config` *argument* holds the result of the module system's lazy "
+"evaluation, which takes into account all modules passed to `evalModules` and "
+"their `imports`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:324
+msgid ""
+"The `config` *attribute* of a module exposes that particular module's option "
+"values to the module system for evaluation."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:327
+msgid "Now make the following changes to `default.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:329
+msgid ""
+"   config = {\n"
+"     scripts.output = pkgs.writeShellApplication {\n"
+"       name = \"map\";\n"
+"       runtimeInputs = with pkgs; [ curl feh ];\n"
+"       text = ''\n"
+"-        ${./map.sh} size=640x640 scale=2 | feh -\n"
+"+        ${./map.sh} ${lib.concatStringsSep \" \"\n"
+"+          config.requestParams} | feh -\n"
+"       '';"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:342
+msgid ""
+"Here, the value of the `config.requestParams` attribute is populated by the "
+"module system based on the definitions in the same file."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:345
+msgid ""
+"Lazy evaluation in the Nix language allows the module system to make a value "
+"available in the `config` argument passed to the module which defines that "
+"value."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:348
+msgid ""
+"`lib.concatStringsSep \" \"` is then used to join each list element from the "
+"value of `config.requestParams` into a single string, with the list elements "
+"of `requestParams` separated by a space character."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:350
+msgid ""
+"The result of this represents the list of command line arguments to pass to "
+"the `./map` script."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:352
+msgid "Conditional definitions"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:353
+msgid ""
+"Sometimes, you will want option values to be optional. This can be useful "
+"when defining a value for an option is not required, as in the following "
+"case."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:355
+msgid ""
+"You will define a new option, `map.zoom`, to control the zoom level of the "
+"map. The Google Maps API will infer a zoom level if no corresponding "
+"argument is passed, a situation you can represent with the `nullOr <type>`, "
+"which represents values of type `<type>` or `null`. This _does not_ "
+"automatically mean that when the option isn't defined, the value of such an "
+"option is `null` -- we still need to define a default value."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:357
+msgid ""
+"Add the `map` attribute set with the `zoom` option into the top-level "
+"`options` declaration, like so:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:359
+msgid ""
+"     requestParams = lib.mkOption {\n"
+"       type = lib.types.listOf lib.types.str;\n"
+"     };\n"
+"+\n"
+"+    map = {\n"
+"+      zoom = lib.mkOption {\n"
+"+        type = lib.types.nullOr lib.types.int;\n"
+"+        default = null;\n"
+"+      };\n"
+"+    };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:374
+msgid ""
+"To make use of this, use the `mkIf <condition> <definition>` function, which "
+"only adds the definition if the condition evaluates to `true`. Make the "
+"following additions to the `requestParams` list in the `config` block:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:377
+msgid ""
+"     requestParams = [\n"
+"       \"size=640x640\"\n"
+"       \"scale=2\"\n"
+"+      (lib.mkIf (config.map.zoom != null)\n"
+"+        \"zoom=${toString config.map.zoom}\")\n"
+"     ];\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:388
+msgid ""
+"This will only add a `zoom` parameter to the script invocation if the value "
+"of `config.map.zoom` is not `null`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:390
+msgid "Default values"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:392
+msgid ""
+"Let's say that in our application we want to have a different default "
+"behavior that sets the zoom level to `10`, such that automatic zooming has "
+"to be enabled explicitly."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:394
+msgid ""
+"This can be done with the `default` argument to [`mkOption`](https://github."
+"com/NixOS/nixpkgs/blob/master/lib/options.nix). Its value will be used if "
+"the value of the option declaring it is not specified otherwise."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:397
+msgid "Modify the corresponding line:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:399
+msgid ""
+"     map = {\n"
+"       zoom = lib.mkOption {\n"
+"         type = lib.types.nullOr lib.types.int;\n"
+"-        default = null;\n"
+"+        default = 10;\n"
+"       };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:411
+msgid "Wrapping shell commands"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:413
+msgid ""
+"You have now declared options controlling the map dimensions and zoom level, "
+"but have not provided a way to specify where the map should be centered."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:415
+msgid ""
+"Add the `center` option now, possibly with your own location as default "
+"value:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:417
+msgid ""
+"         type = lib.types.nullOr lib.types.int;\n"
+"         default = 10;\n"
+"       };\n"
+"+\n"
+"+      center = lib.mkOption {\n"
+"+        type = lib.types.nullOr lib.types.str;\n"
+"+        default = \"switzerland\";\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:431
+msgid ""
+"To implement this behavior, you will use the {download}`geocode <files/"
+"geocode.sh>` utility, which turns location names into coordinates. There are "
+"multiple ways of making a new package accessible, but as an exercise, you "
+"will add it as an option in the module system."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:434
+msgid "First, add a new option to accommodate the package:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:437
+msgid ""
+"   options = {\n"
+"     scripts.output = lib.mkOption {\n"
+"       type = lib.types.package;\n"
+"     };\n"
+"+\n"
+"+    scripts.geocode = lib.mkOption {\n"
+"+      type = lib.types.package;\n"
+"+    };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:449
+msgid ""
+"Then define the value for that option where you make the raw script "
+"reproducible by wrapping a call to it in `writeShellApplication`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:451
+msgid ""
+"   config = {\n"
+"+    scripts.geocode = pkgs.writeShellApplication {\n"
+"+      name = \"geocode\";\n"
+"+      runtimeInputs = with pkgs; [ curl jq ];\n"
+"+      text = ''exec ${./geocode.sh} \"$@\"'';\n"
+"+    };\n"
+"+\n"
+"     scripts.output = pkgs.writeShellApplication {\n"
+"       name = \"map\";\n"
+"       runtimeInputs = with pkgs; [ curl feh ];"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:465
+msgid ""
+"Add another `mkIf` call to the list of `requestParams` now where you access "
+"the wrapped package through `config.scripts.geocode`, and run the executable "
+"`/bin/geocode` inside:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:467
+msgid ""
+"       \"scale=2\"\n"
+"       (lib.mkIf (config.map.zoom != null)\n"
+"         \"zoom=${toString config.map.zoom}\")\n"
+"+      (lib.mkIf (config.map.center != null)\n"
+"+        \"center=\\\"$(${config.scripts.geocode}/bin/geocode ${\n"
+"+          lib.escapeShellArg config.map.center\n"
+"+        })\\\"\")\n"
+"     ];\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:480
+msgid ""
+"This time, you've used `escapeShellArg` to pass the `config.map.center` "
+"value as a command-line argument to `geocode`, string interpolating the "
+"result back into the `requestParams` string which sets the `center` value."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:482
+msgid ""
+"Wrapping shell command execution in Nix modules is a helpful technique for "
+"controlling system changes, as it uses the more ergonomic attributes and "
+"values interface rather than dealing with the peculiarities of escaping "
+"manually."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:484
+msgid "Splitting modules"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:486
+msgid ""
+"The [module schema](https://nixos.org/manual/nixos/stable/#sec-writing-"
+"modules) includes the `imports` attribute, which allows incorporating "
+"further modules, for example to split a large configuration into multiple "
+"files."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:488
+msgid ""
+"In particular, this allows you to separate option declarations from where "
+"they are used in your configuration."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:490
+msgid ""
+"Create a new module, `marker.nix`, where you can declare options for "
+"defining location pins and other markers on the map:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:492
+#: ../../../tutorials/module-system/deep-dive.md:525
+#: ../../../tutorials/module-system/deep-dive.md:555
+#: ../../../tutorials/module-system/deep-dive.md:584
+#: ../../../tutorials/module-system/deep-dive.md:615
+#: ../../../tutorials/module-system/deep-dive.md:633
+#: ../../../tutorials/module-system/deep-dive.md:644
+#: ../../../tutorials/module-system/deep-dive.md:683
+#: ../../../tutorials/module-system/deep-dive.md:702
+#: ../../../tutorials/module-system/deep-dive.md:734
+#: ../../../tutorials/module-system/deep-dive.md:753
+#: ../../../tutorials/module-system/deep-dive.md:770
+#: ../../../tutorials/module-system/deep-dive.md:802
+#: ../../../tutorials/module-system/deep-dive.md:824
+#: ../../../tutorials/module-system/deep-dive.md:840
+#: ../../../tutorials/module-system/deep-dive.md:855
+#: ../../../tutorials/module-system/deep-dive.md:872
+#: ../../../tutorials/module-system/deep-dive.md:888
+#: ../../../tutorials/module-system/deep-dive.md:954
+#: ../../../tutorials/module-system/deep-dive.md:969
+#: ../../../tutorials/module-system/deep-dive.md:984
+#: ../../../tutorials/module-system/deep-dive.md:997
+msgid "marker.nix"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:492
+msgid ""
+"{ lib, config, ... }: {\n"
+"\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:499
+msgid "Reference this new file in `default.nix` using the `imports` attribute:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:501
+msgid ""
+" { pkgs, lib, config, ... }: {\n"
+"\n"
+"+  imports = [\n"
+"+    ./marker.nix\n"
+"+  ];\n"
+"+"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:511
+msgid "The `submodule` type"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:513
+msgid ""
+"We want to set multiple markers on the map. A marker is a complex type with "
+"multiple fields."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:516
+msgid ""
+"This is where one of the most useful types included in the module system's "
+"type system comes into play: `submodule`. This type allows you to define "
+"nested modules with their own options."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:519
+msgid ""
+"Here, you will define a new `map.markers` option whose type is a list of "
+"submodules, each with a nested `location` type, allowing you to define a "
+"list of markers on the map."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:521
+msgid ""
+"Each assignment of markers will be type-checked during evaluation of the top-"
+"level `config`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:523
+msgid "Make the following changes to `marker.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:525
+msgid ""
+"-{ lib, config, ... }: {\n"
+"+{ lib, config, ... }:\n"
+"+let\n"
+"+  markerType = lib.types.submodule {\n"
+"+    options = {\n"
+"+      location = lib.mkOption {\n"
+"+        type = lib.types.nullOr lib.types.str;\n"
+"+        default = null;\n"
+"+      };\n"
+"+    };\n"
+"+  };\n"
+"+in {\n"
+"+\n"
+"+  options = {\n"
+"+    map.markers = lib.mkOption {\n"
+"+      type = lib.types.listOf markerType;\n"
+"+    };\n"
+"+  };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:547
+msgid "Defining options in other modules"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:549
+msgid ""
+"Because of the way the module system composes option definitions, you can "
+"freely assign values to options defined in other modules."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:551
+msgid ""
+"In this case, you will use the `map.markers` option to produce and add new "
+"elements to the `requestParams` list, making your declared markers appear on "
+"the returned map – but from the module declared in `marker.nix`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:553
+msgid ""
+"To implement this behavior, add the following `config` block to `marker.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:555
+msgid ""
+"+  config = {\n"
+"+\n"
+"+    map.markers = [\n"
+"+      { location = \"new york\"; }\n"
+"+    ];\n"
+"+\n"
+"+    requestParams = let\n"
+"+      paramForMarker =\n"
+"+        builtins.map (marker: \"$(${config.scripts.geocode}/bin/geocode ${\n"
+"+          lib.escapeShellArg marker.location})\") config.map.markers;\n"
+"+    in [ \"markers=\\\"${lib.concatStringsSep \"|\" paramForMarker}\\"
+"\"\" ];\n"
+"+  };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:572
+msgid ""
+"To avoid confusion with the `map` option setting and the final `config.map` "
+"configuration value, here we use the `map` function explicitly as `builtins."
+"map`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:576
+msgid ""
+"Here, you again used `escapeShellArg` and string interpolation to generate a "
+"Nix string, this time producing a pipe-separated list of geocoded location "
+"attributes."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:578
+msgid ""
+"The `requestParams` value was also set to the resulting list of strings, "
+"which gets appended to the `requestParams` list defined in `default.nix`, "
+"thanks to the default merging behavior of the `list` type."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:580
+msgid ""
+"When defining multiple markers, determining an appropriate center or zoom "
+"level for the map may be challenging; it's easier to let the API do this for "
+"you."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:582
+msgid ""
+"To achieve this, make the following additions to `marker.nix`, above the "
+"`requestParams` declaration:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:584
+msgid ""
+"+    map.center = lib.mkIf\n"
+"+      (lib.length config.map.markers >= 1)\n"
+"+      null;\n"
+"+\n"
+"+    map.zoom = lib.mkIf\n"
+"+      (lib.length config.map.markers >= 2)\n"
+"+      null;\n"
+"+\n"
+"     requestParams = let\n"
+"       paramForMarker = marker:\n"
+"         let"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:599
+msgid ""
+"In this case, the default behavior of the Google Maps API when not passed a "
+"center or zoom level is to pick the geometric center of all the given "
+"markers, and to set a zoom level appropriate for viewing all markers at once."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:601
+msgid "Nested submodules"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:603
+msgid ""
+"Next, we want to allow multiple named users to define a list of markers each."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:605
+msgid ""
+"For that you'll add a `users` option with type `lib.types.attrsOf "
+"<subtype>`, which will allow you to define `users` as an attribute set, "
+"whose values have type `<subtype>`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:607
+msgid ""
+"Here, that subtype will be another submodule which allows declaring a "
+"departure marker, suitable for querying the API for the recommended route "
+"for a trip."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:609
+msgid ""
+"This will again make use of the `markerType` submodule, giving a nested "
+"structure of submodules."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:611
+msgid ""
+"To propagate marker definitions from `users` to the `map.markers` option, "
+"make the following changes."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:613
+#: ../../../tutorials/module-system/deep-dive.md:681
+msgid "In the `let` block:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:615
+msgid ""
+"+  userType = lib.types.submodule {\n"
+"+    options = {\n"
+"+      departure = lib.mkOption {\n"
+"+        type = markerType;\n"
+"+        default = {};\n"
+"+      };\n"
+"+    };\n"
+"+  };\n"
+"+\n"
+" in {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:629
+msgid ""
+"This defines a submodule type for a user, with a `departure` option of type "
+"`markerType`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:631
+msgid "In the `options` block, above `map.markers`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:633
+msgid ""
+"+    users = lib.mkOption {\n"
+"+      type = lib.types.attrsOf userType;\n"
+"+    };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:640
+msgid ""
+"That allows adding a `users` attribute set to `config` in any submodule that "
+"imports `marker.nix`, where each attribute will be of type `userType` as "
+"declared in the previous step."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:642
+msgid "In the `config` block, above `map.center`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:644
+msgid ""
+"   config = {\n"
+"\n"
+"-    map.markers = [\n"
+"-      { location = \"new york\"; }\n"
+"-    ];\n"
+"+    map.markers = lib.filter\n"
+"+      (marker: marker.location != null)\n"
+"+      (lib.concatMap (user: [\n"
+"+        user.departure\n"
+"+      ]) (lib.attrValues config.users));\n"
+"\n"
+"     map.center = lib.mkIf\n"
+"       (lib.length config.map.markers >= 1)"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:661
+msgid ""
+"This takes all the `departure` markers from all users in the `config` "
+"argument, and adds them to `map.markers` if their `location` attribute is "
+"not `null`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:663
+msgid ""
+"The `config.users` attribute set is passed to `attrValues`, which returns a "
+"list of values of each of the attributes in the set (here, the set of "
+"`config.users` you've defined), sorted alphabetically (which is how "
+"attribute names are stored in the Nix language)."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:665
+msgid ""
+"Back in `default.nix`, the resulting `map.markers` option value is still "
+"accessed by `requestParams`, which in turn is used to generate arguments to "
+"the script that ultimately calls the Google Maps API."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:667
+msgid ""
+"Defining the options in this way allows you to set multiple `users.<name>."
+"departure.location` values and generate a map with the appropriate zoom and "
+"center, with pins corresponding to the set of `departure.location` values "
+"for *all* `users`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:669
+msgid ""
+"In the 2021 Summer of Nix, this formed the basis of an interactive multi-"
+"person map demo."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:671
+msgid "The `strMatching` type"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:673
+msgid ""
+"Now that the map can be rendered with multiple markers, it's time to add "
+"some style customizations."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:675
+msgid ""
+"To tell the markers apart, add another option to the `markerType` submodule, "
+"to allow labeling each marker pin."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:677
+msgid ""
+"The API documentation states that [these labels must be either an uppercase "
+"letter or a number](https://developers.google.com/maps/documentation/maps-"
+"static/start#MarkerStyles)."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:679
+msgid ""
+"You can implement this with the `strMatching \"<regex>\"` type, where "
+"`<regex>` is a regular expression that will accept any matching values, in "
+"this case an uppercase letter or number."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:683
+msgid ""
+"         type = lib.types.nullOr lib.types.str;\n"
+"         default = null;\n"
+"       };\n"
+"+\n"
+"+      style.label = lib.mkOption {\n"
+"+        type = lib.types.nullOr\n"
+"+          (lib.types.strMatching \"[A-Z0-9]\");\n"
+"+        default = null;\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:698
+msgid ""
+"Again, `types.nullOr` allows for `null` values, and the default has been set "
+"to `null`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:700
+msgid "In the `paramForMarker` function:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:702
+msgid ""
+"     requestParams = let\n"
+"-      paramForMarker =\n"
+"-        builtins.map (marker: \"$(${config.scripts.geocode}/bin/geocode ${\n"
+"-         lib.escapeShellArg marker.location})\") config.map.markers;\n"
+"-    in [ \"markers=\\\"${lib.concatStringsSep \"|\" paramForMarker}\\"
+"\"\" ];\n"
+"+      paramForMarker = marker:\n"
+"+        let\n"
+"+          attributes =\n"
+"+            lib.optional (marker.style.label != null)\n"
+"+            \"label:${marker.style.label}\"\n"
+"+            ++ [\n"
+"+              \"$(${config.scripts.geocode}/bin/geocode ${\n"
+"+                lib.escapeShellArg marker.location\n"
+"+              })\"\n"
+"+            ];\n"
+"+        in \"markers=\\\"${lib.concatStringsSep \"|\" attributes}\\\"\";\n"
+"+      in\n"
+"+        builtins.map paramForMarker config.map.markers;"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:724
+msgid ""
+"Note how we now create a unique `marker` for each user by concatenating the "
+"`label` and `location` attributes together, and assigning them to the "
+"`requestParams`. The label for each `marker` is only propagated to the CLI "
+"parameters if `marker.style.label` is set."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:727
+msgid "Functions as submodule arguments"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:729
+msgid ""
+"Right now, if a label is not explicitly set, none will show up. But since "
+"every `users` attribute has a name, we could use that as an automatic value "
+"instead."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:732
+msgid ""
+"This `firstUpperAlnum` function allows you to retrieve the first character "
+"of the username, with the correct type for passing to `departure.style."
+"label`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:734
+msgid ""
+"{ lib, config, ... }:\n"
+" let\n"
+"+  # Returns the uppercased first letter\n"
+"+  # or number of a string\n"
+"+  firstUpperAlnum = str:\n"
+"+    lib.mapNullable lib.head\n"
+"+    (builtins.match \"[^A-Z0-9]*([A-Z0-9]).*\"\n"
+"+    (lib.toUpper str));\n"
+"\n"
+"   markerType = lib.types.submodule {\n"
+"     options = {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:749
+msgid ""
+"By transforming the argument to `lib.types.submodule` into a function, you "
+"can access arguments within it."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:751
+msgid ""
+"One special argument automatically available to submodules is `name`, which "
+"when used in `attrsOf`, gives you the name of the attribute the submodule is "
+"defined under:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:753
+msgid ""
+"-  userType = lib.types.submodule {\n"
+"+  userType = lib.types.submodule ({ name, ... }: {\n"
+"     options = {\n"
+"       departure = lib.mkOption {\n"
+"         type = markerType;\n"
+"         default = {};\n"
+"       };\n"
+"     };\n"
+"-  };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:766
+msgid ""
+"In this case, you don't easily have access to the name from the marker "
+"submodules `label` option, where you otherwise could set a `default` value."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:768
+msgid ""
+"Instead you can use the `config` section of the `user` submodule to set a "
+"default, like so:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:770
+msgid ""
+"+\n"
+"+    config = {\n"
+"+      departure.style.label = lib.mkDefault\n"
+"+        (firstUpperAlnum name);\n"
+"+    };\n"
+"+  });\n"
+"\n"
+" in {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:784
+msgid ""
+"Module options have a *priority*, represented as an integer, which "
+"determines the precedence for setting the option to a particular value. When "
+"merging values, the priority with lowest numeric value wins."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:787
+msgid ""
+"The `lib.mkDefault` modifier sets the priority of its argument value to "
+"1000, the lowest precedence."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:789
+msgid "This ensures that other values set for the same option will prevail."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:792
+msgid "The `either` and `enum` types"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:794
+msgid ""
+"For better visual contrast, it would be helpful to have a way to change the "
+"*color* of a marker."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:796
+msgid "Here you will use two new type-functions for this:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:797
+msgid ""
+"`either <this> <that>`, which takes two types as arguments, and allows "
+"either of them"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:798
+msgid ""
+"`enum [ <allowed values> ]`, which takes a list of allowed values, and "
+"allows any of them"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:800
+msgid ""
+"In the `let` block, add the following `colorType` option, which can hold "
+"strings containing either some given color names or an RGB value, add the "
+"new compound type:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:802
+msgid ""
+"     ...\n"
+"     (builtins.match \"[^A-Z0-9]*([A-Z0-9]).*\"\n"
+"     (lib.toUpper str));\n"
+"\n"
+"+  # Either a color name or `0xRRGGBB`\n"
+"+  colorType = lib.types.either\n"
+"+    (lib.types.strMatching \"0x[0-9A-F]{6}\")\n"
+"+    (lib.types.enum [\n"
+"+      \"black\" \"brown\" \"green\" \"purple\" \"yellow\"\n"
+"+      \"blue\" \"gray\" \"orange\" \"red\" \"white\" ]);\n"
+"+\n"
+"   markerType = lib.types.submodule {\n"
+"     options = {\n"
+"       location = lib.mkOption {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:820
+msgid ""
+"This allows either strings that match a 24-bit hexadecimal number or are "
+"equal to one of the specified color names."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:822
+msgid ""
+"At the bottom of the `let` block, add the `style.color` option and specify a "
+"default value:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:824
+msgid ""
+"           (lib.types.strMatching \"[A-Z0-9]\");\n"
+"         default = null;\n"
+"       };\n"
+"+\n"
+"+      style.color = lib.mkOption {\n"
+"+        type = colorType;\n"
+"+        default = \"red\";\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:838
+msgid ""
+"Now add an entry to the `paramForMarker` list which makes use of the new "
+"option:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:840
+msgid ""
+"               (marker.style.label != null)\n"
+"               \"label:${marker.style.label}\"\n"
+"             ++ [\n"
+"+              \"color:${marker.style.color}\"\n"
+"               \"$(${config.scripts.geocode}/bin/geocode ${\n"
+"                 lib.escapeShellArg marker.location\n"
+"               })\""
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:851
+msgid ""
+"In case you set many different markers, it would be helpful to have the "
+"ability to change their size individually."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:853
+msgid ""
+"Add a new `style.size` option to `marker.nix`, allowing you to choose from "
+"the set of pre-defined sizes:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:855
+msgid ""
+"         type = colorType;\n"
+"         default = \"red\";\n"
+"       };\n"
+"+\n"
+"+      style.size = lib.mkOption {\n"
+"+        type = lib.types.enum\n"
+"+          [ \"tiny\" \"small\" \"medium\" \"large\" ];\n"
+"+        default = \"medium\";\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:870
+msgid ""
+"Now add a mapping for the size parameter in `paramForMarker`, which selects "
+"an appropriate string to pass to the API:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:872
+msgid ""
+"     requestParams = let\n"
+"       paramForMarker = marker:\n"
+"         let\n"
+"+          size = {\n"
+"+            tiny = \"tiny\";\n"
+"+            small = \"small\";\n"
+"+            medium = \"mid\";\n"
+"+            large = null;\n"
+"+          }.${marker.style.size};\n"
+"+"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:886
+msgid ""
+"Finally, add another `lib.optional` call to the `attributes` string, making "
+"use of the selected size:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:888
+msgid ""
+"           attributes =\n"
+"             lib.optional\n"
+"               (marker.style.label != null)\n"
+"               \"label:${marker.style.label}\"\n"
+"+            ++ lib.optional\n"
+"+              (size != null)\n"
+"+              \"size:${size}\"\n"
+"             ++ [\n"
+"               \"color:${marker.style.color}\"\n"
+"               \"$(${config.scripts.geocode}/bin/geocode ${"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:902
+msgid "The `pathType` submodule"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:904
+msgid ""
+"So far, you've created an option for declaring a *departure* marker, as well "
+"as several options for configuring the marker's visual representation."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:906
+msgid ""
+"Now we want to compute and display a route from the user's location to some "
+"destination."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:908
+msgid ""
+"The new option defined in the next section will allow you to set an "
+"*arrival* marker, which together with a departure allows you to draw *paths* "
+"on the map using the new module defined below."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:910
+msgid "To start, create a new `path.nix` file with the following contents:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:912
+#: ../../../tutorials/module-system/deep-dive.md:1013
+#: ../../../tutorials/module-system/deep-dive.md:1045
+#: ../../../tutorials/module-system/deep-dive.md:1070
+#: ../../../tutorials/module-system/deep-dive.md:1088
+#: ../../../tutorials/module-system/deep-dive.md:1110
+#: ../../../tutorials/module-system/deep-dive.md:1131
+#: ../../../tutorials/module-system/deep-dive.md:1150
+#: ../../../tutorials/module-system/deep-dive.md:1168
+#: ../../../tutorials/module-system/deep-dive.md:1184
+#: ../../../tutorials/module-system/deep-dive.md:1203
+#: ../../../tutorials/module-system/deep-dive.md:1219
+msgid "path.nix"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:912
+msgid ""
+"{ lib, config, ... }:\n"
+"let\n"
+"  pathType = lib.types.submodule {\n"
+"    options = {\n"
+"      locations = lib.mkOption {\n"
+"        type = lib.types.listOf lib.types.str;\n"
+"      };\n"
+"    };\n"
+"  };\n"
+"in\n"
+"{\n"
+"  options = {\n"
+"    map.paths = lib.mkOption {\n"
+"      type = lib.types.listOf pathType;\n"
+"    };\n"
+"  };\n"
+"  config = {\n"
+"    requestParams =\n"
+"      let\n"
+"        attrForLocation = loc:\n"
+"          \"$(${config.scripts.geocode}/bin/geocode ${lib.escapeShellArg "
+"loc})\";\n"
+"        paramForPath = path:\n"
+"          let\n"
+"            attributes =\n"
+"              builtins.map attrForLocation path.locations;\n"
+"          in\n"
+"          ''path=\"${lib.concatStringsSep \"|\" attributes}\"'';\n"
+"      in\n"
+"      builtins.map paramForPath config.map.paths;\n"
+"  };\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:947
+msgid ""
+"The `path.nix` module declares an option for defining a list of paths on our "
+"`map`, where each path is a list of strings for geographic locations."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:950
+msgid ""
+"In the `config` attribute we augment the API call by setting the "
+"`requestParams` option value with the coordinates transformed appropriately, "
+"which will be concatenated with request parameters set elsewhere."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:952
+msgid "Now import this new `path.nix` module from your `marker.nix` module:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:954
+msgid ""
+" in {\n"
+"\n"
+"+  imports = [\n"
+"+    ./path.nix\n"
+"+  ];\n"
+"+\n"
+"   options = {\n"
+"\n"
+"     users = lib.mkOption {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:967
+msgid ""
+"Copy the `departure` option declaration to a new `arrival` option in `marker."
+"nix`, to complete the initial path implementation:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:969
+msgid ""
+"         type = markerType;\n"
+"         default = {};\n"
+"       };\n"
+"+\n"
+"+      arrival = lib.mkOption {\n"
+"+        type = markerType;\n"
+"+        default = {};\n"
+"+      };\n"
+"     };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:982
+msgid ""
+"Next, add an `arrival.style.label` attribute to the `config` block, "
+"mirroring the `departure.style.label`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:984
+msgid ""
+"     config = {\n"
+"       departure.style.label = lib.mkDefault\n"
+"         (firstUpperAlnum name);\n"
+"+      arrival.style.label = lib.mkDefault\n"
+"+        (firstUpperAlnum name);\n"
+"     };\n"
+"   });"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:995
+msgid ""
+"Finally, update the return list in the function passed to `concatMap` in "
+"`map.markers` to also include the `arrival` marker for each user:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:997
+msgid ""
+"     map.markers = lib.filter\n"
+"       (marker: marker.location != null)\n"
+"       (lib.concatMap (user: [\n"
+"-        user.departure\n"
+"+        user.departure user.arrival\n"
+"       ]) (lib.attrValues config.users));\n"
+"\n"
+"     map.center = lib.mkIf"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1009
+msgid ""
+"Now you have the basis to define paths on the map, connecting pairs of "
+"departure and arrival points."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1011
+msgid ""
+"In the path module, define a path connecting every user's departure and "
+"arrival locations:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1013
+msgid ""
+"   config = {\n"
+"+\n"
+"+    map.paths = builtins.map (user: {\n"
+"+      locations = [\n"
+"+        user.departure.location\n"
+"+        user.arrival.location\n"
+"+      ];\n"
+"+    }) (lib.filter (user:\n"
+"+      user.departure.location != null\n"
+"+      && user.arrival.location != null\n"
+"+    ) (lib.attrValues config.users));\n"
+"+\n"
+"     requestParams = let\n"
+"       attrForLocation = loc:\n"
+"         \"$(geocode ${lib.escapeShellArg loc})\";"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1032
+msgid ""
+"The new `map.paths` attribute contains a list of all valid paths defined for "
+"all users."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1034
+msgid ""
+"A path is valid only if the `departure` and `arrival` attributes are set for "
+"that user."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1036
+msgid "The `between` constraint on integer values"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1038
+msgid ""
+"Your users have spoken, and they demand the ability to customize the styles "
+"of their paths with a `weight` option."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1040
+msgid "As before, you'll now declare a new submodule for the path style."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1042
+msgid ""
+"While you could also directly declare the `style.weight` option, in this "
+"case you should use the submodule to be able to reuse the path style type "
+"later."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1044
+msgid ""
+"Add the `pathStyleType` submodule option to the `let` block in `path.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1045
+msgid ""
+" { lib, config, ... }:\n"
+" let\n"
+"+\n"
+"+  pathStyleType = lib.types.submodule {\n"
+"+    options = {\n"
+"+      weight = lib.mkOption {\n"
+"+        type = lib.types.ints.between 1 20;\n"
+"+        default = 5;\n"
+"+      };\n"
+"+    };\n"
+"+  };\n"
+"+\n"
+"   pathType = lib.types.submodule {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1063
+msgid ""
+"The `ints.between <lower> <upper>` type allows integers in the given "
+"(inclusive) range."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1066
+msgid ""
+"The path weight will default to 5, but can be set to any integer value in "
+"the 1 to 20 range, with higher weights producing thicker paths on the map."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1068
+msgid "Now add a `style` option to the `options` set further down the file:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1070
+msgid ""
+"     options = {\n"
+"       locations = lib.mkOption {\n"
+"         type = lib.types.listOf lib.types.str;\n"
+"       };\n"
+"+\n"
+"+      style = lib.mkOption {\n"
+"+        type = pathStyleType;\n"
+"+        default = {};\n"
+"+      };\n"
+"     };\n"
+"\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1086
+msgid "Finally, update the `attributes` list in `paramForPath`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1088
+msgid ""
+"       paramForPath = path:\n"
+"         let\n"
+"           attributes =\n"
+"-            builtins.map attrForLocation path.locations;\n"
+"+            [\n"
+"+              \"weight:${toString path.style.weight}\"\n"
+"+            ]\n"
+"+            ++ builtins.map attrForLocation path.locations;\n"
+"         in \"path=\\\"${lib.concatStringsSep \"|\" attributes}\\\"\";"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1101
+msgid "The `pathStyle` submodule"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1103
+msgid ""
+"Users still cannot actually customize the path style yet. Introduce a new "
+"`pathStyle` option for each user."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1106
+msgid ""
+"The module system allows you to declare values for an option multiple times, "
+"and if the types permit doing so, takes care of merging each declaration's "
+"values together."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1108
+msgid ""
+"This makes it possible to have a definition for the `users` option in the "
+"`marker.nix` module, as well as a `users` definition in `path.nix`:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1110
+msgid ""
+" in {\n"
+"   options = {\n"
+"+\n"
+"+    users = lib.mkOption {\n"
+"+      type = lib.types.attrsOf (lib.types.submodule {\n"
+"+        options.pathStyle = lib.mkOption {\n"
+"+          type = pathStyleType;\n"
+"+          default = {};\n"
+"+        };\n"
+"+      });\n"
+"+    };\n"
+"+\n"
+"     map.paths = lib.mkOption {\n"
+"       type = lib.types.listOf pathType;\n"
+"     };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1129
+msgid ""
+"Then add a line using the `user.pathStyle` option in `map.paths` where each "
+"user's paths are processed:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1131
+msgid ""
+"         user.departure.location\n"
+"         user.arrival.location\n"
+"       ];\n"
+"+      style = user.pathStyle;\n"
+"     }) (lib.filter (user:\n"
+"       user.departure.location != null\n"
+"       && user.arrival.location != null"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1142
+msgid "Path styling: color"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1144
+msgid "As with markers, paths should have customizable colors."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1146
+msgid "You can accomplish this using types you've already encountered by now."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1148
+msgid ""
+"Add a new `colorType` block to `path.nix`, specifying the allowed color "
+"names and RGB/RGBA hexadecimal values:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1150
+msgid ""
+" { lib, config, ... }:\n"
+" let\n"
+"\n"
+"+  # Either a color name, `0xRRGGBB` or `0xRRGGBBAA`\n"
+"+  colorType = lib.types.either\n"
+"+    (lib.types.strMatching \"0x[0-9A-F]{6}([0-9A-F]{2})?\")\n"
+"+    (lib.types.enum [\n"
+"+      \"black\" \"brown\" \"green\" \"purple\" \"yellow\"\n"
+"+      \"blue\" \"gray\" \"orange\" \"red\" \"white\"\n"
+"+    ]);\n"
+"+\n"
+"   pathStyleType = lib.types.submodule {"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1166
+msgid ""
+"Under the `weight` option, add a new `color` option to use the new "
+"`colorType` value:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1168
+msgid ""
+"         type = lib.types.ints.between 1 20;\n"
+"         default = 5;\n"
+"       };\n"
+"+\n"
+"+      color = lib.mkOption {\n"
+"+        type = colorType;\n"
+"+        default = \"blue\";\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1182
+msgid "Finally, add a line using the `color` option to the `attributes` list:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1184
+msgid ""
+"           attributes =\n"
+"             [\n"
+"               \"weight:${toString path.style.weight}\"\n"
+"+              \"color:${path.style.color}\"\n"
+"             ]\n"
+"             ++ map attrForLocation path.locations;\n"
+"         in \"path=${"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1195
+msgid "Further styling"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1197
+msgid ""
+"Now that you've got this far, to further improve the aesthetics of the "
+"rendered map, add another style option allowing paths to be drawn as "
+"*geodesics*, the shortest \"as the crow flies\" distance between two points "
+"on Earth."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1199
+msgid ""
+"Since this feature can be turned on or off, you can do this using the `bool` "
+"type, which can be `true` or `false`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1201
+msgid "Make the following changes to `path.nix` now:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1203
+msgid ""
+"         type = colorType;\n"
+"         default = \"blue\";\n"
+"       };\n"
+"+\n"
+"+      geodesic = lib.mkOption {\n"
+"+        type = lib.types.bool;\n"
+"+        default = false;\n"
+"+      };\n"
+"     };\n"
+"   };"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1217
+msgid ""
+"Make sure to also add a line to use that value in `attributes` list, so the "
+"option value is included in the API call:"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1219
+msgid ""
+"             [\n"
+"               \"weight:${toString path.style.weight}\"\n"
+"               \"color:${path.style.color}\"\n"
+"+              \"geodesic:${lib.boolToString path.style.geodesic}\"\n"
+"             ]\n"
+"             ++ map attrForLocation path.locations;\n"
+"         in \"path=${"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1230
+msgid "Wrapping up"
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1232
+msgid ""
+"In this tutorial, you've learned how to write custom Nix modules to bring "
+"external services under declarative control, with the help of several new "
+"utility functions from the Nixpkgs `lib`."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1234
+msgid ""
+"You defined several modules in multiple files, each with separate submodules "
+"making use of the module system's type checking."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1236
+msgid ""
+"These modules exposed features of the external API in a declarative way."
+msgstr ""
+
+#: ../../../tutorials/module-system/deep-dive.md:1238
+msgid "You can now conquer the world with Nix."
+msgstr ""

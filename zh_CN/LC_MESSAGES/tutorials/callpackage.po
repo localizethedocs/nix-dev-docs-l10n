@@ -1,0 +1,522 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/callpackage.md:0
+msgid ""
+"tutorial, callPackage, override, package, customise, parameters, nix, nixpkgs"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:13
+msgid "Package parameters and overrides with `callPackage`"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:15
+msgid ""
+"Nix ships with a special-purpose programming language for creating packages "
+"and configurations: the Nix language. It is used to build the Nix package "
+"collection, known as {term}`Nixpkgs`."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:18
+msgid ""
+"Being purely functional, the Nix language allows declaring custom functions "
+"to abstract over common patterns. One of the most prominent patterns in "
+"Nixpkgs is parametrisation of package recipes."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:21
+msgid "Overview"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:23
+msgid ""
+"Nixpkgs is a sizeable software project on its own, with coding conventions "
+"and idioms that have emerged over the years. It has [established a "
+"convention](https://github.com/nixos/nixpkgs/commit/"
+"d17f0f9cbca38fabb71624f069cd4c0d6feace92) of composing parameterised "
+"packages with automatic settings through a function named [`callPackage`]"
+"(https://github.com/NixOS/nixpkgs/commit/"
+"fd268b4852d39c18e604c584dd49a611dc795a9b). This tutorial shows how to use it "
+"and why it's beneficial."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:27
+msgid "What will you learn?"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:29
+msgid ""
+"Using `callPackage` to invoke package recipes that follow Nixpkgs conventions"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:30
+msgid "Overriding package parameters"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:31
+msgid "Creating interdependent package sets"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:33
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:35
+msgid "Familiarity with the [Nix language](reading-nix-language)"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:36
+msgid "First experience with [packaging existing software](packaging-tutorial)"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:38
+msgid "How long does it take?"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:40
+msgid "45 minutes"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:42
+msgid "Automatic function calls"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:44
+msgid ""
+"Create a new file `hello.nix`, which could be a typical package recipe as "
+"found in Nixpkgs: A function that takes an attribute set, with attributes "
+"corresponding to derivations in the top-level package set, and returns a "
+"derivation."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:47 ../../../tutorials/callpackage.md:111
+msgid "hello.nix"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:47
+msgid ""
+"{ writeShellScriptBin }:\n"
+"writeShellScriptBin \"hello\" ''\n"
+"  echo \"Hello, world!\"\n"
+"''"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:0
+msgid "Detailed explanation"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:56
+msgid ""
+"`hello.nix` declares a function which takes as argument an attribute set "
+"with one element `writeShellScriptBin`. [`writeShellScriptBin`](https://"
+"nixos.org/manual/nixpkgs/unstable/#trivial-builder-writeShellScriptBin) is a "
+"function that happens to exist in Nixpkgs, a [build helper](https://nixos."
+"org/manual/nixpkgs/unstable/#part-builders) that returns a derivation. The "
+"derivation output in this case contains an executable shell script in `$out/"
+"bin/hello` that prints \"Hello world\" when run."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:61
+msgid "Now create a file `default.nix` with the following contents:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:63 ../../../tutorials/callpackage.md:91
+#: ../../../tutorials/callpackage.md:127 ../../../tutorials/callpackage.md:160
+#: ../../../tutorials/callpackage.md:203 ../../../tutorials/callpackage.md:229
+msgid "default.nix"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:63
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> { };\n"
+"in\n"
+"pkgs.callPackage ./hello.nix { }"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:71
+msgid ""
+"Realise the derivation in `default.nix` and run the executable that is "
+"produced:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:73
+msgid ""
+"$ nix-build\n"
+"$ ./result/bin/hello\n"
+"Hello, world!\n"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:79
+msgid ""
+"The argument `writeShellScriptBin` gets filled in automatically when the "
+"function in `hello.nix` is evaluated. For every attribute in the function's "
+"argument, `callPackage` passes an attribute from the `pkgs` attribute set if "
+"it exists."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:82
+msgid ""
+"It may appear cumbersome to create the extra file `hello.nix` for the "
+"package in such a simple setup. We have done so because this is exactly how "
+"Nixpkgs is organised: Every package recipe is a file that declares a "
+"function. This function takes as arguments the package's dependencies."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:87
+msgid "Parameterised builds"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:89
+msgid ""
+"Change the `default.nix` to produce an attribute set of derivations, with "
+"the attribute `hello` containing the original derivation:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:91
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> { };\n"
+"in\n"
+"{\n"
+"  hello = pkgs.callPackage ./hello.nix { };\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:101
+msgid ""
+"When building the attribute `hello`, by accessing it with the [`-A` / `--"
+"attr` option](https://nix.dev/manual/nix/2.19/command-ref/nix-build#opt-"
+"attr), the result will be the same as before:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:103
+msgid ""
+"$ nix-build -A hello\n"
+"$ ./result/bin/hello\n"
+"Hello, world!\n"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:109
+msgid ""
+"Also change `hello.nix` to add an additional parameter `audience` with "
+"default value `\"world\"`:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:111
+msgid ""
+"{\n"
+"  writeShellScriptBin,\n"
+"  audience ? \"world\",\n"
+"}:\n"
+"writeShellScriptBin \"hello\" ''\n"
+"  echo \"Hello, ${audience}!\"\n"
+"''"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:122
+msgid "This also does not change the result."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:124
+msgid ""
+"Things get more interesting when changing `default.nix` to make use of this "
+"new argument. Pass the parameter `audience` in the second argument to "
+"`callPackage`:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:127
+msgid ""
+" let\n"
+"   pkgs = import <nixpkgs> { };\n"
+" in\n"
+" {\n"
+"-  hello = pkgs.callPackage ./hello.nix { };\n"
+"+  hello = pkgs.callPackage ./hello.nix { audience = \"people\"; };\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:138
+msgid ""
+"This attribute is passed on to the argument of the function defined in "
+"`hello.nix`: The same syntax can also be used to explicitly set the "
+"automatically discovered arguments, such as `writeShellScriptBin`, but that "
+"doesn't make sense here."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:141
+msgid "Try it out:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:143
+msgid ""
+"$ nix-build -A hello\n"
+"$ ./result/bin/hello\n"
+"Hello, people!\n"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:149
+msgid ""
+"This pattern is used widely in Nixpkgs: For example, functions which "
+"represent Go programs often have a parameter `buildGoModule`. It is common "
+"to find expressions like `callPackage ./go-program.nix { buildGoModule = "
+"buildGo116Module; }` to change the default Go compiler version. Nixpkgs is "
+"therefore not simply a huge library of pre-configured packages, but a "
+"collection of functions – package *recipes* – for customising packages and "
+"even entire ecosystems (for example \"All Python packages using my custom "
+"interpreter\") on the fly without duplicating code."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:154
+msgid "Overrides"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:156
+msgid ""
+"`callPackage` adds more convenience by allowing parameters to be customised "
+"_after the fact_ using the returned derivation's `override` function."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:158
+msgid ""
+"Add a third attribute `hello-folks` to `default.nix` and set it to `hello."
+"override` called with a new value for `audience`:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:160
+msgid ""
+" let\n"
+"   pkgs = import <nixpkgs> { };\n"
+" in\n"
+"-{\n"
+"+rec {\n"
+"   hello = pkgs.callPackage ./hello.nix { audience = \"people\"; };\n"
+"+  hello-folks = hello.override { audience = \"folks\"; };\n"
+" }"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:173
+msgid ""
+"The resulting attribute set is now recursive (by the keyword `rec`). That "
+"is, attribute values can refer to names from within the same attribute set."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:177
+msgid ""
+"`override` passes `audience` to the original function in `hello.nix` - it "
+"*overrides* whatever arguments have been passed in the original "
+"`callPackage` that produced the derivation `hello`. All the other parameters "
+"will remain the same. This is especially useful and can be often found on "
+"packages that provide many options to customise a package."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:181
+msgid ""
+"Building `hello-folks` attribute and running the resulting executable will "
+"again produce a new version of the script:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:183
+msgid ""
+"$ nix-build -A hello-folks\n"
+"$ ./result/bin/hello\n"
+"Hello, folks!\n"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:189
+msgid ""
+"A real-world example is the [`neovim`](https://search.nixos.org/packages?"
+"show=neovim) package recipe, which has overridable arguments such as "
+"`extraLuaPackages`, `extraPythonPackages`, or `withRuby`. Currently these "
+"parameters are only discoverable by reading the source code, which can be "
+"found by following the link to 📦 Source on [search.nixos.org/packages]"
+"(https://search.nixos.org/packages)."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:192
+msgid "Interdependent package sets"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:194
+msgid ""
+"You can actually create your own version of `callPackage`! This comes in "
+"handy for package sets where the recipes depend on each other."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:198
+msgid ""
+"The following examples do not show the \"called\" files, as they are not "
+"necessary for understanding the principle."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:201
+msgid "Consider the following recursive attribute set of derivations:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:203
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> { };\n"
+"in\n"
+"rec {\n"
+"  a = pkgs.callPackage ./a.nix { };\n"
+"  b = pkgs.callPackage ./b.nix { inherit a; };\n"
+"  c = pkgs.callPackage ./c.nix { inherit b; };\n"
+"  d = pkgs.callPackage ./d.nix { };\n"
+"  e = pkgs.callPackage ./e.nix { inherit c d; };\n"
+"}"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:218
+msgid "Here, `inherit a;` is equivalent to `a = a;`."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:221
+msgid ""
+"Previously declared derivations are passed as arguments to other derivations "
+"through `callPackage`."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:223
+msgid ""
+"In this case you have to remember to manually specify all arguments required "
+"by each package in the respective {term}`Nix file` that are not in Nixpkgs. "
+"If `./b.nix` requires an argument `a` but there is no `pkgs.a`, the function "
+"call will produce an error. This can become quite tedious quickly, "
+"especially for larger package sets."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:227
+msgid ""
+"Use `lib.callPackageWith` to create your own `callPackage` based on an "
+"attribute set."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:229
+msgid ""
+"let\n"
+"  pkgs = import <nixpkgs> { };\n"
+"  callPackage = pkgs.lib.callPackageWith (pkgs // packages);\n"
+"  packages = {\n"
+"    a = callPackage ./a.nix { };\n"
+"    b = callPackage ./b.nix { };\n"
+"    c = callPackage ./c.nix { };\n"
+"    d = callPackage ./d.nix { };\n"
+"    e = callPackage ./e.nix { };\n"
+"  };\n"
+"in\n"
+"packages"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:245
+msgid "This requires some explanation."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:247
+msgid ""
+"First of all note that instead of a recursive attribute set, the names we "
+"operate on are now assigned in a `let` binding. It has the same property as "
+"recursive sets: Names on the left can be used in expressions on the right of "
+"the equal sign (`=`). This is how we can refer to `packages` when we merge "
+"its contents with the pre-existing attribute set `pkgs` using the `//` "
+"operator."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:252
+msgid ""
+"Your custom `callPackages` now makes available all the attributes in `pkgs` "
+"*and* `packages` to the called package function (the same names from "
+"`packages` taking precedence), and `packages` is being built up recursively "
+"with each call."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:254
+msgid ""
+"The last bit may make your head spin. This construction is only possible "
+"because the Nix language is lazily evaluated. That is, values are only "
+"computed when they are actually needed. It allows passing `packages` around "
+"without having fully defined it."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:259
+msgid ""
+"Each package's dependencies are now implicit at this level (they are still "
+"explicit in each of the package files), and `callPackage` resolves them "
+"*automagically*. This relieves you from dealing with them manually, and "
+"precludes configuration errors that may only surface late into a lengthy "
+"build process."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:262
+msgid ""
+"Of course this small example is still manageable in the original form. And "
+"the implicitly recursive variant can obscure the structure for software "
+"developers not familiar with lazy evaluation, making it harder to read for "
+"them than it was before. But this benefit really pays off for large "
+"constructions, where it is the amount of code that would obscure the "
+"structure, and where manual modifications would become cumbersome and error-"
+"prone."
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:266
+msgid "Summary"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:268
+msgid ""
+"Using `callPackage` not only follows Nixpkgs conventions, which makes your "
+"code easier to follow for experienced Nix users, but it also gives you some "
+"benefits for free:"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:270
+msgid "Parametrized builds"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:271
+msgid "Overridable builds"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:272
+msgid "Concise implementation of interdependent package sets"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:274
+msgid "References"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:276
+msgid ""
+"[Nixpkgs manual: `callPackageWith`](https://nixos.org/manual/nixpkgs/stable/"
+"#function-library-lib.customisation.callPackageWith)"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:278
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:280
+msgid "[](file-sets-tutorial) - learn to package your own projects with Nix"
+msgstr ""
+
+#: ../../../tutorials/callpackage.md:281
+msgid ""
+"[](module-system-deep-dive) - learn to wield the functional programming "
+"magic behind NixOS"
+msgstr ""

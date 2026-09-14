@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../reference/nix-manual.md:17
+msgid "Nix pre-release (development)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:17
+msgid "Nix @nix-latest@ (latest)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:17
+msgid "Nix @nix-rolling@ (in Nixpkgs rolling)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:17
+msgid "Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:17
+msgid "Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:0
+msgid "Nix reference manual version overview"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:0
+msgid "Nix, reference, manual, documentation"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:9
+msgid "Nix reference manual"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:11
+msgid ""
+"<!--\n"
+"This page is pre-processed before rendering with Sphinx. For details:\n"
+"\n"
+"    grep -n nix-manual.md default.nix\n"
+"-->\n"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:27
+msgid "The Nix reference manual is available for multiple versions:"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:29
+msgid "[Nix pre-release](https://nix.dev/manual/nix/development/)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:31
+msgid ""
+"Development build from the `master` branch of the [Nix repository](https://"
+"github.com/NixOS/nix)"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:33
+msgid ""
+"[Nix @nix-latest@](https://nix.dev/manual/nix/latest/) ([single page]"
+"(https://nix.dev/manual/nix/latest/nix-@nix-latest@.html))"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:35
+msgid "Latest Nix release"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:37
+msgid ""
+"[Nix @nix-rolling@](https://nix.dev/manual/nix/rolling/) ([single page]"
+"(https://nix.dev/manual/nix/rolling/nix-@nix-rolling@.html))"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:39
+msgid "Shipped with the rolling release of {term}`Nixpkgs` and {term}`NixOS`"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:41
+msgid ""
+"[Nix @nix-stable@](https://nix.dev/manual/nix/stable/) ([single page]"
+"(https://nix.dev/manual/nix/stable/nix-@nix-stable@.html))"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:43
+msgid ""
+"Shipped with the current stable release of {term}`Nixpkgs` and {term}"
+"`NixOS`: @nixpkgs-stable@"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:45
+msgid ""
+"[Nix @nix-prev-stable@](https://nix.dev/manual/nix/prev-stable/) ([single "
+"page](https://nix.dev/manual/nix/prev-stable/nix-@nix-prev-stable@.html))"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:47
+msgid ""
+"Shipped with the previous stable release of {term}`Nixpkgs` and {term}"
+"`NixOS`: @nixpkgs-prev-stable@"
+msgstr ""
+
+#: ../../../reference/nix-manual.md:50
+msgid "More information on Nixpkgs and NixOS releases: [](channel-branches)"
+msgstr ""
