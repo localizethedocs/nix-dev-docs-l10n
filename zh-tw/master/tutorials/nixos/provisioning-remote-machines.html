@@ -1,0 +1,845 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Provisioning remote machines" lang="en" name="description" xml:lang="en" />
+<meta content="Nix, deployment, remote, provisioning, nixos-anywhere, disko, partitioning, installation" name="keywords" />
+
+    <title>Provisioning remote machines via SSH &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=cbf116e0"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/nixos/provisioning-remote-machines';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/nixos/provisioning-remote-machines.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜尋" href="../../search.html" />
+    <link rel="next" title="在 Raspberry Pi 上安裝 NixOS" href="installing-nixos-on-a-raspberry-pi.html" />
+    <link rel="prev" title="使用 NixOS 虛擬機進行整合測試" href="integration-testing-using-virtual-machines.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">NixOS</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/nixos/provisioning-remote-machines.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Provisioning remote machines via SSH</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Provisioning remote machines via SSH</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-environment">Prepare the environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-nixos-configuration">Create a NixOS configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-the-disk-layout">Test the disk layout</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-the-system">Deploy the system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-system">Update the system</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="provisioning-remote-machines-via-ssh">
+<span id="provisioning-remote-machines-tutorial"></span><h1>Provisioning remote machines via SSH<a class="headerlink" href="#provisioning-remote-machines-via-ssh" title="連結到這個標頭">#</a></h1>
+<p>It is possible to replace any Linux installation with a NixOS configuration on running systems using <a class="reference external" href="https://nix-community.github.io/nixos-anywhere/"><code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code></a> and <a class="reference external" href="https://github.com/nix-community/disko"><code class="docutils literal notranslate"><span class="pre">disko</span></code></a>.</p>
+<section id="introduction">
+<h2>簡介<a class="headerlink" href="#introduction" title="連結到這個標頭">#</a></h2>
+<p>In this tutorial, you deploy a NixOS configuration to a running computer.</p>
+<section id="what-will-you-learn">
+<h3>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h3>
+<p>您將會學到如何</p>
+<ul class="simple">
+<li><p>Specify a minimal NixOS configuration with a declarative disk layout and SSH access</p></li>
+<li><p>Check that a configuration is valid</p></li>
+<li><p>Deploy and update a NixOS configuration on a remote machine</p></li>
+</ul>
+</section>
+<section id="what-do-you-need">
+<h3>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h3>
+<ul class="simple">
+<li><p>Familiarity with the <a class="reference internal" href="../nix-language.html#reading-nix-language"><span class="std std-ref">Nix language</span></a></p></li>
+<li><p>Familiarity with the <a class="reference internal" href="../module-system/index.html#module-system-tutorial"><span class="std std-ref">模組系統</span></a></p></li>
+</ul>
+<p>For a successful unattended installation, ensure for the <em>target machine</em> that:</p>
+<ul>
+<li><p>It is a QEMU virtual machine running Linux</p>
+<ul class="simple">
+<li><p>With <a class="reference external" href="https://en.wikipedia.org/wiki/Kexec"><code class="docutils literal notranslate"><span class="pre">kexec</span></code></a> support</p></li>
+<li><p>On the <code class="docutils literal notranslate"><span class="pre">x86-64</span></code> or <code class="docutils literal notranslate"><span class="pre">aarch64</span></code> instruction set architecture (ISA)</p></li>
+<li><p>With at least 1 GB of RAM</p></li>
+</ul>
+<p>This may also be a live system booted from USB, such as the <a class="reference external" href="https://nixos.org/download/#download-nixos-accordion">NixOS installer</a>.</p>
+</li>
+<li><p>The IP address is configured automatically with DHCP</p></li>
+<li><p>You can login via SSH</p>
+<ul class="simple">
+<li><p>With public key authentication (preferred), or password</p></li>
+<li><p>As user <code class="docutils literal notranslate"><span class="pre">root</span></code> or another user with <code class="docutils literal notranslate"><span class="pre">sudo</span></code> permissions</p></li>
+</ul>
+</li>
+</ul>
+<p>The <em>local machine</em> only needs a working <a class="reference internal" href="../../install-nix.html#install-nix"><span class="std std-ref">Nix installation</span></a>.</p>
+<p>We call the <em>target machine</em> <code class="docutils literal notranslate"><span class="pre">target-machine</span></code> in this tutorial.
+Replace it with the actual hostname or IP address.</p>
+</section>
+</section>
+<section id="prepare-the-environment">
+<h2>Prepare the environment<a class="headerlink" href="#prepare-the-environment" title="連結到這個標頭">#</a></h2>
+<p>Create a new project directory and enter it with your shell:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">mkdir remote</span>
+<span class="go">cd remote</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="../../guides/recipes/dependency-management.html#dependency-management-npins"><span class="std std-ref">Specify dependencies</span></a> on <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code>, <code class="docutils literal notranslate"><span class="pre">disko</span></code>, and <code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell<span class="w"> </span>-p<span class="w"> </span>npins
+<span class="gp">[nix-shell:remote]$ </span>npins<span class="w"> </span>init
+<span class="gp">[nix-shell:remote]$ </span>npins<span class="w"> </span>add<span class="w"> </span>github<span class="w"> </span>nix-community<span class="w"> </span>disko
+<span class="gp">[nix-shell:remote]$ </span>npins<span class="w"> </span>add<span class="w"> </span>github<span class="w"> </span>nix-community<span class="w"> </span>nixos-anywhere
+</pre></div>
+</div>
+<p>Create a new file <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> which provides all needed tooling using the pinned dependencies:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="k">let</span>
+  <span class="ss">sources</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./npins</span><span class="p">;</span>
+  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> sources<span class="o">.</span>nixpkgs <span class="p">{};</span>
+<span class="k">in</span>
+
+pkgs<span class="o">.</span>mkShell <span class="p">{</span>
+  <span class="ss">nativeBuildInputs</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+    npins
+    nixos-anywhere
+    nixos-rebuild
+  <span class="p">];</span>
+  <span class="ss">shellHook</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="s s-Multiline">    export NIX_PATH=&quot;nixpkgs=</span><span class="si">${</span>sources<span class="o">.</span>nixpkgs<span class="si">}</span><span class="s s-Multiline">:nixos-config=$PWD/configuration.nix&quot;</span>
+<span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now exit the temporary environment and enter the newly specified one:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">[nix-shell:remote]$ </span><span class="nb">exit</span>
+<span class="gp">$ </span>nix-shell
+</pre></div>
+</div>
+<p>This shell environment is ready to use well-defined versions of Nixpkgs with <code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> and <code class="docutils literal notranslate"><span class="pre">nixos-rebuild</span></code>.</p>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>Run all following commands in this environment.</p>
+</div>
+</section>
+<section id="create-a-nixos-configuration">
+<h2>Create a NixOS configuration<a class="headerlink" href="#create-a-nixos-configuration" title="連結到這個標頭">#</a></h2>
+<p>The new NixOS configuration will consist of the general system configuration and a disk layout specification.</p>
+<p>The disk layout in this example describes a single disk with a <a class="reference external" href="https://en.wikipedia.org/wiki/Master_boot_record">master boot record</a> (MBR) and <a class="reference external" href="https://en.wikipedia.org/wiki/EFI_system_partition">EFI system partition</a> (ESP) partition, and a root file system that takes all remaining available space.
+It will work on both EFI and BIOS systems.</p>
+<p>Create a new file <code class="docutils literal notranslate"><span class="pre">single-disk-layout.nix</span></code> with the disk layout specification:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="p">{</span>
+<span class="linenos"> 4</span>  disko<span class="o">.</span>devices<span class="o">.</span>disk<span class="o">.</span><span class="ss">main</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 5</span>    <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;disk&quot;</span><span class="p">;</span>
+<span class="linenos"> 6</span>    <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 7</span>      <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;gpt&quot;</span><span class="p">;</span>
+<span class="linenos"> 8</span>      <span class="ss">partitions</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 9</span>        <span class="ss">MBR</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">10</span>          <span class="ss">priority</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="linenos">11</span>          <span class="ss">size</span> <span class="o">=</span> <span class="s2">&quot;1M&quot;</span><span class="p">;</span>
+<span class="linenos">12</span>          <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;EF02&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>        <span class="p">};</span>
+<span class="linenos">14</span>        <span class="ss">ESP</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">15</span>          <span class="ss">priority</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="linenos">16</span>          <span class="ss">size</span> <span class="o">=</span> <span class="s2">&quot;500M&quot;</span><span class="p">;</span>
+<span class="linenos">17</span>          <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;EF00&quot;</span><span class="p">;</span>
+<span class="linenos">18</span>          <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">19</span>            <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">;</span>
+<span class="linenos">20</span>            <span class="ss">format</span> <span class="o">=</span> <span class="s2">&quot;vfat&quot;</span><span class="p">;</span>
+<span class="linenos">21</span>            <span class="ss">mountpoint</span> <span class="o">=</span> <span class="s2">&quot;/boot&quot;</span><span class="p">;</span>
+<span class="linenos">22</span>          <span class="p">};</span>
+<span class="linenos">23</span>        <span class="p">};</span>
+<span class="linenos">24</span>        <span class="ss">root</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">25</span>          <span class="ss">priority</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="linenos">26</span>          <span class="ss">size</span> <span class="o">=</span> <span class="s2">&quot;100%&quot;</span><span class="p">;</span>
+<span class="linenos">27</span>          <span class="ss">content</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">28</span>            <span class="ss">type</span> <span class="o">=</span> <span class="s2">&quot;filesystem&quot;</span><span class="p">;</span>
+<span class="linenos">29</span>            <span class="ss">format</span> <span class="o">=</span> <span class="s2">&quot;ext4&quot;</span><span class="p">;</span>
+<span class="linenos">30</span>            <span class="ss">mountpoint</span> <span class="o">=</span> <span class="s2">&quot;/&quot;</span><span class="p">;</span>
+<span class="linenos">31</span>          <span class="p">};</span>
+<span class="linenos">32</span>        <span class="p">};</span>
+<span class="linenos">33</span>      <span class="p">};</span>
+<span class="linenos">34</span>    <span class="p">};</span>
+<span class="linenos">35</span>  <span class="p">};</span>
+<span class="linenos">36</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Create the file <code class="docutils literal notranslate"><span class="pre">configuration.nix</span></code>, which imports the disk layout definition and specifies which disk to format:</p>
+<div class="admonition tip">
+<p class="admonition-title">小訣竅</p>
+<p>If you don't know the target disk's device identifier, list all devices on the <em>target machine</em> with <code class="docutils literal notranslate"><span class="pre">lsblk</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>ssh<span class="w"> </span>target-machine<span class="w"> </span>lsblk
+<span class="go">NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS</span>
+<span class="go">sda      8:0    0   256G  0 disk</span>
+<span class="go">├─sda1   8:1    0 248.5G  0 part /nix/store</span>
+<span class="go">│                                /</span>
+<span class="go">└─sda2   8:2    0   7.5G  0 part [SWAP]</span>
+<span class="go">sr0     11:0    1  1024M  0 rom</span>
+</pre></div>
+</div>
+<p>In this example, the disk name is <code class="docutils literal notranslate"><span class="pre">sda</span></code>.
+The block device path is then <code class="docutils literal notranslate"><span class="pre">/dev/sda</span></code>.
+Note that value for later.</p>
+</div>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span> modulesPath<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span>
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span><span class="k">let</span>
+<span class="linenos"> 4</span>  <span class="ss">diskDevice</span> <span class="o">=</span> <span class="s2">&quot;/dev/sda&quot;</span><span class="p">;</span>
+<span class="linenos"> 5</span>  <span class="ss">sources</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./npins</span><span class="p">;</span>
+<span class="linenos"> 6</span><span class="k">in</span>
+<span class="linenos"> 7</span><span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos"> 9</span>    <span class="p">(</span>modulesPath <span class="o">+</span> <span class="s2">&quot;/profiles/qemu-guest.nix&quot;</span><span class="p">)</span>
+<span class="linenos">10</span>    <span class="p">(</span>sources<span class="o">.</span>disko <span class="o">+</span> <span class="s2">&quot;/module.nix&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="l">./single-disk-layout.nix</span>
+<span class="linenos">12</span>  <span class="p">];</span>
+<span class="linenos">13</span>
+<span class="linenos">14</span>  disko<span class="o">.</span>devices<span class="o">.</span>disk<span class="o">.</span>main<span class="o">.</span><span class="ss">device</span> <span class="o">=</span> diskDevice<span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>  boot<span class="o">.</span>loader<span class="o">.</span><span class="ss">grub</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">17</span>    <span class="ss">devices</span> <span class="o">=</span> <span class="p">[</span> diskDevice <span class="p">];</span>
+<span class="linenos">18</span>    <span class="ss">efiSupport</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">19</span>    <span class="ss">efiInstallAsRemovable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">20</span>  <span class="p">};</span>
+<span class="linenos">21</span>
+<span class="linenos">22</span>  services<span class="o">.</span>openssh<span class="o">.</span><span class="ss">enable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">23</span>
+<span class="linenos">24</span>  users<span class="o">.</span>users<span class="o">.</span>root<span class="o">.</span>openssh<span class="o">.</span>authorizedKeys<span class="o">.</span><span class="ss">keys</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos">25</span>    <span class="s2">&quot;&lt;your SSH key here&gt;&quot;</span>
+<span class="linenos">26</span>  <span class="p">];</span>
+<span class="linenos">27</span>
+<span class="linenos">28</span>  system<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;24.11&quot;</span><span class="p">;</span>
+<span class="linenos">29</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">/dev/sda</span></code> with your disk block device path.</p>
+<p>Replace the <code class="docutils literal notranslate"><span class="pre">&lt;your</span> <span class="pre">SSH</span> <span class="pre">key</span> <span class="pre">here&gt;</span></code> string with the SSH public key that you want to use for future logins as user <code class="docutils literal notranslate"><span class="pre">root</span></code>.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">diskDevice</span></code> variable in the <code class="docutils literal notranslate"><span class="pre">let</span></code> block defines the path of the disk block device:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">3</span><span class="k">let</span>
+<span class="hll"><span class="linenos">4</span>  <span class="ss">diskDevice</span> <span class="o">=</span> <span class="s2">&quot;/dev/sda&quot;</span><span class="p">;</span>
+</span><span class="linenos">5</span>  <span class="ss">sources</span> <span class="o">=</span> <span class="nb">import</span> <span class="l">./npins</span><span class="p">;</span>
+<span class="linenos">6</span><span class="k">in</span>
+</pre></div>
+</div>
+<p class="sd-card-text">It is used to set the target for the partitioning and formatting as described in the disk layout specification.
+It is also used in the boot loader configuration to make it bootable on both legacy BIOS as well as UEFI systems:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos">14</span>  disko<span class="o">.</span>devices<span class="o">.</span>disk<span class="o">.</span>main<span class="o">.</span><span class="ss">device</span> <span class="o">=</span> diskDevice<span class="p">;</span>
+</span><span class="linenos">15</span>
+<span class="linenos">16</span>  boot<span class="o">.</span>loader<span class="o">.</span><span class="ss">grub</span> <span class="o">=</span> <span class="p">{</span>
+<span class="hll"><span class="linenos">17</span>    <span class="ss">devices</span> <span class="o">=</span> <span class="p">[</span> diskDevice <span class="p">];</span>
+</span><span class="linenos">18</span>    <span class="ss">efiSupport</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">19</span>    <span class="ss">efiInstallAsRemovable</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">20</span>  <span class="p">};</span>
+</pre></div>
+</div>
+<p class="sd-card-text">The <code class="docutils literal notranslate"><span class="pre">qemu-guest.nix</span></code> module makes this system compatible for running inside a QEMU virtual machine:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span>  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span>
+<span class="hll"><span class="linenos"> 9</span>    <span class="p">(</span>modulesPath <span class="o">+</span> <span class="s2">&quot;/profiles/qemu-guest.nix&quot;</span><span class="p">)</span>
+</span><span class="linenos">10</span>    <span class="p">(</span>sources<span class="o">.</span>disko <span class="o">+</span> <span class="s2">&quot;/module.nix&quot;</span><span class="p">)</span>
+<span class="linenos">11</span>    <span class="l">./single-disk-layout.nix</span>
+<span class="linenos">12</span>  <span class="p">];</span>
+</pre></div>
+</div>
+<p class="sd-card-text">From a disk layout specification, the <code class="docutils literal notranslate"><span class="pre">disko</span></code> library generates a partitioning script and the portion of the NixOS configuration that mounts the partitions accordingly at boot time.
+The first line imports the library, the second line applies the disk layout:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 8</span>  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span>
+<span class="linenos"> 9</span>    <span class="p">(</span>modulesPath <span class="o">+</span> <span class="s2">&quot;/profiles/qemu-guest.nix&quot;</span><span class="p">)</span>
+<span class="hll"><span class="linenos">10</span>    <span class="p">(</span>sources<span class="o">.</span>disko <span class="o">+</span> <span class="s2">&quot;/module.nix&quot;</span><span class="p">)</span>
+</span><span class="hll"><span class="linenos">11</span>    <span class="l">./single-disk-layout.nix</span>
+</span><span class="linenos">12</span>  <span class="p">];</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="test-the-disk-layout">
+<h2>Test the disk layout<a class="headerlink" href="#test-the-disk-layout" title="連結到這個標頭">#</a></h2>
+<p>Check that the disk layout is valid:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-build -E &quot;((import &lt;nixpkgs&gt; {}).nixos [ ./configuration.nix ]).installTest&quot;</span>
+</pre></div>
+</div>
+<p>This command runs the complete installation in a virtual machine by building a derivation in the <code class="docutils literal notranslate"><span class="pre">installTest</span></code> attribute provided by the <code class="docutils literal notranslate"><span class="pre">disko</span></code> module.</p>
+</section>
+<section id="deploy-the-system">
+<h2>Deploy the system<a class="headerlink" href="#deploy-the-system" title="連結到這個標頭">#</a></h2>
+<p>To deploy the system, build the configuration and the corresponding disk formatting script, and run <code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> using the results:</p>
+<div class="admonition important">
+<p class="admonition-title">重要</p>
+<p>Replace <code class="docutils literal notranslate"><span class="pre">target-host</span></code> with the hostname or IP address of your <em>target machine</em>.</p>
+</div>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">toplevel=$(nixos-rebuild build --no-flake)</span>
+<span class="go">diskoScript=$(nix-build -E &quot;((import &lt;nixpkgs&gt; {}).nixos [ ./configuration.nix ]).diskoScript&quot;)</span>
+<span class="go">nixos-anywhere --store-paths &quot;$diskoScript&quot; &quot;$toplevel&quot; root@target-host</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>If you don't have public key authentication:
+Set the environment variable <code class="docutils literal notranslate"><span class="pre">SSH_PASS</span></code> to your password then append the <code class="docutils literal notranslate"><span class="pre">--env-password</span></code> flag to the <code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> command.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> will now log into the target system, partition, format, and mount the disk, and install the NixOS configuration.
+Then, it reboots the system.</p>
+</section>
+<section id="update-the-system">
+<h2>Update the system<a class="headerlink" href="#update-the-system" title="連結到這個標頭">#</a></h2>
+<p>To update the system, run <code class="docutils literal notranslate"><span class="pre">npins</span></code> and re-deploy the configuration:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">npins update nixpkgs</span>
+<span class="go">nixos-rebuild switch --no-flake --target-host root@target-host</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> is not needed any more, unless you want to change the disk layout.</p>
+</section>
+</section>
+<section id="next-steps">
+<h1>下一步<a class="headerlink" href="#next-steps" title="連結到這個標頭">#</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="binary-cache-setup.html"><span class="doc std std-doc">Setting up an HTTP binary cache</span></a></p></li>
+<li><p><a class="reference internal" href="../../guides/recipes/post-build-hook.html#post-build-hooks"><span class="std std-ref">Setting up post-build hooks</span></a></p></li>
+</ul>
+<section id="references">
+<h2>參考<a class="headerlink" href="#references" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nix-community.github.io/nixos-anywhere/"><code class="docutils literal notranslate"><span class="pre">nixos-anywhere</span></code> project page</a></p></li>
+<li><p><a class="reference external" href="https://github.com/nix-community/disko"><code class="docutils literal notranslate"><span class="pre">disko</span></code> project repository</a></p></li>
+<li><p><a class="reference external" href="https://github.com/nix-community/disko/tree/master/example">Collection of disk layout examples</a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="integration-testing-using-virtual-machines.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">使用 NixOS 虛擬機進行整合測試</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="installing-nixos-on-a-raspberry-pi.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">在 Raspberry Pi 上安裝 NixOS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Provisioning remote machines via SSH</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-the-environment">Prepare the environment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-nixos-configuration">Create a NixOS configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#test-the-disk-layout">Test the disk layout</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploy-the-system">Deploy the system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#update-the-system">Update the system</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,729 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="tutorial, declarative, shell, environment, developer, nix, nixpkgs" name="keywords" />
+
+    <title>Declarative shell environments with shell.nix &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=cbf116e0"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/first-steps/declarative-shell';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/first-steps/declarative-shell.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜尋" href="../../search.html" />
+    <link rel="next" title="Towards reproducibility: pinning Nixpkgs" href="towards-reproducibility-pinning-nixpkgs.html" />
+    <link rel="prev" title="Reproducible interpreted scripts" href="reproducible-scripts.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">第一步</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/integration-testing-using-virtual-machines.html">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../nixos/installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/first-steps/declarative-shell.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Declarative shell environments with shell.nix</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">概覽</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-will-it-take">How long will it take?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entering-a-temporary-shell">Entering a temporary shell</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-shell-nix-file">A basic <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">環境變數</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#startup-commands">Startup commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="declarative-shell-environments-with-shell-nix">
+<span id="declarative-reproducible-envs"></span><h1>Declarative shell environments with <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code><a class="headerlink" href="#declarative-shell-environments-with-shell-nix" title="連結到這個標頭">#</a></h1>
+<section id="overview">
+<h2>概覽<a class="headerlink" href="#overview" title="連結到這個標頭">#</a></h2>
+<p>Declarative shell environments allow you to:</p>
+<ul class="simple">
+<li><p>Automatically run bash commands during environment activation</p></li>
+<li><p>Automatically set environment variables</p></li>
+<li><p>Put the environment definition under version control and reproduce it on other machines</p></li>
+</ul>
+<section id="what-will-you-learn">
+<h3>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h3>
+<p>In the <a class="reference internal" href="ad-hoc-shell-environments.html#ad-hoc-envs"><span class="std std-ref">Ad hoc shell environments</span></a> tutorial, you learned how to imperatively create shell environments using <code class="docutils literal notranslate"><span class="pre">nix-shell</span> <span class="pre">-p</span></code>.
+This is great when you want to quickly access tools without installing them permanently.
+You also learned how to execute that command with a specific Nixpkgs revision using a Git commit as an argument, to recreate the same environment used previously.</p>
+<p>In this tutorial we'll take a look at how to create reproducible shell environments with a declarative configuration in a <a class="reference internal" href="../../reference/glossary.html#term-Nix-file"><span class="xref std std-term">Nix file</span></a>.
+This file can be shared with anyone to recreate the same environment on a different machine.</p>
+</section>
+<section id="how-long-will-it-take">
+<h3>How long will it take?<a class="headerlink" href="#how-long-will-it-take" title="連結到這個標頭">#</a></h3>
+<p>30 minutes</p>
+</section>
+<section id="what-do-you-need">
+<h3>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h3>
+<ul class="simple">
+<li><p>Familiarity with the Unix shell</p></li>
+<li><p>A rudimentary understanding of the <a class="reference internal" href="../nix-language.html#reading-nix-language"><span class="std std-ref">Nix language</span></a></p></li>
+</ul>
+</section>
+</section>
+<section id="entering-a-temporary-shell">
+<h2>Entering a temporary shell<a class="headerlink" href="#entering-a-temporary-shell" title="連結到這個標頭">#</a></h2>
+<p>Suppose we want an environment where <code class="docutils literal notranslate"><span class="pre">cowsay</span></code> and <code class="docutils literal notranslate"><span class="pre">lolcat</span></code> are available.
+The simplest possible way to accomplish this is via the <code class="docutils literal notranslate"><span class="pre">nix-shell</span> <span class="pre">-p</span></code> command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ nix-shell -p cowsay lolcat
+</pre></div>
+</div>
+<p>This command works, but there's a number of drawbacks:</p>
+<ul class="simple">
+<li><p>You have to type out <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">cowsay</span> <span class="pre">lolcat</span></code> every time you enter the shell.</p></li>
+<li><p>It doesn't (ergonomically) allow you any further customization of your shell environment.</p></li>
+</ul>
+<p>A better solution is to create our shell environment from a <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> file.</p>
+</section>
+<section id="a-basic-shell-nix-file">
+<h2>A basic <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> file<a class="headerlink" href="#a-basic-shell-nix-file" title="連結到這個標頭">#</a></h2>
+<p>Create a file called <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> with these contents:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">let</span>
+<span class="linenos"> 2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-24.05&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos"> 4</span><span class="k">in</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>pkgs<span class="o">.</span>mkShellNoCC <span class="p">{</span>
+<span class="linenos"> 7</span>  <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+<span class="linenos"> 8</span>    cowsay
+<span class="linenos"> 9</span>    lolcat
+<span class="linenos">10</span>  <span class="p">];</span>
+<span class="linenos">11</span><span class="p">}</span>
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Detailed explanation</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">We use a version of <a class="reference internal" href="../../reference/pinning-nixpkgs.html#ref-pinning-nixpkgs"><span class="std std-ref">Nixpkgs pinned to a release branch</span></a>.
+If you followed the <a class="reference internal" href="ad-hoc-shell-environments.html#ad-hoc-envs"><span class="std std-ref">Ad hoc shell environments</span></a> tutorial and don't want to download all dependencies again, specify the exact same revision as in the section <a class="reference internal" href="ad-hoc-shell-environments.html#towards-reproducibility"><span class="std std-ref">Towards reproducibility</span></a>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">let</span>
+<span class="hll"><span class="linenos">2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/2a601aafdc5605a5133a2ca506a34a3a73377247&quot;</span><span class="p">;</span>
+</span><span class="linenos">3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos">4</span><span class="k">in</span>
+</pre></div>
+</div>
+<p class="sd-card-text">We explicitly set <code class="docutils literal notranslate"><span class="pre">config</span></code> and <code class="docutils literal notranslate"><span class="pre">overlays</span></code> to avoid them being inadvertently overridden by <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-packageconfig">global configuration</a>.</p>
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> is a function that takes as an argument an attribute set.
+Here we give it an attribute <code class="docutils literal notranslate"><span class="pre">packages</span></code> with a list containing two items from the <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> attribute set.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Side note on <code class="docutils literal notranslate"><span class="pre">mkShell</span></code></span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> and <code class="docutils literal notranslate"><span class="pre">mkShell</span></code> were originally conceived as a way to construct a shell environment containing the <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-tools-of-stdenv">tools needed to debug package builds</a>, such as Make or GCC.
+Only later did it become widely used as a general way to make temporary environments for other purposes.
+<code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> is a function that produces such an environment, but without a compiler toolchain.</p>
+<p class="sd-card-text">You may encounter examples of <code class="docutils literal notranslate"><span class="pre">mkShell</span></code> or <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> that add packages to the <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code> or <code class="docutils literal notranslate"><span class="pre">nativeBuildInputs</span></code> attributes instead.
+<code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> is a <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-pkgs-mkShell">wrapper around <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code></a>, so it takes the same arguments as <code class="docutils literal notranslate"><span class="pre">mkDerivation</span></code>, such as <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code> or <code class="docutils literal notranslate"><span class="pre">nativeBuildInputs</span></code>.
+The <code class="docutils literal notranslate"><span class="pre">packages</span></code> attribute argument to <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> is simply an alias for <code class="docutils literal notranslate"><span class="pre">nativeBuildInputs</span></code>.</p>
+</div>
+</details></div>
+</details><p>Enter the environment by running <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> in the same directory as <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code>:</p>
+<div class="admonition note">
+<p class="admonition-title">備註</p>
+<p>The first invocation of <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> on this file may take a while to download all dependencies.</p>
+</div>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell
+<span class="gp">[nix-shell]$ </span>cowsay<span class="w"> </span>hello<span class="w"> </span><span class="p">|</span><span class="w"> </span>lolcat
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> by default looks for a file called <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> in the current directory and builds a shell environment from the Nix expression in this file.
+Packages defined in the <code class="docutils literal notranslate"><span class="pre">packages</span></code> attribute will be available in <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.</p>
+</section>
+<section id="environment-variables">
+<h2>環境變數<a class="headerlink" href="#environment-variables" title="連結到這個標頭">#</a></h2>
+<p>You may want to automatically export certain environment variables when you enter a shell environment.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">GREETING</span></code> so it can be used in the shell environment:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>let
+<span class="w"> </span>  nixpkgs = fetchTarball &quot;https://github.com/NixOS/nixpkgs/tarball/nixos-24.05&quot;;
+<span class="w"> </span>  pkgs = import nixpkgs { config = {}; overlays = []; };
+<span class="w"> </span>in
+
+<span class="w"> </span>pkgs.mkShellNoCC {
+<span class="w"> </span>  packages = with pkgs; [
+<span class="w"> </span>    cowsay
+<span class="w"> </span>    lolcat
+<span class="w"> </span>  ];
+
+<span class="gi">+  GREETING = &quot;Hello, Nix!&quot;;</span>
+<span class="w"> </span>}
+</pre></div>
+</div>
+<p>Any attribute name passed to <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code> that is not reserved otherwise and has a value which can be coerced to a string will end up as an environment variable.</p>
+<p>Try it out.
+Exit the shell by typing <code class="docutils literal notranslate"><span class="pre">exit</span></code> or pressing <code class="docutils literal notranslate"><span class="pre">Ctrl</span></code>+<code class="docutils literal notranslate"><span class="pre">D</span></code>, then start it again with <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">[nix-shell]$ </span><span class="nb">echo</span><span class="w"> </span><span class="nv">$GREETING</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">警告</p>
+<p>Some variables are protected from being set as described above.</p>
+<p>For example, the shell prompt format for most shells is set by the <code class="docutils literal notranslate"><span class="pre">PS1</span></code> environment variable, but <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> already sets this by default, and will ignore a <code class="docutils literal notranslate"><span class="pre">PS1</span></code> attribute set in the argument.</p>
+<p>If you need to override these protected environment variables, use the <code class="docutils literal notranslate"><span class="pre">shellHook</span></code> attribute as described in the next section.</p>
+</div>
+</section>
+<section id="startup-commands">
+<h2>Startup commands<a class="headerlink" href="#startup-commands" title="連結到這個標頭">#</a></h2>
+<p>You may want to run some shell commands before entering the interactive shell environment.
+These commands can be placed in the <code class="docutils literal notranslate"><span class="pre">shellHook</span></code> attribute provided to <code class="docutils literal notranslate"><span class="pre">mkShellNoCC</span></code>.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">shellHook</span></code> to output a colorful greeting:</p>
+<div class="highlight-diff notranslate"><div class="highlight"><pre><span></span><span class="w"> </span>let
+<span class="w"> </span>  nixpkgs = fetchTarball &quot;https://github.com/NixOS/nixpkgs/tarball/nixos-24.05&quot;;
+<span class="w"> </span>  pkgs = import nixpkgs { config = {}; overlays = []; };
+<span class="w"> </span>in
+
+<span class="w"> </span>pkgs.mkShellNoCC {
+<span class="w"> </span>  packages = with pkgs; [
+<span class="w"> </span>    cowsay
+<span class="w"> </span>    lolcat
+<span class="w"> </span>  ];
+
+<span class="w"> </span>  GREETING = &quot;Hello, Nix!&quot;;
+<span class="gi">+</span>
+<span class="gi">+  shellHook = &#39;&#39;</span>
+<span class="gi">+    echo $GREETING | cowsay | lolcat</span>
+<span class="gi">+  &#39;&#39;;</span>
+<span class="w"> </span>}
+</pre></div>
+</div>
+<p>Try it again.
+Exit the shell by typing <code class="docutils literal notranslate"><span class="pre">exit</span></code> or pressing <code class="docutils literal notranslate"><span class="pre">Ctrl</span></code>+<code class="docutils literal notranslate"><span class="pre">D</span></code>, then start it again with <code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> to observe the effect.</p>
+</section>
+<section id="references">
+<h2>參考<a class="headerlink" href="#references" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#sec-pkgs-mkShell"><code class="docutils literal notranslate"><span class="pre">mkShell</span></code> documentation</a></p></li>
+<li><p>Nixpkgs <a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#ssec-stdenv-functions">shell functions and utilities</a> documentation</p></li>
+<li><p><a class="reference external" href="https://nix.dev/manual/nix/stable/command-ref/nix-shell"><code class="docutils literal notranslate"><span class="pre">nix-shell</span></code> documentation</a></p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>下一步<a class="headerlink" href="#next-steps" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../nix-language.html#reading-nix-language"><span class="std std-ref">Nix 語言基礎</span></a></p></li>
+<li><p><a class="reference internal" href="../../guides/recipes/direnv.html#automatic-direnv"><span class="std std-ref">Automatic environment activation with direnv</span></a></p></li>
+<li><p><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html"><span class="std std-doc">開發外殼中的相依項</span></a></p></li>
+<li><p><a class="reference internal" href="../../guides/recipes/dependency-management.html"><span class="std std-doc">Automatically managing remote sources with npins</span></a></p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="reproducible-scripts.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">Reproducible interpreted scripts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="towards-reproducibility-pinning-nixpkgs.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">Towards reproducibility: pinning Nixpkgs</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">概覽</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-long-will-it-take">How long will it take?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entering-a-temporary-shell">Entering a temporary shell</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-basic-shell-nix-file">A basic <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code> file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">環境變數</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#startup-commands">Startup commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">參考</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
