@@ -1,0 +1,221 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-15 13:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../index.md:0
+msgid "Official documentation for getting things done with Nix."
+msgstr "Nix 활용을 위한 공식 문서."
+
+#: ../../../index.md:0
+msgid ""
+"Nix, Nixpkgs, NixOS, Linux, build systems, deployment, packaging, "
+"declarative, reproducible, immutable, software, developer"
+msgstr ""
+"Nix, Nixpkgs, NixOS, 리눅스, 빌드 시스템, 배포, 패키징, 선언적, 재현 가능, 불"
+"변, 소프트웨어, 개발자"
+
+#: ../../../index.md:0
+msgid "en_GB"
+msgstr "en_GB"
+
+#: ../../../index.md:10
+msgid "Welcome to nix.dev"
+msgstr "nix.dev에 오신 것을 환영합니다"
+
+#: ../../../index.md:12
+msgid ""
+"nix.dev is the home of official documentation for the Nix ecosystem. It is "
+"maintained by the [Nix documentation team](https://nixos.org/community/teams/"
+"documentation)."
+msgstr ""
+"nix.dev는 Nix 생태계의 공식 문서가 있는 곳입니다. 이 사이트는 [Nix 문서화 팀]"
+"(https://nixos.org/community/teams/documentation)이 관리합니다."
+
+#: ../../../index.md:15
+msgid ""
+"If you're new here, {ref}`install Nix <install-nix>` and begin your journey "
+"with our tutorial series!"
+msgstr ""
+"Nix가 처음이시라면, {ref}`Nix를 설치 <install-nix>`하고 튜토리얼 시리즈로 학"
+"습을 시작해 보세요!"
+
+#: ../../../index.md:19
+msgid "Tutorials"
+msgstr "튜토리얼"
+
+#: ../../../index.md:24
+msgid "Series of lessons to get started"
+msgstr "시작하기 위한 수업 시리즈"
+
+#: ../../../index.md:27
+msgid "Guides"
+msgstr "가이드"
+
+#: ../../../index.md:32
+msgid "Guides to getting things done"
+msgstr "작업을 수행하기 위한 가이드"
+
+#: ../../../index.md:37
+msgid "Reference"
+msgstr "레퍼런스"
+
+#: ../../../index.md:42
+msgid "Collections of detailed technical descriptions"
+msgstr "상세한 기술 설명 모음"
+
+#: ../../../index.md:45
+msgid "Concepts"
+msgstr "개념"
+
+#: ../../../index.md:50
+msgid "Explanations of history and ideas in the Nix ecosystem"
+msgstr "Nix 생태계의 역사와 아이디어에 대한 설명"
+
+#: ../../../index.md:53
+msgid "What can you do with Nix?"
+msgstr "Nix로 무엇을 할 수 있나요?"
+
+#: ../../../index.md:55
+msgid "With the Nix ecosystem, you can:"
+msgstr ""
+
+#: ../../../index.md:57
+msgid "{ref}`Reproducible development environments <ad-hoc-envs>`."
+msgstr "{ref}`재현 가능한 개발 환경 <ad-hoc-envs>`."
+
+#: ../../../index.md:58
+msgid "Easy installation of software over URLs."
+msgstr "URL을 통한 간편한 소프트웨어 설치."
+
+#: ../../../index.md:59
+msgid "Easy transfer of software environments between computers."
+msgstr "컴퓨터 간 간편한 소프트웨어 환경 이전."
+
+#: ../../../index.md:60
+msgid ""
+"{ref}`Declarative specification of Linux machines <deploy-nixos-using-"
+"terraform>`."
+msgstr "{ref}`Linux 머신의 선언적 명세 <deploy-nixos-using-terraform>`."
+
+#: ../../../index.md:61
+msgid ""
+"{ref}`Reproducible integration testing using virtual machines <integration-"
+"testing-vms>`."
+msgstr ""
+"{ref}`가상 머신을 활용한 재현 가능한 통합 테스트 <integration-testing-vms>`."
+
+#: ../../../index.md:62
+msgid "Avoidance of version conflicts with already installed software."
+msgstr "이미 설치된 소프트웨어와의 버전 충돌 방지."
+
+#: ../../../index.md:63
+msgid "Installing software from source code."
+msgstr "소스 코드에서 소프트웨어 설치."
+
+#: ../../../index.md:64
+msgid "{ref}`Transparent build caching using binary caches <github-actions>`."
+msgstr "{ref}`바이너리 캐시를 활용한 투명한 빌드 캐싱 <github-actions>`."
+
+#: ../../../index.md:65
+msgid "Strong support for software auditability."
+msgstr "소프트웨어 감사 가능성에 대한 강력한 지원."
+
+#: ../../../index.md:66
+msgid "{ref}`First-class cross compilation support <cross-compilation>`."
+msgstr "{ref}`일급 크로스 컴파일 지원 <cross-compilation>`."
+
+#: ../../../index.md:67
+msgid "Remote builds."
+msgstr "원격 빌드."
+
+#: ../../../index.md:68
+msgid "Remote deployments."
+msgstr "원격 배포."
+
+#: ../../../index.md:69
+msgid "Atomic upgrades and rollbacks."
+msgstr "원자적 업그레이드 및 롤백."
+
+#: ../../../index.md:72
+msgid "Who is Nix for?"
+msgstr "Nix는 누구를 위한 것인가요?"
+
+#: ../../../index.md:74
+msgid ""
+"Nix is a tool for people who both need computers to do exactly as intended, "
+"repeatably, far into the future, and who are familiar with command line "
+"interfaces and plain text editors."
+msgstr ""
+"Nix는 컴퓨터가 의도한 대로 정확하게, 반복적으로, 먼 미래까지 작동해야 하며, "
+"동시에 명령줄 인터페이스와 일반 텍스트 편집기에 익숙한 사람들을 위한 도구입니"
+"다."
+
+#: ../../../index.md:76
+msgid ""
+"You don't have to be a professional software developer and you don't need "
+"formal education in informatics to greatly benefit from Nix. However, "
+"experience with complex software projects and knowing some informatics helps "
+"with appreciating why it's useful and how it works. And it helps with "
+"learning how to use it effectively and [how to make improvements](how-to-"
+"contribute)."
+msgstr ""
+"Nix의 큰 혜택을 누리기 위해 전문 소프트웨어 개발자일 필요도, 정보학에 대한 정"
+"규 교육을 받을 필요도 없습니다. 다만, 복잡한 소프트웨어 프로젝트 경험과 약간"
+"의 정보학 지식이 있으면 Nix가 왜 유용한지, 어떻게 작동하는지 이해하는 데 도움"
+"이 됩니다. 또한 효과적으로 사용하는 방법과 [개선하는 방법](how-to-contribute)"
+"을 배우는 데에도 도움이 됩니다."
+
+#: ../../../index.md:80
+msgid "You probably won't want to go back to a world without Nix if you're a:"
+msgstr "다음과 같은 분이라면, Nix 없는 세상으로 돌아가고 싶지 않을 것입니다:"
+
+#: ../../../index.md:82
+msgid "Full-stack or back-end developer"
+msgstr "풀스택 또는 백엔드 개발자"
+
+#: ../../../index.md:83
+msgid "Test engineer"
+msgstr "테스트 엔지니어"
+
+#: ../../../index.md:84
+msgid "Embedded systems developer"
+msgstr "임베디드 시스템 개발자"
+
+#: ../../../index.md:85
+msgid "DevOps engineer"
+msgstr "DevOps 엔지니어"
+
+#: ../../../index.md:86
+msgid "System administrator"
+msgstr "시스템 관리자"
+
+#: ../../../index.md:87
+msgid "Data scientist"
+msgstr "데이터 사이언티스트"
+
+#: ../../../index.md:88
+msgid "Natural scientist"
+msgstr "자연과학자"
+
+#: ../../../index.md:89
+msgid "Student of a technical field"
+msgstr "이공계 학생"
+
+#: ../../../index.md:90
+msgid "Open source software enthusiast"
+msgstr "오픈소스 소프트웨어 애호가"
