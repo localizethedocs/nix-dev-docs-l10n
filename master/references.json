@@ -47,9 +47,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-06-07 11:40:54 +0200",
-      "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
-      "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
+      "date" : "2026-09-18 20:08:30 +0200",
+      "hash" : "00b6b59022bb38ed2ec879606372db5dc4df031a",
+      "title" : "site: fix content overflow on mobile (unset grid, wrap inline code) (#1288)"
     }
   },
   "type" : "branch",
