@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ko-KR" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Official documentation for getting things done with Nix." lang="en" name="description" xml:lang="en" />
+<meta content="Nix, Nixpkgs, NixOS, Linux, build systems, deployment, packaging, declarative, reproducible, immutable, software, developer" name="keywords" />
+<meta content="en_GB" property="og:locale" />
+
+    <title>nix.dev에 오신 것을 환영합니다 &#8212; nix.dev  문서</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=ac244655"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=be2dec3e"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/index.html" />
+    <link rel="icon" href="_static/favicon.png"/>
+    <link rel="index" title="색인" href="genindex.html" />
+    <link rel="search" title="검색" href="search.html" />
+    <link rel="next" title="Nix 설치" href="install-nix.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ko-KR"/>
+<script type="text/javascript" src="ltd-provenance.js"></script>
+<script type="text/javascript" src="ltd-current.js"></script>
+<script type="text/javascript" src="../../ltd-config.js"></script>
+<script type="text/javascript" src="../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="#">
+    <img src="_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Nix 활용을 위한 공식 문서.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install-nix.html">Nix 설치</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="tutorials/first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/nix-language.html">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="tutorials/working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/cross-compilation.html">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="tutorials/module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="tutorials/nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/deploying-nixos-using-terraform.html">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="guides/index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="guides/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="concepts/index.html">개념</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="contributing/index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="contributing/how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="contributing/documentation/index.html">Contributing documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="소스 저장소"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="소스 파일 다운로드"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDF로 인쇄"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="전체 화면으로보기"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="검색" aria-label="검색" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>nix.dev에 오신 것을 환영합니다</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 내용 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-you-do-with-nix">Nix로 무엇을 할 수 있나요?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#who-is-nix-for">Nix는 누구를 위한 것인가요?</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="welcome-to-nix-dev">
+<h1>nix.dev에 오신 것을 환영합니다<a class="headerlink" href="#welcome-to-nix-dev" title="Link to this heading">#</a></h1>
+<p>nix.dev는 Nix 생태계의 공식 문서가 있는 곳입니다. 이 사이트는 <a class="reference external" href="https://nixos.org/community/teams/documentation">Nix 문서화 팀</a>이 관리합니다.</p>
+<p>Nix가 처음이시라면, <a class="reference internal" href="install-nix.html#install-nix"><span class="std std-ref">Nix를 설치</span></a>하고 튜토리얼 시리즈로 학습을 시작해 보세요!</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover sd-text-center docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+튜토리얼</div>
+<p class="sd-card-text">시작하기 위한 수업 시리즈</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="tutorials/index.html#tutorials"><span class="std std-ref">Tutorials</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover sd-text-center docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+가이드</div>
+<p class="sd-card-text">작업을 수행하기 위한 가이드</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="guides/index.html#guides"><span class="std std-ref">Guides</span></a></div>
+</div>
+</div>
+</div>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover sd-text-center docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+레퍼런스</div>
+<p class="sd-card-text">상세한 기술 설명 모음</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="reference/index.html#reference"><span class="std std-ref">Reference</span></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover sd-text-center docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+개념</div>
+<p class="sd-card-text">Nix 생태계의 역사와 아이디어에 대한 설명</p>
+</div>
+<a class="sd-stretched-link sd-hide-link-text reference internal" href="concepts/index.html#concepts"><span class="std std-ref">개념</span></a></div>
+</div>
+</div>
+</div>
+<section id="what-can-you-do-with-nix">
+<h2>Nix로 무엇을 할 수 있나요?<a class="headerlink" href="#what-can-you-do-with-nix" title="Link to this heading">#</a></h2>
+<p>With the Nix ecosystem, you can:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="tutorials/first-steps/ad-hoc-shell-environments.html#ad-hoc-envs"><span class="std std-ref">재현 가능한 개발 환경</span></a>.</p></li>
+<li><p>URL을 통한 간편한 소프트웨어 설치.</p></li>
+<li><p>컴퓨터 간 간편한 소프트웨어 환경 이전.</p></li>
+<li><p><a class="reference internal" href="tutorials/nixos/deploying-nixos-using-terraform.html#deploy-nixos-using-terraform"><span class="std std-ref">Linux 머신의 선언적 명세</span></a>.</p></li>
+<li><p><a class="reference internal" href="tutorials/nixos/integration-testing-using-virtual-machines.html#integration-testing-vms"><span class="std std-ref">가상 머신을 활용한 재현 가능한 통합 테스트</span></a>.</p></li>
+<li><p>이미 설치된 소프트웨어와의 버전 충돌 방지.</p></li>
+<li><p>소스 코드에서 소프트웨어 설치.</p></li>
+<li><p><a class="reference internal" href="guides/recipes/continuous-integration-github-actions.html#github-actions"><span class="std std-ref">바이너리 캐시를 활용한 투명한 빌드 캐싱</span></a>.</p></li>
+<li><p>소프트웨어 감사 가능성에 대한 강력한 지원.</p></li>
+<li><p><a class="reference internal" href="tutorials/cross-compilation.html#cross-compilation"><span class="std std-ref">일급 크로스 컴파일 지원</span></a>.</p></li>
+<li><p>원격 빌드.</p></li>
+<li><p>원격 배포.</p></li>
+<li><p>원자적 업그레이드 및 롤백.</p></li>
+</ul>
+</section>
+<section id="who-is-nix-for">
+<h2>Nix는 누구를 위한 것인가요?<a class="headerlink" href="#who-is-nix-for" title="Link to this heading">#</a></h2>
+<p>Nix는 컴퓨터가 의도한 대로 정확하게, 반복적으로, 먼 미래까지 작동해야 하며, 동시에 명령줄 인터페이스와 일반 텍스트 편집기에 익숙한 사람들을 위한 도구입니다.</p>
+<p>Nix의 큰 혜택을 누리기 위해 전문 소프트웨어 개발자일 필요도, 정보학에 대한 정규 교육을 받을 필요도 없습니다. 다만, 복잡한 소프트웨어 프로젝트 경험과 약간의 정보학 지식이 있으면 Nix가 왜 유용한지, 어떻게 작동하는지 이해하는 데 도움이 됩니다. 또한 효과적으로 사용하는 방법과 <a class="reference internal" href="contributing/how-to-contribute.html#how-to-contribute"><span class="std std-ref">개선하는 방법</span></a>을 배우는 데에도 도움이 됩니다.</p>
+<p>다음과 같은 분이라면, Nix 없는 세상으로 돌아가고 싶지 않을 것입니다:</p>
+<ul class="simple">
+<li><p>풀스택 또는 백엔드 개발자</p></li>
+<li><p>테스트 엔지니어</p></li>
+<li><p>임베디드 시스템 개발자</p></li>
+<li><p>DevOps 엔지니어</p></li>
+<li><p>시스템 관리자</p></li>
+<li><p>데이터 사이언티스트</p></li>
+<li><p>자연과학자</p></li>
+<li><p>이공계 학생</p></li>
+<li><p>오픈소스 소프트웨어 애호가</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="install-nix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">다음</p>
+        <p class="prev-next-title">Nix 설치</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 내용
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-can-you-do-with-nix">Nix로 무엇을 할 수 있나요?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#who-is-nix-for">Nix는 누구를 위한 것인가요?</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+으로 the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+
+
+<html lang="ko-KR" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Continuous Integration with GitHub Actions and a binary cache" lang="en" name="description" xml:lang="en" />
+<meta content="CI, Continuous Integration, GitHub Actions, Binary Cache, Nix" name="keywords" />
+
+    <title>Continuous integration with GitHub Actions &#8212; nix.dev  문서</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=ac244655"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guides/recipes/continuous-integration-github-actions';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/guides/recipes/continuous-integration-github-actions.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="색인" href="../../genindex.html" />
+    <link rel="search" title="검색" href="../../search.html" />
+    <link rel="next" title="Best practices" href="../best-practices.html" />
+    <link rel="prev" title="Setting up post-build hooks" href="post-build-hook.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="ko-KR"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Nix 활용을 위한 공식 문서.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">Nix 설치</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/nix-language.html">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/cross-compilation.html">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/deploying-nixos-using-terraform.html">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Recipes</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">개념</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">Contributing documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="소스 저장소"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="이 페이지 다운로드">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/guides/recipes/continuous-integration-github-actions.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="소스 파일 다운로드"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="PDF로 인쇄"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="전체 화면으로보기"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="검색" aria-label="검색" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Continuous integration with GitHub Actions</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 내용 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-builds-using-cachix">Caching builds using Cachix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-your-first-binary-cache">1. Creating your first binary cache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-secrets">2. Setting up secrets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-github-actions">3. Setting up GitHub Actions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="continuous-integration-with-github-actions">
+<span id="github-actions"></span><h1>Continuous integration with GitHub Actions<a class="headerlink" href="#continuous-integration-with-github-actions" title="Link to this heading">#</a></h1>
+<p>Set up <a class="reference external" href="https://github.com/features/actions">GitHub Actions</a> as your continuous integration (CI) workflow for commits and pull requests.</p>
+<p>Nix lets CI build and cache developer environments for every project on every branch using binary caches.</p>
+<p>Build time is a key CI metric. Cachix (below) is the most straightforward caching option.</p>
+<section id="caching-builds-using-cachix">
+<h2>Caching builds using Cachix<a class="headerlink" href="#caching-builds-using-cachix" title="Link to this heading">#</a></h2>
+<p>Using <a class="reference external" href="https://cachix.org/">Cachix</a> you’ll never have to waste time building a derivation twice, and you’ll share built derivations with all your developers.</p>
+<p>After each job, just-built derivations are pushed to your binary cache.</p>
+<p>Before each job, derivations to be built are first substituted (if they exist) from your binary cache.</p>
+<section id="creating-your-first-binary-cache">
+<h3>1. Creating your first binary cache<a class="headerlink" href="#creating-your-first-binary-cache" title="Link to this heading">#</a></h3>
+<p>It’s recommended to have different binary caches per team, depending on who will have write/read access to it.</p>
+<p>Fill out the form on the <a class="reference external" href="https://app.cachix.org/cache">create binary cache</a> page.</p>
+<p>On your freshly created binary cache, follow the <strong>Push binaries</strong> tab instructions.</p>
+</section>
+<section id="setting-up-secrets">
+<h3>2. Setting up secrets<a class="headerlink" href="#setting-up-secrets" title="Link to this heading">#</a></h3>
+<p>On your GitHub repository or organization (for use across all repositories):</p>
+<ol class="arabic simple">
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Settings</span></code>.</p></li>
+<li><p>Click on <code class="docutils literal notranslate"><span class="pre">Secrets</span></code>.</p></li>
+<li><p>Add your previously generated secrets (<code class="docutils literal notranslate"><span class="pre">CACHIX_SIGNING_KEY</span></code> and/or <code class="docutils literal notranslate"><span class="pre">CACHIX_AUTH_TOKEN</span></code>).</p></li>
+</ol>
+</section>
+<section id="setting-up-github-actions">
+<h3>3. Setting up GitHub Actions<a class="headerlink" href="#setting-up-github-actions" title="Link to this heading">#</a></h3>
+<p>Create <code class="docutils literal notranslate"><span class="pre">.github/workflows/test.yml</span></code> with:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Test&quot;</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">tests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cachix/install-nix-action@v25</span>
+<span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">nix_path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nixpkgs=channel:nixos-unstable</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cachix/cachix-action@v14</span>
+<span class="w">      </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mycache</span>
+<span class="w">        </span><span class="c1"># If you chose signing key for write access</span>
+<span class="w">        </span><span class="nt">signingKey</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;${{</span><span class="nv"> </span><span class="s">secrets.CACHIX_SIGNING_KEY</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<span class="w">        </span><span class="c1"># If you chose API tokens for write access OR if you have a private cache</span>
+<span class="w">        </span><span class="nt">authToken</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;${{</span><span class="nv"> </span><span class="s">secrets.CACHIX_AUTH_TOKEN</span><span class="nv"> </span><span class="s">}}&#39;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nix-build</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nix-shell --run &quot;echo OK&quot;</span>
+</pre></div>
+</div>
+<p>Once you commit and push to your GitHub repository,
+you should see status checks appearing on commits and PRs.</p>
+</section>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>See <a class="reference external" href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions">GitHub Actions workflow syntax</a></p></li>
+<li><p>To quickly set up a Nix project read through
+<a class="reference external" href="https://github.com/nix-dot-dev/getting-started-nix-template">Getting started Nix template</a>.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="post-build-hook.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">이전</p>
+        <p class="prev-next-title">Setting up post-build hooks</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../best-practices.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">다음</p>
+        <p class="prev-next-title">Best practices</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 내용
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caching-builds-using-cachix">Caching builds using Cachix</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-your-first-binary-cache">1. Creating your first binary cache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-secrets">2. Setting up secrets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-github-actions">3. Setting up GitHub Actions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+으로 the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
