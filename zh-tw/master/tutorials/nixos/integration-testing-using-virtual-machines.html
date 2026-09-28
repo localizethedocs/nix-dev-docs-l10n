@@ -1,0 +1,855 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-TW" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>使用 NixOS 虛擬機進行整合測試 &#8212; nix.dev  文件</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=7da51243"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=cbf116e0"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/nixos/integration-testing-using-virtual-machines';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/nixos/integration-testing-using-virtual-machines.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜尋" href="../../search.html" />
+    <link rel="next" title="Provisioning remote machines via SSH" href="provisioning-remote-machines.html" />
+    <link rel="prev" title="建置並執行 Docker 映像" href="building-and-running-docker-images.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-TW"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>使用 Nix 完成工作的官方文件。</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">安裝 Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">教學</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../first-steps/index.html">第一步</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/declarative-shell.html">宣告式外殼環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix 語言基礎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">打包現有軟體</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">交叉編譯</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../module-system/index.html">模組系統</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">NixOS</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nixos-configuration-on-vm.html">NixOS 虛擬機</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-bootable-iso-image.html">建置可開機的 ISO 映像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-and-running-docker-images.html">建置並執行 Docker 映像</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">使用 NixOS 虛擬機進行整合測試</a></li>
+<li class="toctree-l3"><a class="reference internal" href="provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="installing-nixos-on-a-raspberry-pi.html">在 Raspberry Pi 上安裝 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="deploying-nixos-using-terraform.html">使用 Terraform 部署 NixOS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">指南</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">自動化環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">開發外殼中的相依項</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python 開發環境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">最佳實踐</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">疑難排解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">參考</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">詞彙表</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix 參考手冊</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS 手冊</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">社群專案</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">支援工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">延伸閱讀</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">概念</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">常見問題集</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">貢獻</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">如何貢獻</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">貢獻文件</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="來源儲存庫"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下載此頁面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/nixos/integration-testing-using-virtual-machines.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下載原始檔"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全螢幕模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜尋" aria-label="搜尋" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>使用 NixOS 虛擬機進行整合測試</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目錄 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-testers-runnixostest-function">The <code class="docutils literal notranslate"><span class="pre">testers.runNixOSTest</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-example">Minimal example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">執行測試</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-python-shell-in-the-virtual-machine">Interactive Python shell in the virtual machine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests-with-multiple-virtual-machines">Tests with multiple virtual machines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-information-regarding-nixos-tests">Additional information regarding NixOS tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="integration-testing-with-nixos-virtual-machines">
+<span id="integration-testing-vms"></span><h1>使用 NixOS 虛擬機進行整合測試<a class="headerlink" href="#integration-testing-with-nixos-virtual-machines" title="連結到這個標頭">#</a></h1>
+<section id="what-will-you-learn">
+<h2>您將會學到什麼？<a class="headerlink" href="#what-will-you-learn" title="連結到這個標頭">#</a></h2>
+<p>This tutorial introduces Nixpkgs functionality for testing NixOS configurations.
+It also shows how to set up distributed test scenarios that involve multiple machines.</p>
+</section>
+<section id="what-do-you-need">
+<h2>您需要什麼？<a class="headerlink" href="#what-do-you-need" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p>A working <a class="reference internal" href="../../install-nix.html#install-nix"><span class="std std-ref">Nix installation</span></a> on Linux, or <a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#sec-installation">NixOS</a></p></li>
+<li><p><a class="reference internal" href="../nix-language.html#reading-nix-language"><span class="std std-ref">Nix 語言</span></a>的基礎知識</p></li>
+<li><p>Basic knowledge of <a class="reference internal" href="nixos-configuration-on-vm.html#nixos-vms"><span class="std std-ref">NixOS configuration</span></a></p></li>
+</ul>
+</section>
+<section id="introduction">
+<h2>簡介<a class="headerlink" href="#introduction" title="連結到這個標頭">#</a></h2>
+<p>Nixpkgs provides a <a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#sec-nixos-tests">test environment</a> to automate integration testing for distributed systems.
+It allows defining tests based on a set of declarative NixOS configurations and using a Python shell to interact with them through <a class="reference external" href="https://www.qemu.org/">QEMU</a> as the backend.
+Those tests are widely used to ensure that NixOS works as intended, so in general they are called <a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#sec-nixos-tests">NixOS Tests</a>.
+They can be written and launched outside of NixOS, on any Linux machine<a class="footnote-reference brackets" href="#darwin" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>Nix's design properties make integration tests reproducible, which makes them valuable in a continuous integration (CI) pipeline.</p>
+</section>
+<section id="the-testers-runnixostest-function">
+<h2>The <code class="docutils literal notranslate"><span class="pre">testers.runNixOSTest</span></code> function<a class="headerlink" href="#the-testers-runnixostest-function" title="連結到這個標頭">#</a></h2>
+<p>NixOS VM tests are defined using the <code class="docutils literal notranslate"><span class="pre">testers.runNixOSTest</span></code> function.
+The pattern for NixOS VM tests looks like this:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">let</span>
+<span class="linenos"> 2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-23.11&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos"> 4</span><span class="k">in</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>pkgs<span class="o">.</span>testers<span class="o">.</span>runNixOSTest <span class="p">{</span>
+<span class="linenos"> 7</span>  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;test-name&quot;</span><span class="p">;</span>
+<span class="linenos"> 8</span>  <span class="ss">nodes</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 9</span>    <span class="ss">machine1</span> <span class="o">=</span> <span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos">10</span>      <span class="c1"># ...</span>
+<span class="linenos">11</span>    <span class="p">};</span>
+<span class="linenos">12</span>    <span class="ss">machine2</span> <span class="o">=</span> <span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos">13</span>      <span class="c1"># ...</span>
+<span class="linenos">14</span>    <span class="p">};</span>
+<span class="linenos">15</span>  <span class="p">};</span>
+<span class="linenos">16</span>  <span class="ss">testScript</span> <span class="o">=</span> <span class="p">{</span> nodes<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos">17</span><span class="s s-Multiline">    # ...</span>
+<span class="linenos">18</span><span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">19</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The function <code class="docutils literal notranslate"><span class="pre">testers.runNixOSTest</span></code> takes a <a class="reference external" href="https://nixos.org/manual/nixos/stable/#sec-writing-modules">module</a> to specify the <a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#sec-test-options-reference">test options</a>.
+Because this module only sets configuration values, one can use the abbreviated module notation.</p>
+<p>The following configuration values must be set:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#test-opt-name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a> defines the name of the test.</p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#test-opt-nodes"><code class="docutils literal notranslate"><span class="pre">nodes</span></code></a> contains a set of named configurations, because a test script can involve more than one virtual machine.
+Each virtual machine is created from a NixOS configuration.</p></li>
+<li><p><a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#test-opt-testScript"><code class="docutils literal notranslate"><span class="pre">testScript</span></code></a> defines the Python test script, either as literal string or as a function that takes a <code class="docutils literal notranslate"><span class="pre">nodes</span></code> attribute.
+This Python test script can access the virtual machines via the names used for the <code class="docutils literal notranslate"><span class="pre">nodes</span></code>.
+It has super user rights in the virtual machines.
+In the Python script each virtual machine is accessible via the <code class="docutils literal notranslate"><span class="pre">machine</span></code> object.
+NixOS provides <a class="reference external" href="https://nixos.org/manual/nixos/stable/index.html#ssec-machine-objects">methods</a> to run tests on these configurations.</p></li>
+</ul>
+<p>The test framework automatically starts the virtual machines and runs the Python script.</p>
+</section>
+<section id="minimal-example">
+<h2>Minimal example<a class="headerlink" href="#minimal-example" title="連結到這個標頭">#</a></h2>
+<p>As a minimal test on the default configuration, we will check if the user <code class="docutils literal notranslate"><span class="pre">root</span></code> and <code class="docutils literal notranslate"><span class="pre">alice</span></code> can run Firefox.
+We will build the example up from scratch.</p>
+<ol class="arabic">
+<li><p>Use a <a class="reference internal" href="../../reference/pinning-nixpkgs.html#ref-pinning-nixpkgs"><span class="std std-ref">pinned version of Nixpkgs</span></a>, and <a class="reference internal" href="../../guides/best-practices.html#nixpkgs-config"><span class="std std-ref">explicitly set configuration options and overlays</span></a> to avoid them being inadvertently overridden by global configuration:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">let</span>
+<span class="linenos">2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-23.11&quot;</span><span class="p">;</span>
+<span class="linenos">3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos">4</span><span class="k">in</span>
+<span class="linenos">5</span>
+<span class="linenos">6</span>pkgs<span class="o">.</span>testers<span class="o">.</span>runNixOSTest <span class="p">{</span>
+<span class="linenos">7</span>  <span class="c1"># ...</span>
+<span class="linenos">8</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Label the test with a descriptive name:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;minimal-test&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Because this example only uses one virtual machine, the node we specify is simply called <code class="docutils literal notranslate"><span class="pre">machine</span></code>.
+This name is arbitrary and can be chosen freely.
+As configuration you use the relevant parts of the default configuration, <a class="reference internal" href="nixos-configuration-on-vm.html#nixos-vms"><span class="std std-ref">which we used in a previous tutorial</span></a>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>nodes<span class="o">.</span><span class="ss">machine</span> <span class="o">=</span> <span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos"> 2</span>  users<span class="o">.</span>users<span class="o">.</span><span class="ss">alice</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos"> 3</span>    <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos"> 4</span>    <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;wheel&quot;</span> <span class="p">];</span>
+<span class="linenos"> 5</span>    <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+<span class="linenos"> 6</span>      firefox
+<span class="linenos"> 7</span>      tree
+<span class="linenos"> 8</span>    <span class="p">];</span>
+<span class="linenos"> 9</span>  <span class="p">};</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>  system<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+<span class="linenos">12</span><span class="p">};</span>
+</pre></div>
+</div>
+</li>
+<li><p>This is the test script:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="n">machine</span><span class="o">.</span><span class="n">wait_for_unit</span><span class="p">(</span><span class="s2">&quot;default.target&quot;</span><span class="p">)</span>
+<span class="linenos">2</span><span class="n">machine</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="s2">&quot;su -- alice -c &#39;which firefox&#39;&quot;</span><span class="p">)</span>
+<span class="linenos">3</span><span class="n">machine</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="s2">&quot;su -- root -c &#39;which firefox&#39;&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This Python script refers to <code class="docutils literal notranslate"><span class="pre">machine</span></code> which is the name chosen for the virtual machine configuration used in the <code class="docutils literal notranslate"><span class="pre">nodes</span></code> attribute set.</p>
+<p>The script waits until systemd reaches <code class="docutils literal notranslate"><span class="pre">default.target</span></code>.
+It uses the <code class="docutils literal notranslate"><span class="pre">su</span></code> command to switch between users and the <code class="docutils literal notranslate"><span class="pre">which</span></code> command to check if the user has access to <code class="docutils literal notranslate"><span class="pre">firefox</span></code>.
+It expects that the command <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">firefox</span></code> to succeed for user <code class="docutils literal notranslate"><span class="pre">alice</span></code> and to fail for <code class="docutils literal notranslate"><span class="pre">root</span></code>.</p>
+<p>This script will be the value of the <code class="docutils literal notranslate"><span class="pre">testScript</span></code> attribute.</p>
+</li>
+</ol>
+<p>The complete <code class="docutils literal notranslate"><span class="pre">minimal-test.nix</span></code> file content looks like the following:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">let</span>
+<span class="linenos"> 2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-23.11&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="ss">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="linenos"> 4</span><span class="k">in</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>pkgs<span class="o">.</span>testers<span class="o">.</span>runNixOSTest <span class="p">{</span>
+<span class="linenos"> 7</span>  <span class="ss">name</span> <span class="o">=</span> <span class="s2">&quot;minimal-test&quot;</span><span class="p">;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>  nodes<span class="o">.</span><span class="ss">machine</span> <span class="o">=</span> <span class="p">{</span> config<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos">10</span>
+<span class="linenos">11</span>    users<span class="o">.</span>users<span class="o">.</span><span class="ss">alice</span> <span class="o">=</span> <span class="p">{</span>
+<span class="linenos">12</span>      <span class="ss">isNormalUser</span> <span class="o">=</span> <span class="no">true</span><span class="p">;</span>
+<span class="linenos">13</span>      <span class="ss">extraGroups</span> <span class="o">=</span> <span class="p">[</span> <span class="s2">&quot;wheel&quot;</span> <span class="p">];</span>
+<span class="linenos">14</span>      <span class="ss">packages</span> <span class="o">=</span> <span class="k">with</span> pkgs<span class="p">;</span> <span class="p">[</span>
+<span class="linenos">15</span>        firefox
+<span class="linenos">16</span>        tree
+<span class="linenos">17</span>      <span class="p">];</span>
+<span class="linenos">18</span>    <span class="p">};</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span>    system<span class="o">.</span><span class="ss">stateVersion</span> <span class="o">=</span> <span class="s2">&quot;23.11&quot;</span><span class="p">;</span>
+<span class="linenos">21</span>  <span class="p">};</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span>  <span class="ss">testScript</span> <span class="o">=</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos">24</span><span class="s s-Multiline">    machine.wait_for_unit(&quot;default.target&quot;)</span>
+<span class="linenos">25</span><span class="s s-Multiline">    machine.succeed(&quot;su -- alice -c &#39;which firefox&#39;&quot;)</span>
+<span class="linenos">26</span><span class="s s-Multiline">    machine.fail(&quot;su -- root -c &#39;which firefox&#39;&quot;)</span>
+<span class="linenos">27</span><span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">28</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="running-tests">
+<h2>執行測試<a class="headerlink" href="#running-tests" title="連結到這個標頭">#</a></h2>
+<p>To set up all machines and run the test script:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>minimal-test.nix
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>...
+test script finished in 10.96s
+cleaning up
+killing machine (pid 10)
+(0.00 seconds)
+/nix/store/bx7z3imvxxpwkkza10vb23czhw7873w2-vm-test-run-minimal-test
+</pre></div>
+</div>
+</section>
+<section id="interactive-python-shell-in-the-virtual-machine">
+<h2>Interactive Python shell in the virtual machine<a class="headerlink" href="#interactive-python-shell-in-the-virtual-machine" title="連結到這個標頭">#</a></h2>
+<p>When developing tests or when something breaks, it’s useful to interactively tinker with the test or access a terminal for a machine.</p>
+<p>To start an interactive Python session with the testing framework:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="k">$(</span>nix-build<span class="w"> </span>-A<span class="w"> </span>driverInteractive<span class="w"> </span>minimal-test.nix<span class="k">)</span>/bin/nixos-test-driver
+</pre></div>
+</div>
+<p>Here you can run any of the testing operations.
+Execute the <code class="docutils literal notranslate"><span class="pre">testScript</span></code> attribute from <code class="docutils literal notranslate"><span class="pre">minimal-test.nix</span></code> with the <code class="docutils literal notranslate"><span class="pre">test_script()</span></code> function.</p>
+<p>If a virtual machine is not yet started, the test environment takes care of it on the first call of a method on a <code class="docutils literal notranslate"><span class="pre">machine</span></code> object.</p>
+<p>But you can also manually trigger the start of the virtual machine with:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; machine.start()</span>
+</pre></div>
+</div>
+<p>for a specific node,</p>
+<p>or</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; start_all()</span>
+</pre></div>
+</div>
+<p>for all nodes.</p>
+<p>You can enter an interactive shell on the virtual machine using:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt; machine.shell_interact()</span>
+</pre></div>
+</div>
+<p>and run shell commands like:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">uname -a</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Linux server 5.10.37 #1-NixOS SMP Fri May 14 07:50:46 UTC 2021 x86_64 GNU/Linux
+</pre></div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Re-running successful tests</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<!-- FIXME: this should be a separate recipe that can be linked to, as it's a bit of knowledge one will need now and again. -->
+<p class="sd-card-text">Because test results are kept in the Nix store, a successful test is cached.
+This means that Nix will not run the test a second time as long as the test setup (node configuration and test script) stays semantically the same.
+Therefore, to run a test again, one needs to remove the result.</p>
+<p class="sd-card-text">If you would try to delete the result using the symbolic link, you will get the following error:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-store --delete ./result</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>finding garbage collector roots...
+0 store paths deleted, 0.00 MiB freed
+error: Cannot delete path &#39;/nix/store/4klj06bsilkqkn6h2sia8dcsi72wbcfl-vm-test-run-unnamed&#39; since it is still alive. To find out why, use: nix-store --query --roots
+</pre></div>
+</div>
+<p class="sd-card-text">Instead, remove the symbolic link and only then remove the cached result:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">rm ./result</span>
+<span class="go">nix-store --delete /nix/store/4klj06bsilkqkn6h2sia8dcsi72wbcfl-vm-test-run-unnamed</span>
+</pre></div>
+</div>
+<p class="sd-card-text">This can be also done with one command:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">result=$(readlink -f ./result) rm ./result &amp;&amp; nix-store --delete $result</span>
+</pre></div>
+</div>
+</div>
+</details></section>
+<section id="tests-with-multiple-virtual-machines">
+<h2>Tests with multiple virtual machines<a class="headerlink" href="#tests-with-multiple-virtual-machines" title="連結到這個標頭">#</a></h2>
+<p>Tests can involve multiple virtual machines, for example to test client-server-communication.</p>
+<p>The following example setup includes:</p>
+<ul class="simple">
+<li><p>A virtual machine named <code class="docutils literal notranslate"><span class="pre">server</span></code> running <a class="reference external" href="https://nginx.org/en/">nginx</a> with default configuration.</p></li>
+<li><p>A virtual machine named <code class="docutils literal notranslate"><span class="pre">client</span></code> that has <code class="docutils literal notranslate"><span class="pre">curl</span></code> available to make an HTTP request.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">testScript</span></code> orchestrating testing logic between <code class="docutils literal notranslate"><span class="pre">client</span></code> and <code class="docutils literal notranslate"><span class="pre">server</span></code>.</p></li>
+</ul>
+<p>The complete <code class="docutils literal notranslate"><span class="pre">client-server-test.nix</span></code> file content looks like the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span>
+  <span class="n">nixpkgs</span> <span class="o">=</span> <span class="n">fetchTarball</span> <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/nixos-23.11&quot;</span><span class="p">;</span>
+  <span class="n">pkgs</span> <span class="o">=</span> <span class="kn">import</span><span class="w"> </span><span class="nn">nixpkgs</span> <span class="p">{</span> <span class="n">config</span> <span class="o">=</span> <span class="p">{};</span> <span class="n">overlays</span> <span class="o">=</span> <span class="p">[];</span> <span class="p">};</span>
+<span class="ow">in</span>
+
+<span class="n">pkgs</span><span class="o">.</span><span class="n">testers</span><span class="o">.</span><span class="n">runNixOSTest</span> <span class="p">{</span>
+  <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;client-server-test&quot;</span><span class="p">;</span>
+
+  <span class="n">nodes</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="p">{</span> <span class="n">pkgs</span><span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+    <span class="n">networking</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">firewall</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">allowedTCPPorts</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">80</span> <span class="p">];</span>
+      <span class="p">};</span>
+    <span class="p">};</span>
+    <span class="n">services</span><span class="o">.</span><span class="n">nginx</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="n">enable</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+      <span class="n">virtualHosts</span><span class="o">.</span><span class="s2">&quot;server&quot;</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+
+  <span class="n">nodes</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="p">{</span> <span class="n">pkgs</span><span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+    <span class="n">environment</span><span class="o">.</span><span class="n">systemPackages</span> <span class="o">=</span> <span class="k">with</span> <span class="n">pkgs</span><span class="p">;</span> <span class="p">[</span>
+      <span class="n">curl</span>
+    <span class="p">];</span>
+  <span class="p">};</span>
+
+  <span class="n">testScript</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">wait_for_unit</span><span class="p">(</span><span class="s2">&quot;default.target&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">wait_for_unit</span><span class="p">(</span><span class="s2">&quot;default.target&quot;</span><span class="p">)</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">succeed</span><span class="p">(</span><span class="s2">&quot;curl http://server/ | grep -o </span><span class="se">\&quot;</span><span class="s2">Welcome to nginx!</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The test script performs the following steps:</p>
+<ol class="arabic simple">
+<li><p>Start the server and wait for it to be ready.</p></li>
+<li><p>Start the client and wait for it to be ready.</p></li>
+<li><p>Run <code class="docutils literal notranslate"><span class="pre">curl</span></code> on the client and use <code class="docutils literal notranslate"><span class="pre">grep</span></code> to check the expected return string.
+The test passes or fails based on the return value.</p></li>
+</ol>
+<p>Run the test:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span>client-server-test.nix
+</pre></div>
+</div>
+</section>
+<section id="additional-information-regarding-nixos-tests">
+<h2>Additional information regarding NixOS tests<a class="headerlink" href="#additional-information-regarding-nixos-tests" title="連結到這個標頭">#</a></h2>
+<ul>
+<li><p>Running integration tests on CI requires hardware acceleration, which many CIs do not support.</p>
+<p>To run integration tests in <a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html#github-actions"><span class="std std-ref">GitHub Actions</span></a> see <a class="reference external" href="https://github.com/cachix/install-nix-action#how-do-i-run-nixos-tests">how to disable hardware acceleration</a>.</p>
+</li>
+<li><p>NixOS comes with a large set of tests that can serve as educational examples.</p>
+<p>A good inspiration is <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/nixos/tests/matrix/appservice-irc.nix">Matrix bridging with an IRC</a>.</p>
+</li>
+</ul>
+<!-- TODO: move examples from https://wiki.nixos.org/wiki/NixOS_Testing_library to the NixOS manual and troubleshooting tips to nix.dev -->
+</section>
+<section id="next-steps">
+<h2>下一步<a class="headerlink" href="#next-steps" title="連結到這個標頭">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="../module-system/deep-dive.html#module-system-deep-dive"><span class="std std-ref">Module system deep dive</span></a></p></li>
+<li><p><a class="reference internal" href="building-bootable-iso-image.html#bootable-iso-image"><span class="std std-ref">建置可開機的 ISO 映像</span></a></p></li>
+<li><p><a class="reference internal" href="building-and-running-docker-images.html#nixos-docker-images"><span class="std std-ref">建置並執行 Docker 映像</span></a></p></li>
+</ul>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="darwin" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Support for <a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/108984">running NixOS VM tests on macOS</a> is also implemented but <a class="reference external" href="https://github.com/NixOS/nixpkgs/issues/254552">currently undocumented</a>.</p>
+</aside>
+</aside>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="building-and-running-docker-images.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一頁</p>
+        <p class="prev-next-title">建置並執行 Docker 映像</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="provisioning-remote-machines.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一頁</p>
+        <p class="prev-next-title">Provisioning remote machines via SSH</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目錄
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-will-you-learn">您將會學到什麼？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">您需要什麼？</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">簡介</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-testers-runnixostest-function">The <code class="docutils literal notranslate"><span class="pre">testers.runNixOSTest</span></code> function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#minimal-example">Minimal example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-tests">執行測試</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactive-python-shell-in-the-virtual-machine">Interactive Python shell in the virtual machine</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tests-with-multiple-virtual-machines">Tests with multiple virtual machines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-information-regarding-nixos-tests">Additional information regarding NixOS tests</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">下一步</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

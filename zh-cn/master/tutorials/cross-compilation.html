@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Cross compilation tutorial using Nix" lang="en" name="description" xml:lang="en" />
+<meta content="Nix, cross compilation, cross-compile, Nix" name="keywords" />
+
+    <title>Cross compilation &#8212; nix.dev  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/cross-compilation';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/cross-compilation.html" />
+    <link rel="icon" href="../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="Module system" href="module-system/index.html" />
+    <link rel="prev" title="Working with local files" href="working-with-local-files.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+<script type="text/javascript" src="../ltd-provenance.js"></script>
+<script type="text/javascript" src="../ltd-current.js"></script>
+<script type="text/javascript" src="../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../index.html">
+    <img src="../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Official documentation for getting things done with Nix.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../install-nix.html">Install Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="nix-language.html">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="nixos/nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="nixos/installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/deploying-nixos-using-terraform.html">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../guides/index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../guides/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../concepts/index.html">Concepts</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../contributing/index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../contributing/documentation/index.html">Contributing documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="源码库"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/tutorials/cross-compilation.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Cross compilation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">What do you need?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#platforms">Platforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-a-target-platform">What's a target platform?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-the-host-platform-config">Determining the host platform config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-host-platform-with-nix">Choosing the host platform with Nix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-the-host-platform">Specifying the host platform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-compiling-for-the-first-time">Cross compiling for the first time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-cross-compiling-of-a-hello-world-example">Real-world cross compiling of a Hello World example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#developer-environment-with-a-cross-compiler">Developer environment with a cross compiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="cross-compilation">
+<span id="id1"></span><h1>Cross compilation<a class="headerlink" href="#cross-compilation" title="Link to this heading">#</a></h1>
+<p>Nixpkgs provides tools to cross-compile software for different system types.</p>
+<section id="what-do-you-need">
+<h2>What do you need?<a class="headerlink" href="#what-do-you-need" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Experience using C compilers</p></li>
+<li><p>Basic knowledge of the <a class="reference internal" href="nix-language.html#reading-nix-language"><span class="std std-ref">Nix language</span></a></p></li>
+</ul>
+</section>
+<section id="platforms">
+<h2>Platforms<a class="headerlink" href="#platforms" title="Link to this heading">#</a></h2>
+<p>When compiling code, there is a distinction between the <strong>build platform</strong>, where the executable is <em>built</em>, and the <strong>host platform</strong>, where the compiled executable <em>runs</em>. <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p><strong>Native compilation</strong> is the special case where those two platforms are the same.
+<strong>Cross compilation</strong> is the general case where those two platforms are not.</p>
+<p>Cross compilation is needed when the host platform has limited resources (such as CPU) or when it's not easily accessible for development.</p>
+<p>Nixpkgs has well-tested cross compilation support.</p>
+</section>
+<section id="what-s-a-target-platform">
+<h2>What's a target platform?<a class="headerlink" href="#what-s-a-target-platform" title="Link to this heading">#</a></h2>
+<p>There is a third concept for a platform called the <strong>target platform</strong>.</p>
+<p>The target platform is relevant to cases where you want to build a compiler binary.
+In such cases, you would build a compiler on the <em>build platform</em>, run it to compile code on the <em>host platform</em>, and run the final executable on the <em>target platform</em>.</p>
+<p>Since this is rarely needed, this tutorial assumes that the target is identical to the host.</p>
+</section>
+<section id="determining-the-host-platform-config">
+<h2>Determining the host platform config<a class="headerlink" href="#determining-the-host-platform-config" title="Link to this heading">#</a></h2>
+<p>The build platform is determined automatically by Nix during the configure phase.</p>
+<p>The host platform is best determined by running this command on the host platform:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span><span class="k">$(</span>nix-build<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-I<span class="w"> </span><span class="nv">nixpkgs</span><span class="o">=</span>channel:nixos-23.11<span class="w"> </span>-A<span class="w"> </span>gnu-config<span class="k">)</span>/config.guess
+<span class="go">aarch64-unknown-linux-gnu</span>
+</pre></div>
+</div>
+<p>In case this is not possible (for example, when the host platform is not easily accessible for development), the platform config has to be constructed manually via the following template:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">cpu</span><span class="o">&gt;-&lt;</span><span class="n">vendor</span><span class="o">&gt;-&lt;</span><span class="n">os</span><span class="o">&gt;-&lt;</span><span class="n">abi</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>This string representation is used in <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code> for historic reasons.</p>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">&lt;vendor&gt;</span></code> is often <code class="docutils literal notranslate"><span class="pre">unknown</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;abi&gt;</span></code> is optional.
+There's also no unique identifier for a platform, for example <code class="docutils literal notranslate"><span class="pre">unknown</span></code> and <code class="docutils literal notranslate"><span class="pre">pc</span></code> are interchangeable (which is why the script is called <code class="docutils literal notranslate"><span class="pre">config.guess</span></code>).</p>
+<p>If you can't install Nix, find a way to run <code class="docutils literal notranslate"><span class="pre">config.guess</span></code> (usually comes with the autoconf package) from the OS you're able to run on the host platform.</p>
+<p>Some other common examples of platform configs:</p>
+<ul class="simple">
+<li><p>aarch64-apple-darwin14</p></li>
+<li><p>aarch64-pc-linux-gnu</p></li>
+<li><p>x86_64-w64-mingw32</p></li>
+<li><p>aarch64-apple-ios</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>macOS/Darwin is a special case, as not the whole OS is open-source.
+It's only possible to cross compile between <code class="docutils literal notranslate"><span class="pre">aarch64-darwin</span></code> and <code class="docutils literal notranslate"><span class="pre">x86_64-darwin</span></code>.
+<code class="docutils literal notranslate"><span class="pre">aarch64-darwin</span></code> support was recently added, so cross compilation is barely tested.</p>
+</div>
+</section>
+<section id="choosing-the-host-platform-with-nix">
+<h2>Choosing the host platform with Nix<a class="headerlink" href="#choosing-the-host-platform-with-nix" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code> comes with a set of predefined host platforms for cross compilation called <code class="docutils literal notranslate"><span class="pre">pkgsCross</span></code>.</p>
+<p>It is possible to explore them in <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code>:</p>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p><a class="reference external" href="https://nix.dev/manual/nix/latest/release-notes/rl-2.19">Starting with Nix 2.19</a>, <code class="docutils literal notranslate"><span class="pre">nix</span> <span class="pre">repl</span></code> requires the <code class="docutils literal notranslate"><span class="pre">-f</span></code> / <code class="docutils literal notranslate"><span class="pre">--file</span></code> flag:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix<span class="w"> </span>repl<span class="w"> </span>-f<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-I<span class="w"> </span><span class="nv">nixpkgs</span><span class="o">=</span>channel:nixos-23.11
+</pre></div>
+</div>
+</div>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix<span class="w"> </span>repl<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-I<span class="w"> </span><span class="nv">nixpkgs</span><span class="o">=</span>channel:nixos-23.11
+<span class="go">Welcome to Nix 2.18.1. Type :? for help.</span>
+
+<span class="go">Loading &#39;&lt;nixpkgs&gt;&#39;...</span>
+<span class="go">Added 14200 variables.</span>
+
+<span class="go">nix-repl&gt; pkgsCross.&lt;TAB&gt;</span>
+<span class="go">pkgsCross.aarch64-android             pkgsCross.musl-power</span>
+<span class="go">pkgsCross.aarch64-android-prebuilt    pkgsCross.musl32</span>
+<span class="go">pkgsCross.aarch64-darwin              pkgsCross.musl64</span>
+<span class="go">pkgsCross.aarch64-embedded            pkgsCross.muslpi</span>
+<span class="go">pkgsCross.aarch64-multiplatform       pkgsCross.or1k</span>
+<span class="go">pkgsCross.aarch64-multiplatform-musl  pkgsCross.pogoplug4</span>
+<span class="go">pkgsCross.aarch64be-embedded          pkgsCross.powernv</span>
+<span class="go">pkgsCross.amd64-netbsd                pkgsCross.ppc-embedded</span>
+<span class="go">pkgsCross.arm-embedded                pkgsCross.ppc64</span>
+<span class="go">pkgsCross.armhf-embedded              pkgsCross.ppc64-musl</span>
+<span class="go">pkgsCross.armv7a-android-prebuilt     pkgsCross.ppcle-embedded</span>
+<span class="go">pkgsCross.armv7l-hf-multiplatform     pkgsCross.raspberryPi</span>
+<span class="go">pkgsCross.avr                         pkgsCross.remarkable1</span>
+<span class="go">pkgsCross.ben-nanonote                pkgsCross.remarkable2</span>
+<span class="go">pkgsCross.fuloongminipc               pkgsCross.riscv32</span>
+<span class="go">pkgsCross.ghcjs                       pkgsCross.riscv32-embedded</span>
+<span class="go">pkgsCross.gnu32                       pkgsCross.riscv64</span>
+<span class="go">pkgsCross.gnu64                       pkgsCross.riscv64-embedded</span>
+<span class="go">pkgsCross.i686-embedded               pkgsCross.scaleway-c1</span>
+<span class="go">pkgsCross.iphone32                    pkgsCross.sheevaplug</span>
+<span class="go">pkgsCross.iphone32-simulator          pkgsCross.vc4</span>
+<span class="go">pkgsCross.iphone64                    pkgsCross.wasi32</span>
+<span class="go">pkgsCross.iphone64-simulator          pkgsCross.x86_64-embedded</span>
+<span class="go">pkgsCross.mingw32                     pkgsCross.x86_64-netbsd</span>
+<span class="go">pkgsCross.mingwW64                    pkgsCross.x86_64-netbsd-llvm</span>
+<span class="go">pkgsCross.mmix                        pkgsCross.x86_64-unknown-redox</span>
+<span class="go">pkgsCross.msp430</span>
+</pre></div>
+</div>
+<p>These attribute names for cross compilation packages have been chosen somewhat freely over the course of time.
+They usually do not match the corresponding platform config string.</p>
+<p>You can retrieve the platform string from <code class="docutils literal notranslate"><span class="pre">pkgsCross.&lt;platform&gt;.stdenv.hostPlatform.config</span></code>:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="go">nix-repl&gt; pkgsCross.aarch64-multiplatform.stdenv.hostPlatform.config</span>
+<span class="go">&quot;aarch64-unknown-linux-gnu&quot;</span>
+</pre></div>
+</div>
+<p>If the host platform you seek hasn't been defined yet, please <a class="reference external" href="https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples.nix">contribute it upstream</a>.</p>
+</section>
+<section id="specifying-the-host-platform">
+<h2>Specifying the host platform<a class="headerlink" href="#specifying-the-host-platform" title="Link to this heading">#</a></h2>
+<p>The mechanism for setting up cross compilation works as follows:</p>
+<ol class="arabic">
+<li><p>Take the build platform configuration and apply it to the current package set, called <code class="docutils literal notranslate"><span class="pre">pkgs</span></code> by convention.</p>
+<p>The build platform is implied in <code class="docutils literal notranslate"><span class="pre">pkgs</span> <span class="pre">=</span> <span class="pre">import</span> <span class="pre">&lt;nixpkgs&gt;</span> <span class="pre">{}</span></code> to be the current system.
+This produces a build environment <code class="docutils literal notranslate"><span class="pre">pkgs.stdenv</span></code> with all the dependencies present to compile on the build platform.</p>
+</li>
+<li><p>Apply the appropriate host platform configuration to all the packages in <code class="docutils literal notranslate"><span class="pre">pkgsCross</span></code>.</p>
+<p>Taking <code class="docutils literal notranslate"><span class="pre">pkgs.pkgsCross.&lt;host&gt;.hello</span></code> will produce the package <code class="docutils literal notranslate"><span class="pre">hello</span></code> compiled on the build platform to run on the <code class="docutils literal notranslate"><span class="pre">&lt;host&gt;</span></code> platform.</p>
+</li>
+</ol>
+<p>There are multiple equivalent ways to access packages targeted to the host platform.</p>
+<ol class="arabic">
+<li><p>Explicitly pick the host platform package from within the build platform environment:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">let</span>
+<span class="linenos">2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/release-23.11&quot;</span><span class="p">;</span>
+<span class="linenos">3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{};</span>
+<span class="linenos">4</span><span class="k">in</span>
+<span class="linenos">5</span>pkgs<span class="o">.</span>pkgsCross<span class="o">.</span>aarch64-multiplatform<span class="o">.</span>hello
+</pre></div>
+</div>
+</li>
+<li><p>Pass the host platform to <code class="docutils literal notranslate"><span class="pre">crossSystem</span></code> when importing <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code>.
+This configures <code class="docutils literal notranslate"><span class="pre">nixpkgs</span></code> such that all its packages are built for the host platform:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="k">let</span>
+<span class="linenos">2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/release-23.11&quot;</span><span class="p">;</span>
+<span class="linenos">3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{</span> <span class="ss">crossSystem</span> <span class="o">=</span> <span class="p">{</span> <span class="ss">config</span> <span class="o">=</span> <span class="s2">&quot;aarch64-unknown-linux-gnu&quot;</span><span class="p">;</span> <span class="p">};</span> <span class="p">};</span>
+<span class="linenos">4</span><span class="k">in</span>
+<span class="linenos">5</span>pkgs<span class="o">.</span>hello
+</pre></div>
+</div>
+<p>Equivalently, you can pass the host platform as an argument to <code class="docutils literal notranslate"><span class="pre">nix-build</span></code>:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>nix-build<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-I<span class="w"> </span><span class="nv">nixpkgs</span><span class="o">=</span>channel:nixos-23.11<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--arg<span class="w"> </span>crossSystem<span class="w"> </span><span class="s1">&#39;{ config = &quot;aarch64-unknown-linux-gnu&quot;; }&#39;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-A<span class="w"> </span>hello
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="cross-compiling-for-the-first-time">
+<h2>Cross compiling for the first time<a class="headerlink" href="#cross-compiling-for-the-first-time" title="Link to this heading">#</a></h2>
+<p>To cross compile a package like <a class="reference external" href="https://www.gnu.org/software/hello/">hello</a>, pick the platform attribute — <code class="docutils literal notranslate"><span class="pre">aarch64-multiplatform</span></code> in our case — and run:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-build<span class="w"> </span><span class="s1">&#39;&lt;nixpkgs&gt;&#39;</span><span class="w"> </span>-I<span class="w"> </span><span class="nv">nixpkgs</span><span class="o">=</span>channel:nixos-23.11<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-A<span class="w"> </span>pkgsCross.aarch64-multiplatform.hello
+<span class="go">...</span>
+<span class="go">/nix/store/1dx87l5rav8679lqigf9xxkb7wvh2m4k-hello-aarch64-unknown-linux-gnu-2.12.1</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>The hash of the package in the store path changes with the updates to the channel.</p>
+</div>
+<p><a class="reference external" href="https://search.nixos.org/packages">Search for a package</a> attribute name to find the one you're interested in building.</p>
+</section>
+<section id="real-world-cross-compiling-of-a-hello-world-example">
+<h2>Real-world cross compiling of a Hello World example<a class="headerlink" href="#real-world-cross-compiling-of-a-hello-world-example" title="Link to this heading">#</a></h2>
+<p>The following example cross compiles a Hello World program as static executables to <code class="docutils literal notranslate"><span class="pre">armv6l-unknown-linux-gnueabihf</span></code> and <code class="docutils literal notranslate"><span class="pre">x86_64-w64-mingw32</span></code> (Windows) platforms, and runs the resulting executable with <a class="reference external" href="https://en.wikipedia.org/wiki/Emulator">an emulator</a>.</p>
+<p>Given we have a <code class="docutils literal notranslate"><span class="pre">cross-compile.nix</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">let</span>
+<span class="linenos"> 2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/release-23.11&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="nb">import</span> nixpkgs <span class="p">{};</span>
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>  <span class="c1"># Create a C program that prints Hello World</span>
+<span class="linenos"> 6</span>  <span class="ss">helloWorld</span> <span class="o">=</span> pkgs<span class="o">.</span>writeText <span class="s2">&quot;hello.c&quot;</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos"> 7</span><span class="s s-Multiline">    #include &lt;stdio.h&gt;</span>
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span><span class="s s-Multiline">    int main (void)</span>
+<span class="linenos">10</span><span class="s s-Multiline">    {</span>
+<span class="linenos">11</span><span class="s s-Multiline">      printf (&quot;Hello, world!\n&quot;);</span>
+<span class="linenos">12</span><span class="s s-Multiline">      return 0;</span>
+<span class="linenos">13</span><span class="s s-Multiline">    }</span>
+<span class="linenos">14</span><span class="s s-Multiline">  &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">15</span>
+<span class="linenos">16</span>  <span class="c1"># A function that takes host platform packages</span>
+<span class="linenos">17</span>  <span class="ss">crossCompileFor</span> <span class="o">=</span> hostPkgs<span class="p">:</span>
+<span class="linenos">18</span>    <span class="c1"># Run a simple command with the compiler available</span>
+<span class="linenos">19</span>    hostPkgs<span class="o">.</span>runCommandCC <span class="s2">&quot;hello-world-cross-test&quot;</span> <span class="p">{}</span> <span class="s s-Multiline">&#39;&#39;</span>
+<span class="linenos">20</span><span class="s s-Multiline">      # Wine requires home directory</span>
+<span class="linenos">21</span><span class="s s-Multiline">      HOME=$PWD</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="s s-Multiline">      # Compile our example using the compiler specific to our host platform</span>
+<span class="linenos">24</span><span class="s s-Multiline">      $CC </span><span class="si">${</span>helloWorld<span class="si">}</span><span class="s s-Multiline"> -o hello</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="s s-Multiline">      # Run the compiled program using user mode emulation (Qemu/Wine)</span>
+<span class="linenos">27</span><span class="s s-Multiline">      # buildPackages is passed so that emulation is built for the build platform</span>
+<span class="linenos">28</span><span class="s s-Multiline">      </span><span class="si">${</span>hostPkgs<span class="o">.</span>stdenv<span class="o">.</span>hostPlatform<span class="o">.</span>emulator hostPkgs<span class="o">.</span>buildPackages<span class="si">}</span><span class="s s-Multiline"> hello &gt; $out</span>
+<span class="linenos">29</span>
+<span class="linenos">30</span><span class="s s-Multiline">      # print to stdout</span>
+<span class="linenos">31</span><span class="s s-Multiline">      cat $out</span>
+<span class="linenos">32</span><span class="s s-Multiline">    &#39;&#39;</span><span class="p">;</span>
+<span class="linenos">33</span><span class="k">in</span> <span class="p">{</span>
+<span class="linenos">34</span>  <span class="c1"># Statically compile our example using the two platform hosts</span>
+<span class="linenos">35</span>  <span class="ss">rpi</span> <span class="o">=</span> crossCompileFor pkgs<span class="o">.</span>pkgsCross<span class="o">.</span>raspberryPi<span class="p">;</span>
+<span class="linenos">36</span>  <span class="ss">windows</span> <span class="o">=</span> crossCompileFor pkgs<span class="o">.</span>pkgsCross<span class="o">.</span>mingwW64<span class="p">;</span>
+<span class="linenos">37</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If we build this example and print both resulting derivations, we should see &quot;Hello, world!&quot; for each:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>cat<span class="w"> </span><span class="k">$(</span>nix-build<span class="w"> </span>cross-compile.nix<span class="k">)</span>
+<span class="go">Hello, world!</span>
+<span class="go">Hello, world!</span>
+</pre></div>
+</div>
+</section>
+<section id="developer-environment-with-a-cross-compiler">
+<h2>Developer environment with a cross compiler<a class="headerlink" href="#developer-environment-with-a-cross-compiler" title="Link to this heading">#</a></h2>
+<p>In the <a class="reference internal" href="first-steps/declarative-shell.html#declarative-reproducible-envs"><span class="std std-ref">tutorial for declarative reproducible environments</span></a>, we looked at how Nix helps us provide tooling and system libraries for our project.</p>
+<p>It's also possible to provide an environment with a compiler configured for <strong>cross-compilation to static binaries using musl</strong>.</p>
+<p>Given we have a <code class="docutils literal notranslate"><span class="pre">shell.nix</span></code>:</p>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="k">let</span>
+<span class="linenos"> 2</span>  <span class="ss">nixpkgs</span> <span class="o">=</span> fetchTarball <span class="s2">&quot;https://github.com/NixOS/nixpkgs/tarball/release-23.11&quot;</span><span class="p">;</span>
+<span class="linenos"> 3</span>  <span class="ss">pkgs</span> <span class="o">=</span> <span class="p">(</span><span class="nb">import</span> nixpkgs <span class="p">{})</span><span class="o">.</span>pkgsCross<span class="o">.</span>aarch64-multiplatform<span class="p">;</span>
+<span class="linenos"> 4</span><span class="k">in</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span><span class="c1"># callPackage is needed due to https://github.com/NixOS/nixpkgs/pull/126844</span>
+<span class="linenos"> 7</span>pkgs<span class="o">.</span>pkgsStatic<span class="o">.</span>callPackage <span class="p">({</span> mkShell<span class="p">,</span> zlib<span class="p">,</span> pkg-config<span class="p">,</span> file <span class="p">}:</span> mkShell <span class="p">{</span>
+<span class="linenos"> 8</span>  <span class="c1"># these tools run on the build platform, but are configured to target the host platform</span>
+<span class="linenos"> 9</span>  <span class="ss">nativeBuildInputs</span> <span class="o">=</span> <span class="p">[</span> pkg-config file <span class="p">];</span>
+<span class="linenos">10</span>  <span class="c1"># libraries needed for the host platform</span>
+<span class="linenos">11</span>  <span class="ss">buildInputs</span> <span class="o">=</span> <span class="p">[</span> zlib <span class="p">];</span>
+<span class="linenos">12</span><span class="p">})</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>And <code class="docutils literal notranslate"><span class="pre">hello.c</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">  </span><span class="n">printf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We can cross compile it:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell<span class="w"> </span>--run<span class="w"> </span><span class="s1">&#39;$CC hello.c -o hello&#39;</span><span class="w"> </span>shell.nix
+</pre></div>
+</div>
+<p>And confirm it's aarch64:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell<span class="w"> </span>--run<span class="w"> </span><span class="s1">&#39;file hello&#39;</span><span class="w"> </span>shell.nix
+<span class="go">hello: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV), statically linked, with debug_info, not stripped</span>
+</pre></div>
+</div>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>The <a class="reference external" href="https://cache.nixos.org">official binary cache</a> has a limited number of binaries for packages that are cross compiled, so to save time recompiling, configure <a class="reference internal" href="../guides/recipes/continuous-integration-github-actions.html#github-actions"><span class="std std-ref">your own binary cache and CI with GitHub Actions</span></a>.</p></li>
+<li><p>While many compilers in Nixpkgs support cross compilation, not all of them do.</p>
+<p>Additionally, supporting cross compilation is not trivial work and due to many possible combinations of what would need to be tested, some packages might not build.</p>
+<p><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/#chap-cross">A detailed explanation of how cross compilation is implemented in Nix</a> can help with fixing those issues.</p>
+</li>
+<li><p>The Nix community has a <a class="reference external" href="https://matrix.to/#/#cross-compiling:nixos.org">dedicated Matrix room</a> for help with cross compiling.</p></li>
+</ul>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>Terminology for cross compilation platforms differs between build systems.
+We have chosen to follow
+<a class="reference external" href="https://www.gnu.org/software/autoconf/manual/autoconf-2.69/html_node/Hosts-and-Cross_002dCompilation.html">autoconf terminology</a>.</p>
+</aside>
+</aside>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="working-with-local-files.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Working with local files</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="module-system/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">Module system</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-do-you-need">What do you need?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#platforms">Platforms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-a-target-platform">What's a target platform?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#determining-the-host-platform-config">Determining the host platform config</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-host-platform-with-nix">Choosing the host platform with Nix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specifying-the-host-platform">Specifying the host platform</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-compiling-for-the-first-time">Cross compiling for the first time</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-cross-compiling-of-a-hello-world-example">Real-world cross compiling of a Hello World example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#developer-environment-with-a-cross-compiler">Developer environment with a cross compiler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

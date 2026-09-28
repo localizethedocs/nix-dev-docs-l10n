@@ -1,0 +1,701 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en-US" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta content="Continuous Integration with GitHub Actions and Cachix" lang="en" name="description" xml:lang="en" />
+<meta content="NixOS, deployment, Terraform, AWS" name="keywords" />
+
+    <title>Deploying NixOS using Terraform &#8212; nix.dev  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=e39023b8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/nixos/deploying-nixos-using-terraform';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/tutorials/nixos/deploying-nixos-using-terraform.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Setting up an HTTP binary cache" href="binary-cache-setup.html" />
+    <link rel="prev" title="Installing NixOS on a Raspberry Pi" href="installing-nixos-on-a-raspberry-pi.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en-US"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Official documentation for getting things done with Nix.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">Install Nix</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../nix-language.html">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../cross-compilation.html">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">NixOS</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">Concepts</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../contributing/index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../contributing/how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../contributing/documentation/index.html">Contributing documentation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/style-guide.html">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../contributing/documentation/writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/tutorials/nixos/deploying-nixos-using-terraform.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Deploying NixOS using Terraform</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#booting-nixos-image">Booting NixOS image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-nixos-changes">Deploying NixOS changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveats">Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="deploying-nixos-using-terraform">
+<span id="deploy-nixos-using-terraform"></span><h1>Deploying NixOS using Terraform<a class="headerlink" href="#deploying-nixos-using-terraform" title="Link to this heading">#</a></h1>
+<p>This tutorial assumes you’re <a class="reference external" href="https://www.terraform.io/intro/index.html">familiar with the basics of Terraform</a>.
+By the end, you will have provisioned an Amazon Web Services (AWS) instance with Terraform and used Nix to deploy incremental changes to NixOS running on the instance.</p>
+<p>We’ll look at how to boot a NixOS machine and how to deploy the incremental changes.</p>
+<section id="booting-nixos-image">
+<h2>Booting NixOS image<a class="headerlink" href="#booting-nixos-image" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Start by providing the Terraform executable:</p></li>
+</ol>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>nix-shell<span class="w"> </span>-p<span class="w"> </span>terraform
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>We are using <a class="reference external" href="https://app.terraform.io">Terraform Cloud</a> as a <a class="reference external" href="https://www.terraform.io/docs/state/purpose.html">state/locking backend</a>:</p></li>
+</ol>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>terraform<span class="w"> </span>login
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Make sure to <a class="reference external" href="https://app.terraform.io/app/organizations/new">create an organization</a>, like <code class="docutils literal notranslate"><span class="pre">myorganization</span></code>, in your Terraform Cloud account.</p></li>
+<li><p>Inside <code class="docutils literal notranslate"><span class="pre">myorganization</span></code>, <a class="reference external" href="https://app.terraform.io/app/cachix/workspaces/new">create a workspace</a> by choosing <strong>CLI-driven workflow</strong> and pick a name, like  <code class="docutils literal notranslate"><span class="pre">myapp</span></code>.</p></li>
+<li><p>Inside your workspace, under <code class="docutils literal notranslate"><span class="pre">Settings</span> <span class="pre">/</span> <span class="pre">General</span></code>, change Execution Mode to <code class="docutils literal notranslate"><span class="pre">Local</span></code>.</p></li>
+<li><p>Inside a new directory, create a <code class="docutils literal notranslate"><span class="pre">main.tf</span></code> file with the following contents. This will start an AWS instance with the NixOS image using one SSH keypair and an SSH security group:</p></li>
+</ol>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="nb">terraform</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kr">backend</span><span class="w"> </span><span class="nv">&quot;remote&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="na">organization</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;myorganization&quot;</span>
+
+<span class="w">        </span><span class="nb">workspaces</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;myapp&quot;</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">provider</span><span class="w"> </span><span class="nv">&quot;aws&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;eu-central-1&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">module</span><span class="w"> </span><span class="nv">&quot;nixos_image&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">source</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;git::https://github.com/tweag/terraform-nixos.git//aws_image_nixos?ref=5f5a0408b299874d6a29d1271e9bffeee4c9ca71&quot;</span>
+<span class="w">    </span><span class="na">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;20.09&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_security_group&quot;</span><span class="w"> </span><span class="nv">&quot;ssh_and_egress&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nb">ingress</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="na">from_port</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
+<span class="w">        </span><span class="na">to_port</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="m">22</span>
+<span class="w">        </span><span class="na">protocol</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;tcp&quot;</span>
+<span class="w">        </span><span class="na">cidr_blocks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="nb">egress</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="na">from_port</span><span class="w">       </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<span class="w">        </span><span class="na">to_port</span><span class="w">         </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<span class="w">        </span><span class="na">protocol</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;-1&quot;</span>
+<span class="w">        </span><span class="na">cidr_blocks</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;0.0.0.0/0&quot;</span><span class="p">]</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;tls_private_key&quot;</span><span class="w"> </span><span class="nv">&quot;state_ssh_key&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">algorithm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;RSA&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;local_file&quot;</span><span class="w"> </span><span class="nv">&quot;machine_ssh_key&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">sensitive_content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">tls_private_key.state_ssh_key.private_key_pem</span>
+<span class="w">    </span><span class="na">filename</span><span class="w">          </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${path.module}/id_rsa.pem&quot;</span>
+<span class="w">    </span><span class="na">file_permission</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;0600&quot;</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_key_pair&quot;</span><span class="w"> </span><span class="nv">&quot;generated_key&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">key_name</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;generated-key-${sha256(tls_private_key.state_ssh_key.public_key_openssh)}&quot;</span>
+<span class="w">    </span><span class="na">public_key</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">tls_private_key.state_ssh_key.public_key_openssh</span>
+<span class="p">}</span>
+
+<span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;machine&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">ami</span><span class="w">             </span><span class="o">=</span><span class="w"> </span><span class="nv">module.nixos_image.ami</span>
+<span class="w">    </span><span class="na">instance_type</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;t3.micro&quot;</span>
+<span class="w">    </span><span class="na">security_groups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="nv">aws_security_group.ssh_and_egress.name</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="na">key_name</span><span class="w">        </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_key_pair.generated_key.key_name</span>
+
+<span class="w">    </span><span class="nb">root_block_device</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="na">volume_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">50</span><span class="c1"> # GiB</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">output</span><span class="w"> </span><span class="nv">&quot;public_dns&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_instance.machine.public_dns</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The only NixOS specific snippet is:</p>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span><span class="w"> </span><span class="nv">&quot;nixos_image&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;git::https://github.com/tweag/terraform-nixos.git/aws_image_nixos?ref=5f5a0408b299874d6a29d1271e9bffeee4c9ca71&quot;</span>
+<span class="w">  </span><span class="na">release</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;20.09&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">aws_image_nixos</span></code> module will return a NixOS AMI given a <a class="reference external" href="https://status.nixos.org">NixOS release number</a>
+so that the <code class="docutils literal notranslate"><span class="pre">aws_instance</span></code> resource can reference the AMI in the <a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#instance_type">instance_type</a> argument.</p>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Make sure to <a class="reference external" href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs#authentication">configure AWS credentials</a>.</p></li>
+<li><p>Applying the Terraform configuration should get you a running NixOS:</p></li>
+</ol>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>terraform<span class="w"> </span>init
+<span class="gp">$ </span>terraform<span class="w"> </span>apply
+</pre></div>
+</div>
+</section>
+<section id="deploying-nixos-changes">
+<h2>Deploying NixOS changes<a class="headerlink" href="#deploying-nixos-changes" title="Link to this heading">#</a></h2>
+<p>Once the AWS instance is running a NixOS image via Terraform, we can teach Terraform to always build the latest NixOS configuration and apply those changes to your instance.</p>
+<ol class="arabic simple">
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">configuration.nix</span></code> with the following contents:</p></li>
+</ol>
+<div class="highlight-nix notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="p">{</span> config<span class="p">,</span> lib<span class="p">,</span> pkgs<span class="p">,</span> <span class="o">...</span> <span class="p">}:</span> <span class="p">{</span>
+<span class="linenos">2</span>  <span class="ss">imports</span> <span class="o">=</span> <span class="p">[</span> <span class="l">&lt;nixpkgs/nixos/modules/virtualisation/amazon-image.nix&gt;</span> <span class="p">];</span>
+<span class="linenos">3</span>
+<span class="linenos">4</span>  <span class="c1"># Open https://search.nixos.org/options for all options</span>
+<span class="linenos">5</span><span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Append the following snippet to your <code class="docutils literal notranslate"><span class="pre">main.tf</span></code>:</p></li>
+</ol>
+<div class="highlight-terraform notranslate"><div class="highlight"><pre><span></span><span class="kr">module</span><span class="w"> </span><span class="nv">&quot;deploy_nixos&quot;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="na">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;git::https://github.com/tweag/terraform-nixos.git//deploy_nixos?ref=5f5a0408b299874d6a29d1271e9bffeee4c9ca71&quot;</span>
+<span class="w">    </span><span class="na">nixos_config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;${path.module}/configuration.nix&quot;</span>
+<span class="w">    </span><span class="na">target_host</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">aws_instance.machine.public_ip</span>
+<span class="w">    </span><span class="na">ssh_private_key_file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">local_file.machine_ssh_key.filename</span>
+<span class="w">    </span><span class="na">ssh_agent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="no">false</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Deploy:</p></li>
+</ol>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>terraform<span class="w"> </span>init
+<span class="gp">$ </span>terraform<span class="w"> </span>apply
+</pre></div>
+</div>
+</section>
+<section id="caveats">
+<h2>Caveats<a class="headerlink" href="#caveats" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">deploy_nixos</span></code> module requires NixOS to be installed on the target machine and Nix on the host machine.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">deploy_nixos</span></code> module doesn’t work when the client and target architectures are different (unless you use <a class="reference external" href="https://nix.dev/manual/nix/stable/advanced-topics/distributed-builds.html">distributed builds</a>).</p></li>
+<li><p>If you need to inject a value into Nix, there is no elegant solution.</p></li>
+<li><p>Each machine is evaluated separately, so note that your memory requirements will grow linearly with the number of machines.</p></li>
+</ul>
+</section>
+<section id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>It’s possible to <a class="reference external" href="https://github.com/tweag/terraform-nixos/tree/master/google_image_nixos#readme">switch to Google Compute Engine</a>.</p></li>
+<li><p>The <a class="reference external" href="https://github.com/tweag/terraform-nixos/tree/master/deploy_nixos#readme"><code class="docutils literal notranslate"><span class="pre">deploy_nixos</span></code> module</a> supports a number of arguments, for example to upload keys.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="installing-nixos-on-a-raspberry-pi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installing NixOS on a Raspberry Pi</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="binary-cache-setup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Setting up an HTTP binary cache</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#booting-nixos-image">Booting NixOS image</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-nixos-changes">Deploying NixOS changes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#caveats">Caveats</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next steps</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

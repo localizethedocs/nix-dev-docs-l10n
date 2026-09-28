@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Style guide &#8212; nix.dev  文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=b20591bc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=946197a6"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=be2dec3e"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="../../_static/translations.js?v=beaddf03"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'contributing/documentation/style-guide';</script>
+    <link rel="canonical" href="https://projects.localizethedocs.org/nix-dev-docs-l10n/contributing/documentation/style-guide.html" />
+    <link rel="icon" href="../../_static/favicon.png"/>
+    <link rel="index" title="索引" href="../../genindex.html" />
+    <link rel="search" title="搜索" href="../../search.html" />
+    <link rel="next" title="How to write a tutorial" href="writing-a-tutorial.html" />
+    <link rel="prev" title="Documentation framework" href="diataxis.html" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+<script type="text/javascript" src="../../ltd-provenance.js"></script>
+<script type="text/javascript" src="../../ltd-current.js"></script>
+<script type="text/javascript" src="../../../../ltd-config.js"></script>
+<script type="text/javascript" src="../../../../ltd-flyout.js"></script>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><div class="logo">
+  <a href="../../index.html">
+    <img src="../../_static/img/nix.svg" alt="">
+    <span>nix.dev</span>
+  </a>
+</div>
+
+<iframe src="https://ghbtns.com/github-btn.html?user=nixos&repo=nix.dev&type=star&count=true&size=large" frameborder="0" scrolling="0" width="170" height="30" title="GitHub"></iframe>
+
+<p>Official documentation for getting things done with Nix.</p></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../install-nix.html">Install Nix</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../tutorials/index.html">Tutorials</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/first-steps/index.html">First steps</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/ad-hoc-shell-environments.html">Ad hoc shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/reproducible-scripts.html">Reproducible interpreted scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/declarative-shell.html">Declarative shell environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.html">Towards reproducibility: pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/nix-language.html">Nix language basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/packaging-existing-software.html">Packaging existing software</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/callpackage.html">Package parameters and overrides with <code class="docutils literal notranslate"><span class="pre">callPackage</span></code></a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/working-with-local-files.html">Working with local files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../tutorials/cross-compilation.html">Cross compilation</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/module-system/index.html">Module system</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/module-system/a-basic-module/index.html">1. A basic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/module-system/deep-dive.html">2. Module system deep dive</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../tutorials/nixos/index.html">NixOS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/nixos-configuration-on-vm.html">NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/building-bootable-iso-image.html">Building a bootable ISO image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/building-and-running-docker-images.html">Building and running Docker images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/integration-testing-using-virtual-machines.html">Integration testing with NixOS virtual machines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/provisioning-remote-machines.html">Provisioning remote machines via SSH</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.html">Installing NixOS on a Raspberry Pi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/deploying-nixos-using-terraform.html">Deploying NixOS using Terraform</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/binary-cache-setup.html">Setting up an HTTP binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../tutorials/nixos/distributed-builds-setup.html">Setting up distributed builds</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../guides/index.html">Guides</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../guides/recipes/index.html">Recipes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/add-binary-cache.html">Configure Nix to use a custom binary cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/direnv.html">Automatic environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/sharing-dependencies.html">Dependencies in the development shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/dependency-management.html">Managing remote sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/python-environment.html">Python development environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/post-build-hook.html">Setting up post-build hooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../guides/recipes/continuous-integration-github-actions.html">Continuous integration with GitHub Actions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/best-practices.html">Best practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../guides/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../reference/index.html">Reference</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/glossary.html">Glossary</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../reference/nix-manual.html">Nix reference manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/development/">Nix pre-release (development)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/latest/">Nix @nix-latest@ (latest)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/rolling/">Nix @nix-rolling@ (in Nixpkgs rolling)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/stable/">Nix @nix-stable@ (in Nixpkgs @nixpkgs-stable@)</a></li>
+<li class="toctree-l3"><a class="reference external" href="https://nix.dev/manual/nix/prev-stable/">Nix @nix-prev-stable@ (in Nixpkgs @nixpkgs-prev-stable@)</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixpkgs/stable/">Nixpkgs manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://nixos.org/manual/nixos/stable/">NixOS manual</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/">Community projects</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/nix-community/awesome-nix">Support tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../recommended-reading.html">Further reading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../reference/pinning-nixpkgs.html">Pinning Nixpkgs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../concepts/index.html">Concepts</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/flakes.html">Flakes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../concepts/faq.html">Frequently Asked Questions</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">Contributing</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../how-to-contribute.html">How to contribute</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../how-to-get-help.html">How to get help</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Contributing documentation</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="resources.html">Documentation resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="diataxis.html">Documentation framework</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Style guide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="writing-a-tutorial.html">How to write a tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../acknowledgements/index.html">Acknowledgements</a></li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="sidebar-primary-item"><p>nix.dev as <a href="/nix-dev.pdf">PDF</p></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/nixos/nix.dev" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="源码库"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/contributing/documentation/style-guide.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Style guide</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-style">Writing style</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aim-for-clarity-and-brevity">Aim for clarity and brevity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-inclusive-language">Use inclusive language</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#voice">Voice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#be-correct-cite-sources">Be correct, cite sources</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markup-and-source">Markup and source</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-samples">Code samples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#headers">Headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-line-per-sentence">One line per sentence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="style-guide">
+<h1>Style guide<a class="headerlink" href="#style-guide" title="Link to this heading">#</a></h1>
+<p>This document outlines the guidelines we use when writing documentation.</p>
+<section id="writing-style">
+<h2>Writing style<a class="headerlink" href="#writing-style" title="Link to this heading">#</a></h2>
+<section id="aim-for-clarity-and-brevity">
+<h3>Aim for clarity and brevity<a class="headerlink" href="#aim-for-clarity-and-brevity" title="Link to this heading">#</a></h3>
+<blockquote>
+<div><p>I would have written a shorter letter, but I did not have the time.</p>
+<p>— <a class="reference external" href="https://en.m.wikiquote.org/w/index.php?title=Blaise_Pascal&amp;amp;oldid=2978584#Quotes">Blaise Pascal</a></p>
+</div></blockquote>
+<p>Readers' time and attention are limited.
+Respect them.</p>
+<p>The same holds for communication directed to contributors and maintainers:
+This is a public project, and many people will read what you write.
+Use this leverage with care.</p>
+<ul>
+<li><p>Follow the evidence-based <a class="reference external" href="https://www.plainlanguage.gov/guidelines/">plain language guidelines</a>.</p>
+<ul class="simple">
+<li><p>Don't use jargon. Readers may not be familiar with particular technical terms.</p></li>
+<li><p>Don't use long, complicated words if there are shorter, simpler words that convey the same meaning.</p></li>
+</ul>
+</li>
+<li><p>Use the imperative voice when giving instructions.
+For example, write:</p>
+<blockquote>
+<div><p>Add the <code class="docutils literal notranslate"><span class="pre">python310</span></code> package to <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code>.</p>
+</div></blockquote>
+<p>Don't use a conversational tone, as it distracts from the content.
+For example, don't write:</p>
+<blockquote>
+<div><p>Going forward, let's now add the <code class="docutils literal notranslate"><span class="pre">python310</span></code> package to <code class="docutils literal notranslate"><span class="pre">buildInputs</span></code> as we have seen in the previous tutorial.</p>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section id="use-inclusive-language">
+<h3>Use inclusive language<a class="headerlink" href="#use-inclusive-language" title="Link to this heading">#</a></h3>
+<p>Adapted from <a class="reference external" href="https://github.com/EthicalSource/contributor_covenant/blob/cd7fcf684249786b7f7d47ba49c23a6bcb3233eb/content/version/2/1/code_of_conduct.md">Contributor Covenant</a> and <a class="reference external" href="https://github.com/carpentries/docs.carpentries.org/blob/fb188fa8d7f57ad85eb525091e335ed0d8fea16d/source/policies/coc/index.md#L13-L19">The Carpentries Code of Conduct</a>:</p>
+<ul class="simple">
+<li><p>Use welcoming and inclusive language</p></li>
+<li><p>Show empathy and respect towards other people</p></li>
+<li><p>Be respectful of different viewpoints and experiences</p></li>
+<li><p>Give and gracefully accept constructive criticism</p></li>
+<li><p>Focus on what is best for the community</p></li>
+</ul>
+<p>Avoid idioms as they can be hard to understand for non-native English speakers.</p>
+<p>Don't try to be funny.
+Humor is highly culturally sensitive.
+At best, jokes may obfuscate the relevant instructions.
+At worst, jokes may offend readers and invalidate our effort to help them learn.</p>
+<p>Don't use references to popular culture.
+What you may consider well-known may be entirely obscure and distracting to people from different backgrounds.</p>
+</section>
+<section id="voice">
+<h3>Voice<a class="headerlink" href="#voice" title="Link to this heading">#</a></h3>
+<p>Describe the subject factually and use the imperative voice in direct instructions.</p>
+<p>Do not assume a personal relationship with readers, prefer clarity and brevity to emotional appeal.</p>
+<p>Use &quot;you&quot; to refer to the reader and only use &quot;we&quot; to refer to the authors.
+Both should be rarely needed.</p>
+<p>For example:</p>
+<blockquote>
+<div><p>You will have to deploy secrets to the remote machine.
+We chose to show the explicit, manual process using <code class="docutils literal notranslate"><span class="pre">scp</span></code> here, but there are various tools to automate that.</p>
+</div></blockquote>
+</section>
+<section id="be-correct-cite-sources">
+<h3>Be correct, cite sources<a class="headerlink" href="#be-correct-cite-sources" title="Link to this heading">#</a></h3>
+<p>The only thing worse than no documentation is <em>incorrect documentation</em>.
+One way to ensure correctness is by citing your sources.
+If you make a claim about how something works (e.g. that a command line argument exists), link to official documentation for that subject.
+We would like to maintain a network of documentation, so linking to other documentation helps to reinforce the documentation ecosystem.</p>
+<p>It is explicitly encouraged to update or restructure the manuals where appropriate, to improve the overall experience.</p>
+</section>
+</section>
+<section id="markup-and-source">
+<h2>Markup and source<a class="headerlink" href="#markup-and-source" title="Link to this heading">#</a></h2>
+<section id="code-samples">
+<h3>Code samples<a class="headerlink" href="#code-samples" title="Link to this heading">#</a></h3>
+<p>Always motivate code before showing it, describing in words what it is for or what it will do.</p>
+<div class="error admonition">
+<p class="admonition-title">Counter-example</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Run this command:
+
+<span class="sb">```bash</span>
+:<span class="o">(){</span><span class="w"> </span>:<span class="p">|</span>:<span class="p">&amp;</span><span class="w"> </span><span class="o">}</span><span class="p">;</span>:
+<span class="sb">```</span>
+</pre></div>
+</div>
+</div>
+<p>Non-trivial examples may need additional explanation, especially if they use concepts from outside the given context.
+Use a collapsed content box for explanation that would distract from the reading flow.</p>
+<div class="tip admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>Set off a [<span class="nt">fork bomb</span>](<span class="na">https://en.wikipedia.org/wiki/Fork_bomb</span>):
+
+<span class="sb">```bash</span>
+:<span class="o">(){</span><span class="w"> </span>:<span class="p">|</span>:<span class="p">&amp;</span><span class="w"> </span><span class="o">}</span><span class="p">;</span>:
+<span class="sb">```</span>
+
+:::{dropdown} Detailed explanation
+This Bash command defines and executes a function <span class="sb">`:`</span> that recursively spawns copies of itself, quickly consuming system resources.
+:::
+</pre></div>
+</div>
+</div>
+<p>Always explain code in the text itself.
+Use comments in code samples very sparingly, for instance to highlight a particular aspect.</p>
+<p>Readers tend to glance over large amounts of code when scanning for information, even if most of it is comments.
+Especially beginners will likely find reading more complex-looking code strenuous and may therefore avoid it altogether.</p>
+<p>If a code sample appears to require a lot of inline explanation, consider replacing it with a simpler one.
+If that's not possible, break the example down into multiple parts, explain them separately, and then show the combined result at the end.</p>
+<p>Code samples that are <em>intended</em> to work should work.</p>
+<p>If you are going to present an example that does not work (e.g. you're illustrating a common mistake) explain this beforehand.
+Many readers will get stuck trying to make example code work without reading ahead to find out that the code isn't intended to work.</p>
+<p>Code samples should all include a programming language when applicable for syntax highlighting when rendered, e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```python
+print(&quot;Hello, World!&quot;)
+```
+</pre></div>
+</div>
+</section>
+<section id="headers">
+<h3>Headers<a class="headerlink" href="#headers" title="Link to this heading">#</a></h3>
+<p>Reserve the largest header (<code class="docutils literal notranslate"><span class="pre">#</span></code>) for the title.</p>
+<p>Use Markdown headers <code class="docutils literal notranslate"><span class="pre">##</span></code> through <code class="docutils literal notranslate"><span class="pre">###</span></code> to divide up content in the body of the document.
+Finer-grained headings are not necessarily better.</p>
+</section>
+<section id="one-line-per-sentence">
+<h3>One line per sentence<a class="headerlink" href="#one-line-per-sentence" title="Link to this heading">#</a></h3>
+<p>Write one sentence per line.</p>
+<p>This makes long sentences immediately visible.
+It also makes it easier to review changes and provide direct suggestions, since the GitHub review interface is line-oriented.</p>
+</section>
+<section id="links">
+<h3>Links<a class="headerlink" href="#links" title="Link to this heading">#</a></h3>
+<p>Use <a class="reference external" href="https://github.github.com/gfm/#reference-link">reference links</a> – sparingly – to ease source readability.
+Put definitions close to their first use.</p>
+<div class="tip admonition">
+<p class="admonition-title">Example</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>We follow the [<span class="nt">Diátaxis</span>](<span class="na">https://diataxis.fr/</span>) approach to structure documentation.
+This framework distinguishes between [tutorials], [guides], [reference], and [explanation].
+
+[<span class="nl">tutorials</span>]: <span class="na">https://diataxis.fr/tutorials/</span>
+[<span class="nl">guides</span>]: <span class="na">https://diataxis.fr/how-to-guides/</span>
+[<span class="nl">reference</span>]: <span class="na">https://diataxis.fr/reference/</span>
+[<span class="nl">explanation</span>]: <span class="na">https://diataxis.fr/explanation/</span>
+</pre></div>
+</div>
+</div>
+<p>Unless explicitly required to point to the latest version of an external resource, all references should be <a class="reference external" href="https://en.wikipedia.org/wiki/Permalink">permanent links</a>.</p>
+<p>Many web services offer permalinks, such as:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.github.com/en/repositories/working-with-files/using-files/getting-permanent-links-to-files">GitHub URLs to specific commits</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Linking_to_Wikipedia#Permanent_links_to_old_versions_of_pages">Wikipedia URLs to specific page versions</a></p></li>
+<li><p><a class="reference external" href="https://web.archive.org/save">Internet Archive &quot;Save Page Now&quot; for persisting web pages</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="diataxis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title">Documentation framework</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="writing-a-tutorial.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title">How to write a tutorial</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-style">Writing style</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aim-for-clarity-and-brevity">Aim for clarity and brevity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#use-inclusive-language">Use inclusive language</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#voice">Voice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#be-correct-cite-sources">Be correct, cite sources</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#markup-and-source">Markup and source</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-samples">Code samples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#headers">Headers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-line-per-sentence">One line per sentence</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#links">Links</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： the <a href="https://nixos.org/community/teams/documentation">Nix documentation team</a> and contributors.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2016-2026, NixOS Foundation.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
