@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:2
+msgid "Building a bootable ISO image"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:5
+msgid ""
+"If you need to build images for a different platform, see [Cross compiling]"
+"(https://github.com/nix-community/nixos-generators#user-content-cross-"
+"compiling)."
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:8
+msgid ""
+"You may find that an official installation image lacks some hardware support."
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:10
+msgid ""
+"The solution is to create `myimage.nix` to point to the latest kernel using "
+"the minimal installation ISO:"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:12
+msgid ""
+"{ pkgs, modulesPath, lib, ... }: {\n"
+"  imports = [\n"
+"    \"${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix\"\n"
+"  ];\n"
+"\n"
+"  # use the latest Linux kernel\n"
+"  boot.kernelPackages = pkgs.linuxPackages_latest;\n"
+"\n"
+"  # Needed for https://github.com/NixOS/nixpkgs/issues/58959\n"
+"  boot.supportedFilesystems = lib.mkForce [ \"btrfs\" \"reiserfs\" \"vfat\" "
+"\"f2fs\" \"xfs\" \"ntfs\" \"cifs\" ];\n"
+"}\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:26
+msgid "Generate an ISO with the above configuration:"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:28
+msgid ""
+"$ NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/"
+"archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-"
+"generators --run \"nixos-generate --format iso --configuration ./myimage.nix "
+"-o result\"\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:32
+msgid ""
+"Copy the new image to your USB stick by replacing `sdX` with the name of "
+"your device:"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:34
+msgid ""
+"$ dd if=result/iso/*.iso of=/dev/sdX status=progress\n"
+"$ sync\n"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:39
+msgid "Next steps"
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:41
+msgid ""
+"Take a look at this [list of formats that the generators support](https://"
+"github.com/nix-community/nixos-generators#user-content-supported-formats) to "
+"find your cloud provider or virtualization technology."
+msgstr ""
+
+#: ../../../tutorials/nixos/building-bootable-iso-image.md:42
+msgid ""
+"Take a look at the [alternative guide to create a NixOS live CD](https://"
+"wiki.nixos.org/wiki/Creating_a_NixOS_live_CD)"
+msgstr ""
