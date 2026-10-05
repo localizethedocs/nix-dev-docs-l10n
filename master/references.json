@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-09-30 18:06:25 +0200",
+      "hash" : "96935ad718f5c7502cf1f4b4a3a204e090dd18de",
+      "title" : "site: process nixpkgs-flavoured markdown  (#1292)"
     }
   },
   "type" : "branch",
