@@ -16,9 +16,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-06-07 11:40:54 +0200",
-        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
-        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
+        "date" : "2026-09-22 13:11:26 +0200",
+        "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
+        "title" : "site: bump astro & s\u00e4tteri"
       }
     },
     "ko_KR" : 
@@ -26,9 +26,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-06-07 11:40:54 +0200",
-        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
-        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
+        "date" : "2026-09-22 13:11:26 +0200",
+        "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
+        "title" : "site: bump astro & s\u00e4tteri"
       }
     },
     "zh_CN" : 
@@ -36,9 +36,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-06-07 11:40:54 +0200",
-        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
-        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
+        "date" : "2026-09-22 13:11:26 +0200",
+        "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
+        "title" : "site: bump astro & s\u00e4tteri"
       }
     },
     "zh_TW" : 
@@ -46,9 +46,9 @@
       "branch" : "master",
       "commit" : 
       {
-        "date" : "2026-06-07 11:40:54 +0200",
-        "hash" : "d49ef7af7ef159c95cd86bb2ababcaf721841234",
-        "title" : "Replace NixCon2019 livestream video link with separate videos in recommended reading (#1236)"
+        "date" : "2026-09-22 13:11:26 +0200",
+        "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
+        "title" : "site: bump astro & s\u00e4tteri"
       }
     }
   },
