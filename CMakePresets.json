@@ -30,6 +30,15 @@
       }
     },
     {
+      "name" : "fr_FR",
+      "displayName" : "French",
+      "description" : "Français",
+      "inherits" : "default",
+      "cacheVariables" : {
+        "LANGUAGE" : "fr_FR"
+      }
+    },
+    {
       "name" : "ko_KR",
       "displayName" : "Korean",
       "description" : "한국어",
