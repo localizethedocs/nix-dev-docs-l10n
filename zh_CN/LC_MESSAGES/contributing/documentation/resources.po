@@ -1,0 +1,276 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../contributing/documentation/resources.md:1
+msgid "Documentation resources"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:3
+msgid ""
+"This is an overview of documentation resources for Nix, Nixpkgs, and NixOS, "
+"with suggestions for how you can help to improve them."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:5
+msgid "Reference manuals"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:7
+msgid ""
+"The reference manuals document interfaces and behavior, show examples, and "
+"define component-specific terms."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:9
+msgid "[Nix reference manual](nix-manual)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:10
+msgid "[source](https://github.com/NixOS/nix/tree/master/doc/manual)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:11
+msgid ""
+"[issues](https://github.com/NixOS/nix/issues?"
+"q=is%3Aopen+is%3Aissue+label%3Adocumentation)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:12
+msgid ""
+"[pull requests](https://github.com/NixOS/nix/pulls?"
+"q=is%3Aopen+is%3Apr+label%3Adocumentation)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:13
+msgid "[Nixpkgs reference manual](https://nixos.org/manual/nixpkgs)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:14
+msgid "[source](https://github.com/NixOS/nixpkgs/tree/master/doc)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:15
+msgid ""
+"[issues](https://github.com/NixOS/nixpkgs/issues?"
+"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+-label%3A%226."
+"topic%3A+nixos%22)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:16
+msgid ""
+"[pull requests](https://github.com/NixOS/nixpkgs/pulls?"
+"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+-label%3A%226."
+"topic%3A+nixos%22)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:17
+msgid "[NixOS reference manual](https://nixos.org/manual/nixos)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:18
+msgid "[source](https://github.com/NixOS/nixpkgs/tree/master/nixos/doc/manual)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:19
+msgid ""
+"[issues](https://github.com/NixOS/nixpkgs/issues?"
+"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+label%3A%226."
+"topic%3A+nixos%22+)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:20
+msgid ""
+"[pull requests](https://github.com/NixOS/nixpkgs/pulls?"
+"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+label%3A%226."
+"topic%3A+nixos%22+)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:22
+msgid ""
+"The respective manual sections are maintained by developers of the code "
+"being documented."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:24
+#: ../../../contributing/documentation/resources.md:38
+#: ../../../contributing/documentation/resources.md:50
+#: ../../../contributing/documentation/resources.md:72
+msgid "How to help:"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:26
+msgid ""
+"Add links to definitions, commands, options, etc. where only the name is "
+"mentioned"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:27
+msgid "Ensure consistent use of technical terms"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:28
+msgid "Check that examples are self-contained and follow best practices"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:29
+msgid "Expand on sections that appear incomplete"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:31
+msgid "NixOS Wiki"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:33
+msgid ""
+"[NixOS Wiki](https://wiki.nixos.org/) is a collection of NixOS user guides, "
+"configuration examples, and troubleshooting tips. It is meant to be "
+"complementary to the NixOS reference manual."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:36
+msgid "It is collectively edited by the NixOS user community."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:40
+msgid ""
+"Improve discoverability by adding categorisation and links to reference "
+"documentation"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:41
+msgid "Remove redundant or outdated information"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:42
+msgid "Add guides and sample configurations for your use cases"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:44
+msgid "nix.dev"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:46
+msgid ""
+"The purpose of [nix.dev](https://nix.dev) ([source](https://github.com/nixos/"
+"nix.dev)) is to orient beginners in the Nix ecosystem."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:48
+msgid "The documentation team maintains nix.dev as editors."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:52
+msgid "Work on [open issues](https://github.com/nixos/nix.dev/issues)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:53
+msgid "Review [pull requests](https://github.com/nixos/nix.dev/pulls)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:54
+msgid ""
+"Add guides or tutorials following the [proposed outline](https://github.com/"
+"NixOS/nix.dev/issues/572). New articles can be based on videos such as:"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:57
+msgid ""
+"[The Nix Hour](https://www.youtube.com/watch?"
+"v=wwV1204mCtE&list=PLyzwHTVJlRc8yjlx4VR4LU5A5O44og9in) recordings"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:58
+msgid "some of the ~100 [NixCon](https://www.youtube.com/c/NixCon) recordings"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:59
+msgid ""
+"[Nix video guides](https://www.youtube.com/user/elitespartan117j27) by "
+"@jonringer."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:60
+msgid ""
+"[Summer of Nix 2022 talks](https://www.youtube.com/playlist?list=PLt4-"
+"_lkyRrOMWyp5G-m_d1wtTcbBaOxZk)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:62
+msgid ""
+"Since writing a guide or tutorial is a lot of work, please make sure to "
+"coordinate with maintainers, for example by commenting on or opening an "
+"issue."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:64
+msgid "Discourse"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:66
+msgid ""
+"Nix users exchange information and support each other on these Discourse "
+"categories:"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:68
+msgid "[Help](https://discourse.nixos.org/c/learn/9)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:69
+msgid "[Guides](https://discourse.nixos.org/c/howto/15)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:70
+msgid "[Links](https://discourse.nixos.org/c/links/12)"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:74
+msgid "Ask informed questions, show your work"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:75
+msgid "Answer other people's questions"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:76
+msgid ""
+"Address recurrent questions by updating or adding a NixOS Wiki article, nix."
+"dev guide or tutorial, or one of the reference manuals."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:77
+msgid ""
+"Encourage and help people to incorporate their insights into official "
+"documentation"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:79
+msgid "Nix Pills"
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:81
+msgid ""
+"[Nix Pills](https://nixos.org/guides/nix-pills/) is a series of low-level "
+"tutorials on building software packages with Nix, showing in detail how "
+"Nixpkgs is made from first principles."
+msgstr ""
+
+#: ../../../contributing/documentation/resources.md:83
+msgid "The Nix Pills are not actively maintained."
+msgstr ""
