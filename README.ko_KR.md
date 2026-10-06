@@ -171,7 +171,7 @@
   <tbody>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml" ><img alt="ci-sphinx-build-docs" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml" ><img alt="ci-sphinx-build-docs" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-sphinx-build-docs.yml?logo=github&style=flat&label=ci-sphinx-build-docs" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Sphinx로 문서를 빌드하고 빌드 아티팩트를 업로드합니다.</div>
@@ -179,7 +179,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml" ><img alt="ci-sphinx-update-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml" ><img alt="ci-sphinx-update-pot" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-sphinx-update-pot.yml?logo=github&style=flat&label=ci-sphinx-update-pot" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Sphinx의 <code>gettext</code> 빌더를 사용하여 <code>.pot</code> 파일을 업데이트합니다.</div>
@@ -187,7 +187,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml" ><img alt="ci-gettext-update-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml" ><img alt="ci-gettext-update-po" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-update-po.yml?logo=github&style=flat&label=ci-gettext-update-po" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Gettext 도구를 사용하여 <code>.pot</code> 파일에서 <code>.po</code> 파일을 업데이트합니다.</div>
@@ -195,7 +195,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml"><img alt="ci-gettext-compendium" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml"><img alt="ci-gettext-compendium" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-compendium.yml?logo=github&style=flat&label=ci-gettext-compendium" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Gettext 도구를 사용하여 편집 모음에서 <code>.po</code> 파일을 업데이트합니다.</div>
@@ -203,7 +203,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml"><img alt="ci-gettext-statistics" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml"><img alt="ci-gettext-statistics" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-statistics.yml?logo=github&style=flat&label=ci-gettext-statistics" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Gettext 도구를 사용하여 <code>.po</code> 파일의 통계 정보를 업데이트합니다.</div>
@@ -211,7 +211,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml"><img alt="ci-crowdin-upload-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml"><img alt="ci-crowdin-upload-pot" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-upload-pot.yml?logo=github&style=flat&label=ci-crowdin-upload-pot" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Crowdin CLI 도구를 사용하여 <code>.pot</code> 파일을 Crowdin에 업로드합니다.</div>
@@ -219,7 +219,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml"><img alt="ci-crowdin-download-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml"><img alt="ci-crowdin-download-po" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-download-po.yml?logo=github&style=flat&label=ci-crowdin-download-po" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Crowdin CLI 도구를 사용하여 Crowdin에서 <code>.po</code> 파일을 다운로드합니다.</div>
@@ -227,7 +227,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml"><img alt="ci-crowdin-update-readme" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml"><img alt="ci-crowdin-update-readme" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-update-readme.yml?logo=github&style=flat&label=ci-crowdin-update-readme" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Crowdin CLI 도구를 사용하여 README 번역을 업데이트합니다.</div>
@@ -235,7 +235,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml"><img alt="ci-deploy-pages" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml"><img alt="ci-deploy-pages" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-deploy-pages.yml?logo=github&style=flat&label=ci-deploy-pages" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>빌드 아티팩트를 다운로드하고 <code>pages</code> 브랜치에 배포합니다.</div>
@@ -243,7 +243,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml"><img alt="ci-deploy-po-version" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml"><img alt="ci-deploy-po-version" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-deploy-po-version.yml?logo=github&style=flat&label=ci-deploy-po-version" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div><code>.po</code> 파일을 <code>po/${VERSION}</code> 브랜치에 배포합니다.</div>
@@ -251,7 +251,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml"><img alt="ci-update-contributors" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml"><img alt="ci-update-contributors" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-contributors.yml?logo=github&style=flat&label=ci-update-contributors" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>기여자 <code>.svg</code> 파일을 <code>static</code> 브랜치에 업데이트합니다.</div>
@@ -259,7 +259,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml"><img alt="ci-update-license-year" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml"><img alt="ci-update-license-year" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-license-year.yml?logo=github&style=flat&label=ci-update-license-year" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>LICENSE의 저작권 연도를 현재 연도로 업데이트합니다.</div>
@@ -267,7 +267,7 @@
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml"><img alt="ci-update-submodule" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml"><img alt="ci-update-submodule" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-submodule.yml?logo=github&style=flat&label=ci-update-submodule" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>각 서브모듈을 최신 커밋으로 업데이트합니다.</div>

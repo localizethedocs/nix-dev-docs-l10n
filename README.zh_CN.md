@@ -171,7 +171,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
   <tbody>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml" ><img alt="ci-sphinx-build-docs" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-build-docs.yml" ><img alt="ci-sphinx-build-docs" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-sphinx-build-docs.yml?logo=github&style=flat&label=ci-sphinx-build-docs" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>透过 Sphinx 构建文档并上传构建制品。</div>
@@ -179,7 +179,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml" ><img alt="ci-sphinx-update-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-sphinx-update-pot.yml" ><img alt="ci-sphinx-update-pot" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-sphinx-update-pot.yml?logo=github&style=flat&label=ci-sphinx-update-pot" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>透过 Sphinx 使用 <code>gettext</code> 构建器更新 <code>.pot</code> 文件。</div>
@@ -187,7 +187,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml" ><img alt="ci-gettext-update-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-update-po.yml" ><img alt="ci-gettext-update-po" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-update-po.yml?logo=github&style=flat&label=ci-gettext-update-po" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Update <code>.po</code> files from <code>.pot</code> files by Gettext toolkit.</div>
@@ -195,7 +195,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml"><img alt="ci-gettext-compendium" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-compendium.yml"><img alt="ci-gettext-compendium" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-compendium.yml?logo=github&style=flat&label=ci-gettext-compendium" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Update <code>.po</code> files from the compendium by Gettext toolkit.</div>
@@ -203,7 +203,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml"><img alt="ci-gettext-statistics" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-gettext-statistics.yml"><img alt="ci-gettext-statistics" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-gettext-statistics.yml?logo=github&style=flat&label=ci-gettext-statistics" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>Update statistics information of <code>.po</code> files by Gettext toolkit.</div>
@@ -211,7 +211,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml"><img alt="ci-crowdin-upload-pot" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-upload-pot.yml"><img alt="ci-crowdin-upload-pot" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-upload-pot.yml?logo=github&style=flat&label=ci-crowdin-upload-pot" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>透过 Crowdin CLI 工具上传 <code>.pot</code> 文件到 Crowdin。</div>
@@ -219,7 +219,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml"><img alt="ci-crowdin-download-po" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-download-po.yml"><img alt="ci-crowdin-download-po" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-download-po.yml?logo=github&style=flat&label=ci-crowdin-download-po" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>透过 Crowdin CLI 工具从 Crowdin 下载 <code>.pot</code> 文件。</div>
@@ -227,7 +227,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml"><img alt="ci-crowdin-update-readme" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-crowdin-update-readme.yml"><img alt="ci-crowdin-update-readme" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-crowdin-update-readme.yml?logo=github&style=flat&label=ci-crowdin-update-readme" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>透过 Crowdin CLI 工具更新 README 翻译。</div>
@@ -235,7 +235,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml"><img alt="ci-deploy-pages" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-pages.yml"><img alt="ci-deploy-pages" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-deploy-pages.yml?logo=github&style=flat&label=ci-deploy-pages" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>下载并将构建制品部署到 <code>pages</code> 分支。</div>
@@ -243,7 +243,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml"><img alt="ci-deploy-po-version" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-deploy-po-version.yml"><img alt="ci-deploy-po-version" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-deploy-po-version.yml?logo=github&style=flat&label=ci-deploy-po-version" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>将 <code>.po</code> 文件部署到 <code>po/${VERSION}</code> 分支。</div>
@@ -251,7 +251,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml"><img alt="ci-update-contributors" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-contributors.yml"><img alt="ci-update-contributors" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-contributors.yml?logo=github&style=flat&label=ci-update-contributors" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>将贡献者 <code>.svg</code> 文件更新到 <code>static</code> 分支。</div>
@@ -259,7 +259,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml"><img alt="ci-update-license-year" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-license-year.yml"><img alt="ci-update-license-year" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-license-year.yml?logo=github&style=flat&label=ci-update-license-year" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>将 LICENSE 中的版权年份更新为当前年份。</div>
@@ -267,7 +267,7 @@ The goal of this project is to translate the nix.dev Documentation into multiple
     </tr>
     <tr>
       <td rowspan="1" colspan="1" align="right" style="text-align: right;">
-        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml"><img alt="ci-update-submodule" src="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml/badge.svg" /></a></div>
+        <div><a href="https://github.com/localizethedocs/nix-dev-docs-l10n/actions/workflows/ci-update-submodule.yml"><img alt="ci-update-submodule" src="https://img.shields.io/github/actions/workflow/status/localizethedocs/nix-dev-docs-l10n/ci-update-submodule.yml?logo=github&style=flat&label=ci-update-submodule" /></a></div>
       </td>
       <td rowspan="1" colspan="1" align="left" style="text-align: left;">
         <div>将每个子模块更新至其最新送交。</div>
