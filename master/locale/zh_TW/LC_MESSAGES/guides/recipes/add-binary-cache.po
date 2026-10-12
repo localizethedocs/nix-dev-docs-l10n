@@ -110,7 +110,7 @@ msgstr ""
 
 #: ../../../guides/recipes/add-binary-cache.md:47
 msgid "Next steps"
-msgstr ""
+msgstr "下一步"
 
 #: ../../../guides/recipes/add-binary-cache.md:49
 msgid ""
