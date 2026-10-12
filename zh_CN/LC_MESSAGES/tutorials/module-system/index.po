@@ -1,0 +1,96 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/module-system/index.md:29
+msgid "Lessons"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:2
+msgid "Module system"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:4
+msgid "Much of the power in Nixpkgs and NixOS comes from the module system."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:6
+msgid "The module system is a Nix language library that enables you to"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:7
+msgid "Declare one attribute set using many separate Nix expressions."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:8
+msgid "Imposes type constraints on values in that attribute set."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:9
+msgid ""
+"Define values for the same attribute in different Nix expressions and merge "
+"these values automatically according to their type."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:11
+msgid ""
+"These Nix expressions are called modules and must have a particular "
+"structure."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:13
+msgid "In this tutorial series you'll learn"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:14
+msgid "What a module is and how to create one."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:15
+msgid "What options are and how to declare them."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:16
+msgid "How to express dependencies between modules."
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:18
+msgid "What do you need?"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:20
+msgid "Familiarity with data types and general programming concepts"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:21
+msgid "A {ref}`Nix installation <install-nix>` to run the examples"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:22
+msgid ""
+"Intermediate proficiency in reading and writing the {ref}`Nix language "
+"<reading-nix-language>`"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:24
+msgid "How long will it take?"
+msgstr ""
+
+#: ../../../tutorials/module-system/index.md:26
+msgid "This is a very long tutorial. Prepare for at least 3 hours of work."
+msgstr ""
