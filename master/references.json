@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-10-08 10:26:40 +0200",
+      "hash" : "fa3764c129e03badd665c4913462ed60f1d77f44",
+      "title" : "docs(contributing): improve contribution guide (#1293)"
     }
   },
   "type" : "branch",
