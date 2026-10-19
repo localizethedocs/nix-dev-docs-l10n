@@ -1,0 +1,178 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../reference/pinning-nixpkgs.md:3
+msgid "Pinning Nixpkgs"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:5
+msgid ""
+"Specifying remote Nix expressions, such as the one provided by Nixpkgs, can "
+"be done in several ways:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:7
+msgid ""
+"[`$NIX_PATH` environment variable](https://nix.dev/manual/nix/stable/command-"
+"ref/env-common.html#env-NIX_PATH)"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:8
+msgid ""
+"[`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
+"html#opt-I) to most commands like `nix-build`, `nix-shell`, etc."
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:9
+msgid ""
+"[`fetchurl`](https://nix.dev/manual/nix/stable/language/builtins."
+"html#builtins-fetchurl), [`fetchTarball`](https://nix.dev/manual/nix/stable/"
+"language/builtins.html#builtins-fetchTarball), [`fetchGit`](https://nix.dev/"
+"manual/nix/stable/language/builtins.html#builtins-fetchGit) or [Nixpkgs "
+"fetchers](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers) in "
+"Nix expressions"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:11
+msgid "Possible URL values"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:13
+msgid "Local file path:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:15
+msgid "./path/to/expression.nix\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:19
+msgid ""
+"Using `./.` means that the expression is located in a file `default.nix` in "
+"the current directory."
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:21
+msgid "Pinned to a specific commit:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:23
+msgid ""
+"https://github.com/NixOS/nixpkgs/archive/"
+"eabc38219184cc3e04a974fe31857d8e0eac098d.tar.gz\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:27
+msgid "Using the latest channel version, meaning all tests have passed:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:29
+msgid "http://nixos.org/channels/nixos-22.11/nixexprs.tar.xz\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:33
+msgid "Shorthand syntax for channels:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:35
+msgid "channel:nixos-22.11\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:39
+msgid "Using the latest channel version, hosted by GitHub:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:41
+msgid "https://github.com/NixOS/nixpkgs/archive/nixos-22.11.tar.gz\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:45
+msgid "Using the latest commit on the release branch, but not tested yet:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:47
+msgid "https://github.com/NixOS/nixpkgs/archive/release-21.11.tar.gz\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:51
+msgid "Examples"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:53
+msgid "$ nix-build -I ~/dev\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:57
+msgid ""
+"$ nix-build -I nixpkgs=http://nixos.org/channels/nixos-22.11/nixexprs.tar."
+"xz\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:61
+msgid "$ nix-build -I nixpkgs=channel:nixos-22.11\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:65
+msgid ""
+"$ NIX_PATH=nixpkgs=http://nixos.org/channels/nixos-22.11/nixexprs.tar.xz nix-"
+"build\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:69
+msgid "$ NIX_PATH=nixpkgs=channel:nixos-22.11 nix-build\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:73
+msgid "In the Nix language:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:75
+msgid ""
+"let\n"
+"  pkgs = import (fetchTarball \"https://github.com/NixOS/nixpkgs/archive/"
+"nixos-22.11.tar.gz\") {};\n"
+"in pkgs.stdenv.mkDerivation { ... }\n"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:81
+msgid "Finding specific commits and releases"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:83
+msgid "[status.nixos.org](https://status.nixos.org/) provides:"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:85
+msgid ""
+"Latest tested commits for each release - use when pinning to specific commits"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:86
+msgid ""
+"List of active release channels - use when tracking latest channel versions"
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:88
+msgid ""
+"The complete list of channels is available at [nixos.org/channels](https://"
+"nixos.org/channels)."
+msgstr ""
+
+#: ../../../reference/pinning-nixpkgs.md:91
+msgid "More information on Nixpkgs and NixOS releases: [](channel-branches)"
+msgstr ""
