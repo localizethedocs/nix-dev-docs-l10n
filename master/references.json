@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-10-23 06:38:59 -0700",
+      "hash" : "126f55a0408a4758699847a047e8e893740e7383",
+      "title" : "site: load Fira Code from the npm package again, so builds work offline"
     }
   },
   "type" : "branch",
