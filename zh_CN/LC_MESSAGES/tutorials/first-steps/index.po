@@ -1,0 +1,38 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/first-steps/index.md:10
+msgid "Declarative shell environments"
+msgstr ""
+
+#: ../../../tutorials/first-steps/index.md:3
+msgid "First steps"
+msgstr ""
+
+#: ../../../tutorials/first-steps/index.md:5
+msgid "This tutorial series is where you should start learning Nix."
+msgstr ""
+
+#: ../../../tutorials/first-steps/index.md:7
+msgid ""
+"In these lessons, you will use basic Nix commands to obtain almost any piece "
+"of software, create development environments on the fly, and learn how to "
+"make reproducible scripts. You will also learn to read the Nix language, and "
+"later use it to build portable, reproducible development environments."
+msgstr ""
