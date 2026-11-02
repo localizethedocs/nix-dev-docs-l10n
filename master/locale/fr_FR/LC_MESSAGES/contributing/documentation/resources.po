@@ -68,15 +68,15 @@ msgstr ""
 #: ../../../contributing/documentation/resources.md:15
 msgid ""
 "[issues](https://github.com/NixOS/nixpkgs/issues?"
-"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+-label%3A%226."
-"topic%3A+nixos%22)"
+"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+-"
+"label%3A%226.topic%3A+nixos%22)"
 msgstr ""
 
 #: ../../../contributing/documentation/resources.md:16
 msgid ""
 "[pull requests](https://github.com/NixOS/nixpkgs/pulls?"
-"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+-label%3A%226."
-"topic%3A+nixos%22)"
+"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+-"
+"label%3A%226.topic%3A+nixos%22)"
 msgstr ""
 
 #: ../../../contributing/documentation/resources.md:17
@@ -90,15 +90,13 @@ msgstr ""
 #: ../../../contributing/documentation/resources.md:19
 msgid ""
 "[issues](https://github.com/NixOS/nixpkgs/issues?"
-"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+label%3A%226."
-"topic%3A+nixos%22+)"
+"q=is%3Aopen+is%3Aissue+label%3A%226.topic%3A+documentation%22+label%3A%226.topic%3A+nixos%22+)"
 msgstr ""
 
 #: ../../../contributing/documentation/resources.md:20
 msgid ""
 "[pull requests](https://github.com/NixOS/nixpkgs/pulls?"
-"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+label%3A%226."
-"topic%3A+nixos%22+)"
+"q=is%3Aopen+is%3Apr+label%3A%226.topic%3A+documentation%22+label%3A%226.topic%3A+nixos%22+)"
 msgstr ""
 
 #: ../../../contributing/documentation/resources.md:22
@@ -250,8 +248,8 @@ msgstr ""
 
 #: ../../../contributing/documentation/resources.md:76
 msgid ""
-"Address recurrent questions by updating or adding a NixOS Wiki article, nix."
-"dev guide or tutorial, or one of the reference manuals."
+"Address recurrent questions by updating or adding a NixOS Wiki article, "
+"nix.dev guide or tutorial, or one of the reference manuals."
 msgstr ""
 
 #: ../../../contributing/documentation/resources.md:77

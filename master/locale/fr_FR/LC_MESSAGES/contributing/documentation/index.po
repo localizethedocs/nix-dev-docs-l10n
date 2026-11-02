@@ -34,8 +34,8 @@ msgstr ""
 #: ../../../contributing/documentation/index.md:7
 msgid ""
 "Check the overview of [documentation resources](./resources.md). "
-"Documentation contributions should follow the [style guide](./style-guide."
-"md)."
+"Documentation contributions should follow the [style guide](./style-"
+"guide.md)."
 msgstr ""
 
 #: ../../../contributing/documentation/index.md:10

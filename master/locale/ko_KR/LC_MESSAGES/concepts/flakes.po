@@ -222,8 +222,8 @@ msgstr ""
 
 #: ../../../concepts/flakes.md:144
 msgid ""
-"To build the derivation in your `flake.nix`'s `packages.x86_64-linux."
-"default`, run:"
+"To build the derivation in your `flake.nix`'s `packages.x86_64-"
+"linux.default`, run:"
 msgstr ""
 
 #: ../../../concepts/flakes.md:146
@@ -236,8 +236,8 @@ msgstr ""
 
 #: ../../../concepts/flakes.md:152
 msgid ""
-"`nix run` runs programs in `outputs.apps`. `nix run .#default` runs `outputs."
-"apps.default`. Just `nix run` also runs that."
+"`nix run` runs programs in `outputs.apps`. `nix run .#default` runs "
+"`outputs.apps.default`. Just `nix run` also runs that."
 msgstr ""
 
 #: ../../../concepts/flakes.md:156
@@ -534,19 +534,19 @@ msgstr ""
 
 #: ../../../concepts/flakes.md:324
 msgid ""
-"[Nix Flakes is an experiment that did too much at once...](https://samuel."
-"dionne-riel.com/blog/2023/09/06/flakes-is-an-experiment-that-did-too-much-at-"
-"once.html) ([comments](https://discourse.nixos.org/t/nix-flakes-is-an-"
-"experiment-that-did-too-much-at-once/32707)) (Samuel Dionne-Riel, September "
-"2023)"
+"[Nix Flakes is an experiment that did too much at once...](https://"
+"samuel.dionne-riel.com/blog/2023/09/06/flakes-is-an-experiment-that-did-too-"
+"much-at-once.html) ([comments](https://discourse.nixos.org/t/nix-flakes-is-"
+"an-experiment-that-did-too-much-at-once/32707)) (Samuel Dionne-Riel, "
+"September 2023)"
 msgstr ""
 
 #: ../../../concepts/flakes.md:325
 msgid ""
 "[Experimental does not mean unstable](https://determinate.systems/posts/"
 "experimental-does-not-mean-unstable) ([comments](https://discourse.nixos.org/"
-"t/experimental-does-not-mean-unstable-detsyss-perspective-on-nix-"
-"flakes/32703)) (Graham Christensen, September 2023)"
+"t/experimental-does-not-mean-unstable-detsyss-perspective-on-nix-flakes/"
+"32703)) (Graham Christensen, September 2023)"
 msgstr ""
 
 #: ../../../concepts/flakes.md:326
@@ -570,10 +570,10 @@ msgid ""
 "`nix run github:NixOS/nixpkgs#hello` for non-flake projects may look like "
 "`nix-shell -p '(import (builtins.fetchTree \"github:NixOS/nixpkgs\").outPath "
 "{ }).hello' --run 'hello'`. A drop-in command `nix-run` using the `nix run` "
-"syntax could be defined using a Bash alias like `alias nix-run='run() "
-"{ $(nix-instantiate --raw --impure --eval --expr \"(import <nixpkgs> {}).lib."
-"getExe (import (builtins.fetchTree \\\"$(cut -d \"#\" -f 1 <<< \"$1\")\\\")."
-"outPath { }).$(cut -d \"#\" -f 2 <<< \"$1\")\"); }; run'`."
+"syntax could be defined using a Bash alias like `alias nix-run='run() { $"
+"(nix-instantiate --raw --impure --eval --expr \"(import <nixpkgs> "
+"{}).lib.getExe (import (builtins.fetchTree \\\"$(cut -d \"#\" -f 1 <<< "
+"\"$1\")\\\").outPath { }).$(cut -d \"#\" -f 2 <<< \"$1\")\"); }; run'`."
 msgstr ""
 
 #: ../../../concepts/flakes.md:58

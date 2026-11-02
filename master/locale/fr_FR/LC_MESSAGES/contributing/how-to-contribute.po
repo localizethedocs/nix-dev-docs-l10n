@@ -250,8 +250,8 @@ msgid ""
 "{term}`NixOS` is a collectively developed Linux distribution that can be "
 "configured conveniently in a highly flexible way through declarative "
 "programming interfaces. The code for modules and default configurations is "
-"in the [`nixos` directory of the `nixpkgs` GitHub repository](https://github."
-"com/NixOS/nixpkgs/tree/master/nixos)."
+"in the [`nixos` directory of the `nixpkgs` GitHub repository](https://"
+"github.com/NixOS/nixpkgs/tree/master/nixos)."
 msgstr ""
 
 #: ../../../contributing/how-to-contribute.md:111
@@ -266,10 +266,10 @@ msgstr ""
 #: ../../../contributing/how-to-contribute.md:115
 msgid ""
 "Check [issues labeled `good-first-bug`](https://github.com/NixOS/nixpkgs/"
-"issues?q=is%3Aopen+label%3A%223.skill%3A+good-first-bug%22+label%3A%226."
-"topic%3A+nixos%22) if you're a new contributor. If you know your way around, "
-"working on [popular issues][nixos issues] will be highly appreciated by "
-"other NixOS users."
+"issues?q=is%3Aopen+label%3A%223.skill%3A+good-first-"
+"bug%22+label%3A%226.topic%3A+nixos%22) if you're a new contributor. If you "
+"know your way around, working on [popular issues][nixos issues] will be "
+"highly appreciated by other NixOS users."
 msgstr ""
 
 #: ../../../contributing/how-to-contribute.md:120

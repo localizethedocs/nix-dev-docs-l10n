@@ -78,8 +78,8 @@ msgstr "$ echo \"use nix\" > .envrc && direnv allow\n"
 #: ../../../guides/recipes/direnv.md:30
 msgid ""
 "The next time you launch your terminal and enter the top-level directory of "
-"your project, `direnv` will automatically launch the shell defined in `shell."
-"nix`."
+"your project, `direnv` will automatically launch the shell defined in "
+"`shell.nix`."
 msgstr ""
 
 #: ../../../guides/recipes/direnv.md:32

@@ -111,9 +111,9 @@ msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:53
 msgid ""
-"It may be more convenient to use a software like [Etcher](https://www.balena."
-"io/etcher/) to flash the image to your SD card if you are on a system where "
-"it's available."
+"It may be more convenient to use a software like [Etcher](https://"
+"www.balena.io/etcher/) to flash the image to your SD card if you are on a "
+"system where it's available."
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:56
@@ -163,8 +163,8 @@ msgstr ""
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:72
 msgid ""
 "In case the image doesn't boot, it's worth [updating the firmware](https://"
-"www.raspberrypi.com/documentation/computers/raspberry-pi."
-"html#bootloader_update_stable) and booting the image again."
+"www.raspberrypi.com/documentation/computers/raspberry-"
+"pi.html#bootloader_update_stable) and booting the image again."
 msgstr ""
 
 #: ../../../tutorials/nixos/installing-nixos-on-a-raspberry-pi.md:74

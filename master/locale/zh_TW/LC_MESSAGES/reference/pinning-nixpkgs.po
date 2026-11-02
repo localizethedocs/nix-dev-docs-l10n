@@ -37,18 +37,18 @@ msgstr ""
 
 #: ../../../reference/pinning-nixpkgs.md:8
 msgid ""
-"[`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
-"html#opt-I) to most commands like `nix-build`, `nix-shell`, etc."
+"[`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-"
+"common.html#opt-I) to most commands like `nix-build`, `nix-shell`, etc."
 msgstr ""
 
 #: ../../../reference/pinning-nixpkgs.md:9
 msgid ""
-"[`fetchurl`](https://nix.dev/manual/nix/stable/language/builtins."
-"html#builtins-fetchurl), [`fetchTarball`](https://nix.dev/manual/nix/stable/"
-"language/builtins.html#builtins-fetchTarball), [`fetchGit`](https://nix.dev/"
-"manual/nix/stable/language/builtins.html#builtins-fetchGit) or [Nixpkgs "
-"fetchers](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-fetchers) in "
-"Nix expressions"
+"[`fetchurl`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-fetchurl), [`fetchTarball`](https://nix.dev/manual/"
+"nix/stable/language/builtins.html#builtins-fetchTarball), [`fetchGit`]"
+"(https://nix.dev/manual/nix/stable/language/builtins.html#builtins-fetchGit) "
+"or [Nixpkgs fetchers](https://nixos.org/manual/nixpkgs/stable/#chap-pkgs-"
+"fetchers) in Nix expressions"
 msgstr ""
 
 #: ../../../reference/pinning-nixpkgs.md:11
@@ -121,11 +121,11 @@ msgstr "$ nix-build -I ~/dev\n"
 
 #: ../../../reference/pinning-nixpkgs.md:57
 msgid ""
-"$ nix-build -I nixpkgs=http://nixos.org/channels/nixos-22.11/nixexprs.tar."
-"xz\n"
+"$ nix-build -I nixpkgs=http://nixos.org/channels/nixos-22.11/"
+"nixexprs.tar.xz\n"
 msgstr ""
-"$ nix-build -I nixpkgs=http://nixos.org/channels/nixos-22.11/nixexprs.tar."
-"xz\n"
+"$ nix-build -I nixpkgs=http://nixos.org/channels/nixos-22.11/"
+"nixexprs.tar.xz\n"
 
 #: ../../../reference/pinning-nixpkgs.md:61
 msgid "$ nix-build -I nixpkgs=channel:nixos-22.11\n"

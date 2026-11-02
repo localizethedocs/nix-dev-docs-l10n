@@ -412,8 +412,9 @@ msgstr ""
 
 #: ../../../guides/best-practices.md:272
 msgid ""
-"Use [`builtins.path`](https://nix.dev/manual/nix/stable/language/builtins."
-"html#builtins-path) with the `name` attribute set to something fixed."
+"Use [`builtins.path`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-path) with the `name` attribute set to something "
+"fixed."
 msgstr ""
 
 #: ../../../guides/best-practices.md:274

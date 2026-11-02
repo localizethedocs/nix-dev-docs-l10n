@@ -49,9 +49,9 @@ msgstr ""
 
 #: ../../../concepts/faq.md:10
 msgid ""
-"The Nix logo is inspired by [an idea for the Haskell logo](https://wiki."
-"haskell.org/File:Sgf-logo-blue.png) and the fact that [*nix* is Latin for "
-"*snow*](https://nix-dev.science.uu.narkive.com/VDaaP1BY/nix-logo)."
+"The Nix logo is inspired by [an idea for the Haskell logo](https://"
+"wiki.haskell.org/File:Sgf-logo-blue.png) and the fact that [*nix* is Latin "
+"for *snow*](https://nix-dev.science.uu.narkive.com/VDaaP1BY/nix-logo)."
 msgstr ""
 
 #: ../../../concepts/faq.md:12
@@ -155,8 +155,8 @@ msgstr ""
 
 #: ../../../concepts/faq.md:56
 msgid ""
-"On Linux (including NixOS and WSL), use [`nixos-unstable`](https://github."
-"com/NixOS/nixpkgs/branches/all?query=nixos-unstable)."
+"On Linux (including NixOS and WSL), use [`nixos-unstable`](https://"
+"github.com/NixOS/nixpkgs/branches/all?query=nixos-unstable)."
 msgstr ""
 
 #: ../../../concepts/faq.md:57
@@ -207,9 +207,9 @@ msgstr ""
 
 #: ../../../concepts/faq.md:70
 msgid ""
-"binfmt interpreters, e.g., those configured with [`boot.binfmt."
-"emulatedSystems`](https://search.nixos.org/options?show=boot.binfmt."
-"emulatedSystems)."
+"binfmt interpreters, e.g., those configured with "
+"[`boot.binfmt.emulatedSystems`](https://search.nixos.org/options?"
+"show=boot.binfmt.emulatedSystems)."
 msgstr ""
 
 #: ../../../concepts/faq.md:71

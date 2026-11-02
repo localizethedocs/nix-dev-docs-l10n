@@ -179,8 +179,8 @@ msgstr ""
 msgid ""
 "This tutorial *does not* explain all Nix language features in detail and "
 "*does not* go into specifics of syntactical rules. For instance, this "
-"tutorial skips over commonplace constructs such as `if ... then ... else ..."
-"`."
+"tutorial skips over commonplace constructs such as `if ... then ... "
+"else ...`."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:71
@@ -429,9 +429,9 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:171
 msgid ""
-"The second command runs `nix-instantiate` with the `--eval` option on `file."
-"nix`, which reads the file and evaluates the contained Nix expression. The "
-"resulting value is printed as output."
+"The second command runs `nix-instantiate` with the `--eval` option on "
+"`file.nix`, which reads the file and evaluates the contained Nix expression. "
+"The resulting value is printed as output."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:174
@@ -2017,8 +2017,8 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1580
 msgid ""
-"The preceding shell command writes the contents `1 + 2` to the file `file."
-"nix` in the current directory."
+"The preceding shell command writes the contents `1 + 2` to the file "
+"`file.nix` in the current directory."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1582
@@ -2060,14 +2060,14 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1623
 msgid ""
-"The preceding shell command writes the contents `x: x + 1` to the file `file."
-"nix` in the current directory."
+"The preceding shell command writes the contents `x: x + 1` to the file "
+"`file.nix` in the current directory."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1625
 msgid ""
-"The above Nix expression refers to this file as `./file.nix`. `import ./file."
-"nix` reads the file and evaluates to the contained Nix expression."
+"The above Nix expression refers to this file as `./file.nix`. `import ./"
+"file.nix` reads the file and evaluates to the contained Nix expression."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1630
@@ -2158,8 +2158,8 @@ msgstr ""
 #: ../../../tutorials/nix-language.md:1698
 msgid ""
 "let\n"
-"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/"
-"archive/06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\";\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/archive/"
+"06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\";\n"
 "  pkgs = import nixpkgs {};\n"
 "in\n"
 "pkgs.lib.strings.toUpper \"always pin your sources\""
@@ -2385,8 +2385,8 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1856
 msgid ""
-"[`builtins.fetchurl`](https://nix.dev/manual/nix/stable/language/builtins."
-"html#builtins-fetchurl)"
+"[`builtins.fetchurl`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-fetchurl)"
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1857
@@ -2397,8 +2397,8 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1858
 msgid ""
-"[`builtins.fetchGit`](https://nix.dev/manual/nix/stable/language/builtins."
-"html#builtins-fetchGit)"
+"[`builtins.fetchGit`](https://nix.dev/manual/nix/stable/language/"
+"builtins.html#builtins-fetchGit)"
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1859
@@ -2413,15 +2413,14 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1865
 msgid ""
-"builtins.fetchurl \"https://github.com/NixOS/nix/"
-"archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
+"builtins.fetchurl \"https://github.com/NixOS/nix/archive/"
+"7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1870
 msgid ""
-"\"/nix/"
-"store/7dhgs330clj36384akg86140fqkgh8zf-7c3ab5751568a0bc63430b33a5169c5e4784a0ff."
-"tar.gz\""
+"\"/nix/store/"
+"7dhgs330clj36384akg86140fqkgh8zf-7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1875
@@ -2431,8 +2430,8 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1879
 msgid ""
-"builtins.fetchTarball \"https://github.com/NixOS/nix/"
-"archive/7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
+"builtins.fetchTarball \"https://github.com/NixOS/nix/archive/"
+"7c3ab5751568a0bc63430b33a5169c5e4784a0ff.tar.gz\""
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:1884
@@ -2775,8 +2774,8 @@ msgstr ""
 #: ../../../tutorials/nix-language.md:2063
 msgid ""
 "The `meta` attribute is itself an attribute set, where the `license` "
-"attribute has the value that was assigned to the nested attribute `lib."
-"licenses.gpl3Plus`."
+"attribute has the value that was assigned to the nested attribute "
+"`lib.licenses.gpl3Plus`."
 msgstr ""
 
 #: ../../../tutorials/nix-language.md:2065
@@ -2982,7 +2981,7 @@ msgstr ""
 
 #: ../../../tutorials/nix-language.md:1126
 msgid ""
-"The term *lambda* is a shorthand for [lambda abstraction](https://en."
-"wikipedia.org/wiki/Lambda_calculus#lambdaAbstr) in the [lambda calculus]"
+"The term *lambda* is a shorthand for [lambda abstraction](https://"
+"en.wikipedia.org/wiki/Lambda_calculus#lambdaAbstr) in the [lambda calculus]"
 "(https://en.wikipedia.org/wiki/Lambda_calculus)."
 msgstr ""

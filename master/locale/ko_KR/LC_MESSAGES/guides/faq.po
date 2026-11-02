@@ -164,8 +164,8 @@ msgstr ""
 #: ../../../guides/faq.md:60
 msgid ""
 "Create a library path that only applies to unpackaged programs by using "
-"[`nix-ld`](https://github.com/Mic92/nix-ld). Add this to your `configuration."
-"nix`:"
+"[`nix-ld`](https://github.com/Mic92/nix-ld). Add this to your "
+"`configuration.nix`:"
 msgstr ""
 
 #: ../../../guides/faq.md:63

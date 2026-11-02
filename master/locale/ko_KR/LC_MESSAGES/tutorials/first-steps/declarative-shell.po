@@ -169,8 +169,8 @@ msgstr ""
 #: ../../../tutorials/first-steps/declarative-shell.md:79
 msgid ""
 "let\n"
-"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/"
-"tarball/2a601aafdc5605a5133a2ca506a34a3a73377247\";\n"
+"  nixpkgs = fetchTarball \"https://github.com/NixOS/nixpkgs/tarball/"
+"2a601aafdc5605a5133a2ca506a34a3a73377247\";\n"
 "  pkgs = import nixpkgs { config = {}; overlays = []; };\n"
 "in\n"
 msgstr ""
@@ -216,8 +216,8 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:103
 msgid ""
-"Enter the environment by running `nix-shell` in the same directory as `shell."
-"nix`:"
+"Enter the environment by running `nix-shell` in the same directory as "
+"`shell.nix`:"
 msgstr ""
 
 #: ../../../tutorials/first-steps/declarative-shell.md:106

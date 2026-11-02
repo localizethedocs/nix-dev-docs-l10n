@@ -247,8 +247,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:119
 msgid ""
-"This test login also adds the host key of the remote builder to the `/root/."
-"ssh/known_hosts` file of the local machine. Future logins will not be "
+"This test login also adds the host key of the remote builder to the `/"
+"root/.ssh/known_hosts` file of the local machine. Future logins will not be "
 "interrupted by host key checks."
 msgstr ""
 
@@ -272,8 +272,8 @@ msgstr ""
 msgid ""
 "# cat << EOF >> /etc/nix/nix.conf\n"
 "builders = ssh-ng://remotebuild@remotebuilder $(nix-instantiate --eval -E "
-"builtins.currentSystem) /root/.ssh/remotemachine - - nixos-test,big-parallel,"
-"kvm\n"
+"builtins.currentSystem) /root/.ssh/remotemachine - - nixos-test,big-"
+"parallel,kvm\n"
 "builders-use-substitutes = true\n"
 msgstr ""
 
@@ -411,8 +411,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:212
 msgid ""
-"See the [NixOS option documentation on `nix.buildMachines`](https://search."
-"nixos.org/options?query=nix.buildMachines) for details."
+"See the [NixOS option documentation on `nix.buildMachines`](https://"
+"search.nixos.org/options?query=nix.buildMachines) for details."
 msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:214
@@ -578,8 +578,8 @@ msgstr ""
 #: ../../../tutorials/nixos/distributed-builds-setup.md:299
 msgid ""
 "Refer to the [Nix reference manual](https://nix.dev/manual/nix/latest/"
-"command-ref/conf-file) for details on the options available in [`nix."
-"settings`](https://search.nixos.org/options?show=nix.settings)."
+"command-ref/conf-file) for details on the options available in "
+"[`nix.settings`](https://search.nixos.org/options?show=nix.settings)."
 msgstr ""
 
 #: ../../../tutorials/nixos/distributed-builds-setup.md:302

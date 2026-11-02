@@ -86,9 +86,9 @@ msgstr ""
 
 #: ../../../tutorials/module-system/a-basic-module/index.md:29
 msgid ""
-"Options are declared under the top-level `options` attribute with [`lib."
-"mkOption`](https://nixos.org/manual/nixpkgs/stable/#function-library-lib."
-"options.mkOption)."
+"Options are declared under the top-level `options` attribute with "
+"[`lib.mkOption`](https://nixos.org/manual/nixpkgs/stable/#function-library-"
+"lib.options.mkOption)."
 msgstr ""
 
 #: ../../../tutorials/module-system/a-basic-module/index.md:31

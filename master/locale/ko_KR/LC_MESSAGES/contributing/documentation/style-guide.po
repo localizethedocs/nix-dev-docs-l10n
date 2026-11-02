@@ -57,8 +57,8 @@ msgstr ""
 
 #: ../../../contributing/documentation/style-guide.md:20
 msgid ""
-"Follow the evidence-based [plain language guidelines](https://www."
-"plainlanguage.gov/guidelines/)."
+"Follow the evidence-based [plain language guidelines](https://"
+"www.plainlanguage.gov/guidelines/)."
 msgstr ""
 
 #: ../../../contributing/documentation/style-guide.md:22
@@ -350,8 +350,8 @@ msgstr ""
 #: ../../../contributing/documentation/style-guide.md:173
 msgid ""
 "Unless explicitly required to point to the latest version of an external "
-"resource, all references should be [permanent links](https://en.wikipedia."
-"org/wiki/Permalink)."
+"resource, all references should be [permanent links](https://"
+"en.wikipedia.org/wiki/Permalink)."
 msgstr ""
 
 #: ../../../contributing/documentation/style-guide.md:175
@@ -372,6 +372,6 @@ msgstr ""
 
 #: ../../../contributing/documentation/style-guide.md:179
 msgid ""
-"[Internet Archive \"Save Page Now\" for persisting web pages](https://web."
-"archive.org/save)"
+"[Internet Archive \"Save Page Now\" for persisting web pages](https://"
+"web.archive.org/save)"
 msgstr ""

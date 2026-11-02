@@ -179,8 +179,8 @@ msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:98
 msgid ""
-"A previous version of this guide recommended using [`niv`](https://github."
-"com/nmattia/niv/), a similar pin manager written in Haskell."
+"A previous version of this guide recommended using [`niv`](https://"
+"github.com/nmattia/niv/), a similar pin manager written in Haskell."
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:100
@@ -246,9 +246,9 @@ msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:140
 msgid ""
-"To make such pinned dependencies available as [look-up paths](https://nix."
-"dev/tutorials/nix-language.html#lookup-paths) (like `<nixpkgs>`) while using "
-"the NixOS configuration, one may use:"
+"To make such pinned dependencies available as [look-up paths](https://"
+"nix.dev/tutorials/nix-language.html#lookup-paths) (like `<nixpkgs>`) while "
+"using the NixOS configuration, one may use:"
 msgstr ""
 
 #: ../../../guides/recipes/dependency-management.md:142

@@ -73,8 +73,8 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:28
 msgid ""
-"{ pkgs ? import (fetchTarball \"https://github.com/NixOS/nixpkgs/"
-"archive/06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\") {}\n"
+"{ pkgs ? import (fetchTarball \"https://github.com/NixOS/nixpkgs/archive/"
+"06278c77b5d162e62df170fec307e83f1812d94b.tar.gz\") {}\n"
 "}:\n"
 "\n"
 "...\n"
@@ -82,9 +82,9 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:35
 msgid ""
-"Picking the commit can be done via [status.nixos.org](https://status.nixos."
-"org/), which lists all the releases and the latest commit that has passed "
-"all tests."
+"Picking the commit can be done via [status.nixos.org](https://"
+"status.nixos.org/), which lists all the releases and the latest commit that "
+"has passed all tests."
 msgstr ""
 
 #: ../../../tutorials/first-steps/towards-reproducibility-pinning-nixpkgs.md:38

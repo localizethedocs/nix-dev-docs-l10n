@@ -138,10 +138,10 @@ msgid ""
 "`hello.nix` declares a function which takes as argument an attribute set "
 "with one element `writeShellScriptBin`. [`writeShellScriptBin`](https://"
 "nixos.org/manual/nixpkgs/unstable/#trivial-builder-writeShellScriptBin) is a "
-"function that happens to exist in Nixpkgs, a [build helper](https://nixos."
-"org/manual/nixpkgs/unstable/#part-builders) that returns a derivation. The "
-"derivation output in this case contains an executable shell script in `$out/"
-"bin/hello` that prints \"Hello world\" when run."
+"function that happens to exist in Nixpkgs, a [build helper](https://"
+"nixos.org/manual/nixpkgs/unstable/#part-builders) that returns a derivation. "
+"The derivation output in this case contains an executable shell script in "
+"`$out/bin/hello` that prints \"Hello world\" when run."
 msgstr ""
 
 #: ../../../tutorials/callpackage.md:62
@@ -334,8 +334,8 @@ msgstr ""
 
 #: ../../../tutorials/callpackage.md:159
 msgid ""
-"Add a third attribute `hello-folks` to `default.nix` and set it to `hello."
-"override` called with a new value for `audience`:"
+"Add a third attribute `hello-folks` to `default.nix` and set it to "
+"`hello.override` called with a new value for `audience`:"
 msgstr ""
 
 #: ../../../tutorials/callpackage.md:161

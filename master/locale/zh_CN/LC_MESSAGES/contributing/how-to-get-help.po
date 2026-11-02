@@ -61,8 +61,8 @@ msgstr ""
 #: ../../../contributing/how-to-get-help.md:17
 msgid ""
 "In the `CODEOWNERS` files for [Nixpkgs](https://github.com/NixOS/nixpkgs/"
-"blob/master/ci/OWNERS) or [Nix](https://github.com/NixOS/nix/blob/master/."
-"github/CODEOWNERS)."
+"blob/master/ci/OWNERS) or [Nix](https://github.com/NixOS/nix/blob/"
+"master/.github/CODEOWNERS)."
 msgstr ""
 
 #: ../../../contributing/how-to-get-help.md:19

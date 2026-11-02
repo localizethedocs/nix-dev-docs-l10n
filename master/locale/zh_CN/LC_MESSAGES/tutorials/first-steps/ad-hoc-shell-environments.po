@@ -148,8 +148,8 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:85
 msgid ""
-"Enter the program name you want to run in [search.nixos.org](https://search."
-"nixos.org/packages) to find packages that provide it."
+"Enter the program name you want to run in [search.nixos.org](https://"
+"search.nixos.org/packages) to find packages that provide it."
 msgstr ""
 
 #: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:88
@@ -199,8 +199,8 @@ msgid ""
 "  /nix/store/da6njv7r0zzc2n54n2j54g2a5sbi4a5i-manifest.vim.drv\n"
 "  /nix/store/zs4jb2ybr4rcyzwq0dagg9rlhlc368h6-builder.pl.drv\n"
 "  /nix/store/g8sl2xnsshfrz9f39ki94k8p15vp3xd7-vim-pack-dir.drv\n"
-"  /nix/store/jmxkg8b1psk52awsvfziy9nq6dwmxmjp-luajit-2.1.0-2022-10-04-env."
-"drv\n"
+"  /nix/store/jmxkg8b1psk52awsvfziy9nq6dwmxmjp-luajit-2.1.0-2022-10-04-"
+"env.drv\n"
 "  /nix/store/kn83q8yk6ds74zgyklrjhvv5wkv5wmch-python3-3.10.9-env.drv\n"
 "  /nix/store/m445wn3vizcgg7syna2cdkkws3kk1gq8-neovim-ruby-env.drv\n"
 "  /nix/store/r2wa882mw99c311a4my7hcis9lq3kp3v-neovim-0.8.1.drv\n"
@@ -298,8 +298,8 @@ msgstr ""
 
 #: ../../../tutorials/first-steps/ad-hoc-shell-environments.md:183
 msgid ""
-"$ nix-shell -p git --run \"git --version\" --pure -I nixpkgs=https://github."
-"com/NixOS/nixpkgs/tarball/2a601aafdc5605a5133a2ca506a34a3a73377247\n"
+"$ nix-shell -p git --run \"git --version\" --pure -I nixpkgs=https://"
+"github.com/NixOS/nixpkgs/tarball/2a601aafdc5605a5133a2ca506a34a3a73377247\n"
 "...\n"
 "git version 2.33.1\n"
 msgstr ""

@@ -247,8 +247,8 @@ msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:135
 msgid ""
-"You can retrieve the platform string from `pkgsCross.<platform>.stdenv."
-"hostPlatform.config`:"
+"You can retrieve the platform string from `pkgsCross."
+"<platform>.stdenv.hostPlatform.config`:"
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:137
@@ -260,8 +260,8 @@ msgstr ""
 #: ../../../tutorials/cross-compilation.md:142
 msgid ""
 "If the host platform you seek hasn't been defined yet, please [contribute it "
-"upstream](https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples."
-"nix)."
+"upstream](https://github.com/NixOS/nixpkgs/blob/master/lib/systems/"
+"examples.nix)."
 msgstr ""
 
 #: ../../../tutorials/cross-compilation.md:144
@@ -570,6 +570,6 @@ msgstr ""
 msgid ""
 "Terminology for cross compilation platforms differs between build systems. "
 "We have chosen to follow [autoconf terminology](https://www.gnu.org/software/"
-"autoconf/manual/autoconf-2.69/html_node/Hosts-and-Cross_002dCompilation."
-"html)."
+"autoconf/manual/autoconf-2.69/html_node/Hosts-and-"
+"Cross_002dCompilation.html)."
 msgstr ""

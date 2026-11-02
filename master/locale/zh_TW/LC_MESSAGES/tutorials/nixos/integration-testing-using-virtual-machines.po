@@ -149,9 +149,9 @@ msgid ""
 "function that takes a `nodes` attribute. This Python test script can access "
 "the virtual machines via the names used for the `nodes`. It has super user "
 "rights in the virtual machines. In the Python script each virtual machine is "
-"accessible via the `machine` object. NixOS provides [methods](https://nixos."
-"org/manual/nixos/stable/index.html#ssec-machine-objects) to run tests on "
-"these configurations."
+"accessible via the `machine` object. NixOS provides [methods](https://"
+"nixos.org/manual/nixos/stable/index.html#ssec-machine-objects) to run tests "
+"on these configurations."
 msgstr ""
 
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:75
@@ -578,8 +578,8 @@ msgstr ""
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:328
 msgid ""
 "<!-- TODO: move examples from https://wiki.nixos.org/wiki/"
-"NixOS_Testing_library to the NixOS manual and troubleshooting tips to nix."
-"dev -->\n"
+"NixOS_Testing_library to the NixOS manual and troubleshooting tips to "
+"nix.dev -->\n"
 msgstr ""
 
 #: ../../../tutorials/nixos/integration-testing-using-virtual-machines.md:330

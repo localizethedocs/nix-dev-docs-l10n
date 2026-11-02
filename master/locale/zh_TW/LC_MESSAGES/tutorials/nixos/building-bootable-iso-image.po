@@ -65,13 +65,13 @@ msgstr ""
 
 #: ../../../tutorials/nixos/building-bootable-iso-image.md:32
 msgid ""
-"$ NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/"
-"archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-"
+"$ NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/"
+"74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-"
 "generators --run \"nixos-generate --format iso --configuration ./myimage.nix "
 "-o result\"\n"
 msgstr ""
-"$ NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/"
-"archive/74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-"
+"$ NIX_PATH=nixpkgs=https://github.com/NixOS/nixpkgs/archive/"
+"74e2faf5965a12e8fa5cff799b1b19c6cd26b0e3.tar.gz nix-shell -p nixos-"
 "generators --run \"nixos-generate --format iso --configuration ./myimage.nix "
 "-o result\"\n"
 

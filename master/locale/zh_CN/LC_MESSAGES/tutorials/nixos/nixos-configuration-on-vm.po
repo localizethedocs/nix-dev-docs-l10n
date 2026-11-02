@@ -151,9 +151,9 @@ msgid ""
 "Do not use plain text passwords outside of this example unless you know what "
 "you are doing. See [`initialHashedPassword`](https://nixos.org/manual/nixos/"
 "stable/options.html#opt-users.extraUsers._name_.initialHashedPassword) or "
-"[`ssh.authorizedKeys`](https://nixos.org/manual/nixos/stable/options."
-"html#opt-users.extraUsers._name_.openssh.authorizedKeys.keys) for more "
-"secure alternatives."
+"[`ssh.authorizedKeys`](https://nixos.org/manual/nixos/stable/"
+"options.html#opt-users.extraUsers._name_.openssh.authorizedKeys.keys) for "
+"more secure alternatives."
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:81
@@ -228,22 +228,22 @@ msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:124
 msgid ""
-"The [`-A` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
-"html#opt-attr) specifies the attribute to pick from the provided Nix "
+"The [`-A` option](https://nix.dev/manual/nix/stable/command-ref/opt-"
+"common.html#opt-attr) specifies the attribute to pick from the provided Nix "
 "expression `<nixpkgs/nixos>`."
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:126
 msgid ""
 "To build the virtual machine, we choose the `vm` attribute as defined in "
-"[`nixos/default.nix`](https://github.com/NixOS/nixpkgs/"
-"blob/7c164f4bea71d74d98780ab7be4f9105630a2eba/nixos/default.nix#L19)."
+"[`nixos/default.nix`](https://github.com/NixOS/nixpkgs/blob/"
+"7c164f4bea71d74d98780ab7be4f9105630a2eba/nixos/default.nix#L19)."
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:128
 msgid ""
-"The [`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-common."
-"html#opt-I) prepends entries to the search path."
+"The [`-I` option](https://nix.dev/manual/nix/stable/command-ref/opt-"
+"common.html#opt-I) prepends entries to the search path."
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:130
@@ -423,8 +423,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:255
 msgid ""
-"To change to a Wayland compositor, disable `services.xserver.desktopManager."
-"gnome` and enable `programs.sway`:"
+"To change to a Wayland compositor, disable "
+"`services.xserver.desktopManager.gnome` and enable `programs.sway`:"
 msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:257
@@ -518,8 +518,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/nixos-configuration-on-vm.md:311
 msgid ""
-"[NixOS source code: `configuration template` in `tools.nix`](https://github."
-"com/NixOS/nixpkgs/blob/4e0525a8cdb370d31c1e1ba2641ad2a91fded57d/nixos/"
+"[NixOS source code: `configuration template` in `tools.nix`](https://"
+"github.com/NixOS/nixpkgs/blob/4e0525a8cdb370d31c1e1ba2641ad2a91fded57d/nixos/"
 "modules/installer/tools/tools.nix#L122-L226)."
 msgstr ""
 

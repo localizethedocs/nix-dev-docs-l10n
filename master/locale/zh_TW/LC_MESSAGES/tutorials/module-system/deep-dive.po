@@ -81,9 +81,9 @@ msgstr "您需要什麼？"
 
 #: ../../../tutorials/module-system/deep-dive.md:27
 msgid ""
-"You will use two helper scripts for this exercise. Download {download}`map."
-"sh <files/map.sh>` and {download}`geocode.sh <files/geocode.sh>` to your "
-"working directory."
+"You will use two helper scripts for this exercise. Download {download}"
+"`map.sh <files/map.sh>` and {download}`geocode.sh <files/geocode.sh>` to "
+"your working directory."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:31
@@ -235,8 +235,8 @@ msgid ""
 "prints the result. `evalModules` produces an attribute set where the final "
 "configuration values appear in the `config` attribute. Therefore we evaluate "
 "the Nix expression in `eval.nix` at the [attribute path](https://nix.dev/"
-"manual/nix/stable/language/operators#attribute-selection) `config.scripts."
-"output`."
+"manual/nix/stable/language/operators#attribute-selection) "
+"`config.scripts.output`."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:115
@@ -343,8 +343,8 @@ msgstr ""
 msgid ""
 "That simple command will likely not work as intended on your system, as it "
 "may lack the required dependencies (curl and feh). We can solve this by "
-"packaging the raw {download}`map <files/map.sh>` script with `pkgs."
-"writeShellApplication`."
+"packaging the raw {download}`map <files/map.sh>` script with "
+"`pkgs.writeShellApplication`."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:181
@@ -744,9 +744,9 @@ msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:399
 msgid ""
-"This can be done with the `default` argument to [`mkOption`](https://github."
-"com/NixOS/nixpkgs/blob/master/lib/options.nix). Its value will be used if "
-"the value of the option declaring it is not specified otherwise."
+"This can be done with the `default` argument to [`mkOption`](https://"
+"github.com/NixOS/nixpkgs/blob/master/lib/options.nix). Its value will be "
+"used if the value of the option declaring it is not specified otherwise."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:402
@@ -1042,8 +1042,8 @@ msgstr ""
 #: ../../../tutorials/module-system/deep-dive.md:577
 msgid ""
 "To avoid confusion with the `map` option setting and the final `config.map` "
-"configuration value, here we use the `map` function explicitly as `builtins."
-"map`."
+"configuration value, here we use the `map` function explicitly as "
+"`builtins.map`."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:581
@@ -1218,10 +1218,10 @@ msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:672
 msgid ""
-"Defining the options in this way allows you to set multiple `users.<name>."
-"departure.location` values and generate a map with the appropriate zoom and "
-"center, with pins corresponding to the set of `departure.location` values "
-"for *all* `users`."
+"Defining the options in this way allows you to set multiple `users."
+"<name>.departure.location` values and generate a map with the appropriate "
+"zoom and center, with pins corresponding to the set of `departure.location` "
+"values for *all* `users`."
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:674
@@ -1330,8 +1330,8 @@ msgstr ""
 #: ../../../tutorials/module-system/deep-dive.md:737
 msgid ""
 "This `firstUpperAlnum` function allows you to retrieve the first character "
-"of the username, with the correct type for passing to `departure.style."
-"label`:"
+"of the username, with the correct type for passing to "
+"`departure.style.label`:"
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:739
@@ -1687,8 +1687,8 @@ msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:972
 msgid ""
-"Copy the `departure` option declaration to a new `arrival` option in `marker."
-"nix`, to complete the initial path implementation:"
+"Copy the `departure` option declaration to a new `arrival` option in "
+"`marker.nix`, to complete the initial path implementation:"
 msgstr ""
 
 #: ../../../tutorials/module-system/deep-dive.md:974

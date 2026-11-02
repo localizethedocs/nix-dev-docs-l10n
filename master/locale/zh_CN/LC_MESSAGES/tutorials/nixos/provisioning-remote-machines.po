@@ -425,8 +425,8 @@ msgstr ""
 
 #: ../../../tutorials/nixos/provisioning-remote-machines.md:269
 msgid ""
-"nix-build -E \"((import <nixpkgs> {}).nixos [ ./configuration.nix ])."
-"installTest\"\n"
+"nix-build -E \"((import <nixpkgs> {}).nixos [ ./"
+"configuration.nix ]).installTest\"\n"
 msgstr ""
 
 #: ../../../tutorials/nixos/provisioning-remote-machines.md:273
@@ -454,8 +454,8 @@ msgstr ""
 #: ../../../tutorials/nixos/provisioning-remote-machines.md:283
 msgid ""
 "toplevel=$(nixos-rebuild build --no-flake)\n"
-"diskoScript=$(nix-build -E \"((import <nixpkgs> {}).nixos [ ./configuration."
-"nix ]).diskoScript\")\n"
+"diskoScript=$(nix-build -E \"((import <nixpkgs> {}).nixos [ ./"
+"configuration.nix ]).diskoScript\")\n"
 "nixos-anywhere --store-paths \"$diskoScript\" \"$toplevel\" root@target-"
 "host\n"
 msgstr ""
