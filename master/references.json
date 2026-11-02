@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-10-30 22:37:13 +0100",
+      "hash" : "9d52c2637cc86cddd70564e61b725bfb3ba6036d",
+      "title" : "site: fix prose headings scale for no h1 (#1310)"
     }
   },
   "type" : "branch",
