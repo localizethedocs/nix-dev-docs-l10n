@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-11-09 02:40:27 +0000",
+      "hash" : "760a6747c0228b85b9e1909df475bf0ab8a23102",
+      "title" : "nix: update Nix releases (#1321)"
     }
   },
   "type" : "branch",
