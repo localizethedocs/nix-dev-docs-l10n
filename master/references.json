@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-11-16 08:01:23 -0800",
+      "hash" : "9495958043481cbcb2113f0800aacb4e848a0b7e",
+      "title" : "nix: update Nixpkgs pins"
     }
   },
   "type" : "branch",
