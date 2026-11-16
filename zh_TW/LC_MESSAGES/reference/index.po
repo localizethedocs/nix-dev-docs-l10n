@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../reference/index.md:6
+msgid "Nixpkgs manual"
+msgstr "Nixpkgs 手冊"
+
+#: ../../../reference/index.md:6
+msgid "NixOS manual"
+msgstr "NixOS 手冊"
+
+#: ../../../reference/index.md:6
+msgid "Community projects"
+msgstr "社群專案"
+
+#: ../../../reference/index.md:6
+msgid "Support tools"
+msgstr "支援工具"
+
+#: ../../../reference/index.md:2
+msgid "Reference"
+msgstr "參考"
+
+#: ../../../reference/index.md:4
+msgid "These sections contain collections of detailed technical descriptions."
+msgstr ""
