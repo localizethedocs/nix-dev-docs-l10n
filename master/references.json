@@ -57,9 +57,9 @@
     "branch" : "master",
     "commit" : 
     {
-      "date" : "2026-09-22 13:11:26 +0200",
-      "hash" : "f962ac731fb7f0af2be4cd99fe4dc4719e0a3b51",
-      "title" : "site: bump astro & s\u00e4tteri"
+      "date" : "2026-11-23 18:35:37 +0100",
+      "hash" : "cbc0c3be1a2bf89ae19266c90178fb23277ebe1e",
+      "title" : "site: use edgy corners for technical feeling"
     }
   },
   "type" : "branch",
