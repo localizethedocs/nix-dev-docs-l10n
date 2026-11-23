@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2016-2025, NixOS Foundation
+# This file is distributed under the same license as the nix.dev package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nix.dev master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 08:19+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ko_KR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../tutorials/nixos/index.md:1
+msgid "NixOS"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:3
+msgid "Learn how to configure, test, and install or deploy NixOS."
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:5
+msgid "Creating NixOS images"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:7
+msgid "[](nixos-configuration-on-vm)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:8
+msgid "[](building-bootable-iso-image)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:9
+msgid "[](building-and-running-docker-images)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:11
+msgid "Testing and deploying NixOS configurations"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:13
+msgid "[](integration-testing-using-virtual-machines)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:14
+msgid "[](provisioning-remote-machines-tutorial)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:15
+msgid "[](installing-nixos-on-a-raspberry-pi)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:16
+msgid "[](deploying-nixos-using-terraform)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:18
+msgid "Scaling up"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:20
+msgid "[](binary-cache-setup)"
+msgstr ""
+
+#: ../../../tutorials/nixos/index.md:21
+msgid "[](distributed-build-setup-tutorial)"
+msgstr ""
